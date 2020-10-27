@@ -42,7 +42,7 @@ cd code_documentation
 # Get the current gh-pages branch
 #git clone -b documentation https://git@$GH_REPO_REF
 git clone -b documentation https://github.com/SuperParameterIzation/spipack.git
-cd $GH_REPO_NAME
+cd spipack
 
 ##### Configure git.
 # Set the push default to simple i.e. push only the current branch.
