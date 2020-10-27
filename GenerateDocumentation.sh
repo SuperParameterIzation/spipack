@@ -41,7 +41,9 @@ cd code_documentation
 
 # Get the current gh-pages branch
 #git clone -b documentation https://git@$GH_REPO_REF
-git clone -b documentation https://github.com/SuperParameterIzation/spipack.git
+#git clone -b documentation https://github.com/SuperParameterIzation/spipack.git
+git clone -b documentation git@github.com:SuperParameterIzation/spipack.git
+
 cd spipack
 
 ##### Configure git.
@@ -91,7 +93,7 @@ if [ -d "html" ] && [ -f "html/index.html" ]; then
     # The ouput is redirected to /dev/null to hide any sensitive credential data
     # that might otherwise be exposed.
     #git push --force "${GH_REPO_TOKEN}@${GH_REPO_REF}" > /dev/null 2>&1
-    git push --force 
+    git push --force
 else
     echo '' >&2
     echo 'Warning: No documentation (html) files have been found!' >&2
