@@ -4,6 +4,7 @@
 namespace spi {
 namespace ParticleMethods {
 
+/// ghrwiofhorw
 class GraphLaplacian {
 public:
   GraphLaplacian() = default;
