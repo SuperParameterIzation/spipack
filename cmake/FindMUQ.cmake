@@ -11,6 +11,8 @@ if( MUQ_FOUND )
 else()
   message(STATUS "NO MUQ FOUND")
 
+  include(ExternalProject)
+
   ExternalProject_Add(MUQ
     GIT_REPOSITORY https://bitbucket.org/mituq/muq2/src/master/
     CMAKE_ARGS -DCMAKE_INSTALL_PREFIX=${CMAKE_BINARY_DIR}/external
