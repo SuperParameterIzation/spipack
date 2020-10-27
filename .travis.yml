@@ -27,11 +27,10 @@ script:
     ############################################################################
     # Build main and tests
     ############################################################################
-     - echo "HI"
      - cd build
      - cmake ..
 
 # Generate and deploy documentation
 after_success:
   - cd $TRAVIS_BUILD_DIR
-  - pwd
+  - make doc
