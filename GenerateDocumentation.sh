@@ -94,6 +94,13 @@ if [ -d "html" ] && [ -f "html/index.html" ]; then
     # that might otherwise be exposed.
     #git push --force "${GH_REPO_TOKEN}@${GH_REPO_REF}" > /dev/null 2>&1
     #git push --force "https://${GH_REPO_TOKEN}@${GH_REPO_REF}"
+
+    echo ""
+    echo ""
+    pwd
+    echo ""
+    echo ""
+
 else
     echo '' >&2
     echo 'Warning: No documentation (html) files have been found!' >&2
