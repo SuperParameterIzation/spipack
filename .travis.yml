@@ -11,7 +11,7 @@ env:
   global:
     - GH_REPO_NAME: spipack
     - DOXYFILE: $TRAVIS_BUILD_DIR/documentation
-    - GH_REPO_REF: github.com/SuperParameterIzation/spipack.git
+    - GH_REPO_REF: github.com:SuperParameterIzation/spipack.git
 
 # Install dependencies
 addons:
