@@ -5,6 +5,9 @@ namespace spi {
 namespace ParticleMethods {
 
 /// Estimate a weighted Laplacian operator using a graph Laplacian
+/**
+  DOCUMENTATION GOES HERE
+*/
 class GraphLaplacian {
 public:
   GraphLaplacian() = default;
