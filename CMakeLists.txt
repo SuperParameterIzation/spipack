@@ -28,7 +28,7 @@ find_package(Doxygen)
 if(DOXYGEN_FOUND)
 	message(STATUS "To build documentation, run 'make doc'")
 
-    configure_file(${CMAKE_CURRENT_SOURCE_DIR}/documentation/spipack.doxyfile.in ${CMAKE_CURRENT_BINARY_DIR}/spipack.doxyfile @ONLY)
+    configure_file(${CMAKE_CURRENT_SOURCE_DIR}/spipack.doxyfile.in ${CMAKE_CURRENT_BINARY_DIR}/spipack.doxyfile @ONLY)
     add_custom_target(doc
         ${DOXYGEN_EXECUTABLE} ${CMAKE_CURRENT_BINARY_DIR}/spipack.doxyfile
         WORKING_DIRECTORY ${CMAKE_CURRENT_BINARY_DIR}
