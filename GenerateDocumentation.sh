@@ -73,9 +73,6 @@ echo 'Generating Doxygen code documentation...'
 #doxygen -g spipack.doxyfile.in #2>&1 | tee doxygen.log
 doxygen spipack.doxyfile.in
 
-ls documentation/
-ls documentation/doxygen_output/
-
 ################################################################################
 ##### Upload the documentation to the documentation branch.                #####
 # Only upload if Doxygen successfully created the documentation.
@@ -87,7 +84,7 @@ if [ -d "documentation/doxygen_output/html" ] && [ -f "documentation/doxygen_out
     # gh-pages branch.
     # GitHub is smart enough to know which files have changed and which files have
     # stayed the same and will only update the changed files.
-    git add spipack.doxyfile.in
+    git add documentation/doxygen_output/html
     git status
     #git add --all
 
