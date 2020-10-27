@@ -84,6 +84,7 @@ if [ -d "html" ] && [ -f "html/index.html" ]; then
     # gh-pages branch.
     # GitHub is smart enough to know which files have changed and which files have
     # stayed the same and will only update the changed files.
+    git add spipack.doxyfile.in
     git status
     #git add --all
 
