@@ -36,22 +36,22 @@ echo 'Setting up the script...'
 set -e
 
 # Create a clean working directory for this script.
-mkdir code_documentation
-cd code_documentation
+#mkdir code_documentation
+#cd code_documentation
 
 # Get the current gh-pages branch
 #git clone -b documentation https://git@$GH_REPO_REF
 #git clone -b documentation https://github.com/SuperParameterIzation/spipack.git
-git clone -b documentation git@github.com:SuperParameterIzation/spipack.git
+#git clone -b documentation git@github.com:SuperParameterIzation/spipack.git
 
-cd spipack
+#cd spipack
 
 ##### Configure git.
 # Set the push default to simple i.e. push only the current branch.
-git config --global push.default simple
+#git config --global push.default simple
 # Pretend to be an user called Travis CI.
-git config user.name "Travis CI"
-git config user.email "travis@travis-ci.org"
+#git config user.name "Travis CI"
+#git config user.email "travis@travis-ci.org"
 
 # Remove everything currently in the gh-pages branch.
 # GitHub is smart enough to know which files have changed and which files have
@@ -64,7 +64,7 @@ git config user.email "travis@travis-ci.org"
 # to be seen on the gh-pages site. Therefore creating an empty .nojekyll file.
 # Presumably this is only needed when the SHORT_NAMES option in Doxygen is set
 # to NO, which it is by default. So creating the file just in case.
-echo "" > .nojekyll
+#echo "" > .nojekyll
 
 ################################################################################
 ##### Generate the Doxygen code documentation and log the output.          #####
@@ -83,17 +83,17 @@ if [ -d "html" ] && [ -f "html/index.html" ]; then
     # gh-pages branch.
     # GitHub is smart enough to know which files have changed and which files have
     # stayed the same and will only update the changed files.
-    git add --all
+    #git add --all
 
     # Commit the added files with a title and description containing the Travis CI
     # build number and the GitHub commit reference that issued this build.
-    git commit -a -m "Deploy code docs to GitHub Pages Travis build: ${TRAVIS_BUILD_NUMBER}" -m "Commit: ${TRAVIS_COMMIT}"
+    #git commit -a -m "Deploy code docs to GitHub Pages Travis build: ${TRAVIS_BUILD_NUMBER}" -m "Commit: ${TRAVIS_COMMIT}"
 
     # Force push to the remote gh-pages branch.
     # The ouput is redirected to /dev/null to hide any sensitive credential data
     # that might otherwise be exposed.
     #git push --force "${GH_REPO_TOKEN}@${GH_REPO_REF}" > /dev/null 2>&1
-    git push --force "https://${GH_REPO_TOKEN}@${GH_REPO_REF}"
+    #git push --force "https://${GH_REPO_TOKEN}@${GH_REPO_REF}"
 else
     echo '' >&2
     echo 'Warning: No documentation (html) files have been found!' >&2
