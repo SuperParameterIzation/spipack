@@ -40,7 +40,7 @@ mkdir code_documentation
 cd code_documentation
 
 # Get the current gh-pages branch
-git clone -b documentation git@$GH_REPO_REF
+git clone -b documentation https://git@$GH_REPO_REF
 cd $GH_REPO_NAME
 
 ##### Configure git.
