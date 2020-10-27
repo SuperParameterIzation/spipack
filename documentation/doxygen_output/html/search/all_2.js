@@ -1,7 +1,5 @@
 var searchData=
 [
-  ['dcmake_5finstall_5fprefix',['DCMAKE_INSTALL_PREFIX',['../MUQ-cfgcmd_8txt.html#adfafba63b8f3a1c29ccd003f21acc35f',1,'MUQ-cfgcmd.txt']]],
-  ['dec',['DEC',['../CMakeCCompilerId_8c.html#ad1280362da42492bbc11aa78cbf776ad',1,'DEC():&#160;CMakeCCompilerId.c'],['../CMakeCXXCompilerId_8cpp.html#ad1280362da42492bbc11aa78cbf776ad',1,'DEC():&#160;CMakeCXXCompilerId.cpp']]],
-  ['dmuq_5fenablegroup_5fdefault',['DMUQ_ENABLEGROUP_DEFAULT',['../MUQ-cfgcmd_8txt.html#ac1520b689103189405ff9ee18c6b7f77',1,'MUQ-cfgcmd.txt']]],
-  ['dmuq_5fenablegroup_5futilities_5fhdf5',['DMUQ_ENABLEGROUP_UTILITIES_HDF5',['../MUQ-cfgcmd_8txt.html#a85d77d467931e6624e0825592be4476b',1,'MUQ-cfgcmd.txt']]]
+  ['particlemethods',['ParticleMethods',['../namespacespi_1_1ParticleMethods.html',1,'spi']]],
+  ['spi',['spi',['../namespacespi.html',1,'']]]
 ];
