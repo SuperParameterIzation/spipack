@@ -78,7 +78,7 @@ doxygen spipack.doxyfile.in
 # Only upload if Doxygen successfully created the documentation.
 # Check this by verifying that the html directory and the file html/index.html
 # both exist. This is a good indication that Doxygen did it's work.
-if [ -d "html" ] && [ -f "html/index.html" ]; then
+if [ -d "documentation/doxygen_output/html" ] && [ -f "html/index.html" ]; then
     echo 'Uploading documentation to the documentation branch...'
     # Add everything in this directory (the Doxygen code documentation) to the
     # gh-pages branch.
