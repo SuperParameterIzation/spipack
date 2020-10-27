@@ -90,13 +90,13 @@ if [ -d "documentation/doxygen_output/html" ] && [ -f "documentation/doxygen_out
 
     # Commit the added files with a title and description containing the Travis CI
     # build number and the GitHub commit reference that issued this build.
-    git commit -a -m "Deploy code docs to GitHub Pages Travis build: ${TRAVIS_BUILD_NUMBER}" -m "Commit: ${TRAVIS_COMMIT}"
+    git commit -a -m "Deploy code docs to GitHub Pages Travis build: ${TRAVIS_BUILD_NUMBER} [ci skip]" -m "Commit: ${TRAVIS_COMMIT}"
 
     # Force push to the remote gh-pages branch.
     # The ouput is redirected to /dev/null to hide any sensitive credential data
     # that might otherwise be exposed.
     #git push --force "${GH_REPO_TOKEN}@${GH_REPO_REF}" > /dev/null 2>&1
-    git push https://${GH_REPO_TOKEN}@github.com/SuperParameterIzation/spipack.git HEAD:travis-documentation
+    git push https://${GH_REPO_TOKEN}@github.com/SuperParameterIzation/spipack.git #HEAD:master
     #git push --force "https://${GH_REPO_TOKEN}@${GH_REPO_REF}"
 
     echo ""
