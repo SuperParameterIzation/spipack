@@ -86,7 +86,6 @@ if [ -d "documentation/doxygen_output/html" ] && [ -f "documentation/doxygen_out
     # stayed the same and will only update the changed files.
     git add documentation/doxygen_output/html
     git status
-    #git add --all
 
     # Commit the added files with a title and description containing the Travis CI
     # build number and the GitHub commit reference that issued this build.
@@ -97,7 +96,7 @@ if [ -d "documentation/doxygen_output/html" ] && [ -f "documentation/doxygen_out
     # The ouput is redirected to /dev/null to hide any sensitive credential data
     # that might otherwise be exposed.
     #git push --force "${GH_REPO_TOKEN}@${GH_REPO_REF}" > /dev/null 2>&1
-    git push https://${GH_REPO_TOKEN}@github.com/SuperParameterIzation/spipack.git HEAD:master
+    git push --force https://${GH_REPO_TOKEN}@github.com/SuperParameterIzation/spipack.git #HEAD:master
     #git push --force "https://${GH_REPO_TOKEN}@${GH_REPO_REF}"
 
 else
