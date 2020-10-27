@@ -30,7 +30,6 @@ script:
      - echo $TRAVIS_BUILD_DIR
      - cd build
      - cmake ..
-     - make -j5
 
 # Generate and deploy documentation
 after_success:
