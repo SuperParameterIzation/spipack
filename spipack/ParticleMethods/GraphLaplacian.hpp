@@ -4,7 +4,7 @@
 namespace spi {
 namespace ParticleMethods {
 
-/// ghrwiofhorw
+/// Estimate a weighted Laplacian operator using a graph Laplacian
 class GraphLaplacian {
 public:
   GraphLaplacian() = default;

@@ -71,7 +71,7 @@ set -e
 echo 'Generating Doxygen code documentation...'
 # Redirect both stderr and stdout to the log file AND the console.
 #doxygen -g spipack.doxyfile.in #2>&1 | tee doxygen.log
-doxygen spipack.doxyfile.in
+doxygen documentation/spipack.doxyfile.in
 
 ################################################################################
 ##### Upload the documentation to the documentation branch.                #####
