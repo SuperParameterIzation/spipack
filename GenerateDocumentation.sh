@@ -58,7 +58,7 @@ set -e
 # stayed the same and will only update the changed files. So the gh-pages branch
 # can be safely cleaned, and it is sure that everything pushed later is the new
 # documentation.
-rm -rf documentation/doxygen_output/html
+#rm -rf documentation/doxygen_output/html
 
 # Need to create a .nojekyll file to allow filenames starting with an underscore
 # to be seen on the gh-pages site. Therefore creating an empty .nojekyll file.
@@ -91,7 +91,7 @@ if [ -d "documentation/doxygen_output/html" ] && [ -f "documentation/doxygen_out
     # Commit the added files with a title and description containing the Travis CI
     # build number and the GitHub commit reference that issued this build.
     #git commit -a -m "Deploy code docs to GitHub Pages Travis build: ${TRAVIS_BUILD_NUMBER} [ci skip]" -m "Commit: ${TRAVIS_COMMIT}"
-    git commit -m "Deploy code docs to GitHub Pages Travis build [ci skip]"
+    git commit -m "Deploy code docs to GitHub Pages Travis build"
 
     # Force push to the remote gh-pages branch.
     # The ouput is redirected to /dev/null to hide any sensitive credential data
