@@ -34,5 +34,6 @@ script:
 # Generate and deploy documentation
 after_success:
   - cd $TRAVIS_BUILD_DIR
+  - pwd
   - chmod +x GenerateDocumentation.sh
   - ./GenerateDocumentation.sh
