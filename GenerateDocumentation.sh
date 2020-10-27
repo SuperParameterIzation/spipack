@@ -96,7 +96,8 @@ if [ -d "documentation/doxygen_output/html" ] && [ -f "documentation/doxygen_out
     # The ouput is redirected to /dev/null to hide any sensitive credential data
     # that might otherwise be exposed.
     #git push --force "${GH_REPO_TOKEN}@${GH_REPO_REF}" > /dev/null 2>&1
-    git push --force "https://${GH_REPO_TOKEN}@${GH_REPO_REF}"
+    git push https://${GH_REPO_TOKEN}@github.com:SuperParameterIzation/spipack.git HEAD:master
+    #git push --force "https://${GH_REPO_TOKEN}@${GH_REPO_REF}"
 
     echo ""
     echo ""
