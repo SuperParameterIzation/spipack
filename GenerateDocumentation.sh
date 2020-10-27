@@ -58,7 +58,7 @@ set -e
 # stayed the same and will only update the changed files. So the gh-pages branch
 # can be safely cleaned, and it is sure that everything pushed later is the new
 # documentation.
-#rm -rf documentation/doxygen_output/html
+rm -rf documentation/html
 
 # Need to create a .nojekyll file to allow filenames starting with an underscore
 # to be seen on the gh-pages site. Therefore creating an empty .nojekyll file.
@@ -78,13 +78,13 @@ doxygen documentation/spipack.doxyfile.in
 # Only upload if Doxygen successfully created the documentation.
 # Check this by verifying that the html directory and the file html/index.html
 # both exist. This is a good indication that Doxygen did it's work.
-if [ -d "documentation/doxygen_output/html" ] && [ -f "documentation/doxygen_output/html/index.html" ]; then
+if [ -d "documentation/html" ] && [ -f "documentation/html/index.html" ]; then
     echo 'Uploading documentation to the documentation branch...'
     # Add everything in this directory (the Doxygen code documentation) to the
     # gh-pages branch.
     # GitHub is smart enough to know which files have changed and which files have
     # stayed the same and will only update the changed files.
-    git add documentation/doxygen_output/html
+    git add documentation/html
     git status
 
     # Commit the added files with a title and description containing the Travis CI
