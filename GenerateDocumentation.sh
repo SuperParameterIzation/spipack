@@ -40,7 +40,8 @@ mkdir code_documentation
 cd code_documentation
 
 # Get the current gh-pages branch
-git clone -b documentation https://git@$GH_REPO_REF
+#git clone -b documentation https://git@$GH_REPO_REF
+git clone -b documentation https://github.com/SuperParameterIzation/spipack.git
 cd $GH_REPO_NAME
 
 ##### Configure git.
