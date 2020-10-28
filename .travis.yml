@@ -63,6 +63,7 @@ script:
     ############################################################################
     # Build main and tests
     ############################################################################
+     - cd $TRAVIS_BUILD_DIR
      - cd build
      - cmake ..
      - make -j5
@@ -72,7 +73,7 @@ script:
 # Generate and deploy documentation
 after_success:
   - echo $TRAVIS_BUILD_DIR
-  - cd $TRAVIS_BUILD_DIR
+  - cd $TRAVIS_BUILD_DIR/documentation
   - pwd
   - chmod +x GenerateDocumentation.sh
   - ./GenerateDocumentation.sh
