@@ -14,6 +14,12 @@
 <script type="text/javascript">
   $(document).ready(function() { init_search(); });
 </script>
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Config({
+    extensions: ["tex2jax.js"],
+    jax: ["input/TeX","output/HTML-CSS"],
+});
+</script><script type="text/javascript" src="http://cdn.mathjax.org/mathjax/latest/MathJax.js"></script>
 <link href="doxygen.css" rel="stylesheet" type="text/css" />
 </head>
 <body>
@@ -108,7 +114,13 @@ Public Member Functions</h2></td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><p>Estimate a weighted Laplacian operator using a graph Laplacian. </p>
-<p>DOCUMENTATION GOES HERE </p>
+<p>Let \(\psi\) be a probability distribution (with corresponding probability density function). Define the weighted Laplacian operator (given some function \(H\)) </p><p class="formulaDsp">
+\begin{equation*} \nabla_{\psi}^2 H = \psi^{-1} \nabla \cdot (\psi \nabla f). \end{equation*}
+</p>
+<p> This class uses \(n\) samples \(\{x^{(i)}\}_{i=1}^{n}\) such that \(x^{(i)} \sim \psi\) to approximate the action of this operator and to solve the Poisson equation (given the right hand side \(R\)) </p><p class="formulaDsp">
+\begin{equation*} \nabla_{\psi}^2 H = R \end{equation*}
+</p>
+<p> such that \(\mathbb{E}_{\psi}[H] = 0\). </p>
 </div><h2 class="groupheader">Constructor &amp; Destructor Documentation</h2>
 <a class="anchor" id="a622b961857eb87282325a12fb659bcf9"></a>
 <div class="memitem">
