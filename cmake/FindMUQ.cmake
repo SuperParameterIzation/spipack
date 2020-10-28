@@ -16,15 +16,15 @@ else()
   ExternalProject_Add(MUQ
     GIT_REPOSITORY https://bitbucket.org/mituq/muq2/src/master/
     CMAKE_ARGS -DCMAKE_INSTALL_PREFIX=${CMAKE_BINARY_DIR}/external/muq
+    -DCMAKE_CXX_COMPILER=${CMAKE_CXX_COMPILER}
+    -DCMAKE_C_COMPILER=${CMAKE_C_COMPILER}
     -DMUQ_ENABLEGROUP_DEFAULT=OFF
     -DMUQ_ENABLEGROUP_UTILITIES_HDF5=ON
   )
 
   if(APPLE)
-    set(prefix "lib")
     set(suffix ".dylib")
   else()
-    set(prefix "lib")
     set(suffix ".so")
   endif()
 
@@ -33,8 +33,6 @@ else()
   )
 
   list(APPEND SPIPACK_EXTERNAL_LIBRARIES
-    "${CMAKE_BINARY_DIR}/external/muq/lib/${prefix}muqUtilities${suffix}"
+    "${CMAKE_BINARY_DIR}/external/muq/lib/libmuqUtilities${suffix}"
   )
-
-  message(STATUS ${MUQ_LIBRARIES})
 endif()
