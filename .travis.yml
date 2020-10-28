@@ -1,6 +1,3 @@
-# This will run on Travis' container-based infrastructure
-sudo: false
-
 # Check on linux and osx using gcc and clang
 matrix:
   include:
