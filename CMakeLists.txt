@@ -18,7 +18,7 @@ set(CMAKE_CXX_FLAGS ${CMAKE_CXX_FLAGS} "-w --std=c++17 -pthread")
 ###############################################
 
 # tell cmake where to find the cmake source code
-list(APPEND CMAKE_MODULE_PATH ${CMAKE_SOURCE_DIR}/cmake/)
+list(APPEND CMAKE_MODULE_PATH ${CMAKE_SOURCE_DIR}/cmake/ ${CMAKE_SOURCE_DIR}/cmake/find/ ${CMAKE_SOURCE_DIR}/cmake/ ${CMAKE_SOURCE_DIR}/cmake/check/ ${CMAKE_SOURCE_DIR}/cmake/ ${CMAKE_SOURCE_DIR}/cmake/build/ ${CMAKE_SOURCE_DIR}/cmake/append/)
 
 # find dependencies
 include(FindDependencies)
