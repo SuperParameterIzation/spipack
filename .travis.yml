@@ -10,6 +10,7 @@ matrix:
           packages:
             - clang-8
             - boost1.67
+            - hdf5
       env:
         - MATRIX_EVAL="CC=clang-8 CXX=clang++-8"
     - os: linux
@@ -21,6 +22,7 @@ matrix:
           packages:
             - g++-9
             - boost1.67
+            - hdf5
             - doxygen
             - doxygen-doc
             - doxygen-latex
@@ -36,6 +38,7 @@ matrix:
           packages:
             - clang-8
             - boost-1.67
+            - hdf5
       env:
         - MATRIX_EVAL="CC=clang-8 CXX=clang++-8"
     - os: osx
@@ -46,6 +49,7 @@ matrix:
           packages:
             - g++-9
             - boost-1.67
+            - hdf5
       env:
         - MATRIX_EVAL="CC=gcc-9 CXX=g++-9"
 
