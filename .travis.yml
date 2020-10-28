@@ -1,6 +1,7 @@
 # This will run on Travis' container-based infrastructure
 sudo: false
 
+#
 matrix:
   include:
     - os: linux
@@ -13,6 +14,24 @@ matrix:
       env:
         - MATRIX_EVAL="CC=clang-8 CXX=clang++-8"
     - os: linux
+      addons:
+        apt:
+          sources:
+            - sourceline: 'ppa:ubuntu-toolchain-r/test'
+          packages:
+            - g++-9
+      env:
+        - MATRIX_EVAL="CC=gcc-9 CXX=g++-9"
+    - os: osx
+      addons:
+        apt:
+          sources:
+            - sourceline: 'ppa:ubuntu-toolchain-r/test'
+          packages:
+            - clang-8
+      env:
+        - MATRIX_EVAL="CC=clang-8 CXX=clang++-8"
+    - os: osx
       addons:
         apt:
           sources:
@@ -43,7 +62,7 @@ script:
     ############################################################################
      - cd build
      - cmake ..
-     - make
+     - make -j5
 
 # Generate and deploy documentation
 after_success:
