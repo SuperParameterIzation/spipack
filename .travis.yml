@@ -21,6 +21,11 @@ matrix:
           packages:
             - g++-9
             - boost1.67
+            - doxygen
+            - doxygen-doc
+            - doxygen-latex
+            - doxygen-gui
+            - graphviz
       env:
         - MATRIX_EVAL="CC=gcc-9 CXX=g++-9"
     - os: osx
