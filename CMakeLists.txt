@@ -29,7 +29,7 @@ message(STATUS "External libraries: " ${SPIPACK_EXTERNAL_LIBRARIES})
 message(STATUS "External includes: " ${SPIPACK_EXTERNAL_INCLUDE_DIRS})
 message(STATUS "")
 
-include_directories(${SPIPACK_EXTERNAL_INCLUDE_DIRS})
+include_directories(${CMAKE_SOURCE_DIR} ${SPIPACK_EXTERNAL_INCLUDE_DIRS})
 
 ###############################################
 # Build SPIPACK
@@ -37,9 +37,14 @@ include_directories(${SPIPACK_EXTERNAL_INCLUDE_DIRS})
 
 add_subdirectory(modules)
 
+include_directories(${GTEST_INCLUDE_DIR})
+
 add_executable(run-tests ${GTEST_SOURCE})
-target_link_libraries(run-tests ${SPIPACK_EXTERNAL_LIBRARIES})
-add_dependencies(run-tests GTEST)
+target_link_libraries(run-tests ${SPIPACK_EXTERNAL_LIBRARIES} ${SPIPACK_LIBRARIES} ${GTEST_LIBRARIES})
+add_dependencies(run-tests ${SPIPACK_LIBRARIES})
+if( NOT DEFINED SPIPACK_GTEST_DIR )
+	add_dependencies(run-tests GTEST)
+endif()
 
 ###############################################
 # Build the documentation (doxygen)

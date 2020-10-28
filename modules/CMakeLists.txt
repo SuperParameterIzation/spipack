@@ -1,6 +1,11 @@
+set(SPIPACK_LIBRARIES )
+
 add_subdirectory(NumericalSolvers)
+list(APPEND SPIPACK_LIBRARIES spiNS)
 
 set(GTEST_SOURCE
       modules/_run-tests.cpp
       ${NUMERICAL_SOLVERS_TESTS}
     PARENT_SCOPE)
+
+set(SPIPACK_LIBRARIES ${SPIPACK_LIBRARIES} PARENT_SCOPE)
