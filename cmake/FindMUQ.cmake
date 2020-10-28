@@ -9,8 +9,6 @@ if( MUQ_FOUND )
     ${MUQ_LIBRARIES} ${MUQ_LINK_LIBRARIES}
   )
 else()
-  message(STATUS "NO MUQ FOUND")
-
   include(ExternalProject)
 
   ExternalProject_Add(MUQ
