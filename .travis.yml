@@ -11,6 +11,7 @@ matrix:
             - sourceline: 'ppa:ubuntu-toolchain-r/test'
           packages:
             - clang-8
+            - boost1.67
       env:
         - MATRIX_EVAL="CC=clang-8 CXX=clang++-8"
     - os: linux
@@ -20,6 +21,7 @@ matrix:
             - sourceline: 'ppa:ubuntu-toolchain-r/test'
           packages:
             - g++-9
+            - boost1.67
       env:
         - MATRIX_EVAL="CC=gcc-9 CXX=g++-9"
     - os: osx
@@ -29,6 +31,7 @@ matrix:
             - sourceline: 'ppa:ubuntu-toolchain-r/test'
           packages:
             - clang-8
+            - boost1.67
       env:
         - MATRIX_EVAL="CC=clang-8 CXX=clang++-8"
     - os: osx
@@ -38,6 +41,7 @@ matrix:
             - sourceline: 'ppa:ubuntu-toolchain-r/test'
           packages:
             - g++-9
+            - boost1.67
       env:
         - MATRIX_EVAL="CC=gcc-9 CXX=g++-9"
 
