@@ -54,16 +54,6 @@ branches:
   only:
     - master
 
-# Install dependencies
-addons:
-  apt:
-    packages:
-      - doxygen
-      - doxygen-doc
-      - doxygen-latex
-      - doxygen-gui
-      - graphviz
-
 script:
     ############################################################################
     # Build main and tests
