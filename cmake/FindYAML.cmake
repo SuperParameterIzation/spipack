@@ -35,14 +35,21 @@ if( NOT YamlCpp_LIBRARY )
     -DCMAKE_CXX_FLAGS=-w --std=c++11
     -DCMAKE_CXX_COMPILER=${CMAKE_CXX_COMPILER}
     -DCMAKE_C_COMPILER=${CMAKE_C_COMPILER}
+    -DBUILD_SHARED_LIBS=ON
     -DYAML_CPP_BUILD_TESTS=OFF
   )
+
+  if(APPLE)
+    set(suffix ".dylib")
+  else()
+    set(suffix ".so")
+  endif()
 
   set(SPIPACK_EXTERNAL_INCLUDE_DIRS
     ${CMAKE_BINARY_DIR}/external/yaml/include)
 
   set(SPIPACK_EXTERNAL_LIBRARIES
-    ${CMAKE_BINARY_DIR}/external/yaml/lib/libyaml-cpp.a)
+    ${CMAKE_BINARY_DIR}/external/yaml/lib/libyaml-cpp${suffix})
 else()
   list(APPEND SPIPACK_EXTERNAL_INCLUDE_DIRS
     ${YamlCpp_INCLUDE_DIR}

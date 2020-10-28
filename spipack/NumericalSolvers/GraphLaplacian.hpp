@@ -3,6 +3,10 @@
 
 #include <yaml-cpp/yaml.h>
 
+#include <MUQ/Modeling/Distributions/RandomVariable.h>
+
+#include <MUQ/SamplingAlgorithms/SampleCollection.h>
+
 namespace spi {
 namespace NumericalSolvers {
 
@@ -20,10 +24,33 @@ namespace NumericalSolvers {
 */
 class GraphLaplacian {
 public:
-  GraphLaplacian(YAML::Node const& options) {}
-  GraphLaplacian() = default;
+
+  /// Construct the graph laplacian by sampling a random variable from \f$\psi\f$
+  /**
+    @param[in] rv The random variable that we wish to sample
+    @param[in] options Setup options
+  */
+  GraphLaplacian(std::shared_ptr<muq::Modeling::RandomVariable> const& rv, YAML::Node const& options);
+
+  /// Construct the graph laplacian given samples from the underlying distribution \f$\psi\f$
+  /**
+    @param[in] samples Samples from the underlying distribution \f$\psi\f$
+    @param[in] options Setup options
+  */
+  GraphLaplacian(std::shared_ptr<muq::SamplingAlgorithms::SampleCollection> const& samples, YAML::Node const& options);
+
   virtual ~GraphLaplacian() = default;
+
+  /// How many samples are in the collection?
+  /**
+    \return The number of samples in the sample collection (GraphLaplacian::samples)
+  */
+  unsigned int NumSamples() const;
+
 private:
+
+  /// Samples from the distribution \f$\psi\f$
+  std::shared_ptr<muq::SamplingAlgorithms::SampleCollection> samples;
 };
 
 } // ParticleMethods

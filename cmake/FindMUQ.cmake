@@ -1,4 +1,5 @@
 find_package(MUQ HINTS ${SPIPACK_MUQ_DIR})
+set(SPIPACK_BUILT_MUQ OFF)
 
 if( MUQ_FOUND )
   list(APPEND SPIPACK_EXTERNAL_INCLUDE_DIRS
@@ -10,6 +11,7 @@ if( MUQ_FOUND )
   )
 else()
   include(ExternalProject)
+  set(SPIPACK_BUILT_MUQ ON)
 
   ExternalProject_Add(MUQ
     GIT_REPOSITORY https://bitbucket.org/mituq/muq2/src/master/
