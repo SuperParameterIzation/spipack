@@ -6,13 +6,6 @@ branches:
   only:
     - master
 
-# Environment variables
-env:
-  global:
-    - GH_REPO_NAME: spipack
-    - DOXYFILE: $TRAVIS_BUILD_DIR/documentation
-    - GH_REPO_REF: github.com:SuperParameterIzation/spipack.git
-
 # Install dependencies
 addons:
   apt:
@@ -27,9 +20,9 @@ script:
     ############################################################################
     # Build main and tests
     ############################################################################
-     - echo $TRAVIS_BUILD_DIR
      - cd build
      - cmake ..
+     - make
 
 # Generate and deploy documentation
 after_success:
