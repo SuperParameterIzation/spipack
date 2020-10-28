@@ -1,6 +1,8 @@
 #ifndef GRAPHLAPLACIAN_HPP_
 #define GRAPHLAPLACIAN_HPP_
 
+#include <yaml-cpp/yaml.h>
+
 namespace spi {
 namespace NumericalSolvers {
 
@@ -18,6 +20,7 @@ namespace NumericalSolvers {
 */
 class GraphLaplacian {
 public:
+  GraphLaplacian(YAML::Node const& options) {}
   GraphLaplacian() = default;
   virtual ~GraphLaplacian() = default;
 private:
