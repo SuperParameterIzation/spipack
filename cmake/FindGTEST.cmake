@@ -3,6 +3,7 @@ if( NOT DEFINED SPIPACK_GTEST_DIR )
 
   ExternalProject_Add(GTEST
     GIT_REPOSITORY https://github.com/google/googletest.git
+    STEP_TARGETS install
     CMAKE_ARGS -DCMAKE_INSTALL_PREFIX=${CMAKE_BINARY_DIR}/external/gtest
     -DCMAKE_CXX_FLAGS=-Wall --std=c++11
     -DCMAKE_CXX_COMPILER=${CMAKE_CXX_COMPILER}
