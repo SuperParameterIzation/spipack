@@ -66,6 +66,8 @@ script:
      - cd build
      - cmake ..
      - make -j5
+     - cd ..
+     - ./build/run-tests
 
 # Generate and deploy documentation
 after_success:
