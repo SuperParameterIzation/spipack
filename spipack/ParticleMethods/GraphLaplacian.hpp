@@ -6,7 +6,7 @@ namespace ParticleMethods {
 
 /// Estimate a weighted Laplacian operator using a graph Laplacian
 /**
-  DOCUMENTATION GOES HERE
+  DOCUMENTATION GOES HERE!
 */
 class GraphLaplacian {
 public:
