@@ -1,0 +1,7 @@
+add_subdirectory(tests)
+
+set(NUMERICAL_SOLVERS_TESTS
+  ${NUMERICAL_SOLVERS_TESTS}
+
+  PARENT_SCOPE
+)
