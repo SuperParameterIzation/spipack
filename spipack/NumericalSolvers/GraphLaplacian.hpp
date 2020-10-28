@@ -2,7 +2,7 @@
 #define GRAPHLAPLACIAN_HPP_
 
 namespace spi {
-namespace ParticleMethods {
+namespace NumericalSolvers {
 
 /// Estimate a weighted Laplacian operator using a graph Laplacian
 /**
