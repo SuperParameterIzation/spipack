@@ -3,9 +3,9 @@ if( NOT DEFINED SPIPACK_GTEST_DIR )
 
   ExternalProject_Add(GTEST
     GIT_REPOSITORY https://github.com/google/googletest.git
-    #STEP_TARGETS install
+    STEP_TARGETS install
     CMAKE_ARGS -DCMAKE_INSTALL_PREFIX=${CMAKE_BINARY_DIR}/external/gtest
-    -Dlibdir=lib66
+    -DCMAKE_INSTALL_LIBDIR=${CMAKE_BINARY_DIR}/external/gtest/lib
     -DCMAKE_CXX_FLAGS=-Wall --std=c++11
     -DCMAKE_CXX_COMPILER=${CMAKE_CXX_COMPILER}
     -DCMAKE_C_COMPILER=${CMAKE_C_COMPILER}
@@ -17,7 +17,7 @@ if( NOT DEFINED SPIPACK_GTEST_DIR )
   )
 
   list(APPEND SPIPACK_EXTERNAL_LIBRARIES
-    "${CMAKE_BINARY_DIR}/external/gtest/lib64/libgtest.a"
+    "${CMAKE_BINARY_DIR}/external/gtest/lib/libgtest.a"
   )
 else()
   find_path(GTEST_INCLUDE_DIR gtest/gtest.h
