@@ -63,4 +63,9 @@ TEST_F(GraphLaplacianTests, SampleCollectionConstruction) {
 
   // create the graph laplacian
   laplacian = std::make_shared<GraphLaplacian>(samples, options);
+
+  // check to make sure the samples match
+  for( size_t i=0; i<n; ++i ) {
+    EXPECT_NEAR((samples->at(i)->state[0]-laplacian->Point(i)).norm(), 0.0, 1.0e-10);
+  }
 }
