@@ -17,21 +17,6 @@ ExternalProject_Add(
   INSTALL_COMMAND ${CMAKE_COMMAND} -E make_directory ${CMAKE_BINARY_DIR}/external/eigen3/include && cp -r ${CMAKE_CURRENT_BINARY_DIR}/external/eigen3/src/EIGEN3/Eigen ${CMAKE_BINARY_DIR}/external/eigen3/include && cp -r ${CMAKE_CURRENT_BINARY_DIR}/external/eigen3/src/EIGEN3/unsupported ${CMAKE_BINARY_DIR}/external/eigen3/include
 )
 
-#ExternalProject_Add(
-#  EIGEN3
-#    PREFIX ${CMAKE_CURRENT_BINARY_DIR}/external/eigen3
-#    GIT_REPOSITORY https://gitlab.com/libeigen/eigen.git
-#    CMAKE_ARGS -DCMAKE_INSTALL_PREFIX=${CMAKE_BINARY_DIR}/external/eigen3
-#    -DCMAKE_CXX_FLAGS=-w --std=c++11
-#    -DCMAKE_CXX_COMPILER=${CMAKE_CXX_COMPILER}
-#    -DCMAKE_C_COMPILER=${CMAKE_C_COMPILER}
-#    -DEIGEN_TEST_OPENMP=OFF
-#    -DEIGEN_TEST_SSE2=OFF
-#    -DEIGEN_TEST_AVX=OFF
-#    -DEIGEN_TEST_FMA=OFF
-#  	BUILD_COMMAND make -j5
-#    INSTALL_COMMAND make -j5 install
-#)
 
 if(APPLE)
   set(suffix ".dylib")

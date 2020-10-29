@@ -30,5 +30,6 @@ endmacro(Dependency)
 
 Dependency(YAML)
 Dependency(EIGEN3)
+Dependency(CEREAL)
 Dependency(MUQ)
 Dependency(GTEST)
