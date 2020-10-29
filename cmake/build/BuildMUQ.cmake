@@ -1,15 +1,6 @@
 include(ExternalProject)
 
 set(MUQ_DEPENDS )
-if( SPIPACK_BUILT_EIGEN3 )
-  set(MUQ_DEPENDS EIGEN3)
-endif()
-
-message(STATUS "")
-message(STATUS "")
-message(STATUS ${EIGEN3_INCLUDE_DIR})
-message(STATUS "")
-message(STATUS "")
 
 ExternalProject_Add(
   MUQ
