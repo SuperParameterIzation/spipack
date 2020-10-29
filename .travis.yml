@@ -34,8 +34,8 @@ script:
     # Build main and tests
     ############################################################################
      - cd $TRAVIS_BUILD_DIR
-     - export CC=gcc-9
-     - export CXX=g++-9
+     - export ${CC}=gcc-9
+     - export ${CXX}=g++-9
      - g++-9 --version
      - ${CXX} --version
      - cd build
