@@ -31,5 +31,4 @@ endmacro(Dependency)
 Dependency(YAML)
 Dependency(EIGEN3)
 Dependency(MUQ)
-
-find_package(GTEST)
+Dependency(GTEST)
