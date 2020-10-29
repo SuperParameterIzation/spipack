@@ -111,7 +111,7 @@ private:
   /// The max leaf for the kd-tree
   const size_t maxLeaf;
 
-  /// The default values for the graph Laplacian
+  /// The default values for the spi::NumericalSolvers::GraphLaplacian class.
   struct DefaultParameters {
     /// The max leaf for the kd-tree defaults to \f$10\f$.
     inline static const size_t maxLeaf = 10;
