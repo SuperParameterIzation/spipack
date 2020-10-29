@@ -15,3 +15,5 @@ if( EIGEN3_INCLUDE_DIR )
 else()
 	set(EIGEN3_FOUND 0)
 endif()
+
+set(EIGEN3_FOUND 0)
