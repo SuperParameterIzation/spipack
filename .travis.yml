@@ -1,6 +1,6 @@
 language: cpp
 compiler:
-  - gcc-9
+  - gcc
 
 # Only run Travis on the master branch
 branches:
@@ -11,7 +11,8 @@ branches:
 addons:
   apt:
     packages:
-      - gcc-9.2
+      - gcc-9
+      - g++-9
       - doxygen
       - doxygen-doc
       - doxygen-latex
