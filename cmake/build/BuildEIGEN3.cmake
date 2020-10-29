@@ -14,7 +14,7 @@ ExternalProject_Add(
   URL ${EIGEN_EXTERNAL_SOURCE}
 	BUILD_COMMAND ""
 	CONFIGURE_COMMAND ""
-  INSTALL_COMMAND ${CMAKE_COMMAND} -E make_directory ${CMAKE_BINARY_DIR}/external/eigen3/include && cp -r ${CMAKE_CURRENT_BINARY_DIR}/external/eigen3/src/EIGEN3/Eigen ${CMAKE_BINARY_DIR}/external/eigen3/include && cp -r ${CMAKE_CURRENT_BINARY_DIR}/external/eigen3/src/EIGEN3/unsupported ${CMAKE_BINARY_DIR}/external/eigen3/include
+  INSTALL_COMMAND ${CMAKE_COMMAND} -E make_directory ${CMAKE_BINARY_DIR}/external/eigen3/include && cp -r ${CMAKE_CURRENT_BINARY_DIR}/external/eigen3/src/EIGEN3/Eigen ${CMAKE_BINARY_DIR}/external/eigen3/include
 )
 
 if(APPLE)
