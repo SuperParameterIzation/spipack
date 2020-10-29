@@ -8,37 +8,25 @@ branches:
     - master
 
 # addons:
-#   apt:
-#     sources:
-#     - sourceline: 'deb http://apt.llvm.org/bionic/ llvm-toolchain-bionic-9 main'
-#       key_url: 'https://apt.llvm.org/llvm-snapshot.gpg.key'
-#     - sourceline: 'ppa:ubuntu-toolchain-r/test'
-#     packages:
-#     - cmake
-#     - gcc-9
-#     - g++-9
-#     update: true
+apt:
+  sources:
+  - sourceline: 'deb http://apt.llvm.org/bionic/ llvm-toolchain-bionic-9 main'
+    key_url: 'https://apt.llvm.org/llvm-snapshot.gpg.key'
+  - sourceline: 'ppa:ubuntu-toolchain-r/test'
+  packages:
+  - cmake
+  - gcc-9
+  - g++-9
+  - doxygen
+  - doxygen-doc
+  - doxygen-latex
+  - doxygen-gui
+  - graphviz
+  update: true
 
-# Install dependencies
-addons:
- apt:
-   packages:
-     - cmake
-     - gcc-9
-     - g++-9
-     - doxygen
-     - doxygen-doc
-     - doxygen-latex
-     - doxygen-gui
-     - graphviz
-
+# Build main and tests
 script:
-    ############################################################################
-    # Build main and tests
-    ############################################################################
      - cd $TRAVIS_BUILD_DIR
-     - g++-9 --version
-     - ${CXX} --version
      - cd build
      - cmake .. -DCMAKE_CXX_COMPILER=g++-9 -DCMAKE_C_COMPILER=gcc-9
      - make -j5
@@ -49,6 +37,5 @@ script:
 after_success:
   - echo $TRAVIS_BUILD_DIR
   - cd $TRAVIS_BUILD_DIR/documentation
-  - pwd
   - chmod +x GenerateDocumentation.sh
   - ./GenerateDocumentation.sh
