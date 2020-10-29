@@ -17,6 +17,11 @@ addons:
     - cmake
     - gcc-9
     - g++-9
+    - doxygen
+    - doxygen-doc
+    - doxygen-latex
+    - doxygen-gui
+    - graphviz
     update: true
 
 # Install dependencies
