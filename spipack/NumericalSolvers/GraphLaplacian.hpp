@@ -18,7 +18,7 @@ namespace NumericalSolvers {
   \f{equation*}{
     \nabla_{\psi}^2 H = \psi^{-1} \nabla \cdot (\psi \nabla f).
   \f}
-  This class uses \f$n\f$ samples \f$\{x^{(i)}\}_{i=1}^{n}\f$ such that \f$x^{(i)} \sim \psi\f$ to approximate the action of this operator and to solve the Poisson equation (given the right hand side \f$R\f$)
+  This class uses \f$n\f$ samples \f$\{x^{(i)}\}_{i=1}^{n}\f$ such that \f$x^{(i)} \sim \psi\f$ to approximate the action of this operator and to solve the weighted Poisson equation (given the right hand side \f$R\f$)
   \f{equation*}{
     \nabla_{\psi}^2 H = R
   \f}
@@ -51,8 +51,53 @@ public:
 
 private:
 
-  /// Samples from the distribution \f$\psi\f$
-  std::shared_ptr<muq::SamplingAlgorithms::SampleCollection> samples;
+  /// Create a sample collection by sampling a random variable
+  /**
+    @param[in] rv The random variable that we wish to sample
+    @param[in] n Sample the random variable \f$n\f$ times
+  */
+  static std::shared_ptr<muq::SamplingAlgorithms::SampleCollection> SampleRandomVariable(std::shared_ptr<muq::Modeling::RandomVariable> const& rv, unsigned int const n);
+
+  /// Interpret the particle locations as a point cloud
+  class PointCloud {
+  public:
+
+    /// Construct the point cloud given samples from the underlying distribution \f$\psi\f$
+    /**
+      @param[in] samples Samples from the underlying distribution \f$\psi\f$
+    */
+    PointCloud(std::shared_ptr<muq::SamplingAlgorithms::SampleCollection> const& samples);
+
+    virtual ~PointCloud() = default;
+
+    /// Get the number of samples (from \f$\psi\f$)
+    /**
+      \return The number of points in the sample collection (GraphLaplacian::PointCloud::samples)
+    */
+    size_t kdtree_get_point_count() const;
+
+    /// Get the \f$i^{th}\f$ component of the \f$p^{th}\f$ point
+    /**
+      @param[in] p We want to access this particle number
+      @param[in] i We want this index of the particle location
+      \return The \f$i^{th}\f$ component of the \f$p^{th}\f$ point in GraphLaplacian::PointCloud::samples
+    */
+    double kdtree_get_pt(size_t const p, size_t const i) const;
+
+    /// Optional bounding-box computation
+    /**
+      \return Return <tt>false</tt> to default to a standard bounding box computation loop
+    */
+    template<class BBOX>
+    inline bool kdtree_get_bbox(BBOX& bb) const { return false; }
+
+  private:
+    /// Samples from the distribution \f$\psi\f$
+    std::shared_ptr<muq::SamplingAlgorithms::SampleCollection> samples;
+  };
+
+  /// The point cloud that we will use to approximate the weighted Laplacian (and solve the weighted Poisson equation)
+  const PointCloud cloud;
 };
 
 } // ParticleMethods
