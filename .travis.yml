@@ -2,11 +2,12 @@ language: cpp
 compiler:
   - gcc-9
 
-# Only run Travis on the master branch
+# only run Travis on the master branch
 branches:
   only:
     - master
 
+# set up the envronment
 addons:
   apt:
     sources:
@@ -24,33 +25,16 @@ addons:
     - graphviz
     update: true
 
-# Install dependencies
-#addons:
-#  apt:
-#    packages:
-#      - doxygen
-#      - doxygen-doc
-#      - doxygen-latex
-#      - doxygen-gui
-#      - graphviz
-
+# build main and tests
 script:
-    ############################################################################
-    # Build main and tests
-    ############################################################################
      - cd $TRAVIS_BUILD_DIR
-     - g++-9 --version
-     - ${CXX} --version
-     - cd build
      - cmake .. -DCMAKE_CXX_COMPILER=g++-9 -DCMAKE_C_COMPILER=gcc-9
      - make -j5
      - cd ..
      - ./build/run-tests
 
-# Generate and deploy documentation
+# generate and deploy documentation
 after_success:
-  - echo $TRAVIS_BUILD_DIR
   - cd $TRAVIS_BUILD_DIR/documentation
-  - pwd
   - chmod +x GenerateDocumentation.sh
   - ./GenerateDocumentation.sh
