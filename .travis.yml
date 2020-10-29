@@ -22,9 +22,8 @@ script:
     # Build main and tests
     ############################################################################
      - cd $TRAVIS_BUILD_DIR
-     - CXX --version
      - cd build
-     - cmake .. -DCMAKE_CXX_COMPILER=CXX -DCMAKE_C_COMPILER=CC
+     - cmake .. 
      - make -j5
      - cd ..
      - ./build/run-tests
