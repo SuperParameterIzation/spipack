@@ -28,6 +28,7 @@ macro(Dependency name)
   include(Append${name})
 endmacro(Dependency)
 
+set(library_prefix "lib")
 set(static_library_suffix ".a")
 if(APPLE)
   set(shared_library_suffix ".dylib")

@@ -17,4 +17,4 @@ set(GTEST_INCLUDE_DIR
   ${CMAKE_BINARY_DIR}/external/gtest/include)
 
 set(GTEST_LIBRARIES
-  ${CMAKE_BINARY_DIR}/external/gtest/lib/libgtest${static_library_suffix})
+  ${CMAKE_BINARY_DIR}/external/gtest/lib/${library_prefix}gtest${static_library_suffix})

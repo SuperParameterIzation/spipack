@@ -16,18 +16,12 @@ ExternalProject_Add(
     INSTALL_COMMAND make -j5 install
 )
 
-if(APPLE)
-  set(suffix ".dylib")
-else()
-  set(suffix ".so")
-endif()
-
 list(APPEND MUQ_INCLUDE_DIRS
   "${CMAKE_BINARY_DIR}/external/muq/include"
 )
 
 list(APPEND MUQ_LIBRARIES
-  "${CMAKE_BINARY_DIR}/external/muq/lib/libmuqUtilities${shared_library_suffix}"
-  "${CMAKE_BINARY_DIR}/external/muq/lib/libmuqModeling${shared_library_suffix}"
-  "${CMAKE_BINARY_DIR}/external/muq/lib/libmuqSamplingAlgorithms${shared_library_suffix}"
+  "${CMAKE_BINARY_DIR}/external/muq/lib/${library_prefix}muqUtilities${shared_library_suffix}"
+  "${CMAKE_BINARY_DIR}/external/muq/lib/${library_prefix}muqModeling${shared_library_suffix}"
+  "${CMAKE_BINARY_DIR}/external/muq/lib/${library_prefix}muqSamplingAlgorithms${shared_library_suffix}"
 )

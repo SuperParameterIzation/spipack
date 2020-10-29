@@ -15,5 +15,5 @@ ExternalProject_Add(
     INSTALL_COMMAND make -j5 install
 )
 
-set(YamlCpp_LIBRARY ${CMAKE_BINARY_DIR}/external/yaml/lib/libyaml-cpp${shared_library_suffix})
+set(YamlCpp_LIBRARY ${CMAKE_BINARY_DIR}/external/yaml/lib/${library_prefix}yaml-cpp${shared_library_suffix})
 set(YamlCpp_INCLUDE_DIR ${CMAKE_BINARY_DIR}/external/yaml/include)
