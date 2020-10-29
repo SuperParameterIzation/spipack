@@ -37,7 +37,7 @@ script:
      - g++-9 --version
      - ${CXX} --version
      - cd build
-     - cmake ..
+     - cmake .. -DCMAKE_CXX_COMPILER=g++-9 -DCMAKE_C_COMPILER=gcc-9
      - make -j5
      - cd ..
      - ./build/run-tests
