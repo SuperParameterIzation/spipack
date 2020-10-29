@@ -63,7 +63,7 @@ script:
     ############################################################################
      - cd $TRAVIS_BUILD_DIR
      - cd build
-     - cmake ..
+     - cmake .. -DCMAKE_CXX_COMPILER=CXX -DCMAKE_C_COMPILER=CC
      - make -j5
      - cd ..
      - ./build/run-tests
