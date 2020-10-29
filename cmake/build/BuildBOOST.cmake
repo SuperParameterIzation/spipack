@@ -92,9 +92,6 @@ if(SPIPACK_USE_LIBC11)
         INSTALL_COMMAND ""
         )
 else(SPIPACK_USE_LIBC11)
-
-  message(STATUS "HERE")
-
         ExternalProject_Add(
           BOOST
           PREFIX ${CMAKE_CURRENT_BINARY_DIR}/external/boost
