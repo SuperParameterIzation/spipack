@@ -11,8 +11,8 @@ ExternalProject_Add(
     -DCMAKE_C_COMPILER=${CMAKE_C_COMPILER}
     -DBUILD_SHARED_LIBS=ON
     -DYAML_CPP_BUILD_TESTS=OFF
-  	BUILD_COMMAND make
-    INSTALL_COMMAND make install
+  	BUILD_COMMAND make -j5
+    INSTALL_COMMAND make -j5 install
 )
 
 if(APPLE)
