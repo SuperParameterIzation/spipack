@@ -28,9 +28,11 @@ macro(Dependency name)
   include(Append${name})
 endmacro(Dependency)
 
+set(static_library_suffix ".a")
+
 Dependency(YAML)
 Dependency(EIGEN3)
-Dependency(BOOST)
+#Dependency(BOOST)
 Dependency(MUQ)
 Dependency(GTEST)
 
