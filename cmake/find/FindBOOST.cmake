@@ -31,39 +31,28 @@ else()
 	          HINTS ${SPIPACK_BOOST_DIR}/include ${SPIPACK_BOOST_DIR} ${SPIPACK_BOOST_INCLUDE_DIR}
 	          PATH_SUFFIXES boost NO_DEFAULT_PATH)
 
-	find_library(BOOST_SYSTEM_LIBRARY_STATIC NAMES ${library_prefix}boost_system.${static_library_suffix}
-	             HINTS ${MUQ_BOOST_DIR}/lib ${MUQ_BOOST_DIR}/stage/lib NO_DEFAULT_PATH)
-	find_library(BOOST_FILESYSTEM_LIBRARY_STATIC NAMES ${library_prefix}boost_filesystem.${static_library_suffix}
-	             HINTS ${MUQ_BOOST_DIR}/lib ${MUQ_BOOST_DIR}/stage/lib NO_DEFAULT_PATH)
- 	find_library(BOOST_GRAPH_LIBRARY_STATIC NAMES ${library_prefix}boost_graph.${static_library_suffix}
- 	             HINTS ${MUQ_BOOST_DIR}/lib ${MUQ_BOOST_DIR}/stage/lib NO_DEFAULT_PATH)
-
  	find_library(BOOST_SYSTEM_LIBRARY NAMES boost_system
- 		 	     HINTS ${MUQ_BOOST_DIR}/lib ${MUQ_BOOST_DIR}/stage/lib NO_DEFAULT_PATH)
+ 		 	     HINTS ${SPIPACK_BOOST_DIR} ${SPIPACK_BOOST_DIR}/lib ${SPIPACK_BOOST_DIR}/stage/lib NO_DEFAULT_PATH)
  	find_library(BOOST_FILESYSTEM_LIBRARY NAMES boost_filesystem
- 		 	     HINTS ${MUQ_BOOST_DIR}/lib ${MUQ_BOOST_DIR}/stage/lib NO_DEFAULT_PATH)
+ 		 	     HINTS ${SPIPACK_BOOST_DIR} ${SPIPACK_BOOST_DIR}/lib ${SPIPACK_BOOST_DIR}/stage/lib NO_DEFAULT_PATH)
  	find_library(BOOST_GRAPH_LIBRARY NAMES boost_graph
- 		 	     HINTS ${MUQ_BOOST_DIR}/lib ${MUQ_BOOST_DIR}/stage/lib NO_DEFAULT_PATH)
+ 		 	     HINTS ${SPIPACK_BOOST_DIR} ${SPIPACK_BOOST_DIR}/lib ${SPIPACK_BOOST_DIR}/stage/lib NO_DEFAULT_PATH)
 
-	set(BOOST_LIBRARY ${BOOST_SYSTEM_LIBRARY} ${BOOST_FILESYSTEM_LIBRARY} ${BOOST_GRAPH_LIBRARY})
-	set(BOOST_LIBRARY_STATIC ${BOOST_SYSTEM_LIBRARY_STATIC} ${BOOST_FILESYSTEM_LIBRARY_STATIC} ${BOOST_GRAPH_LIBRARY_STATIC})
+	set(BOOST_LIBRARY ${BOOST_GRAPH_LIBRARY} ${BOOST_FILESYSTEM_LIBRARY} ${BOOST_SYSTEM_LIBRARY})
+	set(BOOST_LIBRARIES ${BOOST_LIBRARY})
 endif()
 
 set(BOOST_INCLUDE_DIRS ${BOOST_INCLUDE_DIR})
-set(BOOST_LIBRARIES ${BOOST_LIBRARY})
+set(BOOST_INCLUDE_DIRS ${BOOST_INCLUDE_DIR})
 
-message(STATUS ${BOOST_INCLUDE_DIRS})
-message(STATUS ${BOOST_LIBRARIES})
-
-if( NOT BOOST_INCLUDE_DIRS )
-	message(STATUS "")
-	message(STATUS "")
-	message(STATUS "")
-	message(STATUS "DID NOT FIND BOOST")
-	message(STATUS "")
-	message(STATUS "")
-	message(STATUS "")
-endif()
+#execute_process(COMMAND mkdir external/boost
+#								COMMAND mkdir external/boost/include
+# 								COMMAND cp -r ${BOOST_INCLUDE_DIR}/boost external/boost/include
+#								COMMAND mkdir external/boost/lib
+#								COMMAND cp -r ${BOOST_GRAPH_LIBRARY} external/boost/lib
+#								COMMAND cp -r ${BOOST_FILESYSTEM_LIBRARY} external/boost/lib
+#								COMMAND cp -r ${BOOST_SYSTEM_LIBRARY} external/boost/lib
+#								)
 
 include(FindPackageHandleStandardArgs)
 

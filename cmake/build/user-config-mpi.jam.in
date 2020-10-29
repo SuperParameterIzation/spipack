@@ -1,0 +1,2 @@
+using @BOOST_TOOLSET_NAME@ : spipack : @CMAKE_CXX_COMPILER@ ;
+using mpi : @CMAKE_CXX_COMPILER@ ;
