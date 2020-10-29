@@ -14,12 +14,18 @@ public:
   virtual void SetUp() override {
     // create a standard Gaussian random variable
     rv = std::make_shared<Gaussian>(dim)->AsVariable();
+
+    // set the options for the graph laplacian
+    options["MaxLeaf"] = maxLeaf;
   }
 
   /// Make sure everything is constructed correctly
   virtual void TearDown() override {
     // make sure the graph laplacian has enough samples
     EXPECT_EQ(laplacian->NumSamples(), n);
+
+    // make the the kd tree max leaf is the value we set
+    EXPECT_EQ(laplacian->KDTreeMaxLeaf(), maxLeaf);
   }
 
 protected:
@@ -28,6 +34,9 @@ protected:
 
   /// The number of samples
   const size_t n = 1000;
+
+  /// The max leaf size for the kd tree
+  const size_t maxLeaf = 15;
 
   /// The options for the graph Laplacian
   YAML::Node options;

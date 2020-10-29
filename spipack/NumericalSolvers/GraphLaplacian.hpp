@@ -23,6 +23,12 @@ namespace NumericalSolvers {
     \nabla_{\psi}^2 H = R
   \f}
   such that \f$\mathbb{E}_{\psi}[H] = 0\f$.
+
+  <B>Configuration Parameters:</B>
+      Parameter Key | Type | Default Value | Description |
+      ------------- | ------------- | ------------- | ------------- |
+      "NumSamples"   | size_t | - | In the case where a random variable is passed to the constructor, we draw \f$n\f$ samples from the distribution.   |
+      "MaxLeaf"   | size_t | 10 | The maximum leaf size for the kd tree (nanoflann parameter). |
 */
 class GraphLaplacian {
 public:
@@ -47,7 +53,10 @@ public:
   /**
     \return The number of samples in the sample collection (GraphLaplacian::samples)
   */
-  unsigned int NumSamples() const;
+  size_t NumSamples() const;
+
+  /// Get the max leaf size for the kd stree (nanoflann parameter)
+  size_t KDTreeMaxLeaf() const;
 
 private:
 
@@ -56,7 +65,7 @@ private:
     @param[in] rv The random variable that we wish to sample
     @param[in] n Sample the random variable \f$n\f$ times
   */
-  static std::shared_ptr<muq::SamplingAlgorithms::SampleCollection> SampleRandomVariable(std::shared_ptr<muq::Modeling::RandomVariable> const& rv, unsigned int const n);
+  static std::shared_ptr<muq::SamplingAlgorithms::SampleCollection> SampleRandomVariable(std::shared_ptr<muq::Modeling::RandomVariable> const& rv, size_t const n);
 
   /// Interpret the particle locations as a point cloud
   class PointCloud {
@@ -98,6 +107,18 @@ private:
 
   /// The point cloud that we will use to approximate the weighted Laplacian (and solve the weighted Poisson equation)
   const PointCloud cloud;
+
+  /// The max leaf for the kd-tree
+  const size_t maxLeaf;
+
+  /// The default values for the graph Laplacian
+  struct DefaultParameters {
+    /// The max leaf for the kd-tree defaults to \f$10\f$.
+    inline static const size_t maxLeaf = 10;
+  };
+
+  /// Store the default values
+  inline static const DefaultParameters defaults;
 };
 
 } // ParticleMethods

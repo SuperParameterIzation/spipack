@@ -5,14 +5,16 @@ using namespace muq::SamplingAlgorithms;
 using namespace spi::NumericalSolvers;
 
 GraphLaplacian::GraphLaplacian(std::shared_ptr<RandomVariable> const& rv, YAML::Node const& options) :
-  cloud(SampleRandomVariable(rv, options["NumSamples"].as<unsigned int>()))
+  cloud(SampleRandomVariable(rv, options["NumSamples"].as<size_t>())),
+  maxLeaf(options["MaxLeaf"].as<size_t>(defaults.maxLeaf))
 {}
 
 GraphLaplacian::GraphLaplacian(std::shared_ptr<muq::SamplingAlgorithms::SampleCollection> const& samples, YAML::Node const& options) :
-  cloud(samples)
+  cloud(samples),
+  maxLeaf(options["MaxLeaf"].as<size_t>(defaults.maxLeaf))
 {}
 
-std::shared_ptr<muq::SamplingAlgorithms::SampleCollection> GraphLaplacian::SampleRandomVariable(std::shared_ptr<RandomVariable> const& rv, unsigned int const n) {
+std::shared_ptr<muq::SamplingAlgorithms::SampleCollection> GraphLaplacian::SampleRandomVariable(std::shared_ptr<RandomVariable> const& rv, size_t const n) {
   // add random samples into a sample collection
   auto samples = std::make_shared<SampleCollection>();
   for( size_t i=0; i<n; ++i ) { samples->Add(std::make_shared<SamplingState>(rv->Sample())); }
@@ -20,7 +22,9 @@ std::shared_ptr<muq::SamplingAlgorithms::SampleCollection> GraphLaplacian::Sampl
   return samples;
 }
 
-unsigned int GraphLaplacian::NumSamples() const { return cloud.kdtree_get_point_count(); }
+size_t GraphLaplacian::NumSamples() const { return cloud.kdtree_get_point_count(); }
+
+size_t GraphLaplacian::KDTreeMaxLeaf() const { return maxLeaf; }
 
 GraphLaplacian::PointCloud::PointCloud(std::shared_ptr<SampleCollection> const& samples) : samples(samples) {}
 
