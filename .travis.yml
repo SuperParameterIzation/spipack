@@ -1,65 +1,21 @@
-# Check on linux and osx using gcc and clang
-matrix:
-  include:
-    - os: linux
-      addons:
-        apt:
-          sources:
-            - sourceline: 'ppa:mhier/libboost-latest'
-            - ubuntu-toolchain-r-test
-          packages:
-            - clang-8
-            - boost1.67
-      env:
-        - CXX=clang-8
-        - MATRIX_EVAL="CC=clang-8 CXX=clang++-8"
-    - os: linux
-      addons:
-        apt:
-          sources:
-            - sourceline: 'ppa:mhier/libboost-latest'
-            - ubuntu-toolchain-r-test
-          packages:
-            - g++-9
-            - boost1.67
-            - doxygen
-            - doxygen-doc
-            - doxygen-latex
-            - doxygen-gui
-            - graphviz
-      env:
-        - CXX=g++-9
-        - MATRIX_EVAL="CC=gcc-9 CXX=g++-9"
-    - os: osx
-      addons:
-        apt:
-          sources:
-            - sourceline: 'ppa:ubuntu-toolchain-r/test'
-          packages:
-            - clang-8
-            - boost-1.67
-      env:
-        - CXX=clang-8
-        - MATRIX_EVAL="CC=clang-8 CXX=clang++-8"
-    - os: osx
-      addons:
-        apt:
-          sources:
-            - sourceline: 'ppa:ubuntu-toolchain-r/test'
-          packages:
-            - g++-9
-            - boost-1.67
-      env:
-        - CXX=g++-9
-        - MATRIX_EVAL="CC=gcc-9 CXX=g++-9"
+language: cpp
+compiler:
+  - gcc-9
 
 # Only run Travis on the master branch
 branches:
   only:
     - master
 
-before_install:
-  - eval "${MATRIX_EVAL}"
+# Install dependencies
+addons:
+  apt:
+    packages:
+      - doxygen
+      - doxygen-doc
+      - doxygen-latex
+      - doxygen-gui
+      - graphviz
 
 script:
     ############################################################################
