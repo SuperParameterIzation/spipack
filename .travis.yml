@@ -12,7 +12,6 @@ addons:
   apt:
     packages:
       - gcc-9
-      - g++-9
       - doxygen
       - doxygen-doc
       - doxygen-latex
