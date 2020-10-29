@@ -36,7 +36,7 @@ list(APPEND MUQ_INCLUDE_DIRS
 )
 
 list(APPEND MUQ_LIBRARIES
-  "${CMAKE_BINARY_DIR}/external/muq/lib/libmuqUtilities${suffix}"
-  "${CMAKE_BINARY_DIR}/external/muq/lib/libmuqModeling${suffix}"
-  "${CMAKE_BINARY_DIR}/external/muq/lib/libmuqSamplingAlgorithms${suffix}"
+  "${CMAKE_BINARY_DIR}/external/muq/lib/libmuqUtilities${shared_library_suffix}"
+  "${CMAKE_BINARY_DIR}/external/muq/lib/libmuqModeling${shared_library_suffix}"
+  "${CMAKE_BINARY_DIR}/external/muq/lib/libmuqSamplingAlgorithms${shared_library_suffix}"
 )

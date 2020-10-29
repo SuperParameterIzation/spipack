@@ -29,6 +29,11 @@ macro(Dependency name)
 endmacro(Dependency)
 
 set(static_library_suffix ".a")
+if(APPLE)
+  set(shared_library_suffix ".dylib")
+else()
+  set(shared_library_suffix ".so")
+endif()
 
 Dependency(YAML)
 Dependency(EIGEN3)

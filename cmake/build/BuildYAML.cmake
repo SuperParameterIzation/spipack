@@ -15,11 +15,5 @@ ExternalProject_Add(
     INSTALL_COMMAND make -j5 install
 )
 
-if(APPLE)
-  set(suffix ".dylib")
-else()
-  set(suffix ".so")
-endif()
-
-set(YamlCpp_LIBRARY ${CMAKE_BINARY_DIR}/external/yaml/lib/libyaml-cpp${suffix})
+set(YamlCpp_LIBRARY ${CMAKE_BINARY_DIR}/external/yaml/lib/libyaml-cpp${shared_library_suffix})
 set(YamlCpp_INCLUDE_DIR ${CMAKE_BINARY_DIR}/external/yaml/include)
