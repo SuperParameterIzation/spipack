@@ -11,6 +11,7 @@ matrix:
             - clang-8
             - boost1.67
       env:
+        - CXX=clang-8
         - MATRIX_EVAL="CC=clang-8 CXX=clang++-8"
     - os: linux
       addons:
@@ -27,6 +28,7 @@ matrix:
             - doxygen-gui
             - graphviz
       env:
+        - CXX=g++-9
         - MATRIX_EVAL="CC=gcc-9 CXX=g++-9"
     - os: osx
       addons:
@@ -37,6 +39,7 @@ matrix:
             - clang-8
             - boost-1.67
       env:
+        - CXX=clang-8
         - MATRIX_EVAL="CC=clang-8 CXX=clang++-8"
     - os: osx
       addons:
@@ -47,6 +50,7 @@ matrix:
             - g++-9
             - boost-1.67
       env:
+        - CXX=g++-9
         - MATRIX_EVAL="CC=gcc-9 CXX=g++-9"
 
 # Only run Travis on the master branch
@@ -62,7 +66,7 @@ script:
     # Build main and tests
     ############################################################################
      - cd $TRAVIS_BUILD_DIR
-     - CXX --version 
+     - CXX --version
      - cd build
      - cmake .. -DCMAKE_CXX_COMPILER=CXX -DCMAKE_C_COMPILER=CC
      - make -j5
