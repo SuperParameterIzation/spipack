@@ -108,7 +108,7 @@ else(SPIPACK_USE_LIBC11)
 
 set_property( TARGET BOOST PROPERTY FOLDER "Externals")
 
-set( BOOST_INCLUDE_DIRS ${Boost_INSTALL_DIR}/include )
+set(BOOST_INCLUDE_DIRS ${Boost_INSTALL_DIR}/include )
 
 set(BOOST_SYSTEM_LIBRARY ${Boost_INSTALL_DIR}/lib/${library_prefix}boost_system${shared_library_suffix})
 set(BOOST_FILESYSTEM_LIBRARY ${Boost_INSTALL_DIR}/lib/${library_prefix}boost_filesystem${shared_library_suffix})

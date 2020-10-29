@@ -43,16 +43,6 @@ else()
 endif()
 
 set(BOOST_INCLUDE_DIRS ${BOOST_INCLUDE_DIR})
-set(BOOST_INCLUDE_DIRS ${BOOST_INCLUDE_DIR})
-
-#execute_process(COMMAND mkdir external/boost
-#								COMMAND mkdir external/boost/include
-# 								COMMAND cp -r ${BOOST_INCLUDE_DIR}/boost external/boost/include
-#								COMMAND mkdir external/boost/lib
-#								COMMAND cp -r ${BOOST_GRAPH_LIBRARY} external/boost/lib
-#								COMMAND cp -r ${BOOST_FILESYSTEM_LIBRARY} external/boost/lib
-#								COMMAND cp -r ${BOOST_SYSTEM_LIBRARY} external/boost/lib
-#								)
 
 include(FindPackageHandleStandardArgs)
 
