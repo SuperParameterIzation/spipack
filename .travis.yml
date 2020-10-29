@@ -11,6 +11,7 @@ branches:
 addons:
   apt:
     packages:
+      - gcc-9.2
       - doxygen
       - doxygen-doc
       - doxygen-latex
@@ -23,7 +24,7 @@ script:
     ############################################################################
      - cd $TRAVIS_BUILD_DIR
      - cd build
-     - cmake .. 
+     - cmake ..
      - make -j5
      - cd ..
      - ./build/run-tests
