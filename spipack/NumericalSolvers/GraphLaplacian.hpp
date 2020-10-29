@@ -3,6 +3,8 @@
 
 #include <yaml-cpp/yaml.h>
 
+#include <nanoflann.hpp>
+
 #include <MUQ/Modeling/Distributions/RandomVariable.h>
 
 #include <MUQ/SamplingAlgorithms/SampleCollection.h>
