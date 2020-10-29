@@ -1,6 +1,6 @@
 language: cpp
 compiler:
-  - gcc
+  - gcc-9
 
 # Only run Travis on the master branch
 branches:
