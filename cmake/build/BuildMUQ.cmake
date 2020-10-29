@@ -5,6 +5,12 @@ if( SPIPACK_BUILT_EIGEN3 )
   set(MUQ_DEPENDS EIGEN3)
 endif()
 
+message(STATUS "")
+message(STATUS "")
+message(STATUS ${EIGEN3_INCLUDE_DIR})
+message(STATUS "")
+message(STATUS "")
+
 ExternalProject_Add(
   MUQ
     PREFIX ${CMAKE_CURRENT_BINARY_DIR}/external/muq

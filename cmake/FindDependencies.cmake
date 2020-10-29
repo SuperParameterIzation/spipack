@@ -30,9 +30,12 @@ endmacro(Dependency)
 
 Dependency(YAML)
 Dependency(EIGEN3)
+Dependency(BOOST)
 Dependency(MUQ)
 Dependency(GTEST)
 
 # add the header only submodules
 list(APPEND SPIPACK_EXTERNAL_INCLUDE_DIRS
-  ${CMAKE_SOURCE_DIR}/external/cereal/include ${CMAKE_SOURCE_DIR}/external/nanoflann/include/)
+  ${CMAKE_SOURCE_DIR}/external/cereal/include
+  ${CMAKE_SOURCE_DIR}/external/nanoflann/include/
+  )
