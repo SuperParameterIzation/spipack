@@ -24,4 +24,4 @@ else()
   set(suffix ".so")
 endif()
 
-set(EIGEN3_INCLUDE_DIR ${CMAKE_BINARY_DIR}/external/eigen3/include/eigen3/)
+set(EIGEN3_INCLUDE_DIR ${CMAKE_BINARY_DIR}/external/eigen3/include/)
