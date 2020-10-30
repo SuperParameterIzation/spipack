@@ -18,7 +18,7 @@ namespace NumericalSolvers {
   \f{equation*}{
     \nabla_{\psi}^2 H = \psi^{-1} \nabla \cdot (\psi \nabla f).
   \f}
-  This class uses \f$n\f$ samples \f$\{x^{(i)}\}_{i=1}^{n}\f$ such that \f$x^{(i)} \sim \psi\f$ to approximate the action of this operator and to solve the weighted Poisson equation (given the right hand side \f$R\f$)
+  This class uses \f$n\f$ samples \f$\{\boldsymbol{x}^{(i)}\}_{i=1}^{n}\f$ such that \f$\boldsymbol{x}^{(i)} \sim \psi\f$ to approximate the action of this operator and to solve the weighted Poisson equation (given the right hand side \f$R\f$)
   \f{equation*}{
     \nabla_{\psi}^2 H = R
   \f}
@@ -66,6 +66,14 @@ public:
     (re-)Build the kd-tree based on the samples.
   */
   void BuildKDTree();
+
+  /// Find the points that are within radius \f$r\f$ of a given point \f$\boldsymbol{x}\f$
+  /**
+    Find all of the points \f$\{\boldsymbol{x}^{(j)}\}_{j=1}^{k} \subseteq \{\boldsymbol{x}^{(i)}\}_{i=1}^{n}\f$ such that \f$\|\boldsymbol{x}-\boldsymbol{x}^{(j)}\| \leq r\f$, where \f$r>0\f$ is a given radius.
+    @param[in] x The given point \f$\boldsymbol{x}\f$
+    @param[in] r The search radius \f$r\f$
+  */
+  void FindNeighbors(Eigen::VectorXd const& x, double const r) const;
 
 private:
 

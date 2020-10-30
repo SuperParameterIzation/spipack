@@ -85,5 +85,8 @@ TEST_F(GraphLaplacianTests, FindNearestNeighbors_NumNeighbors) {
   // build the kd-tree based on the samples
   laplacian->BuildKDTree();
 
+  // choose a new random point from the distribution
+  const Eigen::VectorXd x = rv->Sample();
+
   EXPECT_TRUE(false);
 }

@@ -34,7 +34,12 @@ const Eigen::VectorXd& GraphLaplacian::Point(size_t const i) const {
 }
 
 void GraphLaplacian::BuildKDTree() {
-  std::cout << "BUILD KD TREE" << std::endl;
+  // (re-)build the kd-tree
+  kdtree.buildIndex();
+}
+
+void GraphLaplacian::FindNeighbors(Eigen::VectorXd const& x, double const r) const {
+
 }
 
 GraphLaplacian::PointCloud::PointCloud(std::shared_ptr<SampleCollection> const& samples) : samples(samples) {}
