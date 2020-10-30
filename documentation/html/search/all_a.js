@@ -1,6 +1,4 @@
 var searchData=
 [
-  ['point',['Point',['../classspi_1_1NumericalSolvers_1_1GraphLaplacian.html#a5302a619bf7ca2d6209e4e7ab267878c',1,'spi::NumericalSolvers::GraphLaplacian::Point()'],['../classspi_1_1NumericalSolvers_1_1GraphLaplacian_1_1PointCloud.html#a1938b7239fbda9b2dcedfe39a8bd945f',1,'spi::NumericalSolvers::GraphLaplacian::PointCloud::Point()']]],
-  ['pointcloud',['PointCloud',['../classspi_1_1NumericalSolvers_1_1GraphLaplacian_1_1PointCloud.html#ae83afea910c577184194f83d4f675f27',1,'spi::NumericalSolvers::GraphLaplacian::PointCloud']]],
-  ['pointcloud',['PointCloud',['../classspi_1_1NumericalSolvers_1_1GraphLaplacian_1_1PointCloud.html',1,'spi::NumericalSolvers::GraphLaplacian']]]
+  ['test_5ff',['TEST_F',['../GraphLaplacianTests_8cpp.html#a4b3a06f22dfa6f138a91c27c4f2d7dbd',1,'TEST_F(GraphLaplacianTests, RandomVariableConstruction):&#160;GraphLaplacianTests.cpp'],['../GraphLaplacianTests_8cpp.html#ae0afd5a23d6e63c0fb80f5c5daeb21f0',1,'TEST_F(GraphLaplacianTests, SampleCollectionConstruction):&#160;GraphLaplacianTests.cpp']]]
 ];
