@@ -49,11 +49,11 @@ protected:
 };
 
 TEST_F(GraphLaplacianTests, RandomVariableConstruction) {
-  /*// create the options for the graph laplacian
+  // create the options for the graph laplacian
   options["NumSamples"] = n;
 
   // create the graph laplacian
-  laplacian = std::make_shared<GraphLaplacian>(rv, options);*/
+  laplacian = std::make_shared<GraphLaplacian>(rv, options);
 }
 
 TEST_F(GraphLaplacianTests, SampleCollectionConstruction) {
