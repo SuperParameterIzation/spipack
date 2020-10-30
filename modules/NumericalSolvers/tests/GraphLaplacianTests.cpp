@@ -1,12 +1,12 @@
 #include <gtest/gtest.h>
 
-/*#include "spipack/NumericalSolvers/GraphLaplacian.hpp"
+#include "spipack/NumericalSolvers/GraphLaplacian.hpp"
 
 #include <MUQ/Modeling/Distributions/Gaussian.h>
 
 using namespace muq::Modeling;
 using namespace muq::SamplingAlgorithms;
-using namespace spi::NumericalSolvers;*/
+using namespace spi::NumericalSolvers;
 
 class GraphLaplacianTests : public::testing::Test {
 public:
@@ -26,7 +26,7 @@ public:
 
     // make the the kd tree max leaf is the value we set
     EXPECT_EQ(laplacian->KDTreeMaxLeaf(), maxLeaf);
-  }
+  }*/
 
 protected:
   /// The dimension of state space
@@ -45,7 +45,7 @@ protected:
   std::shared_ptr<RandomVariable> rv;
 
   /// The graph Laplacian---use a pointer here so we can initalize it as null
-  std::shared_ptr<GraphLaplacian> laplacian;*/
+  std::shared_ptr<GraphLaplacian> laplacian;
 };
 
 TEST_F(GraphLaplacianTests, RandomVariableConstruction) {
