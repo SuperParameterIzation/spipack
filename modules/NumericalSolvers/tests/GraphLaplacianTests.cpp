@@ -58,7 +58,7 @@ protected:
 
 TEST(TESTGraphLaplacianTests, SampleCollectionConstruction) {
   /// The dimension of state space
-  const unsigned int dim = 4;
+  inline static const unsigned int dim = 4;
 
   /// The number of samples
   const size_t n = 1000;
@@ -76,8 +76,8 @@ TEST(TESTGraphLaplacianTests, SampleCollectionConstruction) {
   options["MaxLeaf"] = maxLeaf;
 
   // add random samples into a sample collection
-  //auto samples = std::make_shared<SampleCollection>();
-  //for( size_t i=0; i<n; ++i ) { samples->Add(std::make_shared<SamplingState>(rv->Sample())); }
+  auto samples = std::make_shared<SampleCollection>();
+  for( size_t i=0; i<n; ++i ) { samples->Add(std::make_shared<SamplingState>(rv->Sample())); }
 
   // create the graph laplacian
   //auto laplacian = std::make_shared<GraphLaplacian>(samples, options);
