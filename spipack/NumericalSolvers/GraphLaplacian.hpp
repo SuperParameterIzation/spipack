@@ -61,6 +61,12 @@ public:
   /// Get the \f$i^{th}\f$ point from the point cloud.
   const Eigen::VectorXd& Point(size_t const i) const;
 
+  /// Update the kd-tree
+  /**
+    (re-)Build the kd-tree based on the samples.
+  */
+  void BuildKDTree();
+
 private:
 
   /// Create a sample collection by sampling a random variable

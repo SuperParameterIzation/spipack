@@ -17,6 +17,7 @@ public:
 
     // set the options for the graph laplacian
     options["MaxLeaf"] = maxLeaf;
+    options["NumSamples"] = n;
   }
 
   /// Make sure everything is constructed correctly
@@ -49,9 +50,6 @@ protected:
 };
 
 TEST_F(GraphLaplacianTests, RandomVariableConstruction) {
-  // create the options for the graph laplacian
-  options["NumSamples"] = n;
-
   // create the graph laplacian
   laplacian = std::make_shared<GraphLaplacian>(rv, options);
 }
@@ -68,4 +66,18 @@ TEST_F(GraphLaplacianTests, SampleCollectionConstruction) {
   for( size_t i=0; i<n; ++i ) {
     EXPECT_NEAR((samples->at(i)->state[0]-laplacian->Point(i)).norm(), 0.0, 1.0e-10);
   }
+}
+
+TEST_F(GraphLaplacianTests, FindNearestNeighbors_Radius) {
+  // create the graph laplacian
+  laplacian = std::make_shared<GraphLaplacian>(rv, options);
+
+  EXPECT_TRUE(false);
+}
+
+TEST_F(GraphLaplacianTests, FindNearestNeighbors_NumNeighbors) {
+  // create the graph laplacian
+  laplacian = std::make_shared<GraphLaplacian>(rv, options);
+
+  EXPECT_TRUE(false);
 }

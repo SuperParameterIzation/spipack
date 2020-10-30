@@ -33,6 +33,10 @@ const Eigen::VectorXd& GraphLaplacian::Point(size_t const i) const {
   return cloud.Point(i);
 }
 
+void GraphLaplacian::BuildKDTree() {
+  std::cout << "BUILD KD TREE" << std::endl;
+}
+
 GraphLaplacian::PointCloud::PointCloud(std::shared_ptr<SampleCollection> const& samples) : samples(samples) {}
 
 size_t GraphLaplacian::PointCloud::kdtree_get_point_count() const {
