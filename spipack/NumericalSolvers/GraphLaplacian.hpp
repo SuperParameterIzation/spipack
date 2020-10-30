@@ -38,14 +38,14 @@ public:
     @param[in] rv The random variable that we wish to sample
     @param[in] options Setup options
   */
-  GraphLaplacian(std::shared_ptr<muq::Modeling::RandomVariable> const& rv, YAML::Node const& options);
+  //GraphLaplacian(std::shared_ptr<muq::Modeling::RandomVariable> const& rv, YAML::Node const& options);
 
   /// Construct the graph laplacian given samples from the underlying distribution \f$\psi\f$
   /**
     @param[in] samples Samples from the underlying distribution \f$\psi\f$
     @param[in] options Setup options
   */
-  //GraphLaplacian(std::shared_ptr<muq::SamplingAlgorithms::SampleCollection> const& samples, YAML::Node const& options);
+  GraphLaplacian(std::shared_ptr<muq::SamplingAlgorithms::SampleCollection> const& samples, YAML::Node const& options);
 
   virtual ~GraphLaplacian() = default;
 

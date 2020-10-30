@@ -4,17 +4,17 @@ using namespace muq::Modeling;
 using namespace muq::SamplingAlgorithms;
 using namespace spi::NumericalSolvers;
 
-GraphLaplacian::GraphLaplacian(std::shared_ptr<RandomVariable> const& rv, YAML::Node const& options) :
-  cloud(SampleRandomVariable(rv, options["NumSamples"].as<size_t>()))
+//GraphLaplacian::GraphLaplacian(std::shared_ptr<RandomVariable> const& rv, YAML::Node const& options) :
+//  cloud(SampleRandomVariable(rv, options["NumSamples"].as<size_t>()))
   //maxLeaf(options["MaxLeaf"].as<size_t>(defaults.maxLeaf)),
   //kdtree(cloud.StateDim(), cloud, nanoflann::KDTreeSingleIndexAdaptorParams(maxLeaf))
-{}
+//{}
 
-/*GraphLaplacian::GraphLaplacian(std::shared_ptr<muq::SamplingAlgorithms::SampleCollection> const& samples, YAML::Node const& options) :
+GraphLaplacian::GraphLaplacian(std::shared_ptr<muq::SamplingAlgorithms::SampleCollection> const& samples, YAML::Node const& options) :
   cloud(samples),
   maxLeaf(options["MaxLeaf"].as<size_t>(defaults.maxLeaf)),
   kdtree(cloud.StateDim(), cloud, nanoflann::KDTreeSingleIndexAdaptorParams(maxLeaf))
-{}*/
+{}
 
 std::shared_ptr<muq::SamplingAlgorithms::SampleCollection> GraphLaplacian::SampleRandomVariable(std::shared_ptr<RandomVariable> const& rv, size_t const n) {
   // add random samples into a sample collection
