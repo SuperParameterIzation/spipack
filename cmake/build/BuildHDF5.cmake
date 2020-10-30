@@ -24,6 +24,7 @@ ExternalProject_Add(
 )
 
 set(HDF5_INCLUDE_DIRS ${CMAKE_BINARY_DIR}/external/hdf5/include)
+set(HDF5_INCLUDE_DIR ${HDF5_INCLUDE_DIRS})
 
 set(HDF5_LIBRARY ${CMAKE_BINARY_DIR}/external/hdf5/lib/${library_prefix}hdf5${shared_library_suffix})
 set(HDF5HL_LIBRARY ${CMAKE_BINARY_DIR}/external/hdf5/lib/${library_prefix}hdf5_hl${shared_library_suffix})
