@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['test',['TEST',['../GraphLaplacianTests_8cpp.html#a64c3a4d2d552dfbf76e099bc96b21c6f',1,'GraphLaplacianTests.cpp']]]
+  ['numsamples',['NumSamples',['../classspi_1_1NumericalSolvers_1_1GraphLaplacian.html#aaa925f69f5414d41e9f03b0fda83a2e8',1,'spi::NumericalSolvers::GraphLaplacian']]]
 ];

@@ -69,6 +69,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
     <ul class="tablist">
       <li><a href="annotated.html"><span>Class&#160;List</span></a></li>
       <li><a href="classes.html"><span>Class&#160;Index</span></a></li>
+      <li><a href="hierarchy.html"><span>Class&#160;Hierarchy</span></a></li>
       <li><a href="functions.html"><span>Class&#160;Members</span></a></li>
     </ul>
   </div>
@@ -93,7 +94,12 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 </div><!-- top -->
 <div class="header">
   <div class="summary">
+<a href="#nested-classes">Classes</a> &#124;
 <a href="#pub-methods">Public Member Functions</a> &#124;
+<a href="#pri-types">Private Types</a> &#124;
+<a href="#pri-static-methods">Static Private Member Functions</a> &#124;
+<a href="#pri-attribs">Private Attributes</a> &#124;
+<a href="#pri-static-attribs">Static Private Attributes</a> &#124;
 <a href="classspi_1_1NumericalSolvers_1_1GraphLaplacian-members.html">List of all members</a>  </div>
   <div class="headertitle">
 <div class="title">spi::NumericalSolvers::GraphLaplacian Class Reference</div>  </div>
@@ -105,26 +111,84 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 
 <p><code>#include &lt;<a class="el" href="GraphLaplacian_8hpp_source.html">GraphLaplacian.hpp</a>&gt;</code></p>
 <table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="nested-classes"></a>
+Classes</h2></td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structspi_1_1NumericalSolvers_1_1GraphLaplacian_1_1DefaultParameters.html">DefaultParameters</a></td></tr>
+<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">The default values for the <a class="el" href="classspi_1_1NumericalSolvers_1_1GraphLaplacian.html" title="Estimate a weighted Laplacian operator using a graph Laplacian. ">spi::NumericalSolvers::GraphLaplacian</a> class.  <a href="structspi_1_1NumericalSolvers_1_1GraphLaplacian_1_1DefaultParameters.html#details">More...</a><br /></td></tr>
+<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classspi_1_1NumericalSolvers_1_1GraphLaplacian_1_1PointCloud.html">PointCloud</a></td></tr>
+<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Interpret the particle locations as a point cloud.  <a href="classspi_1_1NumericalSolvers_1_1GraphLaplacian_1_1PointCloud.html#details">More...</a><br /></td></tr>
+<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-methods"></a>
 Public Member Functions</h2></td></tr>
-<tr class="memitem:a5d916d7a298513cef8375c614f009716"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classspi_1_1NumericalSolvers_1_1GraphLaplacian.html#a5d916d7a298513cef8375c614f009716">GraphLaplacian</a> (YAML::Node const &amp;options)</td></tr>
-<tr class="separator:a5d916d7a298513cef8375c614f009716"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a622b961857eb87282325a12fb659bcf9"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classspi_1_1NumericalSolvers_1_1GraphLaplacian.html#a622b961857eb87282325a12fb659bcf9">GraphLaplacian</a> ()=default</td></tr>
-<tr class="separator:a622b961857eb87282325a12fb659bcf9"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a900a746412cbdae9ca8d0bfb9875deb4"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classspi_1_1NumericalSolvers_1_1GraphLaplacian.html#a900a746412cbdae9ca8d0bfb9875deb4">GraphLaplacian</a> (std::shared_ptr&lt; muq::Modeling::RandomVariable &gt; const &amp;rv, YAML::Node const &amp;options)</td></tr>
+<tr class="memdesc:a900a746412cbdae9ca8d0bfb9875deb4"><td class="mdescLeft">&#160;</td><td class="mdescRight">Construct the graph laplacian by sampling a random variable from \(\psi\).  <a href="#a900a746412cbdae9ca8d0bfb9875deb4">More...</a><br /></td></tr>
+<tr class="separator:a900a746412cbdae9ca8d0bfb9875deb4"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a98c1b445a8c9ca0c93cd0e2505779af7"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classspi_1_1NumericalSolvers_1_1GraphLaplacian.html#a98c1b445a8c9ca0c93cd0e2505779af7">GraphLaplacian</a> (std::shared_ptr&lt; muq::SamplingAlgorithms::SampleCollection &gt; const &amp;samples, YAML::Node const &amp;options)</td></tr>
+<tr class="memdesc:a98c1b445a8c9ca0c93cd0e2505779af7"><td class="mdescLeft">&#160;</td><td class="mdescRight">Construct the graph laplacian given samples from the underlying distribution \(\psi\).  <a href="#a98c1b445a8c9ca0c93cd0e2505779af7">More...</a><br /></td></tr>
+<tr class="separator:a98c1b445a8c9ca0c93cd0e2505779af7"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:af533e7a08281524ec2f3c70a236c864f"><td class="memItemLeft" align="right" valign="top">virtual&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classspi_1_1NumericalSolvers_1_1GraphLaplacian.html#af533e7a08281524ec2f3c70a236c864f">~GraphLaplacian</a> ()=default</td></tr>
 <tr class="separator:af533e7a08281524ec2f3c70a236c864f"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aaa925f69f5414d41e9f03b0fda83a2e8"><td class="memItemLeft" align="right" valign="top">size_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classspi_1_1NumericalSolvers_1_1GraphLaplacian.html#aaa925f69f5414d41e9f03b0fda83a2e8">NumSamples</a> () const </td></tr>
+<tr class="memdesc:aaa925f69f5414d41e9f03b0fda83a2e8"><td class="mdescLeft">&#160;</td><td class="mdescRight">How many samples are in the collection?  <a href="#aaa925f69f5414d41e9f03b0fda83a2e8">More...</a><br /></td></tr>
+<tr class="separator:aaa925f69f5414d41e9f03b0fda83a2e8"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ae349ddc78e7d6ff38c1571c3098f1881"><td class="memItemLeft" align="right" valign="top">size_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classspi_1_1NumericalSolvers_1_1GraphLaplacian.html#ae349ddc78e7d6ff38c1571c3098f1881">KDTreeMaxLeaf</a> () const </td></tr>
+<tr class="memdesc:ae349ddc78e7d6ff38c1571c3098f1881"><td class="mdescLeft">&#160;</td><td class="mdescRight">Get the max leaf size for the kd stree (nanoflann parameter)  <a href="#ae349ddc78e7d6ff38c1571c3098f1881">More...</a><br /></td></tr>
+<tr class="separator:ae349ddc78e7d6ff38c1571c3098f1881"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a5302a619bf7ca2d6209e4e7ab267878c"><td class="memItemLeft" align="right" valign="top">const Eigen::VectorXd &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classspi_1_1NumericalSolvers_1_1GraphLaplacian.html#a5302a619bf7ca2d6209e4e7ab267878c">Point</a> (size_t const i) const </td></tr>
+<tr class="memdesc:a5302a619bf7ca2d6209e4e7ab267878c"><td class="mdescLeft">&#160;</td><td class="mdescRight">Get the \(i^{th}\) point from the point cloud.  <a href="#a5302a619bf7ca2d6209e4e7ab267878c">More...</a><br /></td></tr>
+<tr class="separator:a5302a619bf7ca2d6209e4e7ab267878c"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pri-types"></a>
+Private Types</h2></td></tr>
+<tr class="memitem:a04d6290144ce3dfc7fc94cbe16e1c645"><td class="memItemLeft" align="right" valign="top">typedef nanoflann::KDTreeSingleIndexAdaptor&lt; nanoflann::L2_Simple_Adaptor&lt; double, <a class="el" href="classspi_1_1NumericalSolvers_1_1GraphLaplacian_1_1PointCloud.html">PointCloud</a> &gt;, <a class="el" href="classspi_1_1NumericalSolvers_1_1GraphLaplacian_1_1PointCloud.html">PointCloud</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classspi_1_1NumericalSolvers_1_1GraphLaplacian.html#a04d6290144ce3dfc7fc94cbe16e1c645">NanoflannKDTree</a></td></tr>
+<tr class="memdesc:a04d6290144ce3dfc7fc94cbe16e1c645"><td class="mdescLeft">&#160;</td><td class="mdescRight">The nanoflann kd-tree type.  <a href="#a04d6290144ce3dfc7fc94cbe16e1c645">More...</a><br /></td></tr>
+<tr class="separator:a04d6290144ce3dfc7fc94cbe16e1c645"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pri-static-methods"></a>
+Static Private Member Functions</h2></td></tr>
+<tr class="memitem:a3421dfc1e677026bef763e4edb533d0e"><td class="memItemLeft" align="right" valign="top">static std::shared_ptr&lt; muq::SamplingAlgorithms::SampleCollection &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classspi_1_1NumericalSolvers_1_1GraphLaplacian.html#a3421dfc1e677026bef763e4edb533d0e">SampleRandomVariable</a> (std::shared_ptr&lt; muq::Modeling::RandomVariable &gt; const &amp;rv, size_t const n)</td></tr>
+<tr class="memdesc:a3421dfc1e677026bef763e4edb533d0e"><td class="mdescLeft">&#160;</td><td class="mdescRight">Create a sample collection by sampling a random variable.  <a href="#a3421dfc1e677026bef763e4edb533d0e">More...</a><br /></td></tr>
+<tr class="separator:a3421dfc1e677026bef763e4edb533d0e"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pri-attribs"></a>
+Private Attributes</h2></td></tr>
+<tr class="memitem:a1030837403006643cd579b67ced6565d"><td class="memItemLeft" align="right" valign="top">const <a class="el" href="classspi_1_1NumericalSolvers_1_1GraphLaplacian_1_1PointCloud.html">PointCloud</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classspi_1_1NumericalSolvers_1_1GraphLaplacian.html#a1030837403006643cd579b67ced6565d">cloud</a></td></tr>
+<tr class="memdesc:a1030837403006643cd579b67ced6565d"><td class="mdescLeft">&#160;</td><td class="mdescRight">The point cloud that we will use to approximate the weighted Laplacian (and solve the weighted Poisson equation)  <a href="#a1030837403006643cd579b67ced6565d">More...</a><br /></td></tr>
+<tr class="separator:a1030837403006643cd579b67ced6565d"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aba5528a7e9eaee874d65b66df6d403c0"><td class="memItemLeft" align="right" valign="top">const size_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classspi_1_1NumericalSolvers_1_1GraphLaplacian.html#aba5528a7e9eaee874d65b66df6d403c0">maxLeaf</a></td></tr>
+<tr class="memdesc:aba5528a7e9eaee874d65b66df6d403c0"><td class="mdescLeft">&#160;</td><td class="mdescRight">The max leaf for the kd-tree.  <a href="#aba5528a7e9eaee874d65b66df6d403c0">More...</a><br /></td></tr>
+<tr class="separator:aba5528a7e9eaee874d65b66df6d403c0"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a662f08a000e6a9c3e2c6d98e3250cd74"><td class="memItemLeft" align="right" valign="top"><a class="el" href="classspi_1_1NumericalSolvers_1_1GraphLaplacian.html#a04d6290144ce3dfc7fc94cbe16e1c645">NanoflannKDTree</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classspi_1_1NumericalSolvers_1_1GraphLaplacian.html#a662f08a000e6a9c3e2c6d98e3250cd74">kdtree</a></td></tr>
+<tr class="memdesc:a662f08a000e6a9c3e2c6d98e3250cd74"><td class="mdescLeft">&#160;</td><td class="mdescRight">The nanoflann kd-tree.  <a href="#a662f08a000e6a9c3e2c6d98e3250cd74">More...</a><br /></td></tr>
+<tr class="separator:a662f08a000e6a9c3e2c6d98e3250cd74"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pri-static-attribs"></a>
+Static Private Attributes</h2></td></tr>
+<tr class="memitem:aa50a8ef0657760fade62148bd055d647"><td class="memItemLeft" align="right" valign="top">static const <a class="el" href="structspi_1_1NumericalSolvers_1_1GraphLaplacian_1_1DefaultParameters.html">DefaultParameters</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classspi_1_1NumericalSolvers_1_1GraphLaplacian.html#aa50a8ef0657760fade62148bd055d647">defaults</a></td></tr>
+<tr class="memdesc:aa50a8ef0657760fade62148bd055d647"><td class="mdescLeft">&#160;</td><td class="mdescRight">Store the default values.  <a href="#aa50a8ef0657760fade62148bd055d647">More...</a><br /></td></tr>
+<tr class="separator:aa50a8ef0657760fade62148bd055d647"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><p>Estimate a weighted Laplacian operator using a graph Laplacian. </p>
 <p>Let \(\psi\) be a probability distribution (with corresponding probability density function). Define the weighted Laplacian operator (given some function \(H\)) </p><p class="formulaDsp">
 \begin{equation*} \nabla_{\psi}^2 H = \psi^{-1} \nabla \cdot (\psi \nabla f). \end{equation*}
 </p>
-<p> This class uses \(n\) samples \(\{x^{(i)}\}_{i=1}^{n}\) such that \(x^{(i)} \sim \psi\) to approximate the action of this operator and to solve the Poisson equation (given the right hand side \(R\)) </p><p class="formulaDsp">
+<p> This class uses \(n\) samples \(\{x^{(i)}\}_{i=1}^{n}\) such that \(x^{(i)} \sim \psi\) to approximate the action of this operator and to solve the weighted Poisson equation (given the right hand side \(R\)) </p><p class="formulaDsp">
 \begin{equation*} \nabla_{\psi}^2 H = R \end{equation*}
 </p>
-<p> such that \(\mathbb{E}_{\psi}[H] = 0\). </p>
-</div><h2 class="groupheader">Constructor &amp; Destructor Documentation</h2>
-<a class="anchor" id="a5d916d7a298513cef8375c614f009716"></a>
+<p> such that \(\mathbb{E}_{\psi}[H] = 0\).</p>
+<p><b>Configuration Parameters:</b> </p><table class="doxtable">
+<tr>
+<th>Parameter Key </th><th>Type </th><th>Default Value </th><th>Description  </th></tr>
+<tr>
+<td>"NumSamples" </td><td>size_t </td><td>- </td><td>In the case where a random variable is passed to the constructor, we draw \(n\) samples from the distribution. </td></tr>
+<tr>
+<td>"MaxLeaf" </td><td>size_t </td><td>10 </td><td>The maximum leaf size for the kd tree (nanoflann parameter). </td></tr>
+</table>
+</div><h2 class="groupheader">Member Typedef Documentation</h2>
+<a class="anchor" id="a04d6290144ce3dfc7fc94cbe16e1c645"></a>
 <div class="memitem">
 <div class="memproto">
 <table class="mlabels">
@@ -132,42 +196,88 @@ Public Member Functions</h2></td></tr>
   <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname">spi::NumericalSolvers::GraphLaplacian::GraphLaplacian </td>
-          <td>(</td>
-          <td class="paramtype">YAML::Node const &amp;&#160;</td>
-          <td class="paramname"><em>options</em></td><td>)</td>
-          <td></td>
+          <td class="memname">typedef nanoflann::KDTreeSingleIndexAdaptor&lt;nanoflann::L2_Simple_Adaptor&lt;double, <a class="el" href="classspi_1_1NumericalSolvers_1_1GraphLaplacian_1_1PointCloud.html">PointCloud</a>&gt;, <a class="el" href="classspi_1_1NumericalSolvers_1_1GraphLaplacian_1_1PointCloud.html">PointCloud</a>&gt; <a class="el" href="classspi_1_1NumericalSolvers_1_1GraphLaplacian.html#a04d6290144ce3dfc7fc94cbe16e1c645">spi::NumericalSolvers::GraphLaplacian::NanoflannKDTree</a></td>
         </tr>
       </table>
   </td>
   <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
+<span class="mlabels"><span class="mlabel">private</span></span>  </td>
   </tr>
 </table>
 </div><div class="memdoc">
 
+<p>The nanoflann kd-tree type. </p>
+
 </div>
 </div>
-<a class="anchor" id="a622b961857eb87282325a12fb659bcf9"></a>
+<h2 class="groupheader">Constructor &amp; Destructor Documentation</h2>
+<a class="anchor" id="a900a746412cbdae9ca8d0bfb9875deb4"></a>
 <div class="memitem">
 <div class="memproto">
-<table class="mlabels">
-  <tr>
-  <td class="mlabels-left">
       <table class="memname">
         <tr>
           <td class="memname">spi::NumericalSolvers::GraphLaplacian::GraphLaplacian </td>
           <td>(</td>
-          <td class="paramname"></td><td>)</td>
+          <td class="paramtype">std::shared_ptr&lt; muq::Modeling::RandomVariable &gt; const &amp;&#160;</td>
+          <td class="paramname"><em>rv</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
           <td></td>
+          <td class="paramtype">YAML::Node const &amp;&#160;</td>
+          <td class="paramname"><em>options</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
         </tr>
       </table>
-  </td>
-  <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">default</span></span>  </td>
-  </tr>
-</table>
 </div><div class="memdoc">
+
+<p>Construct the graph laplacian by sampling a random variable from \(\psi\). </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[in]</td><td class="paramname">rv</td><td>The random variable that we wish to sample </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">options</td><td>Setup options </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a class="anchor" id="a98c1b445a8c9ca0c93cd0e2505779af7"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">GraphLaplacian::GraphLaplacian </td>
+          <td>(</td>
+          <td class="paramtype">std::shared_ptr&lt; muq::SamplingAlgorithms::SampleCollection &gt; const &amp;&#160;</td>
+          <td class="paramname"><em>samples</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">YAML::Node const &amp;&#160;</td>
+          <td class="paramname"><em>options</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Construct the graph laplacian given samples from the underlying distribution \(\psi\). </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[in]</td><td class="paramname">samples</td><td>Samples from the underlying distribution \(\psi\) </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">options</td><td>Setup options </td></tr>
+  </table>
+  </dd>
+</dl>
 
 </div>
 </div>
@@ -194,8 +304,195 @@ Public Member Functions</h2></td></tr>
 
 </div>
 </div>
-<hr/>The documentation for this class was generated from the following file:<ul>
+<h2 class="groupheader">Member Function Documentation</h2>
+<a class="anchor" id="ae349ddc78e7d6ff38c1571c3098f1881"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">size_t GraphLaplacian::KDTreeMaxLeaf </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td> const</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Get the max leaf size for the kd stree (nanoflann parameter) </p>
+
+</div>
+</div>
+<a class="anchor" id="aaa925f69f5414d41e9f03b0fda83a2e8"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">size_t GraphLaplacian::NumSamples </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td> const</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>How many samples are in the collection? </p>
+<dl class="section return"><dt>Returns</dt><dd>The number of samples in the sample collection (GraphLaplacian::samples) </dd></dl>
+
+</div>
+</div>
+<a class="anchor" id="a5302a619bf7ca2d6209e4e7ab267878c"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">const Eigen::VectorXd &amp; GraphLaplacian::Point </td>
+          <td>(</td>
+          <td class="paramtype">size_t const&#160;</td>
+          <td class="paramname"><em>i</em></td><td>)</td>
+          <td> const</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Get the \(i^{th}\) point from the point cloud. </p>
+
+</div>
+</div>
+<a class="anchor" id="a3421dfc1e677026bef763e4edb533d0e"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">std::shared_ptr&lt; muq::SamplingAlgorithms::SampleCollection &gt; GraphLaplacian::SampleRandomVariable </td>
+          <td>(</td>
+          <td class="paramtype">std::shared_ptr&lt; muq::Modeling::RandomVariable &gt; const &amp;&#160;</td>
+          <td class="paramname"><em>rv</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">size_t const&#160;</td>
+          <td class="paramname"><em>n</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">static</span><span class="mlabel">private</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Create a sample collection by sampling a random variable. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[in]</td><td class="paramname">rv</td><td>The random variable that we wish to sample </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">n</td><td>Sample the random variable \(n\) times </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<h2 class="groupheader">Member Data Documentation</h2>
+<a class="anchor" id="a1030837403006643cd579b67ced6565d"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">const <a class="el" href="classspi_1_1NumericalSolvers_1_1GraphLaplacian_1_1PointCloud.html">PointCloud</a> spi::NumericalSolvers::GraphLaplacian::cloud</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">private</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>The point cloud that we will use to approximate the weighted Laplacian (and solve the weighted Poisson equation) </p>
+
+</div>
+</div>
+<a class="anchor" id="aa50a8ef0657760fade62148bd055d647"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">const <a class="el" href="structspi_1_1NumericalSolvers_1_1GraphLaplacian_1_1DefaultParameters.html">DefaultParameters</a> spi::NumericalSolvers::GraphLaplacian::defaults</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">static</span><span class="mlabel">private</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Store the default values. </p>
+
+</div>
+</div>
+<a class="anchor" id="a662f08a000e6a9c3e2c6d98e3250cd74"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="classspi_1_1NumericalSolvers_1_1GraphLaplacian.html#a04d6290144ce3dfc7fc94cbe16e1c645">NanoflannKDTree</a> spi::NumericalSolvers::GraphLaplacian::kdtree</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">private</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>The nanoflann kd-tree. </p>
+
+</div>
+</div>
+<a class="anchor" id="aba5528a7e9eaee874d65b66df6d403c0"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">const size_t spi::NumericalSolvers::GraphLaplacian::maxLeaf</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">private</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>The max leaf for the kd-tree. </p>
+
+</div>
+</div>
+<hr/>The documentation for this class was generated from the following files:<ul>
 <li>/home/travis/build/SuperParameterIzation/spipack/spipack/NumericalSolvers/<a class="el" href="GraphLaplacian_8hpp_source.html">GraphLaplacian.hpp</a></li>
+<li>/home/travis/build/SuperParameterIzation/spipack/modules/NumericalSolvers/src/<a class="el" href="GraphLaplacian_8cpp.html">GraphLaplacian.cpp</a></li>
 </ul>
 </div><!-- contents -->
 <!-- start footer part -->

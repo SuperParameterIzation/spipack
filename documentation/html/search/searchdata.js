@@ -1,11 +1,12 @@
 var indexSectionsWithContent =
 {
-  0: "_acgmst~",
-  1: "g",
+  0: "_acdgklmnoprst~",
+  1: "dgp",
   2: "s",
   3: "_cg",
-  4: "acgmst~",
-  5: "s"
+  4: "acgkmnpst~",
+  5: "cdklmnors",
+  6: "n"
 };
 
 var indexSectionNames =
@@ -15,7 +16,8 @@ var indexSectionNames =
   2: "namespaces",
   3: "files",
   4: "functions",
-  5: "variables"
+  5: "variables",
+  6: "typedefs"
 };
 
 var indexSectionLabels =
@@ -25,6 +27,7 @@ var indexSectionLabels =
   2: "Namespaces",
   3: "Files",
   4: "Functions",
-  5: "Variables"
+  5: "Variables",
+  6: "Typedefs"
 };
 
