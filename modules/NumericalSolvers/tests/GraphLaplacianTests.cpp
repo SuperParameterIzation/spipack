@@ -77,7 +77,10 @@ TEST(TESTGraphLaplacianTests, SampleCollectionConstruction) {
 
   // add random samples into a sample collection
   auto samples = std::make_shared<SampleCollection>();
-  for( size_t i=0; i<n; ++i ) { samples->Add(std::make_shared<SamplingState>(rv->Sample())); }
+  for( size_t i=0; i<n; ++i ) {
+    auto samp = std::make_shared<SamplingState>(rv->Sample());
+    samples->Add(samp);
+  }
 
   // create the graph laplacian
   //auto laplacian = std::make_shared<GraphLaplacian>(samples, options);
