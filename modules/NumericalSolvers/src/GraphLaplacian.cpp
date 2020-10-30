@@ -11,7 +11,7 @@ using namespace spi::NumericalSolvers;
 //{}
 
 GraphLaplacian::GraphLaplacian(std::shared_ptr<SampleCollection> const& samples, YAML::Node const& options) :
-  cloud(std::make_unique<PointCloud>(samples))
+  cloud(/*std::make_unique<PointCloud>(samples)*/)
   //maxLeaf(options["MaxLeaf"].as<size_t>(defaults.maxLeaf)),
   //kdtree(cloud.StateDim(), cloud, nanoflann::KDTreeSingleIndexAdaptorParams(maxLeaf))
 {}
