@@ -58,7 +58,7 @@ protected:
 
 TEST(TESTGraphLaplacianTests, SampleCollectionConstruction) {
   /// The dimension of state space
-  inline static const unsigned int dim = 4;
+  const unsigned int dim = 4;
 
   /// The number of samples
   const size_t n = 1000;
