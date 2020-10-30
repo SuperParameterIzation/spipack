@@ -10,13 +10,13 @@ using namespace spi::NumericalSolvers;
   //kdtree(cloud.StateDim(), cloud, nanoflann::KDTreeSingleIndexAdaptorParams(maxLeaf))
 //{}
 
-GraphLaplacian::GraphLaplacian(std::shared_ptr<muq::SamplingAlgorithms::SampleCollection> const& samples, YAML::Node const& options) :
+GraphLaplacian::GraphLaplacian(std::shared_ptr<SampleCollection> const& samples, YAML::Node const& options) :
   cloud(std::make_unique<PointCloud>(samples))
   //maxLeaf(options["MaxLeaf"].as<size_t>(defaults.maxLeaf)),
   //kdtree(cloud.StateDim(), cloud, nanoflann::KDTreeSingleIndexAdaptorParams(maxLeaf))
 {}
 
-std::shared_ptr<muq::SamplingAlgorithms::SampleCollection> GraphLaplacian::SampleRandomVariable(std::shared_ptr<RandomVariable> const& rv, size_t const n) {
+std::shared_ptr<SampleCollection> GraphLaplacian::SampleRandomVariable(std::shared_ptr<RandomVariable> const& rv, size_t const n) {
   // add random samples into a sample collection
   auto samples = std::make_shared<SampleCollection>();
   for( size_t i=0; i<n; ++i ) { samples->Add(std::make_shared<SamplingState>(rv->Sample())); }

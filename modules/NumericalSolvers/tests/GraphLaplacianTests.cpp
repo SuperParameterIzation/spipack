@@ -11,7 +11,7 @@ using namespace spi::NumericalSolvers;
 class GraphLaplacianTests : public::testing::Test {
 public:
   /// Set up information to test the graph Laplacian
-  virtual void SetUp() override {
+  void SetUp() {
     // create a standard Gaussian random variable
     rv = std::make_shared<Gaussian>(dim)->AsVariable();
 
