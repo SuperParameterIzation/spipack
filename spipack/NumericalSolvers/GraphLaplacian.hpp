@@ -45,7 +45,7 @@ public:
     @param[in] samples Samples from the underlying distribution \f$\psi\f$
     @param[in] options Setup options
   */
-  GraphLaplacian(std::shared_ptr<muq::SamplingAlgorithms::SampleCollection> const& samples, YAML::Node const& options);
+  //GraphLaplacian(std::shared_ptr<muq::SamplingAlgorithms::SampleCollection> const& samples, YAML::Node const& options);
 
   virtual ~GraphLaplacian() = default;
 
@@ -118,25 +118,25 @@ private:
   };
 
   /// The point cloud that we will use to approximate the weighted Laplacian (and solve the weighted Poisson equation)
-  const PointCloud cloud;
+  //const PointCloud cloud;
 
   /// The max leaf for the kd-tree
-  const size_t maxLeaf;
+  //const size_t maxLeaf;
 
   /// The nanoflann kd-tree type
   typedef nanoflann::KDTreeSingleIndexAdaptor<nanoflann::L2_Simple_Adaptor<double, PointCloud>, PointCloud> NanoflannKDTree;
 
   /// The nanoflann kd-tree
-	NanoflannKDTree kdtree;
+	//NanoflannKDTree kdtree;
 
   /// The default values for the spi::NumericalSolvers::GraphLaplacian class.
-  struct DefaultParameters {
+  /*struct DefaultParameters {
     /// The max leaf for the kd-tree defaults to \f$10\f$.
     inline static const size_t maxLeaf = 10;
   };
 
   /// Store the default values
-  inline static const DefaultParameters defaults;
+  inline static const DefaultParameters defaults;*/
 };
 
 } // ParticleMethods
