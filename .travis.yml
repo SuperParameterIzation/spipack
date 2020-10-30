@@ -38,5 +38,5 @@ script:
 # generate and deploy documentation
 after_success:
   - cd $TRAVIS_BUILD_DIR/documentation
-  - chmod +x GenerateDocumentation.sh
-  - ./GenerateDocumentation.sh
+  #- chmod +x GenerateDocumentation.sh
+  #- ./GenerateDocumentation.sh

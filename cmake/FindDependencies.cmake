@@ -38,7 +38,7 @@ endif()
 
 Dependency(YAML)
 Dependency(EIGEN3)
-Dependency(BOOST)#
+Dependency(BOOST)
 Dependency(HDF5)
 Dependency(MUQ)
 Dependency(GTEST)
