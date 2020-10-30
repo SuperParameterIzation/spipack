@@ -17,7 +17,7 @@ ExternalProject_Add(
   HDF5
     PREFIX ${CMAKE_CURRENT_BINARY_DIR}/external/hdf5
     URL ${HDF5_EXTERNAL_SOURCE}
-    CONFIGURE_COMMAND CC=${CMAKE_C_COMPILER} CXX=${CMAKE_CXX_COMPILER}; ${CMAKE_CURRENT_BINARY_DIR}/external/hdf5/src/HDF5/hdf5-${SPIPACK_INTERNAL_HDF5_VERSION}/configure  CC=${CMAKE_C_COMPILER} CXX=${CMAKE_CXX_COMPILER} ${HDF5_PARALLEL_FLAG} --prefix=${CMAKE_BINARY_DIR}/external/hdf5 --enable-production --disable-examples &> hdf5-configure.txt
+    CONFIGURE_COMMAND CC=${CMAKE_C_COMPILER} CXX=${CMAKE_CXX_COMPILER}; ${CMAKE_CURRENT_BINARY_DIR}/external/hdf5/src/HDF5/hdf5-${SPIPACK_INTERNAL_HDF5_VERSION}/configure  CC=${CMAKE_C_COMPILER} CXX=${CMAKE_CXX_COMPILER} ${HDF5_PARALLEL_FLAG} --prefix=${CMAKE_BINARY_DIR}/external/hdf5 --enable-production --disable-examples
     BUILD_COMMAND make -j5 install
     BUILD_IN_SOURCE 1
     INSTALL_COMMAND ""

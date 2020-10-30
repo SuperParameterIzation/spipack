@@ -86,8 +86,8 @@ if(SPIPACK_USE_LIBC11)
         URL ${BOOST_EXTERNAL_SOURCE}
         PATCH_COMMAND cp ${CMAKE_CURRENT_SOURCE_DIR}/external/boost/shared_ptr_helper.hpp ${CMAKE_CURRENT_BINARY_DIR}/external/boost/src/BOOST/boost/serialization/shared_ptr_helper.hpp
         UPDATE_COMMAND ""
-        CONFIGURE_COMMAND mv ${CMAKE_CURRENT_BINARY_DIR}/user-config.jam ${BOOST_BUILD_DIR}/user-config.jam && ${BOOST_BUILD_DIR}/bootstrap.sh --prefix=${Boost_INSTALL_DIR} --without-icu &> boost-configure.txt
-        BUILD_COMMAND ${BOOST_BUILD_DIR}/b2 cxxflags=${BOOST_CXX_FLAGS} linkflags=${BOOST_LINK_FLAGS} variant=release --user-config=${BOOST_BUILD_DIR}/user-config.jam toolset=${BOOST_TOOLSET_NAME}-spipack --with-filesystem --with-graph --with-system --disable-icu  install
+        CONFIGURE_COMMAND mv ${CMAKE_CURRENT_BINARY_DIR}/user-config.jam ${BOOST_BUILD_DIR}/user-config.jam && ${BOOST_BUILD_DIR}/bootstrap.sh --prefix=${Boost_INSTALL_DIR} --without-icu
+        BUILD_COMMAND ${BOOST_BUILD_DIR}/b2 cxxflags=${BOOST_CXX_FLAGS} linkflags=${BOOST_LINK_FLAGS} variant=release --user-config=${BOOST_BUILD_DIR}/user-config.jam toolset=${BOOST_TOOLSET_NAME}-spipack  --with-filesystem --with-graph --with-system --disable-icu install
         BUILD_IN_SOURCE 1
         INSTALL_COMMAND ""
         )
@@ -98,7 +98,7 @@ else(SPIPACK_USE_LIBC11)
           URL ${BOOST_EXTERNAL_SOURCE}
           PATCH_COMMAND cp ${CMAKE_CURRENT_SOURCE_DIR}/external/boost/shared_ptr_helper.hpp ${CMAKE_CURRENT_BINARY_DIR}/external/boost/src/BOOST/boost/serialization/shared_ptr_helper.hpp
           UPDATE_COMMAND ""
-          CONFIGURE_COMMAND mv ${CMAKE_CURRENT_BINARY_DIR}/user-config.jam ${BOOST_BUILD_DIR}/user-config.jam && ${BOOST_BUILD_DIR}/bootstrap.sh --prefix=${Boost_INSTALL_DIR} --without-icu &> boost-configure.txt
+          CONFIGURE_COMMAND mv ${CMAKE_CURRENT_BINARY_DIR}/user-config.jam ${BOOST_BUILD_DIR}/user-config.jam && ${BOOST_BUILD_DIR}/bootstrap.sh --prefix=${Boost_INSTALL_DIR} --without-icu
           BUILD_COMMAND ${BOOST_BUILD_DIR}/b2 cxxflags=${BOOST_CXX_FLAGS} variant=release --user-config=${BOOST_BUILD_DIR}/user-config.jam toolset=${BOOST_TOOLSET_NAME}-spipack --with-filesystem --with-graph --disable-icu --with-system  install
           BUILD_IN_SOURCE 1
           INSTALL_COMMAND ""
