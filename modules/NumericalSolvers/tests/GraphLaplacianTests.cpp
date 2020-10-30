@@ -78,7 +78,8 @@ TEST(TESTGraphLaplacianTests, SampleCollectionConstruction) {
   // add random samples into a sample collection
   auto samples = std::make_shared<SampleCollection>();
   for( std::size_t i=0; i<n; ++i ) {
-    auto samp = std::make_shared<SamplingState>(rv->Sample());
+    Eigen::VectorXd state = rv->Sample();
+    auto samp = std::make_shared<SamplingState>(state);
     samples->Add(samp);
   }
 
