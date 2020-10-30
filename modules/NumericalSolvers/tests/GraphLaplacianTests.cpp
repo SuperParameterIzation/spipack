@@ -72,12 +72,18 @@ TEST_F(GraphLaplacianTests, FindNearestNeighbors_Radius) {
   // create the graph laplacian
   laplacian = std::make_shared<GraphLaplacian>(rv, options);
 
+  // build the kd-tree based on the samples
+  laplacian->BuildKDTree();
+
   EXPECT_TRUE(false);
 }
 
 TEST_F(GraphLaplacianTests, FindNearestNeighbors_NumNeighbors) {
   // create the graph laplacian
   laplacian = std::make_shared<GraphLaplacian>(rv, options);
+
+  // build the kd-tree based on the samples
+  laplacian->BuildKDTree();
 
   EXPECT_TRUE(false);
 }
