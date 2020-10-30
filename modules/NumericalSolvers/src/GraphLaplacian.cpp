@@ -5,7 +5,7 @@ using namespace muq::SamplingAlgorithms;
 using namespace spi::NumericalSolvers;
 
 GraphLaplacian::GraphLaplacian(std::shared_ptr<RandomVariable> const& rv, YAML::Node const& options) :
-  //cloud(SampleRandomVariable(rv, options["NumSamples"].as<size_t>())),
+  cloud(SampleRandomVariable(rv, options["NumSamples"].as<size_t>()))
   //maxLeaf(options["MaxLeaf"].as<size_t>(defaults.maxLeaf)),
   //kdtree(cloud.StateDim(), cloud, nanoflann::KDTreeSingleIndexAdaptorParams(maxLeaf))
 {}
@@ -26,7 +26,7 @@ std::shared_ptr<muq::SamplingAlgorithms::SampleCollection> GraphLaplacian::Sampl
 
 size_t GraphLaplacian::NumSamples() const { return cloud.kdtree_get_point_count(); }
 
-size_t GraphLaplacian::KDTreeMaxLeaf() const { return maxLeaf; }
+//size_t GraphLaplacian::KDTreeMaxLeaf() const { return maxLeaf; }
 
 const Eigen::VectorXd& GraphLaplacian::Point(size_t const i) const {
   assert(i<NumSamples());

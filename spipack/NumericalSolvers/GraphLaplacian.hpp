@@ -56,7 +56,7 @@ public:
   size_t NumSamples() const;
 
   /// Get the max leaf size for the kd stree (nanoflann parameter)
-  size_t KDTreeMaxLeaf() const;
+  //size_t KDTreeMaxLeaf() const;
 
   /// Get the \f$i^{th}\f$ point from the point cloud.
   const Eigen::VectorXd& Point(size_t const i) const;
@@ -118,7 +118,7 @@ private:
   };
 
   /// The point cloud that we will use to approximate the weighted Laplacian (and solve the weighted Poisson equation)
-  //const PointCloud cloud;
+  const PointCloud cloud;
 
   /// The max leaf for the kd-tree
   //const size_t maxLeaf;
