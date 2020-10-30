@@ -118,7 +118,7 @@ private:
   };
 
   /// The point cloud that we will use to approximate the weighted Laplacian (and solve the weighted Poisson equation)
-  const PointCloud cloud;
+  std::unique_ptr<PointCloud> cloud;
 
   /// The max leaf for the kd-tree
   //const size_t maxLeaf;
