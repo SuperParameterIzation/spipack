@@ -11,9 +11,9 @@ using namespace spi::NumericalSolvers;
 //{}
 
 GraphLaplacian::GraphLaplacian(std::shared_ptr<muq::SamplingAlgorithms::SampleCollection> const& samples, YAML::Node const& options) :
-  cloud(samples),
-  maxLeaf(options["MaxLeaf"].as<size_t>(defaults.maxLeaf)),
-  kdtree(cloud.StateDim(), cloud, nanoflann::KDTreeSingleIndexAdaptorParams(maxLeaf))
+  cloud(samples)
+  //maxLeaf(options["MaxLeaf"].as<size_t>(defaults.maxLeaf)),
+  //kdtree(cloud.StateDim(), cloud, nanoflann::KDTreeSingleIndexAdaptorParams(maxLeaf))
 {}
 
 std::shared_ptr<muq::SamplingAlgorithms::SampleCollection> GraphLaplacian::SampleRandomVariable(std::shared_ptr<RandomVariable> const& rv, size_t const n) {
