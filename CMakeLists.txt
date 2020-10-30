@@ -35,7 +35,7 @@ include_directories(${CMAKE_SOURCE_DIR} ${SPIPACK_EXTERNAL_INCLUDE_DIRS})
 # Build SPIPACK
 ###############################################
 
-#add_subdirectory(modules)
+add_subdirectory(modules)
 
 include_directories(${GTEST_INCLUDE_DIR})
 
