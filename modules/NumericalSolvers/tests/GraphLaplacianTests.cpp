@@ -80,7 +80,7 @@ TEST(TESTGraphLaplacianTests, SampleCollectionConstruction) {
   for( size_t i=0; i<n; ++i ) { samples->Add(std::make_shared<SamplingState>(rv->Sample())); }
 
   // create the graph laplacian
-  auto laplacian = std::make_shared<GraphLaplacian>(samples, options);
+  //auto laplacian = std::make_shared<GraphLaplacian>(samples, options);
 
   // check to make sure the samples match
   /*for( size_t i=0; i<n; ++i ) {
