@@ -8,8 +8,8 @@ ExternalProject_Add(GTEST
   -DCMAKE_CXX_FLAGS=-Wall --std=c++11
   -DCMAKE_CXX_COMPILER=${CMAKE_CXX_COMPILER}
   -DCMAKE_C_COMPILER=${CMAKE_C_COMPILER}
-  BUILD_COMMAND make -j5
-  INSTALL_COMMAND make -j5 install
+  BUILD_COMMAND make -j5 &> gtest-build.txt
+  INSTALL_COMMAND make -j5 install &> gtest-install.txt
 )
 
 set(GTEST_INCLUDE_DIR
