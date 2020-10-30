@@ -4,7 +4,7 @@ using namespace muq::Modeling;
 using namespace muq::SamplingAlgorithms;
 using namespace spi::NumericalSolvers;
 
-GraphLaplacian::GraphLaplacian(std::shared_ptr<RandomVariable> const& rv, YAML::Node const& options) //:
+GraphLaplacian::GraphLaplacian(std::shared_ptr<RandomVariable> const& rv, YAML::Node const& options) :
   cloud(SampleRandomVariable(rv, options["NumSamples"].as<size_t>()))
   //maxLeaf(options["MaxLeaf"].as<size_t>(defaults.maxLeaf)),
   //kdtree(cloud.StateDim(), cloud, nanoflann::KDTreeSingleIndexAdaptorParams(maxLeaf))
