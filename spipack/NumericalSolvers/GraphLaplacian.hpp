@@ -71,22 +71,22 @@ private:
   static std::shared_ptr<muq::SamplingAlgorithms::SampleCollection> SampleRandomVariable(std::shared_ptr<muq::Modeling::RandomVariable> const& rv, size_t const n);
 
   /// Interpret the particle locations as a point cloud
-  class PointCloud {
-  public:
+  //class PointCloud {
+  //public:
 
     /// Construct the point cloud given samples from the underlying distribution \f$\psi\f$
     /**
       @param[in] samples Samples from the underlying distribution \f$\psi\f$
     */
-    PointCloud(std::shared_ptr<muq::SamplingAlgorithms::SampleCollection> const& samples);
+    //PointCloud(std::shared_ptr<muq::SamplingAlgorithms::SampleCollection> const& samples);
 
-    virtual ~PointCloud() = default;
+    //virtual ~PointCloud() = default;
 
     /// Get the number of samples (from \f$\psi\f$)
     /**
       \return The number of points in the sample collection (GraphLaplacian::PointCloud::samples)
     */
-    size_t kdtree_get_point_count() const;
+    //size_t kdtree_get_point_count() const;
 
     /// Get the \f$i^{th}\f$ component of the \f$p^{th}\f$ point
     /**
@@ -94,31 +94,31 @@ private:
       @param[in] i We want this index of the particle location
       \return The \f$i^{th}\f$ component of the \f$p^{th}\f$ point in GraphLaplacian::PointCloud::samples
     */
-    double kdtree_get_pt(size_t const p, size_t const i) const;
+    //double kdtree_get_pt(size_t const p, size_t const i) const;
 
     /// Optional bounding-box computation
     /**
       \return Return <tt>false</tt> to default to a standard bounding box computation loop
     */
-    template<class BBOX>
-    inline bool kdtree_get_bbox(BBOX& bb) const { return false; }
+    /*template<class BBOX>
+    inline bool kdtree_get_bbox(BBOX& bb) const { return false; }*/
 
     /// Get the \f$i^{th}\f$ point from the GraphLaplacian::PointCloud::samples.
-    const Eigen::VectorXd& Point(size_t const i) const;
+    //const Eigen::VectorXd& Point(size_t const i) const;
 
     /// The dimension of the state
     /**
       The samples \f$x \sim \psi\f$ are in \f$\mathbb{R}^{d}\f$. This function returns the dimension \f$d\f$ (size of the first sample).
     */
-    size_t StateDim() const;
+    //size_t StateDim() const;
 
-  private:
+  //private:
     /// Samples from the distribution \f$\psi\f$
-    std::shared_ptr<muq::SamplingAlgorithms::SampleCollection> samples;
-  };
+    //std::shared_ptr<muq::SamplingAlgorithms::SampleCollection> samples;
+  //};
 
   /// The point cloud that we will use to approximate the weighted Laplacian (and solve the weighted Poisson equation)
-  const PointCloud cloud;
+  //const PointCloud cloud;
 
   /// The max leaf for the kd-tree
   //const size_t maxLeaf;
