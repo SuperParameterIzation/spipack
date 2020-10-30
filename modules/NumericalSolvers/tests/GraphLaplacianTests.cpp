@@ -1,16 +1,16 @@
 #include <gtest/gtest.h>
 
-#include "spipack/NumericalSolvers/GraphLaplacian.hpp"
+/*#include "spipack/NumericalSolvers/GraphLaplacian.hpp"
 
 #include <MUQ/Modeling/Distributions/Gaussian.h>
 
 using namespace muq::Modeling;
 using namespace muq::SamplingAlgorithms;
-using namespace spi::NumericalSolvers;
+using namespace spi::NumericalSolvers;*/
 
 class GraphLaplacianTests : public::testing::Test {
 public:
-  /// Set up information to test the graph Laplacian
+  /*/// Set up information to test the graph Laplacian
   virtual void SetUp() override {
     // create a standard Gaussian random variable
     rv = std::make_shared<Gaussian>(dim)->AsVariable();
@@ -45,7 +45,7 @@ protected:
   std::shared_ptr<RandomVariable> rv;
 
   /// The graph Laplacian---use a pointer here so we can initalize it as null
-  std::shared_ptr<GraphLaplacian> laplacian;
+  std::shared_ptr<GraphLaplacian> laplacian;*/
 };
 
 TEST_F(GraphLaplacianTests, RandomVariableConstruction) {
