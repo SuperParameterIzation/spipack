@@ -32,9 +32,9 @@ ExternalProject_Add(
     -DHDF5HL_LIBRARY=${HDF5HL_LIBRARY}
     -DMUQ_ENABLEGROUP_DEFAULT=OFF
     -DMUQ_ENABLEGROUP_UTILITIES_HDF5=ON
-    -DMUQ_ENABLEGROUP_SAMPLING_ALGORITHM=ON 
-  	BUILD_COMMAND make -j5 &> muq-build.txt
-    INSTALL_COMMAND make -j5 install &> muq-install.txt
+    -DMUQ_ENABLEGROUP_SAMPLING_ALGORITHM=ON
+  	BUILD_COMMAND make -j5 #&> muq-build.txt
+    INSTALL_COMMAND make -j5 install #&> muq-install.txt
 )
 
 list(APPEND MUQ_INCLUDE_DIRS
