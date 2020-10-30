@@ -36,7 +36,7 @@ else()
   set(shared_library_suffix ".so")
 endif()
 
-#Dependency(YAML)
+Dependency(YAML)
 #Dependency(EIGEN3)
 #Dependency(BOOST)
 #Dependency(HDF5)
