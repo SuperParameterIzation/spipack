@@ -10,7 +10,7 @@ using namespace spi::NumericalSolvers;
 
 class GraphLaplacianTests : public::testing::Test {
 public:
-  /*/// Set up information to test the graph Laplacian
+  /// Set up information to test the graph Laplacian
   virtual void SetUp() override {
     // create a standard Gaussian random variable
     rv = std::make_shared<Gaussian>(dim)->AsVariable();
@@ -19,7 +19,7 @@ public:
     options["MaxLeaf"] = maxLeaf;
   }
 
-  /// Make sure everything is constructed correctly
+  /*/// Make sure everything is constructed correctly
   virtual void TearDown() override {
     // make sure the graph laplacian has enough samples
     EXPECT_EQ(laplacian->NumSamples(), n);
