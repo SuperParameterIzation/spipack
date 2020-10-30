@@ -37,7 +37,7 @@ else()
 endif()
 
 Dependency(YAML)
-#Dependency(EIGEN3)
+Dependency(EIGEN3)
 #Dependency(BOOST)
 #Dependency(HDF5)
 #Dependency(MUQ)
