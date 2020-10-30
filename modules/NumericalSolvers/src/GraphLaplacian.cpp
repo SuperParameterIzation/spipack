@@ -33,7 +33,7 @@ std::shared_ptr<SampleCollection> GraphLaplacian::SampleRandomVariable(std::shar
   return cloud.Point(i);
 }*/
 
-GraphLaplacian::PointCloud::PointCloud(std::shared_ptr<SampleCollection> const& samples) /*: samples(samples)*/ {}
+GraphLaplacian::PointCloud::PointCloud(/*std::shared_ptr<SampleCollection> const& samples*/) /*: samples(samples)*/ {}
 
 /*size_t GraphLaplacian::PointCloud::kdtree_get_point_count() const {
   assert(samples);

@@ -78,9 +78,9 @@ private:
     /**
       @param[in] samples Samples from the underlying distribution \f$\psi\f$
     */
-    PointCloud(std::shared_ptr<muq::SamplingAlgorithms::SampleCollection> const& samples);
+    PointCloud(/*std::shared_ptr<muq::SamplingAlgorithms::SampleCollection> const& samples*/);
 
-    virtual ~PointCloud() = default;
+    //virtual ~PointCloud() = default;
 
     /// Get the number of samples (from \f$\psi\f$)
     /**
