@@ -48,21 +48,39 @@ protected:
   std::shared_ptr<GraphLaplacian> laplacian;
 };
 
-TEST_F(GraphLaplacianTests, RandomVariableConstruction) {
+//TEST_F(GraphLaplacianTests, RandomVariableConstruction) {
   // create the options for the graph laplacian
   //options["NumSamples"] = n;
 
   // create the graph laplacian
   //laplacian = std::make_shared<GraphLaplacian>(rv, options);
-}
+//}
 
-TEST_F(GraphLaplacianTests, SampleCollectionConstruction) {
+TEST(TESTGraphLaplacianTests, SampleCollectionConstruction) {
+  /// The dimension of state space
+  static const unsigned int dim = 4;
+
+  /// The number of samples
+  const size_t n = 1000;
+
+  /// The max leaf size for the kd tree
+  const size_t maxLeaf = 15;
+
+  /// The options for the graph Laplacian
+  YAML::Node options;
+
+  // create a standard Gaussian random variable
+  auto rv = std::make_shared<Gaussian>(dim)->AsVariable();
+
+  // set the options for the graph laplacian
+  options["MaxLeaf"] = maxLeaf;
+
   // add random samples into a sample collection
   auto samples = std::make_shared<SampleCollection>();
   for( size_t i=0; i<n; ++i ) { samples->Add(std::make_shared<SamplingState>(rv->Sample())); }
 
   // create the graph laplacian
-  laplacian = std::make_shared<GraphLaplacian>(samples, options);
+  auto laplacian = std::make_shared<GraphLaplacian>(samples, options);
 
   // check to make sure the samples match
   /*for( size_t i=0; i<n; ++i ) {
