@@ -33,9 +33,9 @@ std::shared_ptr<muq::SamplingAlgorithms::SampleCollection> GraphLaplacian::Sampl
   return cloud.Point(i);
 }*/
 
-GraphLaplacian::PointCloud::PointCloud(std::shared_ptr<SampleCollection> const& samples) : samples(samples) {}
+GraphLaplacian::PointCloud::PointCloud(std::shared_ptr<SampleCollection> const& samples) /*: samples(samples)*/ {}
 
-size_t GraphLaplacian::PointCloud::kdtree_get_point_count() const {
+/*size_t GraphLaplacian::PointCloud::kdtree_get_point_count() const {
   assert(samples);
   return samples->size();
 }
@@ -57,4 +57,4 @@ size_t GraphLaplacian::PointCloud::StateDim() const {
   assert(samples);
   assert(samples->size()>0);
   return samples->at(0)->state[0].size();
-}
+}*/
