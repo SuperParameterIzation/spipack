@@ -61,10 +61,10 @@ TEST(TESTGraphLaplacianTests, SampleCollectionConstruction) {
   const unsigned int dim = 4;
 
   /// The number of samples
-  const size_t n = 1000;
+  const std::size_t n = 1000;
 
   /// The max leaf size for the kd tree
-  const size_t maxLeaf = 15;
+  const std::size_t maxLeaf = 15;
 
   /// The options for the graph Laplacian
   YAML::Node options;
@@ -77,7 +77,7 @@ TEST(TESTGraphLaplacianTests, SampleCollectionConstruction) {
 
   // add random samples into a sample collection
   auto samples = std::make_shared<SampleCollection>();
-  for( size_t i=0; i<n; ++i ) {
+  for( std::size_t i=0; i<n; ++i ) {
     auto samp = std::make_shared<SamplingState>(rv->Sample());
     samples->Add(samp);
   }
