@@ -38,9 +38,9 @@ endif()
 
 Dependency(YAML)
 Dependency(EIGEN3)
-#Dependency(BOOST)
-#Dependency(HDF5)
-#Dependency(MUQ)
+Dependency(BOOST)#
+Dependency(HDF5)
+Dependency(MUQ)
 Dependency(GTEST)
 
 # add the header only submodules
