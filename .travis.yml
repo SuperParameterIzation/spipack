@@ -1,10 +1,8 @@
 language: cpp
 compiler:
   - gcc-9
-  - clang
 os:
   - linux
-  - osx
 
 # only run Travis on the master branch
 branches:
@@ -32,7 +30,7 @@ addons:
 # build main and tests
 script:
   - cd $TRAVIS_BUILD_DIR/build
-  - cmake ..
+  - cmake .. -DCMAKE_CXX_COMPILER=g++-9 -DCMAKE_C_COMPILER=gcc-9
   - make -j5
   - cd ..
   - ./build/run-tests
