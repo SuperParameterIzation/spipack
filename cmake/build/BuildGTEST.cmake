@@ -9,7 +9,7 @@ ExternalProject_Add(GTEST
   -DCMAKE_CXX_COMPILER=${CMAKE_CXX_COMPILER}
   -DCMAKE_C_COMPILER=${CMAKE_C_COMPILER}
   BUILD_COMMAND make -j5 &> gtest-build.txt
-  INSTALL_COMMAND make -j5 install &> gtest-install.txt
+  INSTALL_COMMAND make -j5 install
 )
 
 set(GTEST_INCLUDE_DIR
