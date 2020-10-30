@@ -124,7 +124,7 @@ private:
   //const size_t maxLeaf;
 
   /// The nanoflann kd-tree type
-  typedef nanoflann::KDTreeSingleIndexAdaptor<nanoflann::L2_Simple_Adaptor<double, PointCloud>, PointCloud> NanoflannKDTree;
+  //typedef nanoflann::KDTreeSingleIndexAdaptor<nanoflann::L2_Simple_Adaptor<double, PointCloud>, PointCloud> NanoflannKDTree;
 
   /// The nanoflann kd-tree
 	//NanoflannKDTree kdtree;
