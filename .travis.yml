@@ -23,12 +23,12 @@ before_script:
   - $CXX --version
   - $CC --version
   - cd $TRAVIS_BUILD_DIR/build
-  - cmake ..
+  - cmake .. > cmake_output.txt
 
 script:
   - $CXX --version
   - $CC --version
   - cd $TRAVIS_BUILD_DIR/build
-  - make -j5
+  - make -j5 > make_output.txt
   - cd ..
   - ./build/run-tests
