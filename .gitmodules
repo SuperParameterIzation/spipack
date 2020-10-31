@@ -7,3 +7,6 @@
 [submodule "external/eigen3"]
 	path = external/eigen3
 	url = https://gitlab.com/libeigen/eigen.git
+[submodule "external/muq"]
+	path = external/muq
+	url = https://andrew_d_davis@bitbucket.org/mituq/muq2.git

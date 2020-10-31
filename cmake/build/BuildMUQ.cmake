@@ -14,9 +14,10 @@ endif()
 ExternalProject_Add(
   MUQ
     PREFIX ${CMAKE_CURRENT_BINARY_DIR}/external/muq
-    GIT_REPOSITORY https://bitbucket.org/mituq/muq2/src/master/
+    #GIT_REPOSITORY https://bitbucket.org/mituq/muq2/src/master/
+    SOURCE_DIR ${CMAKE_SOURCE_DIR}/external/muq
     DEPENDS ${MUQ_DEPENDS}
-    CMAKE_ARGS -DCMAKE_INSTALL_PREFIX=${CMAKE_BINARY_DIR}/external/muq
+    CMAKE_ARGS -DCMAKE_INSTALL_PREFIX=${CMAKE_CURRENT_BINARY_DIR}/external/muq
     -DCMAKE_CXX_COMPILER=${CMAKE_CXX_COMPILER}
     -DCMAKE_C_COMPILER=${CMAKE_C_COMPILER}
     -DCMAKE_CXX_FLAGS=${CMAKE_CXX_FLAGS}
