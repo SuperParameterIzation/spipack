@@ -17,7 +17,13 @@ matrix:
           packages: ['g++-9', 'libpq-dev']
       env:
         - CXX=g++-9
+        - CC=gcc-9
 
 script:
   - $CXX --version
-  - make -kj3
+  - $CC --version
+  - cd $TRAVIS_BUILD_DIR/build
+  - cmake ..
+  - make -j5
+  - cd ..
+  - ./build/run-tests
