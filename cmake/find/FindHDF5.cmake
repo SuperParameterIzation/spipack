@@ -48,3 +48,5 @@ find_package_handle_standard_args(HDF5  DEFAULT_MSG
                                   HDF5_LIBRARY HDF5_INCLUDE_DIR)
 
 mark_as_advanced(HDF5_INCLUDE_DIR HDF5_LIBRARY)
+
+set(HDF5_FOUND 0)
