@@ -3,6 +3,7 @@
 #include "spipack/NumericalSolvers/GraphLaplacian.hpp"
 
 #include <MUQ/Modeling/Distributions/Gaussian.h>
+#include <MUQ/Modeling/Distributions/InverseGamma.h>
 
 using namespace muq::Modeling;
 using namespace muq::SamplingAlgorithms;
@@ -70,7 +71,8 @@ TEST(TESTGraphLaplacianTests, SampleCollectionConstruction) {
   YAML::Node options;
 
   // create a standard Gaussian random variable
-  auto rv = std::make_shared<Gaussian>(dim)->AsVariable();
+  //auto rv = std::make_shared<Gaussian>(dim)->AsVariable();
+  auto rv = std::make_shared<InverseGamma>(1.0, 1.0)->AsVariable();
 
   // set the options for the graph laplacian
   options["MaxLeaf"] = maxLeaf;
