@@ -8,7 +8,7 @@ ExternalProject_Add(GTEST
   -DCMAKE_CXX_FLAGS=-Wall --std=c++11
   -DCMAKE_CXX_COMPILER=${CMAKE_CXX_COMPILER}
   -DCMAKE_C_COMPILER=${CMAKE_C_COMPILER}
-  -DBUILD_SHARED_LIBS=ON
+  -DBUILD_SHARED_LIBS=OFF
   BUILD_COMMAND make -j5
   INSTALL_COMMAND make -j5 install
 )
@@ -17,4 +17,4 @@ set(GTEST_INCLUDE_DIR
   ${CMAKE_BINARY_DIR}/external/gtest/include)
 
 set(GTEST_LIBRARIES
-  ${CMAKE_BINARY_DIR}/external/gtest/lib/${library_prefix}gtest${shared_library_suffix})
+  ${CMAKE_BINARY_DIR}/external/gtest/lib/${library_prefix}gtest${static_library_suffix})
