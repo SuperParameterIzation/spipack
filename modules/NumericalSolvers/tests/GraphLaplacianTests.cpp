@@ -24,7 +24,6 @@ public:
   virtual void TearDown() override {
     // make sure the graph laplacian has enough samples
     EXPECT_EQ(laplacian->NumSamples(), n);
-
     // make the the kd tree max leaf is the value we set
     EXPECT_EQ(laplacian->KDTreeMaxLeaf(), maxLeaf);
   }*/
@@ -71,8 +70,8 @@ TEST(TESTGraphLaplacianTests, SampleCollectionConstruction) {
   YAML::Node options;
 
   // create a standard Gaussian random variable
-  //auto rv = std::make_shared<Gaussian>(dim)->AsVariable();
-  auto rv = std::make_shared<InverseGamma>(1.0, 1.0)->AsVariable();
+  auto dist = std::make_shared<Gaussian>(dim);
+  auto rv = dist->AsVariable();
 
   // set the options for the graph laplacian
   options["MaxLeaf"] = maxLeaf;
