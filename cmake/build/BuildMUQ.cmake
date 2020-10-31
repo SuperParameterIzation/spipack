@@ -11,15 +11,6 @@ if( SPIPACK_BUILT_BOOST )
   list(APPEND MUQ_DEPENDS BOOST)
 endif()
 
-message(STATUS "")
-message(STATUS "")
-message(STATUS "")
-message(STATUS ${CMAKE_CURRENT_BINARY_DIR}/external/muq)
-message(STATUS ${CMAKE_SOURCE_DIR}/external/muq2)
-message(STATUS "")
-message(STATUS "")
-message(STATUS "")
-
 ExternalProject_Add(
   MUQ
     PREFIX ${CMAKE_CURRENT_BINARY_DIR}/external/muq/
