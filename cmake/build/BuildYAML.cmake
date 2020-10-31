@@ -11,8 +11,8 @@ ExternalProject_Add(
     -DCMAKE_CXX_FLAGS=${CMAKE_CXX_FLAGS}
     -DBUILD_SHARED_LIBS=ON
     -DYAML_CPP_BUILD_TESTS=OFF
-  	BUILD_COMMAND make -j5
-    INSTALL_COMMAND make -j5 install
+  	BUILD_COMMAND make -j5 install
+    INSTALL_COMMAND ""
 )
 
 set(YamlCpp_LIBRARY ${CMAKE_BINARY_DIR}/external/yaml/lib/${library_prefix}yaml-cpp${shared_library_suffix})
