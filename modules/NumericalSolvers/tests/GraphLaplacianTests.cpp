@@ -76,13 +76,14 @@ TEST(TESTGraphLaplacianTests, SampleCollectionConstruction) {
   options["MaxLeaf"] = maxLeaf;
 
   // add random samples into a sample collection
-  auto samples = std::make_shared<SampleCollection>();
-  for( std::size_t i=0; i<n; ++i ) {
+  Eigen::VectorXd state = rv->Sample();
+  //auto samples = std::make_shared<SampleCollection>();
+  //for( std::size_t i=0; i<n; ++i ) {
     //Eigen::VectorXd state = Eigen::VectorXd::Random(dim);
-    Eigen::VectorXd state = rv->Sample();
+    //Eigen::VectorXd state = rv->Sample();
     //auto samp = std::make_shared<SamplingState>(state);
     //samples->Add(samp);
-  }
+  //}
 
   // create the graph laplacian
   //auto laplacian = std::make_shared<GraphLaplacian>(samples, options);
