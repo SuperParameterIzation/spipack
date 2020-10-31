@@ -19,11 +19,16 @@ matrix:
         - CXX=g++-9
         - CC=gcc-9
 
-script:
+before_script:
   - $CXX --version
   - $CC --version
   - cd $TRAVIS_BUILD_DIR/build
   - cmake ..
+
+script:
+  - $CXX --version
+  - $CC --version
+  - cd $TRAVIS_BUILD_DIR/build
   - make -j5
   - cd ..
   - ./build/run-tests
