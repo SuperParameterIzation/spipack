@@ -9,9 +9,9 @@ branches:
 
 # set up the envronment
 addons:
-  apt:
-    sources:
-    - ubuntu-toolchain-r-test
+  #apt:
+    #sources:
+    #- ubuntu-toolchain-r-test
     #- sourceline: 'deb http://apt.llvm.org/bionic/ llvm-toolchain-bionic-9 main'
     #  key_url: 'https://apt.llvm.org/llvm-snapshot.gpg.key'
     #- sourceline: 'ppa:ubuntu-toolchain-r/test'
