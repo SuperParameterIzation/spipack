@@ -46,28 +46,6 @@ protected:
     return samples;
   }
 
-  /// Check the nearest neighbors
-  /**
-    @param[in] x A point \f$\boldsymbol{x}\f$ in the domain
-    @param[in] neighbors A list of the nearest neighbors to the point \f$\boldsymbol{x}\f$
-    @param[in] samples The samples used to construct the graph Laplacian
-  */
-  void CheckNearestNeighbors(Eigen::VectorXd const& x, std::vector<std::pair<std::size_t, double> > const& neighbors, std::shared_ptr<SampleCollection> const& samples) const {
-    for( const auto& it : neighbors ) {
-      EXPECT_TRUE(it.first<n);
-      EXPECT_TRUE(it.second<r*r+1.0e-10);
-
-      // make sure that we have found the correct neighbor
-      const Eigen::VectorXd& xj = samples->at(it.first)->state[0];
-
-      // check the neighbors
-      EXPECT_TRUE((x-xj).norm()<r+1.0e-10);
-      EXPECT_NEAR(x.dot(xj), it.second, 1.0e-10);
-
-      std::cout << "HERE" << std::endl;
-    }
-  }
-
   /// The dimension of state spaces
   inline static const unsigned int dim = 4;
 
@@ -118,7 +96,18 @@ TEST_F(GraphLaplacianTests, FindNearestNeighbors_Radius) {
   laplacian->FindNeighbors(x, r, neighbors);
 
   // make sure the index of the neighbors is valid and they are within the correct radius
-  CheckNearestNeighbors(x, neighbors, samples);
+  for( const auto& it : neighbors ) {
+    EXPECT_TRUE(it.first<n);
+    EXPECT_TRUE(it.second<r*r+1.0e-10);
+
+    // make sure that we have found the correct neighbor
+    const Eigen::VectorXd& xj = samples->at(it.first)->state[0];
+
+    // check the neighbors
+    const double diffnorm = (x-xj).norm();
+    EXPECT_TRUE(diffnorm<r+1.0e-10);
+    EXPECT_NEAR(diffnorm*diffnorm, it.second, 1.0e-10);
+  }
 }
 
 TEST_F(GraphLaplacianTests, FindNearestNeighbors_NumNeighbors) {
