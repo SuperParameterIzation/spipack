@@ -77,7 +77,7 @@ TEST(TESTGraphLaplacianTests, SampleCollectionConstruction) {
   options["MaxLeaf"] = maxLeaf;
 
   // add random samples into a sample collection
-  Eigen::VectorXd state = rv->Sample();
+  //Eigen::VectorXd state = rv->Sample();
   //auto samples = std::make_shared<SampleCollection>();
   //for( std::size_t i=0; i<n; ++i ) {
     //Eigen::VectorXd state = Eigen::VectorXd::Random(dim);
