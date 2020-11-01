@@ -57,7 +57,7 @@ protected:
 //}
 
 TEST(TESTGraphLaplacianTests, SampleCollectionConstruction) {
-  /*/// The dimension of state space
+  /// The dimension of state space
   const unsigned int dim = 4;
 
   /// The number of samples
@@ -71,7 +71,7 @@ TEST(TESTGraphLaplacianTests, SampleCollectionConstruction) {
 
   // create a standard Gaussian random variable
   auto dist = std::make_shared<Gaussian>(dim);
-  auto rv = dist->AsVariable();
+  /*auto rv = dist->AsVariable();
 
   // set the options for the graph laplacian
   options["MaxLeaf"] = maxLeaf;*/
