@@ -1,4 +1,6 @@
 var searchData=
 [
-  ['test_5ff',['TEST_F',['../GraphLaplacianTests_8cpp.html#a4b3a06f22dfa6f138a91c27c4f2d7dbd',1,'TEST_F(GraphLaplacianTests, RandomVariableConstruction):&#160;GraphLaplacianTests.cpp'],['../GraphLaplacianTests_8cpp.html#ae0afd5a23d6e63c0fb80f5c5daeb21f0',1,'TEST_F(GraphLaplacianTests, SampleCollectionConstruction):&#160;GraphLaplacianTests.cpp']]]
+  ['n',['n',['../classGraphLaplacianTests.html#a2e2fbd8d4c78e5508a7a306abdeff11d',1,'GraphLaplacianTests']]],
+  ['nanoflannkdtree',['NanoflannKDTree',['../classspi_1_1NumericalSolvers_1_1GraphLaplacian.html#a04d6290144ce3dfc7fc94cbe16e1c645',1,'spi::NumericalSolvers::GraphLaplacian']]],
+  ['numsamples',['NumSamples',['../classspi_1_1NumericalSolvers_1_1GraphLaplacian.html#acb41d0c5d96c7aad4b9dd02d0c1b09de',1,'spi::NumericalSolvers::GraphLaplacian']]]
 ];

@@ -1,4 +1,6 @@
 var searchData=
 [
-  ['graphlaplacian',['GraphLaplacian',['../classspi_1_1NumericalSolvers_1_1GraphLaplacian.html#a900a746412cbdae9ca8d0bfb9875deb4',1,'spi::NumericalSolvers::GraphLaplacian::GraphLaplacian(std::shared_ptr&lt; muq::Modeling::RandomVariable &gt; const &amp;rv, YAML::Node const &amp;options)'],['../classspi_1_1NumericalSolvers_1_1GraphLaplacian.html#a98c1b445a8c9ca0c93cd0e2505779af7',1,'spi::NumericalSolvers::GraphLaplacian::GraphLaplacian(std::shared_ptr&lt; muq::SamplingAlgorithms::SampleCollection &gt; const &amp;samples, YAML::Node const &amp;options)']]]
+  ['cmake_5fminimum_5frequired',['cmake_minimum_required',['../CMakeLists_8txt.html#a3bf614cd52d42166ee0b19c0252d5db5',1,'CMakeLists.txt']]],
+  ['configure_5ffile',['configure_file',['../CMakeLists_8txt.html#a41a1e1d6274a42368f5dee87b6c9edbe',1,'CMakeLists.txt']]],
+  ['createfromsamples',['CreateFromSamples',['../classGraphLaplacianTests.html#a7df08f9a6420ac9170915cfb3f2187d8',1,'GraphLaplacianTests']]]
 ];
