@@ -29,15 +29,31 @@ public:
     EXPECT_EQ(laplacian->KDTreeMaxLeaf(), maxLeaf);
   }
 
+  /// Create the graph Laplacian from samples
+  /**
+    \return The sample collection used to create the graph Laplacian
+  */
+  std::shared_ptr<SampleCollection> CreateFromSamples() {
+    // add random samples into a sample collection
+    auto samples = std::make_shared<SampleCollection>();
+    for( std::size_t i=0; i<n; ++i ) { samples->Add(std::make_shared<SamplingState>(rv->Sample())); }
+
+    // create the graph laplacian
+    laplacian = std::make_shared<GraphLaplacian>(samples, options);
+
+    // return the samples
+    return samples;
+  }
+
 protected:
-  /// The dimension of state space
+  /// The dimension of state spaces
   inline static const unsigned int dim = 4;
 
   /// The number of samples
-  const size_t n = 1000;
+  const std::size_t n = 10000;
 
   /// The max leaf size for the kd tree
-  const size_t maxLeaf = 15;
+  const std::size_t maxLeaf = 15;
 
   /// The options for the graph Laplacian
   YAML::Node options;
@@ -55,27 +71,42 @@ TEST_F(GraphLaplacianTests, RandomVariableConstruction) {
 }
 
 TEST_F(GraphLaplacianTests, SampleCollectionConstruction) {
-  // add random samples into a sample collection
-  auto samples = std::make_shared<SampleCollection>();
-  for( size_t i=0; i<n; ++i ) { samples->Add(std::make_shared<SamplingState>(rv->Sample())); }
-
-  // create the graph laplacian
-  laplacian = std::make_shared<GraphLaplacian>(samples, options);
+  // create the graph laplacian from samples
+  auto samples = CreateFromSamples();
 
   // check to make sure the samples match
-  for( size_t i=0; i<n; ++i ) {
+  for( std::size_t i=0; i<n; ++i ) {
     EXPECT_NEAR((samples->at(i)->state[0]-laplacian->Point(i)).norm(), 0.0, 1.0e-10);
   }
 }
 
 TEST_F(GraphLaplacianTests, FindNearestNeighbors_Radius) {
-  // create the graph laplacian
-  laplacian = std::make_shared<GraphLaplacian>(rv, options);
+  // create the graph laplacian from samples
+  auto samples = CreateFromSamples();
 
   // build the kd-tree based on the samples
   laplacian->BuildKDTree();
 
-  EXPECT_TRUE(false);
+  // choose a new random point from the distribution
+  const Eigen::VectorXd x = rv->Sample();
+  const double r = 0.5; // the radius
+
+  // find all of the points within a choosen radius
+  std::vector<std::pair<std::size_t, double> > neighbors;
+  laplacian->FindNeighbors(x, r, neighbors);
+
+  // make sure the index of the neighbors is valid and they are within the correct radius
+  for( const auto& it : neighbors ) {
+    EXPECT_TRUE(it.first<n);
+    EXPECT_TRUE(it.second<r*r+1.0e-10);
+
+    // make sure that we have found the correct neighbor
+    const Eigen::VectorXd& xj = samples->at(it.first)->state[0];
+
+    // check the neighbors
+    EXPECT_TRUE((x-xj).norm()<r+1.0e-10);
+    EXPECT_NEAR(x.dot(xj), it.second, 1.0e-10);
+  }
 }
 
 TEST_F(GraphLaplacianTests, FindNearestNeighbors_NumNeighbors) {

@@ -26,8 +26,8 @@ namespace NumericalSolvers {
   <B>Configuration Parameters:</B>
       Parameter Key | Type | Default Value | Description |
       ------------- | ------------- | ------------- | ------------- |
-      "NumSamples"   | size_t | - | In the case where a random variable is passed to the constructor, we draw \f$n\f$ samples from the distribution.   |
-      "MaxLeaf"   | size_t | 10 | The maximum leaf size for the kd tree (nanoflann parameter). |
+      "NumSamples"   | std::size_t | - | In the case where a random variable is passed to the constructor, we draw \f$n\f$ samples from the distribution.   |
+      "MaxLeaf"   | std::size_t | 10 | The maximum leaf size for the kd tree (nanoflann parameter). |
 */
 class GraphLaplacian {
 public:
@@ -52,13 +52,13 @@ public:
   /**
     \return The number of samples in the sample collection (GraphLaplacian::samples)
   */
-  size_t NumSamples() const;
+  std::size_t NumSamples() const;
 
   /// Get the max leaf size for the kd stree (nanoflann parameter)
-  size_t KDTreeMaxLeaf() const;
+  std::size_t KDTreeMaxLeaf() const;
 
   /// Get the \f$i^{th}\f$ point from the point cloud.
-  const Eigen::VectorXd& Point(size_t const i) const;
+  const Eigen::VectorXd& Point(std::size_t const i) const;
 
   /// Update the kd-tree
   /**
@@ -71,8 +71,9 @@ public:
     Find all of the points \f$\{\boldsymbol{x}^{(j)}\}_{j=1}^{k} \subseteq \{\boldsymbol{x}^{(i)}\}_{i=1}^{n}\f$ such that \f$\|\boldsymbol{x}-\boldsymbol{x}^{(j)}\| \leq r\f$, where \f$r>0\f$ is a given radius.
     @param[in] x The given point \f$\boldsymbol{x}\f$
     @param[in] r The search radius \f$r\f$
+    @param[out] neighbors A vector of the nearest neighbors. First: the neighbor's index, Second: the squared distance (\f$d^2 = \boldsymbol{x} \cdot \boldsymbol{x}^{(j)}\f$) between the point \f$\boldsymbol{x}\f$ and the neighbor
   */
-  void FindNeighbors(Eigen::VectorXd const& x, double const r) const;
+  void FindNeighbors(Eigen::VectorXd const& x, double const r, std::vector<std::pair<std::size_t, double> >& neighbors) const;
 
 private:
 
@@ -81,7 +82,7 @@ private:
     @param[in] rv The random variable that we wish to sample
     @param[in] n Sample the random variable \f$n\f$ times
   */
-  static std::shared_ptr<muq::SamplingAlgorithms::SampleCollection> SampleRandomVariable(std::shared_ptr<muq::Modeling::RandomVariable> const& rv, size_t const n);
+  static std::shared_ptr<muq::SamplingAlgorithms::SampleCollection> SampleRandomVariable(std::shared_ptr<muq::Modeling::RandomVariable> const& rv, std::size_t const n);
 
   /// Interpret the particle locations as a point cloud
   class PointCloud {
@@ -99,7 +100,7 @@ private:
     /**
       \return The number of points in the sample collection (GraphLaplacian::PointCloud::samples)
     */
-    size_t kdtree_get_point_count() const;
+    std::size_t kdtree_get_point_count() const;
 
     /// Get the \f$i^{th}\f$ component of the \f$p^{th}\f$ point
     /**
@@ -107,7 +108,7 @@ private:
       @param[in] i We want this index of the particle location
       \return The \f$i^{th}\f$ component of the \f$p^{th}\f$ point in GraphLaplacian::PointCloud::samples
     */
-    double kdtree_get_pt(size_t const p, size_t const i) const;
+    double kdtree_get_pt(std::size_t const p, std::size_t const i) const;
 
     /// Optional bounding-box computation
     /**
@@ -117,13 +118,13 @@ private:
     inline bool kdtree_get_bbox(BBOX& bb) const { return false; }
 
     /// Get the \f$i^{th}\f$ point from the GraphLaplacian::PointCloud::samples.
-    const Eigen::VectorXd& Point(size_t const i) const;
+    const Eigen::VectorXd& Point(std::size_t const i) const;
 
     /// The dimension of the state
     /**
       The samples \f$x \sim \psi\f$ are in \f$\mathbb{R}^{d}\f$. This function returns the dimension \f$d\f$ (size of the first sample).
     */
-    size_t StateDim() const;
+    std::size_t StateDim() const;
 
   private:
     /// Samples from the distribution \f$\psi\f$
@@ -134,7 +135,7 @@ private:
   const PointCloud cloud;
 
   /// The max leaf for the kd-tree
-  const size_t maxLeaf;
+  const std::size_t maxLeaf;
 
   /// The nanoflann kd-tree type
   typedef nanoflann::KDTreeSingleIndexAdaptor<nanoflann::L2_Simple_Adaptor<double, PointCloud>, PointCloud> NanoflannKDTree;
@@ -145,7 +146,7 @@ private:
   /// The default values for the spi::NumericalSolvers::GraphLaplacian class.
   struct DefaultParameters {
     /// The max leaf for the kd-tree defaults to \f$10\f$.
-    inline static const size_t maxLeaf = 10;
+    inline static const std::size_t maxLeaf = 10;
   };
 
   /// Store the default values
