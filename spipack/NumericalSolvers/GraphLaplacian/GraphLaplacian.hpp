@@ -188,7 +188,7 @@ private:
   inline static const DefaultParameters defaults;
 };
 
-} // ParticleMethods
+} // namespace NumericalSolvers
 } // namespace spi
 
 #endif
