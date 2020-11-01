@@ -15,7 +15,7 @@ matrix:
         apt:
           sources: ['ubuntu-toolchain-r-test']
           packages:
-            -g++-9
+            - g++-9
             - doxygen
             - doxygen-doc
             - doxygen-latex
