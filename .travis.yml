@@ -14,15 +14,17 @@ matrix:
       addons:
         apt:
           sources: ['ubuntu-toolchain-r-test']
-          packages: ['g++-9', 'libpq-dev']
+          packages:
+            -g++-9
+            - doxygen
+            - doxygen-doc
+            - doxygen-latex
+            - doxygen-gui
+            - graphviz
+
       env:
         - CXX=g++-9
         - CC=gcc-9
-        - doxygen
-        - doxygen-doc
-        - doxygen-latex
-        - doxygen-gui
-        - graphviz
 
 before_script:
   - cd $TRAVIS_BUILD_DIR/build
