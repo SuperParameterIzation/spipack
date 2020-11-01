@@ -75,6 +75,15 @@ public:
   */
   void FindNeighbors(Eigen::VectorXd const& x, double const r, std::vector<std::pair<std::size_t, double> >& neighbors) const;
 
+  /// Find the \f$k\f$ points that are closest to a given point \f$\boldsymbol{x}\f$
+  /**
+    Find the closest \f$k\f$ points \f$\{\boldsymbol{x}^{(j)}\}_{j=1}^{k} \subseteq \{\boldsymbol{x}^{(i)}\}_{i=1}^{n}\f$.
+    @param[in] x The given point \f$\boldsymbol{x}\f$
+    @param[in] k The number of nearest neighbors \f$k\f$
+    @param[out] neighbors A vector of the nearest neighbors. First: the neighbor's index, Second: the squared distance (\f$d^2 = \boldsymbol{x} \cdot \boldsymbol{x}^{(j)}\f$) between the point \f$\boldsymbol{x}\f$ and the neighbor
+  */
+  void FindNeighbors(Eigen::VectorXd const& x, std::size_t const k, std::vector<std::pair<std::size_t, double> >& neighbors) const;
+
 private:
 
   /// Create a sample collection by sampling a random variable

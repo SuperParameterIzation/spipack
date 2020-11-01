@@ -39,6 +39,7 @@ void GraphLaplacian::BuildKDTree() {
 }
 
 void GraphLaplacian::FindNeighbors(Eigen::VectorXd const& x, double const r, std::vector<std::pair<std::size_t, double> >& neighbors) const {
+  // make sure the state size matches
   assert(x.size()==cloud.StateDim());
 
   // need to use the squared radius
@@ -49,6 +50,30 @@ void GraphLaplacian::FindNeighbors(Eigen::VectorXd const& x, double const r, std
 
   // find the nearest neighbors---neighbors in a specified radius
   kdtree.findNeighbors(resultSet, x.data(), nanoflann::SearchParams());
+}
+
+void GraphLaplacian::FindNeighbors(Eigen::VectorXd const& x, std::size_t const k, std::vector<std::pair<std::size_t, double> >& neighbors) const {
+  // make sure the state size matches
+  assert(x.size()==cloud.StateDim());
+
+  // make sure we have enough points
+  assert(k>0);
+  assert(k<=NumSamples());
+
+  // find the nearest neighbors
+  std::vector<std::size_t> indices(k);
+  std::vector<double> squaredDists(k);
+  nanoflann::KNNResultSet<double, std::size_t> resultSet(k);
+  resultSet.init(&indices[0], &squaredDists[0]);
+  kdtree.findNeighbors(resultSet, x.data(), nanoflann::SearchParams());
+
+  assert(indices.size()==k);
+  assert(squaredDists.size()==k);
+
+  // store the indices/distances in the output vector
+  neighbors.reserve(indices.size());
+  std::transform(indices.begin(), indices.end(), squaredDists.begin(), std::back_inserter(neighbors),
+               [](std::size_t a, double b) { return std::make_pair(a, b); });
 }
 
 GraphLaplacian::PointCloud::PointCloud(std::shared_ptr<SampleCollection> const& samples) : samples(samples) {}

@@ -111,14 +111,32 @@ TEST_F(GraphLaplacianTests, FindNearestNeighbors_Radius) {
 }
 
 TEST_F(GraphLaplacianTests, FindNearestNeighbors_NumNeighbors) {
-  // create the graph laplacian
-  laplacian = std::make_shared<GraphLaplacian>(rv, options);
+  // create the graph laplacian from samples
+  auto samples = CreateFromSamples();
 
   // build the kd-tree based on the samples
   laplacian->BuildKDTree();
 
   // choose a new random point from the distribution
   const Eigen::VectorXd x = rv->Sample();
+  const size_t k = 15; // the number of nearest neighbors
 
-  EXPECT_TRUE(false);
+  // find all of the points within a choosen radius
+  std::vector<std::pair<std::size_t, double> > neighbors;
+  laplacian->FindNeighbors(x, k, neighbors);
+
+  // make sure we found the correct number of nearest neighbors
+  EXPECT_EQ(neighbors.size(), k);
+
+  // make sure the index of the neighbors is valid and they are within the correct radius
+  for( const auto& it : neighbors ) {
+    EXPECT_TRUE(it.first<n);
+
+    // make sure that we have found the correct neighbor
+    const Eigen::VectorXd& xj = samples->at(it.first)->state[0];
+
+    // check the neighbors
+    const double diffnorm = (x-xj).norm();
+    EXPECT_NEAR(diffnorm*diffnorm, it.second, 1.0e-10);
+  }
 }
