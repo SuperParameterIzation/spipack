@@ -20,14 +20,10 @@ branches:
 #         - CC=gcc-9
 
 before_script:
-  - $CXX --version
-  - $CC --version
   - cd $TRAVIS_BUILD_DIR/build
   - cmake .. -DCMAKE_BUILD_TYPE=Debug > cmake_output.txt
 
 script:
-  - $CXX --version
-  - $CC --version
   - cd $TRAVIS_BUILD_DIR/build
   - make -j5 > make_output.txt
   - cd ..
