@@ -18,4 +18,4 @@ set(GTEST_INCLUDE_DIR
   ${CMAKE_BINARY_DIR}/external/gtest/include)
 
 set(GTEST_LIBRARIES
-  ${CMAKE_BINARY_DIR}/external/gtest/lib/${library_prefix}gmock${shared_library_suffix})
+  ${CMAKE_BINARY_DIR}/external/gtest/lib/${library_prefix}gmock${static_library_suffix})
