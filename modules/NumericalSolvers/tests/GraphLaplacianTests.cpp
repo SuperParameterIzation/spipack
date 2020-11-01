@@ -57,7 +57,7 @@ protected:
 //}
 
 TEST(TESTGraphLaplacianTests, SampleCollectionConstruction) {
-  /// The dimension of state space
+  /*/// The dimension of state space
   const unsigned int dim = 4;
 
   /// The number of samples
@@ -74,7 +74,7 @@ TEST(TESTGraphLaplacianTests, SampleCollectionConstruction) {
   auto rv = dist->AsVariable();
 
   // set the options for the graph laplacian
-  options["MaxLeaf"] = maxLeaf;
+  options["MaxLeaf"] = maxLeaf;*/
 
   // add random samples into a sample collection
   //Eigen::VectorXd state = rv->Sample();
