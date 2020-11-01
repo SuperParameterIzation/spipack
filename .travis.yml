@@ -28,3 +28,9 @@ script:
   - make -j5
   - cd ..
   #- ./build/run-tests
+
+# generate and deploy documentation
+after_success:
+  - cd $TRAVIS_BUILD_DIR/documentation
+  - chmod +x GenerateDocumentation.sh
+  - ./GenerateDocumentation.sh
