@@ -14,10 +14,10 @@ matrix:
       addons:
         apt:
           sources: ['ubuntu-toolchain-r-test']
-          packages: ['g++-7', 'libpq-dev']
+          packages: ['g++-9', 'libpq-dev']
       env:
-        - CXX=g++-7
-        - CC=gcc-7
+        - CXX=g++-9
+        - CC=gcc-9
 
 before_script:
   - cd $TRAVIS_BUILD_DIR/build
