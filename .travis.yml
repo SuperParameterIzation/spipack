@@ -25,8 +25,8 @@ before_script:
 
 script:
   - cd $TRAVIS_BUILD_DIR/build
-  - make -j5
-  - cd ..
+  #- make -j5
+  #- cd ..
   #- ./build/run-tests
 
 # generate and deploy documentation
