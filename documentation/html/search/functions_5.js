@@ -1,7 +1,4 @@
 var searchData=
 [
-  ['kdtree_5fget_5fbbox',['kdtree_get_bbox',['../classspi_1_1NumericalSolvers_1_1GraphLaplacian_1_1PointCloud.html#a5d55cc7fc09d76583fe838d514c01da7',1,'spi::NumericalSolvers::GraphLaplacian::PointCloud']]],
-  ['kdtree_5fget_5fpoint_5fcount',['kdtree_get_point_count',['../classspi_1_1NumericalSolvers_1_1GraphLaplacian_1_1PointCloud.html#ac59a158746e9dbe244d6807cb15d0997',1,'spi::NumericalSolvers::GraphLaplacian::PointCloud']]],
-  ['kdtree_5fget_5fpt',['kdtree_get_pt',['../classspi_1_1NumericalSolvers_1_1GraphLaplacian_1_1PointCloud.html#a13dd0fe0f4d6f96eeef465de20109880',1,'spi::NumericalSolvers::GraphLaplacian::PointCloud']]],
-  ['kdtreemaxleaf',['KDTreeMaxLeaf',['../classspi_1_1NumericalSolvers_1_1GraphLaplacian.html#a838c497356a790113f56624de840012b',1,'spi::NumericalSolvers::GraphLaplacian']]]
+  ['graphlaplacian',['GraphLaplacian',['../classspi_1_1NumericalSolvers_1_1GraphLaplacian.html#a900a746412cbdae9ca8d0bfb9875deb4',1,'spi::NumericalSolvers::GraphLaplacian::GraphLaplacian(std::shared_ptr&lt; muq::Modeling::RandomVariable &gt; const &amp;rv, YAML::Node const &amp;options)'],['../classspi_1_1NumericalSolvers_1_1GraphLaplacian.html#a98c1b445a8c9ca0c93cd0e2505779af7',1,'spi::NumericalSolvers::GraphLaplacian::GraphLaplacian(std::shared_ptr&lt; muq::SamplingAlgorithms::SampleCollection &gt; const &amp;samples, YAML::Node const &amp;options)']]]
 ];

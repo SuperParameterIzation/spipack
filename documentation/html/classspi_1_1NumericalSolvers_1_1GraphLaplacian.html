@@ -145,9 +145,15 @@ Public Member Functions</h2></td></tr>
 <tr class="memitem:a5860b3cbbb84f59a2b79ce07295a0188"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classspi_1_1NumericalSolvers_1_1GraphLaplacian.html#a5860b3cbbb84f59a2b79ce07295a0188">FindNeighbors</a> (Eigen::VectorXd const &amp;x, double const r, std::vector&lt; std::pair&lt; std::size_t, double &gt; &gt; &amp;neighbors) const </td></tr>
 <tr class="memdesc:a5860b3cbbb84f59a2b79ce07295a0188"><td class="mdescLeft">&#160;</td><td class="mdescRight">Find the points that are within radius \(r\) of a given point \(\boldsymbol{x}\).  <a href="#a5860b3cbbb84f59a2b79ce07295a0188">More...</a><br /></td></tr>
 <tr class="separator:a5860b3cbbb84f59a2b79ce07295a0188"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a1934364bc8dce9da42e053742b72625e"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classspi_1_1NumericalSolvers_1_1GraphLaplacian.html#a1934364bc8dce9da42e053742b72625e">FindNeighbors</a> (Eigen::VectorXd const &amp;x, std::size_t const k, std::vector&lt; std::pair&lt; std::size_t, double &gt; &gt; &amp;neighbors) const </td></tr>
-<tr class="memdesc:a1934364bc8dce9da42e053742b72625e"><td class="mdescLeft">&#160;</td><td class="mdescRight">Find the \(k\) points that are closest to a given point \(\boldsymbol{x}\).  <a href="#a1934364bc8dce9da42e053742b72625e">More...</a><br /></td></tr>
-<tr class="separator:a1934364bc8dce9da42e053742b72625e"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ab7b59eb1d2073a98ac5ac76b8c534dad"><td class="memItemLeft" align="right" valign="top">double&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classspi_1_1NumericalSolvers_1_1GraphLaplacian.html#ab7b59eb1d2073a98ac5ac76b8c534dad">FindNeighbors</a> (Eigen::VectorXd const &amp;x, std::size_t const k, std::vector&lt; std::pair&lt; std::size_t, double &gt; &gt; &amp;neighbors) const </td></tr>
+<tr class="memdesc:ab7b59eb1d2073a98ac5ac76b8c534dad"><td class="mdescLeft">&#160;</td><td class="mdescRight">Find the \(k\) points that are closest to a given point \(\boldsymbol{x}\).  <a href="#ab7b59eb1d2073a98ac5ac76b8c534dad">More...</a><br /></td></tr>
+<tr class="separator:ab7b59eb1d2073a98ac5ac76b8c534dad"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:afacc9bf991bb83130031f75ea3a78686"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classspi_1_1NumericalSolvers_1_1GraphLaplacian.html#afacc9bf991bb83130031f75ea3a78686">EvaluateKernel</a> (Eigen::VectorXd const &amp;x, double const h2, std::vector&lt; std::pair&lt; std::size_t, double &gt; &gt; &amp;neighbors) const </td></tr>
+<tr class="memdesc:afacc9bf991bb83130031f75ea3a78686"><td class="mdescLeft">&#160;</td><td class="mdescRight">Evaluate kernel at neighbors.  <a href="#afacc9bf991bb83130031f75ea3a78686">More...</a><br /></td></tr>
+<tr class="separator:afacc9bf991bb83130031f75ea3a78686"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a125d83383ea328174e45a9cce8a80248"><td class="memItemLeft" align="right" valign="top">virtual double&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classspi_1_1NumericalSolvers_1_1GraphLaplacian.html#a125d83383ea328174e45a9cce8a80248">Kernel</a> (double const theta) const </td></tr>
+<tr class="memdesc:a125d83383ea328174e45a9cce8a80248"><td class="mdescLeft">&#160;</td><td class="mdescRight">Evaluate the kernel function.  <a href="#a125d83383ea328174e45a9cce8a80248">More...</a><br /></td></tr>
+<tr class="separator:a125d83383ea328174e45a9cce8a80248"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pri-types"></a>
 Private Types</h2></td></tr>
@@ -331,6 +337,48 @@ Static Private Attributes</h2></td></tr>
 
 </div>
 </div>
+<a class="anchor" id="afacc9bf991bb83130031f75ea3a78686"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void GraphLaplacian::EvaluateKernel </td>
+          <td>(</td>
+          <td class="paramtype">Eigen::VectorXd const &amp;&#160;</td>
+          <td class="paramname"><em>x</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">double const&#160;</td>
+          <td class="paramname"><em>h2</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">std::vector&lt; std::pair&lt; std::size_t, double &gt; &gt; &amp;&#160;</td>
+          <td class="paramname"><em>neighbors</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td> const</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Evaluate kernel at neighbors. </p>
+<p>Given a point \(\boldsymbol{x}\) and its nearest neighbors \(\{\boldsymbol{x}^{(j)}\}_{j=1}^{k}\), compute the kernel function \(k_h(\|\boldsymbol{x} - \boldsymbol{x}^{(j)}\|^2) = k(h^{-2} \|\boldsymbol{x} - \boldsymbol{x}^{(j)}\|^2)\). </p><dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[in]</td><td class="paramname">x</td><td>The given point \(\boldsymbol{x}\) </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">h2</td><td>The squared bandwidth \(h^2\) that defines the kernel. </td></tr>
+    <tr><td class="paramdir">[in,out]</td><td class="paramname">neighbors</td><td>A vector of the nearest neighbors. First: the neighbor's index, Second: (input) the squared distance ( \(d^2 = \boldsymbol{x} \cdot \boldsymbol{x}^{(j)}\)) between the point \(\boldsymbol{x}\) and the neighbor, (output) the kernel evaluation \(k(\boldsymbol{x}, \boldsymbol{x}^{(j)})\) </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
 <a class="anchor" id="a5860b3cbbb84f59a2b79ce07295a0188"></a>
 <div class="memitem">
 <div class="memproto">
@@ -373,12 +421,12 @@ Static Private Attributes</h2></td></tr>
 
 </div>
 </div>
-<a class="anchor" id="a1934364bc8dce9da42e053742b72625e"></a>
+<a class="anchor" id="ab7b59eb1d2073a98ac5ac76b8c534dad"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">void GraphLaplacian::FindNeighbors </td>
+          <td class="memname">double GraphLaplacian::FindNeighbors </td>
           <td>(</td>
           <td class="paramtype">Eigen::VectorXd const &amp;&#160;</td>
           <td class="paramname"><em>x</em>, </td>
@@ -412,6 +460,7 @@ Static Private Attributes</h2></td></tr>
   </table>
   </dd>
 </dl>
+<dl class="section return"><dt>Returns</dt><dd>The squared distance to the furtherest point from \(\boldsymbol{x}\) </dd></dl>
 
 </div>
 </div>
@@ -429,6 +478,43 @@ Static Private Attributes</h2></td></tr>
 </div><div class="memdoc">
 
 <p>Get the max leaf size for the kd stree (nanoflann parameter) </p>
+
+</div>
+</div>
+<a class="anchor" id="a125d83383ea328174e45a9cce8a80248"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">double GraphLaplacian::Kernel </td>
+          <td>(</td>
+          <td class="paramtype">double const&#160;</td>
+          <td class="paramname"><em>theta</em></td><td>)</td>
+          <td> const</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">virtual</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Evaluate the kernel function. </p>
+<p>The kernel is a decreasing function \(k: \mathbb{R}^{+} \mapsto \mathbb{R}^{+}\) such that \(k(\theta) = 0\) if \(\theta \notin [0,1]\).</p>
+<p>The base class implementation is </p><p class="formulaDsp">
+\begin{equation*} k(\theta) = \begin{cases} 1 &amp; \mbox{if } \theta \in [0,1] \\ 0 &amp; \mbox{else.} \end{cases} \end{equation*}
+</p>
+ <dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[in]</td><td class="paramname">theta</td><td>The input to the kernel \(\theta\) </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>The kernel evaluation \(k(\theta)\) </dd></dl>
 
 </div>
 </div>
@@ -601,8 +687,8 @@ Static Private Attributes</h2></td></tr>
 </div>
 </div>
 <hr/>The documentation for this class was generated from the following files:<ul>
-<li>/home/travis/build/SuperParameterIzation/spipack/spipack/NumericalSolvers/<a class="el" href="GraphLaplacian_8hpp_source.html">GraphLaplacian.hpp</a></li>
-<li>/home/travis/build/SuperParameterIzation/spipack/modules/NumericalSolvers/src/<a class="el" href="GraphLaplacian_8cpp.html">GraphLaplacian.cpp</a></li>
+<li>/home/travis/build/SuperParameterIzation/spipack/spipack/NumericalSolvers/GraphLaplacian/<a class="el" href="GraphLaplacian_8hpp_source.html">GraphLaplacian.hpp</a></li>
+<li>/home/travis/build/SuperParameterIzation/spipack/modules/NumericalSolvers/src/GraphLaplacian/<a class="el" href="GraphLaplacian_8cpp.html">GraphLaplacian.cpp</a></li>
 </ul>
 </div><!-- contents -->
 <!-- start footer part -->
