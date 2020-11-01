@@ -71,10 +71,10 @@ TEST(TESTGraphLaplacianTests, SampleCollectionConstruction) {
 
   // create a standard Gaussian random variable
   auto dist = std::make_shared<Gaussian>(dim);
-  /*auto rv = dist->AsVariable();
+  auto rv = dist->AsVariable();
 
   // set the options for the graph laplacian
-  options["MaxLeaf"] = maxLeaf;*/
+  //options["MaxLeaf"] = maxLeaf;
 
   // add random samples into a sample collection
   //Eigen::VectorXd state = rv->Sample();
