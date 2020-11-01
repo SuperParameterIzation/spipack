@@ -1,8 +1,8 @@
 #include <gtest/gtest.h>
 
-#include "spipack/NumericalSolvers/GraphLaplacian.hpp"
-
 #include <MUQ/Modeling/Distributions/Gaussian.h>
+
+#include "spipack/NumericalSolvers/GraphLaplacian/GraphLaplacian.hpp"
 
 using namespace muq::Modeling;
 using namespace muq::SamplingAlgorithms;
@@ -123,12 +123,13 @@ TEST_F(GraphLaplacianTests, FindNearestNeighbors_NumNeighbors) {
 
   // find all of the points within a choosen radius
   std::vector<std::pair<std::size_t, double> > neighbors;
-  laplacian->FindNeighbors(x, k, neighbors);
+  const double furthestDist = laplacian->FindNeighbors(x, k, neighbors);
 
   // make sure we found the correct number of nearest neighbors
   EXPECT_EQ(neighbors.size(), k);
 
   // make sure the index of the neighbors is valid and they are within the correct radius
+  double maxdist = 0.0;
   for( const auto& it : neighbors ) {
     EXPECT_TRUE(it.first<n);
 
@@ -137,6 +138,11 @@ TEST_F(GraphLaplacianTests, FindNearestNeighbors_NumNeighbors) {
 
     // check the neighbors
     const double diffnorm = (x-xj).norm();
+    maxdist = std::max(maxdist, diffnorm);
     EXPECT_NEAR(diffnorm*diffnorm, it.second, 1.0e-10);
   }
+  EXPECT_NEAR(furthestDist, maxdist*maxdist, 1.0e-10);
+
+  // evaluate the kernel function at the neighbors
+  laplacian->EvaluateKernel(x, furthestDist, neighbors);
 }

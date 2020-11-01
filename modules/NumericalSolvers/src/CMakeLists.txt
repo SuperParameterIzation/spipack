@@ -1,5 +1,6 @@
 set(SOURCE
-  GraphLaplacian.cpp
+  GraphLaplacian/GraphLaplacian.cpp
+  GraphLaplacian/GraphLaplacianKernel.cpp
 )
 
 message(STATUS ${SPIPACK_EXTERNAL_LIBRARIES})

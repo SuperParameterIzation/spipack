@@ -1,4 +1,4 @@
-#include "spipack/NumericalSolvers/GraphLaplacian.hpp"
+#include "spipack/NumericalSolvers/GraphLaplacian/GraphLaplacian.hpp"
 
 using namespace muq::Modeling;
 using namespace muq::SamplingAlgorithms;
@@ -52,7 +52,7 @@ void GraphLaplacian::FindNeighbors(Eigen::VectorXd const& x, double const r, std
   kdtree.findNeighbors(resultSet, x.data(), nanoflann::SearchParams());
 }
 
-void GraphLaplacian::FindNeighbors(Eigen::VectorXd const& x, std::size_t const k, std::vector<std::pair<std::size_t, double> >& neighbors) const {
+double GraphLaplacian::FindNeighbors(Eigen::VectorXd const& x, std::size_t const k, std::vector<std::pair<std::size_t, double> >& neighbors) const {
   // make sure the state size matches
   assert(x.size()==cloud.StateDim());
 
@@ -74,6 +74,25 @@ void GraphLaplacian::FindNeighbors(Eigen::VectorXd const& x, std::size_t const k
   neighbors.reserve(indices.size());
   std::transform(indices.begin(), indices.end(), squaredDists.begin(), std::back_inserter(neighbors),
                [](std::size_t a, double b) { return std::make_pair(a, b); });
+
+  return resultSet.worstDist();
+}
+
+void GraphLaplacian::EvaluateKernel(Eigen::VectorXd const& x, double const h2, std::vector<std::pair<std::size_t, double> >& neighbors) const {
+  // loop through the nearest neighbors
+  for( auto& neigh : neighbors ) {
+    // get the neighbor point
+    //const Eigen::VectorXd& xj = samples->at(neigh.first)->state[0];
+
+    std::cout << Kernel(neigh.second/h2) << std::endl;
+
+
+  }
+}
+
+double GraphLaplacian::Kernel(double const theta) const {
+  assert(theta>-1.0e-10);
+  return (theta<1.0);
 }
 
 GraphLaplacian::PointCloud::PointCloud(std::shared_ptr<SampleCollection> const& samples) : samples(samples) {}

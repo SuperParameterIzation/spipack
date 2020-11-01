@@ -81,8 +81,34 @@ public:
     @param[in] x The given point \f$\boldsymbol{x}\f$
     @param[in] k The number of nearest neighbors \f$k\f$
     @param[out] neighbors A vector of the nearest neighbors. First: the neighbor's index, Second: the squared distance (\f$d^2 = \boldsymbol{x} \cdot \boldsymbol{x}^{(j)}\f$) between the point \f$\boldsymbol{x}\f$ and the neighbor
+    \return The squared distance to the furtherest point from \f$\boldsymbol{x}\f$
   */
-  void FindNeighbors(Eigen::VectorXd const& x, std::size_t const k, std::vector<std::pair<std::size_t, double> >& neighbors) const;
+  double FindNeighbors(Eigen::VectorXd const& x, std::size_t const k, std::vector<std::pair<std::size_t, double> >& neighbors) const;
+
+  /// Evaluate kernel at neighbors
+  /**
+    Given a point \f$\boldsymbol{x}\f$ and its nearest neighbors \f$\{\boldsymbol{x}^{(j)}\}_{j=1}^{k}\f$, compute the kernel function \f$k_h(\|\boldsymbol{x} - \boldsymbol{x}^{(j)}\|^2) = k(h^{-2} \|\boldsymbol{x} - \boldsymbol{x}^{(j)}\|^2)\f$.
+    @param[in] x The given point \f$\boldsymbol{x}\f$
+    @param[in] h2 The squared bandwidth \f$h^2\f$ that defines the kernel.
+    @param[in,out] neighbors A vector of the nearest neighbors. First: the neighbor's index, Second: (input) the squared distance (\f$d^2 = \boldsymbol{x} \cdot \boldsymbol{x}^{(j)}\f$) between the point \f$\boldsymbol{x}\f$ and the neighbor, (output) the kernel evaluation \f$k(\boldsymbol{x}, \boldsymbol{x}^{(j)})\f$
+  */
+  void EvaluateKernel(Eigen::VectorXd const& x, double const h2, std::vector<std::pair<std::size_t, double> >& neighbors) const;
+
+  /// Evaluate the kernel function
+  /**
+    The kernel is a decreasing function \f$k: \mathbb{R}^{+} \mapsto \mathbb{R}^{+}\f$ such that \f$k(\theta) = 0\f$ if \f$\theta \notin [0,1]\f$.
+
+    The base class implementation is
+    \f{equation*}{
+      k(\theta) = \begin{cases}
+        1 & \mbox{if } \theta \in [0,1] \\
+        0 & \mbox{else.}
+      \end{cases}
+    \f}
+    @param[in] theta The input to the kernel \f$\theta\f$
+    \return The kernel evaluation \f$k(\theta)\f$
+  */
+  virtual double Kernel(double const theta) const;
 
 private:
 
