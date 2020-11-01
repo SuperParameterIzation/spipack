@@ -23,7 +23,7 @@ before_script:
   - $CXX --version
   - $CC --version
   - cd $TRAVIS_BUILD_DIR/build
-  - cmake .. > cmake_output.txt
+  - cmake .. -DCMAKE_BUILD_TYPE=Debug > cmake_output.txt
 
 script:
   - $CXX --version
