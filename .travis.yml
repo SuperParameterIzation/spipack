@@ -9,15 +9,15 @@ branches:
   only:
     - master
 
-matrix:
-    - compiler: gcc
-      addons:
-        apt:
-          sources: ['ubuntu-toolchain-r-test']
-          packages: ['g++-9', 'libpq-dev']
-      env:
-        - CXX=g++-9
-        - CC=gcc-9
+# matrix:
+#     - compiler: gcc
+#       addons:
+#         apt:
+#           sources: ['ubuntu-toolchain-r-test']
+#           packages: ['g++-9', 'libpq-dev']
+#       env:
+#         - CXX=g++-9
+#         - CC=gcc-9
 
 before_script:
   - $CXX --version
