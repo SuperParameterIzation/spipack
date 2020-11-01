@@ -34,6 +34,7 @@ double Distribution::LogDensity(ref_vector<Eigen::VectorXd> const& inputs) {
 
 
 Eigen::VectorXd Distribution::Sample(ref_vector<Eigen::VectorXd> const& inputs) {
+  std::cout << "IN SAMPLE!" << std::endl;
   return SampleImpl(inputs);
 }
 
