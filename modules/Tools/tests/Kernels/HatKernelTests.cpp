@@ -16,6 +16,7 @@ TEST(HatKernelTests, Evaluate) {
     Eigen::VectorXd x2 = Eigen::VectorXd::Ones(dim, 1);
     x2 = 0.3*x2/x2.norm();
     EXPECT_DOUBLE_EQ(kernel.Evaluate(x1, x2), 1.0);
+    EXPECT_DOUBLE_EQ(kernel(0.1), 1.0);
   }
 
   Eigen::VectorXd diff = x1;
@@ -24,5 +25,6 @@ TEST(HatKernelTests, Evaluate) {
     Eigen::VectorXd x2 = Eigen::VectorXd::Ones(dim, 1);
     x2 = 1.3*x2/x2.norm();
     EXPECT_DOUBLE_EQ(kernel.Evaluate(x1, x2), 0.0);
+    EXPECT_DOUBLE_EQ(kernel(1.1), 0.0);
   }
 }
