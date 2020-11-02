@@ -46,8 +46,6 @@ public:
   */
   virtual double EvaluateIsotropicKernel(double const theta) const override;
 
-protected:
-
   /// Evaluate the kernel function \f$k(\theta)\f$
   /**
     We have already checked that \f$\theta \leq 1\f$---this function implements the support of the kernel.
@@ -55,6 +53,8 @@ protected:
     \return The kernel evaluation \f$k(\theta)\f$
   */
   virtual double EvaluateCompactKernel(double const theta) const = 0;
+
+protected:
 
 private:
 };

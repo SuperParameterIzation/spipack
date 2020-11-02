@@ -18,6 +18,11 @@ public:
     // set the options for the graph laplacian
     options["MaxLeaf"] = maxLeaf;
     options["NumSamples"] = n;
+
+    // set the kernel options
+    YAML::Node kernelOptions;
+    kernelOptions["Kernel"] = "HatKernel";
+    options["KernelOptions"] = kernelOptions;
   }
 
   /// Make sure everything is constructed correctly

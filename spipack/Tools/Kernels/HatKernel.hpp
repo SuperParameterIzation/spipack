@@ -26,7 +26,6 @@ public:
   HatKernel(YAML::Node const& options);
 
   virtual ~HatKernel() = default;
-protected:
 
   /// Evaluate the hat kernel function \f$k(\theta)\f$
   /**
@@ -35,6 +34,8 @@ protected:
     \return The kernel evaluation \f$k(\theta)\f$
   */
   virtual double EvaluateCompactKernel(double const theta) const override;
+
+protected:
 
 private:
 };

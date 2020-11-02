@@ -2,19 +2,26 @@
 
 using namespace muq::Modeling;
 using namespace muq::SamplingAlgorithms;
+using namespace spi::Tools;
 using namespace spi::NumericalSolvers;
 
 GraphLaplacian::GraphLaplacian(std::shared_ptr<RandomVariable> const& rv, YAML::Node const& options) :
   cloud(SampleRandomVariable(rv, options["NumSamples"].as<std::size_t>())),
   maxLeaf(options["MaxLeaf"].as<std::size_t>(defaults.maxLeaf)),
   kdtree(cloud.StateDim(), cloud, nanoflann::KDTreeSingleIndexAdaptorParams(maxLeaf))
-{}
+{
+  kernel = CompactKernel::Construct(options["KernelOptions"]);
+  assert(kernel);
+}
 
 GraphLaplacian::GraphLaplacian(std::shared_ptr<muq::SamplingAlgorithms::SampleCollection> const& samples, YAML::Node const& options) :
   cloud(samples),
   maxLeaf(options["MaxLeaf"].as<std::size_t>(defaults.maxLeaf)),
   kdtree(cloud.StateDim(), cloud, nanoflann::KDTreeSingleIndexAdaptorParams(maxLeaf))
-{}
+{
+  kernel = CompactKernel::Construct(options["KernelOptions"]);
+  assert(kernel);
+}
 
 std::shared_ptr<muq::SamplingAlgorithms::SampleCollection> GraphLaplacian::SampleRandomVariable(std::shared_ptr<RandomVariable> const& rv, std::size_t const n) {
   // add random samples into a sample collection
@@ -79,20 +86,13 @@ double GraphLaplacian::FindNeighbors(Eigen::VectorXd const& x, std::size_t const
 }
 
 void GraphLaplacian::EvaluateKernel(Eigen::VectorXd const& x, double const h2, std::vector<std::pair<std::size_t, double> >& neighbors) const {
+  assert(kernel);
+
   // loop through the nearest neighbors
   for( auto& neigh : neighbors ) {
-    // get the neighbor point
-    //const Eigen::VectorXd& xj = samples->at(neigh.first)->state[0];
-
-    std::cout << Kernel(neigh.second/h2) << std::endl;
-
-
+    // compute the kernel between the given point and its neighbor
+    neigh.second = kernel->EvaluateCompactKernel(neigh.second/h2);
   }
-}
-
-double GraphLaplacian::Kernel(double const theta) const {
-  assert(theta>-1.0e-10);
-  return (theta<1.0);
 }
 
 GraphLaplacian::PointCloud::PointCloud(std::shared_ptr<SampleCollection> const& samples) : samples(samples) {}

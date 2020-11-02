@@ -23,6 +23,12 @@ class Kernel {
 public:
 
   /// Construct the kernel function
+  /**
+  <B>Configuration Parameters:</B>
+      Parameter Key | Type | Default Value | Description |
+      ------------- | ------------- | ------------- | ------------- |
+      "Kernel"   | std::string | - | The name of the kernel function   |
+  */
   Kernel(YAML::Node const& options);
 
   virtual ~Kernel() = default;
