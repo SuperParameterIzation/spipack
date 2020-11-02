@@ -73,9 +73,9 @@ public:
   */
   std::size_t NumSamples() const;
 
-  /// The squared bandwdwidth \f$h^\f$
+  /// The squared bandwdwidth \f$h^{2}\f$
   /**
-    \return The squared bandwidth \f$h^2\f$
+    \return The squared bandwidth \f$h^{2}\f$
   */
   double SquaredBandwidth() const;
 

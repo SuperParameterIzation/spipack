@@ -9,6 +9,7 @@ var searchData=
   ['spipack_5fregister_5fcompact_5fkernel',['SPIPACK_REGISTER_COMPACT_KERNEL',['../CompactKernel_8hpp.html#a49807dea5c3f0ed02f1d3c599c2095a7',1,'CompactKernel.hpp']]],
   ['spipack_5fregister_5fisotropic_5fkernel',['SPIPACK_REGISTER_ISOTROPIC_KERNEL',['../IsotropicKernel_8hpp.html#a48db39f57bc64a0d538f78903f98848f',1,'IsotropicKernel.hpp']]],
   ['spipack_5fregister_5fkernel',['SPIPACK_REGISTER_KERNEL',['../Kernel_8hpp.html#a8ae8ec2e80b673a0f007c905121dfbe0',1,'Kernel.hpp']]],
+  ['squaredbandwidth',['SquaredBandwidth',['../classspi_1_1NumericalSolvers_1_1GraphLaplacian.html#a51e754608491894348bbf91ccef5fe25',1,'spi::NumericalSolvers::GraphLaplacian::SquaredBandwidth()'],['../structspi_1_1NumericalSolvers_1_1GraphLaplacian_1_1DefaultParameters.html#a2cb82f0969aea386970990b2142d5c84',1,'spi::NumericalSolvers::GraphLaplacian::DefaultParameters::SquaredBandwidth()']]],
   ['statedim',['StateDim',['../classspi_1_1NumericalSolvers_1_1GraphLaplacian_1_1PointCloud.html#a368a56632d9251e9606812212c19d5aa',1,'spi::NumericalSolvers::GraphLaplacian::PointCloud']]],
   ['std',['std',['../CMakeLists_8txt.html#a74f1ce2eb667ae060cbeba3a048ca2fa',1,'CMakeLists.txt']]],
   ['tools',['Tools',['../namespacespi_1_1Tools.html',1,'spi']]]
