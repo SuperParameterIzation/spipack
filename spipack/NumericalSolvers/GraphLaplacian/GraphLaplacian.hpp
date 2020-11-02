@@ -5,6 +5,8 @@
 
 #include <nanoflann.hpp>
 
+#include <Eigen/Sparse>
+
 #include <MUQ/Modeling/Distributions/RandomVariable.h>
 
 #include <MUQ/SamplingAlgorithms/SampleCollection.h>
@@ -26,12 +28,24 @@ namespace NumericalSolvers {
   \f}
   such that \f$\mathbb{E}_{\psi}[H] = 0\f$.
 
+  Define a compact kernel function \f$k: \mathbb{R}^{+} \mapsto \mathbb{R}^{+}\f$ such that \f$k(\theta)\f$ is decreasing and \f$k(\theta) = 0\f$ if \f$\theta \notin [0,1]\f$ (i.e., the support of the kernel is \f$[0,1]\f$). Define the matrix \f$\boldsymbol{K}\f$ such that the \f$(i^{th}, j^{th})\f$ component is
+  \f{equation*}{
+    K_{ij} = \frac{k(h^{-2} \|\boldsymbol{x}^{(i)} -\boldsymbol{x}^{(i)}\|^2)}{\sqrt{d^{(i)} d^{(j)}}},
+  \f}
+  where \f$h\f$ is the bandwidth parameter and \f$d^{(i)} = \sum_{j=1}^{n} k(h^{-2} \|\boldsymbol{x}^{(i)} -\boldsymbol{x}^{(i)}\|^2)\f$. Additionally, define a diagonal matrix \f$\boldsymbol{D}\f$ such that \f$D_{ii} = \sum_{j=1}^{n} K_{ij}\f$. Define the heat matrix and discrete weighted Laplacian
+  \f{equation*}{
+    \begin{array}{ccc}
+      \boldsymbol{P} = \boldsymbol{D}^{-1} \boldsymbol{K} & \mbox{and} & \widetilde{\nabla}_{\psi}^2 = h^{-2} (\boldsymbol{I}-\boldsymbol{P}),
+    \end{array}
+  \f}
+  where \f$\boldsymbol{I}\f$ is the identity matrix.
+
   <B>Configuration Parameters:</B>
       Parameter Key | Type | Default Value | Description |
       ------------- | ------------- | ------------- | ------------- |
       "NumSamples"   | std::size_t | - | In the case where a random variable is passed to the constructor, we draw \f$n\f$ samples from the distribution.   |
       "MaxLeaf"   | std::size_t | 10 | The maximum leaf size for the kd tree (nanoflann parameter). |
-      "KernelOptions"   | YAML::Node | - | The options for the kernel function. |
+      "KernelOptions"   | YAML::Node | - | The options for the kernel function (spi::Tools::CompactKernel). |
 */
 class GraphLaplacian {
 public:
@@ -62,7 +76,7 @@ public:
   std::size_t KDTreeMaxLeaf() const;
 
   /// Get the \f$i^{th}\f$ point from the point cloud.
-  const Eigen::VectorXd& Point(std::size_t const i) const;
+  Eigen::Ref<const Eigen::VectorXd> Point(std::size_t const i) const;
 
   /// Update the kd-tree
   /**
@@ -94,9 +108,15 @@ public:
     Given a point \f$\boldsymbol{x}\f$ and its nearest neighbors \f$\{\boldsymbol{x}^{(j)}\}_{j=1}^{k}\f$, compute the kernel function \f$k_h(\|\boldsymbol{x} - \boldsymbol{x}^{(j)}\|^2) = k(h^{-2} \|\boldsymbol{x} - \boldsymbol{x}^{(j)}\|^2)\f$.
     @param[in] x The given point \f$\boldsymbol{x}\f$
     @param[in] h2 The squared bandwidth \f$h^2\f$ that defines the kernel.
-    @param[in,out] neighbors A vector of the nearest neighbors. First: the neighbor's index, Second: (input) the squared distance (\f$d^2 = \boldsymbol{x} \cdot \boldsymbol{x}^{(j)}\f$) between the point \f$\boldsymbol{x}\f$ and the neighbor, (output) the kernel evaluation \f$k(\boldsymbol{x}, \boldsymbol{x}^{(j)})\f$
+    @param[in,out] neighbors A vector of the nearest neighbors. First: the neighbor's index, Second: (input) the squared distance (\f$\boldsymbol{x} \cdot \boldsymbol{x}^{(j)}\f$) between the point \f$\boldsymbol{x}\f$ and the neighbor, (output) the kernel evaluation \f$k(\boldsymbol{x}, \boldsymbol{x}^{(j)})\f$
+    \return The sum of the kernel evaluations \f$d(\boldsymbol{x}) = \sum_{j=1}^{k} k_h(\|\boldsymbol{x}-\boldsymbol{x}^{(j)}\|^2)\f$
   */
-  void EvaluateKernel(Eigen::VectorXd const& x, double const h2, std::vector<std::pair<std::size_t, double> >& neighbors) const;
+  double EvaluateKernel(Eigen::VectorXd const& x, double const h2, std::vector<std::pair<std::size_t, double> >& neighbors) const;
+
+  /// Construct the heat matrix \f$\boldsymbol{P}\f$
+  /**
+  */
+  void ConstructHeatMatrix();
 
 private:
 
@@ -141,7 +161,7 @@ private:
     inline bool kdtree_get_bbox(BBOX& bb) const { return false; }
 
     /// Get the \f$i^{th}\f$ point from the GraphLaplacian::PointCloud::samples.
-    const Eigen::VectorXd& Point(std::size_t const i) const;
+    Eigen::Ref<const Eigen::VectorXd> Point(std::size_t const i) const;
 
     /// The dimension of the state
     /**
@@ -153,6 +173,16 @@ private:
     /// Samples from the distribution \f$\psi\f$
     std::shared_ptr<muq::SamplingAlgorithms::SampleCollection> samples;
   };
+
+  /// Initialize the graph Laplacian 
+  /**
+    Must be called by every constructor.
+    @param[in] options The options for the graph Laplacian
+  */
+  void Initialize(YAML::Node const& options);
+
+  /// The heat matrix \f$\boldsymbol{P}\f$
+  Eigen::SparseMatrix<double> heatMatrix;
 
   /// The point cloud that we will use to approximate the weighted Laplacian (and solve the weighted Poisson equation)
   const PointCloud cloud;

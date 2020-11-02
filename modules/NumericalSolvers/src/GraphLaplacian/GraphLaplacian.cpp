@@ -10,8 +10,7 @@ GraphLaplacian::GraphLaplacian(std::shared_ptr<RandomVariable> const& rv, YAML::
   maxLeaf(options["MaxLeaf"].as<std::size_t>(defaults.maxLeaf)),
   kdtree(cloud.StateDim(), cloud, nanoflann::KDTreeSingleIndexAdaptorParams(maxLeaf))
 {
-  kernel = CompactKernel::Construct(options["KernelOptions"]);
-  assert(kernel);
+  Initialize(options);
 }
 
 GraphLaplacian::GraphLaplacian(std::shared_ptr<muq::SamplingAlgorithms::SampleCollection> const& samples, YAML::Node const& options) :
@@ -19,8 +18,16 @@ GraphLaplacian::GraphLaplacian(std::shared_ptr<muq::SamplingAlgorithms::SampleCo
   maxLeaf(options["MaxLeaf"].as<std::size_t>(defaults.maxLeaf)),
   kdtree(cloud.StateDim(), cloud, nanoflann::KDTreeSingleIndexAdaptorParams(maxLeaf))
 {
+  Initialize(options);
+}
+
+void GraphLaplacian::Initialize(YAML::Node const& options) {
+  // create the kernel
   kernel = CompactKernel::Construct(options["KernelOptions"]);
   assert(kernel);
+
+  // initialize the sparse heat matrix
+  heatMatrix.resize(NumSamples(), NumSamples());
 }
 
 std::shared_ptr<muq::SamplingAlgorithms::SampleCollection> GraphLaplacian::SampleRandomVariable(std::shared_ptr<RandomVariable> const& rv, std::size_t const n) {
@@ -35,7 +42,7 @@ std::size_t GraphLaplacian::NumSamples() const { return cloud.kdtree_get_point_c
 
 std::size_t GraphLaplacian::KDTreeMaxLeaf() const { return maxLeaf; }
 
-const Eigen::VectorXd& GraphLaplacian::Point(std::size_t const i) const {
+Eigen::Ref<const Eigen::VectorXd> GraphLaplacian::Point(std::size_t const i) const {
   assert(i<NumSamples());
   return cloud.Point(i);
 }
@@ -85,14 +92,33 @@ double GraphLaplacian::FindNeighbors(Eigen::VectorXd const& x, std::size_t const
   return resultSet.worstDist();
 }
 
-void GraphLaplacian::EvaluateKernel(Eigen::VectorXd const& x, double const h2, std::vector<std::pair<std::size_t, double> >& neighbors) const {
+double GraphLaplacian::EvaluateKernel(Eigen::VectorXd const& x, double const h2, std::vector<std::pair<std::size_t, double> >& neighbors) const {
   assert(kernel);
 
   // loop through the nearest neighbors
+  double sum = 0.0;
   for( auto& neigh : neighbors ) {
     // compute the kernel between the given point and its neighbor
     neigh.second = kernel->EvaluateCompactKernel(neigh.second/h2);
+    sum += neigh.second;
   }
+
+  return sum;
+}
+
+void GraphLaplacian::ConstructHeatMatrix() {
+  // build the kd-tree based on the samples
+  BuildKDTree();
+
+  // loop through the samples
+  for( std::size_t i=0; i<NumSamples(); ++i ) {
+    // get the state for this sample
+    const Eigen::Ref<const Eigen::VectorXd> x = Point(i);
+
+    std::cout << x.transpose() << std::endl;
+  }
+
+  std::cout << "Construct heat matrix" << std::endl;
 }
 
 GraphLaplacian::PointCloud::PointCloud(std::shared_ptr<SampleCollection> const& samples) : samples(samples) {}
@@ -109,7 +135,7 @@ double GraphLaplacian::PointCloud::kdtree_get_pt(std::size_t const p, std::size_
   return samples->at(p)->state[0][i];
 }
 
-const Eigen::VectorXd& GraphLaplacian::PointCloud::Point(std::size_t const i) const {
+Eigen::Ref<const Eigen::VectorXd> GraphLaplacian::PointCloud::Point(std::size_t const i) const {
   assert(samples);
   assert(i<samples->size());
   return samples->at(i)->state[0];

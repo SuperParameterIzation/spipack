@@ -113,6 +113,16 @@ TEST_F(GraphLaplacianTests, FindNearestNeighbors_Radius) {
     EXPECT_TRUE(diffnorm<r+1.0e-10);
     EXPECT_NEAR(diffnorm*diffnorm, it.second, 1.0e-10);
   }
+
+  // evaluate the kernel function at the neighbors
+  const double kernelsum = laplacian->EvaluateKernel(x, r, neighbors);
+
+  // the distances should now be the kernel evaluation
+  for( const auto& it : neighbors ) {
+    // in this case, the kernel is a hat kernel, so the distance is 1
+    EXPECT_DOUBLE_EQ(it.second, 1.0);
+  }
+  EXPECT_DOUBLE_EQ(kernelsum, (double)neighbors.size());
 }
 
 TEST_F(GraphLaplacianTests, FindNearestNeighbors_NumNeighbors) {
@@ -149,5 +159,22 @@ TEST_F(GraphLaplacianTests, FindNearestNeighbors_NumNeighbors) {
   EXPECT_NEAR(furthestDist, maxdist*maxdist, 1.0e-10);
 
   // evaluate the kernel function at the neighbors
-  laplacian->EvaluateKernel(x, furthestDist, neighbors);
+  const double kernelsum = laplacian->EvaluateKernel(x, furthestDist, neighbors);
+
+  // the distances should now be the kernel evaluation
+  for( const auto& it : neighbors ) {
+    // in this case, the kernel is a hat kernel, so the distance is 1
+    EXPECT_DOUBLE_EQ(it.second, 1.0);
+  }
+  EXPECT_DOUBLE_EQ(kernelsum, (double)k);
+}
+
+TEST_F(GraphLaplacianTests, ConstructHeatMatrix) {
+  // create the graph laplacian from samples
+  auto samples = CreateFromSamples();
+
+  // construct the heat matrix
+  laplacian->ConstructHeatMatrix();
+
+  EXPECT_TRUE(false);
 }
