@@ -1,7 +1,5 @@
 var searchData=
 [
-  ['_7egraphlaplacian',['~GraphLaplacian',['../classspi_1_1NumericalSolvers_1_1GraphLaplacian.html#af533e7a08281524ec2f3c70a236c864f',1,'spi::NumericalSolvers::GraphLaplacian']]],
-  ['_7ehatkernel',['~HatKernel',['../classspi_1_1NumericalSolvers_1_1HatKernel.html#a316196762413cd13078f625d4f15d0ba',1,'spi::NumericalSolvers::HatKernel']]],
-  ['_7ekernel',['~Kernel',['../classspi_1_1Tools_1_1Kernel.html#a94625d2efab4da6a9d387e160e829150',1,'spi::Tools::Kernel']]],
-  ['_7epointcloud',['~PointCloud',['../classspi_1_1NumericalSolvers_1_1GraphLaplacian_1_1PointCloud.html#ab44de8446bb02b0f2daa016027293d14',1,'spi::NumericalSolvers::GraphLaplacian::PointCloud']]]
+  ['point',['Point',['../classspi_1_1NumericalSolvers_1_1GraphLaplacian.html#afc4bf66056b105396b4f6c392f09ad04',1,'spi::NumericalSolvers::GraphLaplacian::Point()'],['../classspi_1_1NumericalSolvers_1_1GraphLaplacian_1_1PointCloud.html#a3cfe55aef587bfba1f0e68c796897bc9',1,'spi::NumericalSolvers::GraphLaplacian::PointCloud::Point()']]],
+  ['pointcloud',['PointCloud',['../classspi_1_1NumericalSolvers_1_1GraphLaplacian_1_1PointCloud.html#ae83afea910c577184194f83d4f675f27',1,'spi::NumericalSolvers::GraphLaplacian::PointCloud']]]
 ];

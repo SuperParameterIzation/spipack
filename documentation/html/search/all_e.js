@@ -1,6 +1,5 @@
 var searchData=
 [
-  ['point',['Point',['../classspi_1_1NumericalSolvers_1_1GraphLaplacian.html#afc4bf66056b105396b4f6c392f09ad04',1,'spi::NumericalSolvers::GraphLaplacian::Point()'],['../classspi_1_1NumericalSolvers_1_1GraphLaplacian_1_1PointCloud.html#a3cfe55aef587bfba1f0e68c796897bc9',1,'spi::NumericalSolvers::GraphLaplacian::PointCloud::Point()']]],
-  ['pointcloud',['PointCloud',['../classspi_1_1NumericalSolvers_1_1GraphLaplacian_1_1PointCloud.html#ae83afea910c577184194f83d4f675f27',1,'spi::NumericalSolvers::GraphLaplacian::PointCloud']]],
-  ['pointcloud',['PointCloud',['../classspi_1_1NumericalSolvers_1_1GraphLaplacian_1_1PointCloud.html',1,'spi::NumericalSolvers::GraphLaplacian']]]
+  ['operator_28_29',['operator()',['../classspi_1_1Tools_1_1IsotropicKernel.html#ae653b33470dab6d4a04d94ef59e8791e',1,'spi::Tools::IsotropicKernel::operator()()'],['../classspi_1_1Tools_1_1Kernel.html#ac412a5d46715bfec5f2a69a6448b8d80',1,'spi::Tools::Kernel::operator()()']]],
+  ['options',['options',['../classGraphLaplacianTests.html#a52bce07aea75078572082e420fb4fe87',1,'GraphLaplacianTests']]]
 ];

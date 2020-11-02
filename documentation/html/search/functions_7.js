@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['main',['main',['../__run-tests_8cpp.html#a3c04138a5bfe5d72780bb7e82a18e627',1,'_run-tests.cpp']]]
+  ['isotropickernel',['IsotropicKernel',['../classspi_1_1Tools_1_1IsotropicKernel.html#a8b1cab3138c69c632aaeadc8508d7dba',1,'spi::Tools::IsotropicKernel']]]
 ];
