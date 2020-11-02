@@ -93,7 +93,8 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <div class="header">
   <div class="summary">
 <a href="#nested-classes">Classes</a> &#124;
-<a href="#namespaces">Namespaces</a>  </div>
+<a href="#namespaces">Namespaces</a> &#124;
+<a href="#define-members">Macros</a>  </div>
   <div class="headertitle">
 <div class="title">IsotropicKernel.hpp File Reference</div>  </div>
 </div><!--header-->
@@ -114,7 +115,30 @@ Namespaces</h2></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:namespacespi_1_1Tools"><td class="memItemLeft" align="right" valign="top"> &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacespi_1_1Tools.html">spi::Tools</a></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="define-members"></a>
+Macros</h2></td></tr>
+<tr class="memitem:a48db39f57bc64a0d538f78903f98848f"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="IsotropicKernel_8hpp.html#a48db39f57bc64a0d538f78903f98848f">SPIPACK_REGISTER_ISOTROPIC_KERNEL</a>(NAME)</td></tr>
+<tr class="separator:a48db39f57bc64a0d538f78903f98848f"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
+<h2 class="groupheader">Macro Definition Documentation</h2>
+<a class="anchor" id="a48db39f57bc64a0d538f78903f98848f"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">#define SPIPACK_REGISTER_ISOTROPIC_KERNEL</td>
+          <td>(</td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname">NAME</td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<b>Value:</b><div class="fragment"><div class="line"><span class="keyword">static</span> <span class="keyword">auto</span> regIsotropic ##NAME     \</div><div class="line">  = <a class="code" href="classspi_1_1Tools_1_1IsotropicKernel.html#ad36495584c41f51a1c6df420f98f8830">spi::Tools::IsotropicKernel::KernelMap</a>()-&gt;insert(std::make_pair(#NAME, muq::Utilities::shared_factory&lt;NAME&gt;()));</div><div class="ttc" id="classspi_1_1Tools_1_1IsotropicKernel_html_ad36495584c41f51a1c6df420f98f8830"><div class="ttname"><a href="classspi_1_1Tools_1_1IsotropicKernel.html#ad36495584c41f51a1c6df420f98f8830">spi::Tools::IsotropicKernel::KernelMap</a></div><div class="ttdeci">static std::shared_ptr&lt; ConstructKernelMap &gt; KernelMap()</div><div class="ttdoc">Get the map from isotropic kernel name to its constructor. </div><div class="ttdef"><b>Definition:</b> IsotropicKernel.cpp:30</div></div>
+</div><!-- fragment -->
+</div>
+</div>
 </div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>

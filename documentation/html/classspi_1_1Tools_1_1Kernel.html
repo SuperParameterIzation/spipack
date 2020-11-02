@@ -94,7 +94,9 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 </div><!-- top -->
 <div class="header">
   <div class="summary">
+<a href="#pub-types">Public Types</a> &#124;
 <a href="#pub-methods">Public Member Functions</a> &#124;
+<a href="#pub-static-methods">Static Public Member Functions</a> &#124;
 <a href="classspi_1_1Tools_1_1Kernel-members.html">List of all members</a>  </div>
   <div class="headertitle">
 <div class="title">spi::Tools::Kernel Class Reference<span class="mlabels"><span class="mlabel">abstract</span></span></div>  </div>
@@ -117,32 +119,80 @@ Inheritance diagram for spi::Tools::Kernel:</div>
 </map>
  </div></div>
 <table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-types"></a>
+Public Types</h2></td></tr>
+<tr class="memitem:a31325782b3924893917e8ebbfb73bc50"><td class="memItemLeft" align="right" valign="top">typedef boost::function&lt; std::shared_ptr&lt; <a class="el" href="classspi_1_1Tools_1_1Kernel.html">Kernel</a> &gt;YAML::Node)&gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classspi_1_1Tools_1_1Kernel.html#a31325782b3924893917e8ebbfb73bc50">KernelConstructor</a></td></tr>
+<tr class="memdesc:a31325782b3924893917e8ebbfb73bc50"><td class="mdescLeft">&#160;</td><td class="mdescRight">The constructor type to create a kernel function.  <a href="#a31325782b3924893917e8ebbfb73bc50">More...</a><br /></td></tr>
+<tr class="separator:a31325782b3924893917e8ebbfb73bc50"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a23c18d4b05191c0313e0c17648f22158"><td class="memItemLeft" align="right" valign="top">typedef std::map&lt; std::string, <a class="el" href="classspi_1_1Tools_1_1Kernel.html#a31325782b3924893917e8ebbfb73bc50">KernelConstructor</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classspi_1_1Tools_1_1Kernel.html#a23c18d4b05191c0313e0c17648f22158">ConstructKernelMap</a></td></tr>
+<tr class="memdesc:a23c18d4b05191c0313e0c17648f22158"><td class="mdescLeft">&#160;</td><td class="mdescRight">A map from the kernel name to its corresponding constructor.  <a href="#a23c18d4b05191c0313e0c17648f22158">More...</a><br /></td></tr>
+<tr class="separator:a23c18d4b05191c0313e0c17648f22158"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-methods"></a>
 Public Member Functions</h2></td></tr>
-<tr class="memitem:a84dba549c0823454ecfc8089c20cf812"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classspi_1_1Tools_1_1Kernel.html#a84dba549c0823454ecfc8089c20cf812">Kernel</a> ()</td></tr>
-<tr class="memdesc:a84dba549c0823454ecfc8089c20cf812"><td class="mdescLeft">&#160;</td><td class="mdescRight">Construct the kernel function.  <a href="#a84dba549c0823454ecfc8089c20cf812">More...</a><br /></td></tr>
-<tr class="separator:a84dba549c0823454ecfc8089c20cf812"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:abad469b2fb318cc20da3488c6d5ed140"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classspi_1_1Tools_1_1Kernel.html#abad469b2fb318cc20da3488c6d5ed140">Kernel</a> (YAML::Node const &amp;options)</td></tr>
+<tr class="memdesc:abad469b2fb318cc20da3488c6d5ed140"><td class="mdescLeft">&#160;</td><td class="mdescRight">Construct the kernel function.  <a href="#abad469b2fb318cc20da3488c6d5ed140">More...</a><br /></td></tr>
+<tr class="separator:abad469b2fb318cc20da3488c6d5ed140"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a94625d2efab4da6a9d387e160e829150"><td class="memItemLeft" align="right" valign="top">virtual&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classspi_1_1Tools_1_1Kernel.html#a94625d2efab4da6a9d387e160e829150">~Kernel</a> ()=default</td></tr>
 <tr class="separator:a94625d2efab4da6a9d387e160e829150"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ac0a97960947fcf158b2c6f8eb3b4c531"><td class="memItemLeft" align="right" valign="top">virtual double&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classspi_1_1Tools_1_1Kernel.html#ac0a97960947fcf158b2c6f8eb3b4c531">Evaluate</a> (Eigen::Ref&lt; Eigen::VectorXd &gt; const &amp;x1, Eigen::Ref&lt; Eigen::VectorXd &gt; const &amp;x2) const =0</td></tr>
-<tr class="memdesc:ac0a97960947fcf158b2c6f8eb3b4c531"><td class="mdescLeft">&#160;</td><td class="mdescRight">Evaluate the kernel function \(k(\boldsymbol{x}_1, \boldsymbol{x}_2)\).  <a href="#ac0a97960947fcf158b2c6f8eb3b4c531">More...</a><br /></td></tr>
-<tr class="separator:ac0a97960947fcf158b2c6f8eb3b4c531"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ac412a5d46715bfec5f2a69a6448b8d80"><td class="memItemLeft" align="right" valign="top">double&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classspi_1_1Tools_1_1Kernel.html#ac412a5d46715bfec5f2a69a6448b8d80">operator()</a> (Eigen::Ref&lt; Eigen::VectorXd &gt; const &amp;x1, Eigen::Ref&lt; Eigen::VectorXd &gt; const &amp;x2) const </td></tr>
-<tr class="memdesc:ac412a5d46715bfec5f2a69a6448b8d80"><td class="mdescLeft">&#160;</td><td class="mdescRight">Evaluate the kernel function \(k(\boldsymbol{x}_1, \boldsymbol{x}_2)\).  <a href="#ac412a5d46715bfec5f2a69a6448b8d80">More...</a><br /></td></tr>
-<tr class="separator:ac412a5d46715bfec5f2a69a6448b8d80"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ad33ce75a9b4f4ee828aa358f3eb79485"><td class="memItemLeft" align="right" valign="top">virtual double&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classspi_1_1Tools_1_1Kernel.html#ad33ce75a9b4f4ee828aa358f3eb79485">Evaluate</a> (Eigen::Ref&lt; const Eigen::VectorXd &gt; const &amp;x1, Eigen::Ref&lt; const Eigen::VectorXd &gt; const &amp;x2) const =0</td></tr>
+<tr class="memdesc:ad33ce75a9b4f4ee828aa358f3eb79485"><td class="mdescLeft">&#160;</td><td class="mdescRight">Evaluate the kernel function \(k(\boldsymbol{x}_1, \boldsymbol{x}_2)\).  <a href="#ad33ce75a9b4f4ee828aa358f3eb79485">More...</a><br /></td></tr>
+<tr class="separator:ad33ce75a9b4f4ee828aa358f3eb79485"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a5db50d7b2306da5e41070d9a8ca7b700"><td class="memItemLeft" align="right" valign="top">double&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classspi_1_1Tools_1_1Kernel.html#a5db50d7b2306da5e41070d9a8ca7b700">operator()</a> (Eigen::Ref&lt; const Eigen::VectorXd &gt; const &amp;x1, Eigen::Ref&lt; const Eigen::VectorXd &gt; const &amp;x2) const </td></tr>
+<tr class="memdesc:a5db50d7b2306da5e41070d9a8ca7b700"><td class="mdescLeft">&#160;</td><td class="mdescRight">Evaluate the kernel function \(k(\boldsymbol{x}_1, \boldsymbol{x}_2)\).  <a href="#a5db50d7b2306da5e41070d9a8ca7b700">More...</a><br /></td></tr>
+<tr class="separator:a5db50d7b2306da5e41070d9a8ca7b700"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-static-methods"></a>
+Static Public Member Functions</h2></td></tr>
+<tr class="memitem:a4929b30ca6dad759d6f6a7fab7e32cea"><td class="memItemLeft" align="right" valign="top">static std::shared_ptr&lt; <a class="el" href="classspi_1_1Tools_1_1Kernel.html">Kernel</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classspi_1_1Tools_1_1Kernel.html#a4929b30ca6dad759d6f6a7fab7e32cea">Construct</a> (YAML::Node const &amp;options)</td></tr>
+<tr class="memdesc:a4929b30ca6dad759d6f6a7fab7e32cea"><td class="mdescLeft">&#160;</td><td class="mdescRight">A static constructor to create a kernel function.  <a href="#a4929b30ca6dad759d6f6a7fab7e32cea">More...</a><br /></td></tr>
+<tr class="separator:a4929b30ca6dad759d6f6a7fab7e32cea"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a4fb3d323bbcab8f5ba3e9edf1edcf689"><td class="memItemLeft" align="right" valign="top">static std::shared_ptr&lt; <a class="el" href="classspi_1_1Tools_1_1Kernel.html#a23c18d4b05191c0313e0c17648f22158">ConstructKernelMap</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classspi_1_1Tools_1_1Kernel.html#a4fb3d323bbcab8f5ba3e9edf1edcf689">KernelMap</a> ()</td></tr>
+<tr class="memdesc:a4fb3d323bbcab8f5ba3e9edf1edcf689"><td class="mdescLeft">&#160;</td><td class="mdescRight">Get the map from kernel name to its constructor.  <a href="#a4fb3d323bbcab8f5ba3e9edf1edcf689">More...</a><br /></td></tr>
+<tr class="separator:a4fb3d323bbcab8f5ba3e9edf1edcf689"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><p>The kernel function implementation. </p>
 <p>This class implements a kernel function \(k: \mathbb{R}^{d} \times \mathbb{R}^{d} \mapsto \mathbb{R}^{+}\). </p>
-</div><h2 class="groupheader">Constructor &amp; Destructor Documentation</h2>
-<a class="anchor" id="a84dba549c0823454ecfc8089c20cf812"></a>
+</div><h2 class="groupheader">Member Typedef Documentation</h2>
+<a class="anchor" id="a23c18d4b05191c0313e0c17648f22158"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">typedef std::map&lt;std::string, <a class="el" href="classspi_1_1Tools_1_1Kernel.html#a31325782b3924893917e8ebbfb73bc50">KernelConstructor</a>&gt; <a class="el" href="classspi_1_1Tools_1_1Kernel.html#a23c18d4b05191c0313e0c17648f22158">spi::Tools::Kernel::ConstructKernelMap</a></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>A map from the kernel name to its corresponding constructor. </p>
+
+</div>
+</div>
+<a class="anchor" id="a31325782b3924893917e8ebbfb73bc50"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">typedef boost::function&lt;std::shared_ptr&lt;<a class="el" href="classspi_1_1Tools_1_1Kernel.html">Kernel</a>&gt;YAML::Node)&gt; <a class="el" href="classspi_1_1Tools_1_1Kernel.html#a31325782b3924893917e8ebbfb73bc50">spi::Tools::Kernel::KernelConstructor</a></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>The constructor type to create a kernel function. </p>
+
+</div>
+</div>
+<h2 class="groupheader">Constructor &amp; Destructor Documentation</h2>
+<a class="anchor" id="abad469b2fb318cc20da3488c6d5ed140"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
           <td class="memname">Kernel::Kernel </td>
           <td>(</td>
-          <td class="paramname"></td><td>)</td>
+          <td class="paramtype">YAML::Node const &amp;&#160;</td>
+          <td class="paramname"><em>options</em></td><td>)</td>
           <td></td>
         </tr>
       </table>
@@ -176,7 +226,39 @@ Public Member Functions</h2></td></tr>
 </div>
 </div>
 <h2 class="groupheader">Member Function Documentation</h2>
-<a class="anchor" id="ac0a97960947fcf158b2c6f8eb3b4c531"></a>
+<a class="anchor" id="a4929b30ca6dad759d6f6a7fab7e32cea"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">std::shared_ptr&lt; <a class="el" href="classspi_1_1Tools_1_1Kernel.html">Kernel</a> &gt; Kernel::Construct </td>
+          <td>(</td>
+          <td class="paramtype">YAML::Node const &amp;&#160;</td>
+          <td class="paramname"><em>options</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">static</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>A static constructor to create a kernel function. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[in]</td><td class="paramname">options</td><td>Options for this constructor </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a class="anchor" id="ad33ce75a9b4f4ee828aa358f3eb79485"></a>
 <div class="memitem">
 <div class="memproto">
 <table class="mlabels">
@@ -186,13 +268,13 @@ Public Member Functions</h2></td></tr>
         <tr>
           <td class="memname">virtual double spi::Tools::Kernel::Evaluate </td>
           <td>(</td>
-          <td class="paramtype">Eigen::Ref&lt; Eigen::VectorXd &gt; const &amp;&#160;</td>
+          <td class="paramtype">Eigen::Ref&lt; const Eigen::VectorXd &gt; const &amp;&#160;</td>
           <td class="paramname"><em>x1</em>, </td>
         </tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype">Eigen::Ref&lt; Eigen::VectorXd &gt; const &amp;&#160;</td>
+          <td class="paramtype">Eigen::Ref&lt; const Eigen::VectorXd &gt; const &amp;&#160;</td>
           <td class="paramname"><em>x2</em>&#160;</td>
         </tr>
         <tr>
@@ -218,24 +300,50 @@ Public Member Functions</h2></td></tr>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>The kernel evaluation \(k(\boldsymbol{x}_1, \boldsymbol{x}_2)\) </dd></dl>
 
-<p>Implemented in <a class="el" href="classspi_1_1Tools_1_1IsotropicKernel.html#a210a2f086110d9b98f7d3de7a3238b80">spi::Tools::IsotropicKernel</a>.</p>
+<p>Implemented in <a class="el" href="classspi_1_1Tools_1_1IsotropicKernel.html#a87eb39741f4e58e4fdd9e53547305a32">spi::Tools::IsotropicKernel</a>.</p>
 
 </div>
 </div>
-<a class="anchor" id="ac412a5d46715bfec5f2a69a6448b8d80"></a>
+<a class="anchor" id="a4fb3d323bbcab8f5ba3e9edf1edcf689"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">std::shared_ptr&lt; <a class="el" href="classspi_1_1Tools_1_1Kernel.html#a23c18d4b05191c0313e0c17648f22158">Kernel::ConstructKernelMap</a> &gt; Kernel::KernelMap </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">static</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Get the map from kernel name to its constructor. </p>
+<dl class="section return"><dt>Returns</dt><dd>The map from kernel name to its constructor </dd></dl>
+
+</div>
+</div>
+<a class="anchor" id="a5db50d7b2306da5e41070d9a8ca7b700"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
           <td class="memname">double Kernel::operator() </td>
           <td>(</td>
-          <td class="paramtype">Eigen::Ref&lt; Eigen::VectorXd &gt; const &amp;&#160;</td>
+          <td class="paramtype">Eigen::Ref&lt; const Eigen::VectorXd &gt; const &amp;&#160;</td>
           <td class="paramname"><em>x1</em>, </td>
         </tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype">Eigen::Ref&lt; Eigen::VectorXd &gt; const &amp;&#160;</td>
+          <td class="paramtype">Eigen::Ref&lt; const Eigen::VectorXd &gt; const &amp;&#160;</td>
           <td class="paramname"><em>x2</em>&#160;</td>
         </tr>
         <tr>
