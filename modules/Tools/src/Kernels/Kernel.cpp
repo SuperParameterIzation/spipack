@@ -4,7 +4,7 @@ using namespace spi::Tools;
 
 Kernel::Kernel(YAML::Node const& options) {}
 
-double Kernel::operator()(Eigen::Ref<Eigen::VectorXd> const& x1, Eigen::Ref<Eigen::VectorXd> const& x2) const {
+double Kernel::operator()(Eigen::Ref<const Eigen::VectorXd> const& x1, Eigen::Ref<const Eigen::VectorXd> const& x2) const {
   assert(x1.size()==x2.size());
   return Evaluate(x1, x2);
 }
@@ -32,11 +32,11 @@ std::shared_ptr<Kernel> Kernel::Construct(YAML::Node const& options) {
 
 std::shared_ptr<Kernel::ConstructKernelMap> Kernel::KernelMap() {
   // define a static map from type to constructor
-  static std::shared_ptr<Kernel::ConstructKernelMap> map;
+  static std::shared_ptr<ConstructKernelMap> map;
 
   if( !map ) { // if the map has not yet been created ...
     // ... create the map
-    map = std::make_shared<Kernel::ConstructKernelMap>();
+    map = std::make_shared<ConstructKernelMap>();
   }
 
   return map;

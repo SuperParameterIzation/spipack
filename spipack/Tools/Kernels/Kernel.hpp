@@ -43,7 +43,7 @@ public:
   /**
     \return The map from kernel name to its constructor
   */
-  static std::shared_ptr<Kernel::ConstructKernelMap> KernelMap();
+  static std::shared_ptr<ConstructKernelMap> KernelMap();
 
   /// Evaluate the kernel function \f$k(\boldsymbol{x}_1, \boldsymbol{x}_2)\f$
   /**
@@ -51,7 +51,7 @@ public:
     @param[in] x2 The second argument to the kernel function
     \return The kernel evaluation \f$k(\boldsymbol{x}_1, \boldsymbol{x}_2)\f$
   */
-  virtual double Evaluate(Eigen::Ref<Eigen::VectorXd> const& x1, Eigen::Ref<Eigen::VectorXd> const& x2) const = 0;
+  virtual double Evaluate(Eigen::Ref<const Eigen::VectorXd> const& x1, Eigen::Ref<const Eigen::VectorXd> const& x2) const = 0;
 
   /// Evaluate the kernel function  \f$k(\boldsymbol{x}_1, \boldsymbol{x}_2)\f$
   /**
@@ -59,7 +59,7 @@ public:
     @param[in] x2 The second argument to the kernel function
     \return The kernel evaluation \f$k(\boldsymbol{x}_1, \boldsymbol{x}_2)\f$
   */
-  double operator()(Eigen::Ref<Eigen::VectorXd> const& x1, Eigen::Ref<Eigen::VectorXd> const& x2) const;
+  double operator()(Eigen::Ref<const Eigen::VectorXd> const& x1, Eigen::Ref<const Eigen::VectorXd> const& x2) const;
 
 private:
 };
