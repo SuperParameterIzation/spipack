@@ -119,8 +119,17 @@ public:
 
   /// Construct the heat matrix \f$\boldsymbol{P}\f$
   /**
+    Construct the heat matrix \f$\boldsymbol{P}\f$---this function overwrites any existing information in spi::NumericalSolvers::heatMatrix.
   */
   void ConstructHeatMatrix();
+
+  /// Compute the eigenvalues of the heat matrix \f$\boldsymbol{P}\f$
+  /**
+    This function does not recompute \f$\boldsymbol{P}\f$, but it computes the largest eigenvalues of the currently stored value.
+    @param[in] neig Compute the <tt>neig</tt> largest eigenvalues
+    @param[out] eigenvalues The <tt>neig</tt> largest eigenvalues
+  */
+  void HeatMatrixEigenvalues(const size_t neig, Eigen::Ref<Eigen::VectorXd> eigenvalues) const;
 
 private:
 

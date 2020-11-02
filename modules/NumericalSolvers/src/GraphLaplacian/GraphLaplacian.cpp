@@ -1,5 +1,8 @@
 #include "spipack/NumericalSolvers/GraphLaplacian/GraphLaplacian.hpp"
 
+#include <Spectra/GenEigsSolver.h>
+#include <Spectra/MatOp/SparseGenMatProd.h>
+
 using namespace muq::Modeling;
 using namespace muq::SamplingAlgorithms;
 using namespace spi::Tools;
@@ -162,6 +165,23 @@ void GraphLaplacian::ConstructHeatMatrix(Eigen::Ref<const Eigen::VectorXd> const
 
   // create the heat matrix
   heatMatrix.setFromTriplets(entries.begin(), entries.end());
+}
+
+void GraphLaplacian::HeatMatrixEigenvalues(const size_t neig, Eigen::Ref<Eigen::VectorXd> eigenvalues) const {
+  assert(eigenvalues.size()==neig);
+
+  // wrapper for space mat-vecs
+  Spectra::SparseGenMatProd<double> matvec(heatMatrix);
+
+  // construct eigen solver object, requesting the largest neig eigenvalues
+  Spectra::GenEigsSolver<double, Spectra::LARGEST_MAGN, Spectra::SparseGenMatProd<double> > eigsolver(&matvec, neig, 2*neig+1);
+
+  // initialize and compute
+  eigsolver.init();
+  eigsolver.compute();
+
+  // get the results
+  eigenvalues = eigsolver.eigenvalues().real();
 }
 
 GraphLaplacian::PointCloud::PointCloud(std::shared_ptr<SampleCollection> const& samples) : samples(samples) {}

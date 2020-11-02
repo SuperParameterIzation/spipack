@@ -180,5 +180,9 @@ TEST_F(GraphLaplacianTests, ConstructHeatMatrix) {
   // construct the heat matrix
   laplacian->ConstructHeatMatrix();
 
-  EXPECT_TRUE(false);
+  // the largest eigenvalue is 1
+  const std::size_t neig = 1;
+  Eigen::VectorXd eigenvalues(neig);
+  laplacian->HeatMatrixEigenvalues(neig, eigenvalues);
+  EXPECT_NEAR(eigenvalues(0), 1.0, 1.0e-10);
 }
