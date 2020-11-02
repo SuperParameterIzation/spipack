@@ -1,7 +1,16 @@
 #ifndef KERNEL_HPP_
 #define KERNEL_HPP_
 
+#include <iostream>
+#include <map>
+
+#include <boost/function.hpp>
+
+#include <yaml-cpp/yaml.h>
+
 #include <Eigen/Core>
+
+#include <MUQ/Utilities/RegisterClassName.h>
 
 namespace spi {
 namespace Tools {
@@ -14,9 +23,27 @@ class Kernel {
 public:
 
   /// Construct the kernel function
-  Kernel();
+  Kernel(YAML::Node const& options);
 
   virtual ~Kernel() = default;
+
+  /// A static constructor to create a kernel function
+  /**
+    @param[in] options Options for this constructor
+  */
+  static std::shared_ptr<Kernel> Construct(YAML::Node const& options);
+
+  /// The constructor type to create a kernel function
+  typedef boost::function<std::shared_ptr<Kernel>(YAML::Node)> KernelConstructor;
+
+  /// A map from the kernel name to its corresponding constructor
+  typedef std::map<std::string, KernelConstructor> ConstructKernelMap;
+
+  /// Get the map from kernel name to its constructor
+  /**
+    \return The map from kernel name to its constructor
+  */
+  static std::shared_ptr<Kernel::ConstructKernelMap> KernelMap();
 
   /// Evaluate the kernel function \f$k(\boldsymbol{x}_1, \boldsymbol{x}_2)\f$
   /**
@@ -39,5 +66,8 @@ private:
 
 } // namespace Tools
 } // namespace spi
+
+#define SPIPACK_REGISTER_KERNEL(NAME) static auto reg ##NAME		\
+  = spi::Tools::Kernel::KernelMap()->insert(std::make_pair(#NAME, muq::Utilities::shared_factory<NAME>()));
 
 #endif

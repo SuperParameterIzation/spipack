@@ -4,7 +4,7 @@
 
 using namespace spi::Tools;
 
-CompactKernel::CompactKernel() : IsotropicKernel() {}
+CompactKernel::CompactKernel(YAML::Node const& options) : IsotropicKernel(options) {}
 
 double CompactKernel::EvaluateIsotropicKernel(double const theta) const {
   static const double buffer = 1.0+1.0e-10;

@@ -18,8 +18,12 @@ namespace Tools {
 */
 class HatKernel : public CompactKernel {
 public:
+
   /// Construct a hat kernel
-  HatKernel();
+  /**
+    @param[in] options Options for this kernel function
+  */
+  HatKernel(YAML::Node const& options);
 
   virtual ~HatKernel() = default;
 protected:

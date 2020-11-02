@@ -4,14 +4,36 @@
 
 using namespace spi::Tools;
 
+TEST(HatKernelTests, StaticKernelConstructor) {
+  const unsigned int dim = 5;
+
+  // the options for this kernel
+  YAML::Node options;
+  options["Kernel"] = "HatKernel";
+
+  // create a hat kernel
+  std::shared_ptr<Kernel> kernel = Kernel::Construct(options);
+
+  EXPECT_TRUE(kernel);
+
+  // check inside the kernel support
+  const Eigen::VectorXd x1 = Eigen::VectorXd::Zero(dim, 1);
+  Eigen::VectorXd x2 = Eigen::VectorXd::Ones(dim, 1);
+  x2 = 0.3*x2/x2.norm();
+  EXPECT_DOUBLE_EQ(kernel->Evaluate(x1, x2), 1.0);
+  EXPECT_DOUBLE_EQ(kernel->operator()(x1, x2), 1.0);
+}
+
 TEST(HatKernelTests, Evaluate) {
   const unsigned int dim = 5;
 
+  // the options for this kernel
+  YAML::Node options;
+
   // create a hat kernel
-  const HatKernel kernel;
+  const HatKernel kernel(options);
 
-  Eigen::VectorXd x1 = Eigen::VectorXd::Zero(dim, 1);
-
+  const Eigen::VectorXd x1 = Eigen::VectorXd::Zero(dim, 1);
   { // check inside the kernel support
     Eigen::VectorXd x2 = Eigen::VectorXd::Ones(dim, 1);
     x2 = 0.3*x2/x2.norm();

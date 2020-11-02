@@ -16,7 +16,10 @@ class IsotropicKernel : public Kernel {
 public:
 
   /// Construct an isotropic kernel
-  IsotropicKernel();
+  /**
+    @param[in] options Options for this kernel function
+  */
+  IsotropicKernel(YAML::Node const& options);
 
   virtual ~IsotropicKernel() = default;
 

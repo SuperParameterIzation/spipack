@@ -14,7 +14,10 @@ class CompactKernel : public IsotropicKernel {
 public:
 
   /// Construct a compact kernel
-  CompactKernel();
+  /**
+    @param[in] options Options for this kernel function
+  */
+  CompactKernel(YAML::Node const& options);
 
   virtual ~CompactKernel() = default;
 
