@@ -97,6 +97,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <a href="#nested-classes">Classes</a> &#124;
 <a href="#pub-methods">Public Member Functions</a> &#124;
 <a href="#pri-types">Private Types</a> &#124;
+<a href="#pri-methods">Private Member Functions</a> &#124;
 <a href="#pri-static-methods">Static Private Member Functions</a> &#124;
 <a href="#pri-attribs">Private Attributes</a> &#124;
 <a href="#pri-static-attribs">Static Private Attributes</a> &#124;
@@ -136,9 +137,9 @@ Public Member Functions</h2></td></tr>
 <tr class="memitem:a838c497356a790113f56624de840012b"><td class="memItemLeft" align="right" valign="top">std::size_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classspi_1_1NumericalSolvers_1_1GraphLaplacian.html#a838c497356a790113f56624de840012b">KDTreeMaxLeaf</a> () const </td></tr>
 <tr class="memdesc:a838c497356a790113f56624de840012b"><td class="mdescLeft">&#160;</td><td class="mdescRight">Get the max leaf size for the kd stree (nanoflann parameter)  <a href="#a838c497356a790113f56624de840012b">More...</a><br /></td></tr>
 <tr class="separator:a838c497356a790113f56624de840012b"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:afc4bf66056b105396b4f6c392f09ad04"><td class="memItemLeft" align="right" valign="top">const Eigen::VectorXd &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classspi_1_1NumericalSolvers_1_1GraphLaplacian.html#afc4bf66056b105396b4f6c392f09ad04">Point</a> (std::size_t const i) const </td></tr>
-<tr class="memdesc:afc4bf66056b105396b4f6c392f09ad04"><td class="mdescLeft">&#160;</td><td class="mdescRight">Get the \(i^{th}\) point from the point cloud.  <a href="#afc4bf66056b105396b4f6c392f09ad04">More...</a><br /></td></tr>
-<tr class="separator:afc4bf66056b105396b4f6c392f09ad04"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ab9d6341efc16fc23c5ecf1027096df2b"><td class="memItemLeft" align="right" valign="top">Eigen::Ref&lt; const Eigen::VectorXd &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classspi_1_1NumericalSolvers_1_1GraphLaplacian.html#ab9d6341efc16fc23c5ecf1027096df2b">Point</a> (std::size_t const i) const </td></tr>
+<tr class="memdesc:ab9d6341efc16fc23c5ecf1027096df2b"><td class="mdescLeft">&#160;</td><td class="mdescRight">Get the \(i^{th}\) point from the point cloud.  <a href="#ab9d6341efc16fc23c5ecf1027096df2b">More...</a><br /></td></tr>
+<tr class="separator:ab9d6341efc16fc23c5ecf1027096df2b"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a0351fee22d8dfc9bcd380af3cb097c26"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classspi_1_1NumericalSolvers_1_1GraphLaplacian.html#a0351fee22d8dfc9bcd380af3cb097c26">BuildKDTree</a> ()</td></tr>
 <tr class="memdesc:a0351fee22d8dfc9bcd380af3cb097c26"><td class="mdescLeft">&#160;</td><td class="mdescRight">Update the kd-tree.  <a href="#a0351fee22d8dfc9bcd380af3cb097c26">More...</a><br /></td></tr>
 <tr class="separator:a0351fee22d8dfc9bcd380af3cb097c26"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -148,15 +149,24 @@ Public Member Functions</h2></td></tr>
 <tr class="memitem:ab7b59eb1d2073a98ac5ac76b8c534dad"><td class="memItemLeft" align="right" valign="top">double&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classspi_1_1NumericalSolvers_1_1GraphLaplacian.html#ab7b59eb1d2073a98ac5ac76b8c534dad">FindNeighbors</a> (Eigen::VectorXd const &amp;x, std::size_t const k, std::vector&lt; std::pair&lt; std::size_t, double &gt; &gt; &amp;neighbors) const </td></tr>
 <tr class="memdesc:ab7b59eb1d2073a98ac5ac76b8c534dad"><td class="mdescLeft">&#160;</td><td class="mdescRight">Find the \(k\) points that are closest to a given point \(\boldsymbol{x}\).  <a href="#ab7b59eb1d2073a98ac5ac76b8c534dad">More...</a><br /></td></tr>
 <tr class="separator:ab7b59eb1d2073a98ac5ac76b8c534dad"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:afacc9bf991bb83130031f75ea3a78686"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classspi_1_1NumericalSolvers_1_1GraphLaplacian.html#afacc9bf991bb83130031f75ea3a78686">EvaluateKernel</a> (Eigen::VectorXd const &amp;x, double const h2, std::vector&lt; std::pair&lt; std::size_t, double &gt; &gt; &amp;neighbors) const </td></tr>
-<tr class="memdesc:afacc9bf991bb83130031f75ea3a78686"><td class="mdescLeft">&#160;</td><td class="mdescRight">Evaluate kernel at neighbors.  <a href="#afacc9bf991bb83130031f75ea3a78686">More...</a><br /></td></tr>
-<tr class="separator:afacc9bf991bb83130031f75ea3a78686"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a9c706cb31c123104b4d0a602d39b1943"><td class="memItemLeft" align="right" valign="top">double&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classspi_1_1NumericalSolvers_1_1GraphLaplacian.html#a9c706cb31c123104b4d0a602d39b1943">EvaluateKernel</a> (Eigen::VectorXd const &amp;x, double const h2, std::vector&lt; std::pair&lt; std::size_t, double &gt; &gt; &amp;neighbors) const </td></tr>
+<tr class="memdesc:a9c706cb31c123104b4d0a602d39b1943"><td class="mdescLeft">&#160;</td><td class="mdescRight">Evaluate kernel at neighbors.  <a href="#a9c706cb31c123104b4d0a602d39b1943">More...</a><br /></td></tr>
+<tr class="separator:a9c706cb31c123104b4d0a602d39b1943"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:afcdc9cd363fd0aff5d4cd1df134a370f"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classspi_1_1NumericalSolvers_1_1GraphLaplacian.html#afcdc9cd363fd0aff5d4cd1df134a370f">ConstructHeatMatrix</a> ()</td></tr>
+<tr class="memdesc:afcdc9cd363fd0aff5d4cd1df134a370f"><td class="mdescLeft">&#160;</td><td class="mdescRight">Construct the heat matrix \(\boldsymbol{P}\).  <a href="#afcdc9cd363fd0aff5d4cd1df134a370f">More...</a><br /></td></tr>
+<tr class="separator:afcdc9cd363fd0aff5d4cd1df134a370f"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pri-types"></a>
 Private Types</h2></td></tr>
 <tr class="memitem:a04d6290144ce3dfc7fc94cbe16e1c645"><td class="memItemLeft" align="right" valign="top">typedef nanoflann::KDTreeSingleIndexAdaptor&lt; nanoflann::L2_Simple_Adaptor&lt; double, <a class="el" href="classspi_1_1NumericalSolvers_1_1GraphLaplacian_1_1PointCloud.html">PointCloud</a> &gt;, <a class="el" href="classspi_1_1NumericalSolvers_1_1GraphLaplacian_1_1PointCloud.html">PointCloud</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classspi_1_1NumericalSolvers_1_1GraphLaplacian.html#a04d6290144ce3dfc7fc94cbe16e1c645">NanoflannKDTree</a></td></tr>
 <tr class="memdesc:a04d6290144ce3dfc7fc94cbe16e1c645"><td class="mdescLeft">&#160;</td><td class="mdescRight">The nanoflann kd-tree type.  <a href="#a04d6290144ce3dfc7fc94cbe16e1c645">More...</a><br /></td></tr>
 <tr class="separator:a04d6290144ce3dfc7fc94cbe16e1c645"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pri-methods"></a>
+Private Member Functions</h2></td></tr>
+<tr class="memitem:a35f2096a52555c21f507e9fa9004cce8"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classspi_1_1NumericalSolvers_1_1GraphLaplacian.html#a35f2096a52555c21f507e9fa9004cce8">Initialize</a> (YAML::Node const &amp;options)</td></tr>
+<tr class="memdesc:a35f2096a52555c21f507e9fa9004cce8"><td class="mdescLeft">&#160;</td><td class="mdescRight">Initialize the graph Laplacian.  <a href="#a35f2096a52555c21f507e9fa9004cce8">More...</a><br /></td></tr>
+<tr class="separator:a35f2096a52555c21f507e9fa9004cce8"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pri-static-methods"></a>
 Static Private Member Functions</h2></td></tr>
@@ -166,6 +176,9 @@ Static Private Member Functions</h2></td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pri-attribs"></a>
 Private Attributes</h2></td></tr>
+<tr class="memitem:a068763bfd48fbd2f73475dcd7c58c9f4"><td class="memItemLeft" align="right" valign="top">Eigen::SparseMatrix&lt; double &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classspi_1_1NumericalSolvers_1_1GraphLaplacian.html#a068763bfd48fbd2f73475dcd7c58c9f4">heatMatrix</a></td></tr>
+<tr class="memdesc:a068763bfd48fbd2f73475dcd7c58c9f4"><td class="mdescLeft">&#160;</td><td class="mdescRight">The heat matrix \(\boldsymbol{P}\).  <a href="#a068763bfd48fbd2f73475dcd7c58c9f4">More...</a><br /></td></tr>
+<tr class="separator:a068763bfd48fbd2f73475dcd7c58c9f4"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a1030837403006643cd579b67ced6565d"><td class="memItemLeft" align="right" valign="top">const <a class="el" href="classspi_1_1NumericalSolvers_1_1GraphLaplacian_1_1PointCloud.html">PointCloud</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classspi_1_1NumericalSolvers_1_1GraphLaplacian.html#a1030837403006643cd579b67ced6565d">cloud</a></td></tr>
 <tr class="memdesc:a1030837403006643cd579b67ced6565d"><td class="mdescLeft">&#160;</td><td class="mdescRight">The point cloud that we will use to approximate the weighted Laplacian (and solve the weighted Poisson equation)  <a href="#a1030837403006643cd579b67ced6565d">More...</a><br /></td></tr>
 <tr class="separator:a1030837403006643cd579b67ced6565d"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -194,6 +207,13 @@ Static Private Attributes</h2></td></tr>
 \begin{equation*} \nabla_{\psi}^2 H = R \end{equation*}
 </p>
 <p> such that \(\mathbb{E}_{\psi}[H] = 0\).</p>
+<p>Define a compact kernel function \(k: \mathbb{R}^{+} \mapsto \mathbb{R}^{+}\) such that \(k(\theta)\) is decreasing and \(k(\theta) = 0\) if \(\theta \notin [0,1]\) (i.e., the support of the kernel is \([0,1]\)). Define the matrix \(\boldsymbol{K}\) such that the \((i^{th}, j^{th})\) component is </p><p class="formulaDsp">
+\begin{equation*} K_{ij} = \frac{k(h^{-2} \|\boldsymbol{x}^{(i)} -\boldsymbol{x}^{(i)}\|^2)}{\sqrt{d^{(i)} d^{(j)}}}, \end{equation*}
+</p>
+<p> where \(h\) is the bandwidth parameter and \(d^{(i)} = \sum_{j=1}^{n} k(h^{-2} \|\boldsymbol{x}^{(i)} -\boldsymbol{x}^{(i)}\|^2)\). Additionally, define a diagonal matrix \(\boldsymbol{D}\) such that \(D_{ii} = \sum_{j=1}^{n} K_{ij}\). Define the heat matrix and discrete weighted Laplacian </p><p class="formulaDsp">
+\begin{equation*} \begin{array}{ccc} \boldsymbol{P} = \boldsymbol{D}^{-1} \boldsymbol{K} &amp; \mbox{and} &amp; \widetilde{\nabla}_{\psi}^2 = h^{-2} (\boldsymbol{I}-\boldsymbol{P}), \end{array} \end{equation*}
+</p>
+<p> where \(\boldsymbol{I}\) is the identity matrix.</p>
 <p><b>Configuration Parameters:</b> </p><table class="doxtable">
 <tr>
 <th>Parameter Key </th><th>Type </th><th>Default Value </th><th>Description  </th></tr>
@@ -202,7 +222,7 @@ Static Private Attributes</h2></td></tr>
 <tr>
 <td>"MaxLeaf" </td><td>std::size_t </td><td>10 </td><td>The maximum leaf size for the kd tree (nanoflann parameter). </td></tr>
 <tr>
-<td>"KernelOptions" </td><td>YAML::Node </td><td>- </td><td>The options for the kernel function. </td></tr>
+<td>"KernelOptions" </td><td>YAML::Node </td><td>- </td><td>The options for the kernel function (<a class="el" href="classspi_1_1Tools_1_1CompactKernel.html" title="An implementation of a compact kernel. ">spi::Tools::CompactKernel</a>). </td></tr>
 </table>
 </div><h2 class="groupheader">Member Typedef Documentation</h2>
 <a class="anchor" id="a04d6290144ce3dfc7fc94cbe16e1c645"></a>
@@ -340,12 +360,29 @@ Static Private Attributes</h2></td></tr>
 
 </div>
 </div>
-<a class="anchor" id="afacc9bf991bb83130031f75ea3a78686"></a>
+<a class="anchor" id="afcdc9cd363fd0aff5d4cd1df134a370f"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">void GraphLaplacian::EvaluateKernel </td>
+          <td class="memname">void GraphLaplacian::ConstructHeatMatrix </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Construct the heat matrix \(\boldsymbol{P}\). </p>
+
+</div>
+</div>
+<a class="anchor" id="a9c706cb31c123104b4d0a602d39b1943"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">double GraphLaplacian::EvaluateKernel </td>
           <td>(</td>
           <td class="paramtype">Eigen::VectorXd const &amp;&#160;</td>
           <td class="paramname"><em>x</em>, </td>
@@ -375,10 +412,11 @@ Static Private Attributes</h2></td></tr>
   <table class="params">
     <tr><td class="paramdir">[in]</td><td class="paramname">x</td><td>The given point \(\boldsymbol{x}\) </td></tr>
     <tr><td class="paramdir">[in]</td><td class="paramname">h2</td><td>The squared bandwidth \(h^2\) that defines the kernel. </td></tr>
-    <tr><td class="paramdir">[in,out]</td><td class="paramname">neighbors</td><td>A vector of the nearest neighbors. First: the neighbor's index, Second: (input) the squared distance ( \(d^2 = \boldsymbol{x} \cdot \boldsymbol{x}^{(j)}\)) between the point \(\boldsymbol{x}\) and the neighbor, (output) the kernel evaluation \(k(\boldsymbol{x}, \boldsymbol{x}^{(j)})\) </td></tr>
+    <tr><td class="paramdir">[in,out]</td><td class="paramname">neighbors</td><td>A vector of the nearest neighbors. First: the neighbor's index, Second: (input) the squared distance ( \(\boldsymbol{x} \cdot \boldsymbol{x}^{(j)}\)) between the point \(\boldsymbol{x}\) and the neighbor, (output) the kernel evaluation \(k(\boldsymbol{x}, \boldsymbol{x}^{(j)})\) </td></tr>
   </table>
   </dd>
 </dl>
+<dl class="section return"><dt>Returns</dt><dd>The sum of the kernel evaluations \(d(\boldsymbol{x}) = \sum_{j=1}^{k} k_h(\|\boldsymbol{x}-\boldsymbol{x}^{(j)}\|^2)\) </dd></dl>
 
 </div>
 </div>
@@ -467,6 +505,38 @@ Static Private Attributes</h2></td></tr>
 
 </div>
 </div>
+<a class="anchor" id="a35f2096a52555c21f507e9fa9004cce8"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">void GraphLaplacian::Initialize </td>
+          <td>(</td>
+          <td class="paramtype">YAML::Node const &amp;&#160;</td>
+          <td class="paramname"><em>options</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">private</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Initialize the graph Laplacian. </p>
+<p>Must be called by every constructor. </p><dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[in]</td><td class="paramname">options</td><td>The options for the graph Laplacian </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
 <a class="anchor" id="a838c497356a790113f56624de840012b"></a>
 <div class="memitem">
 <div class="memproto">
@@ -502,12 +572,12 @@ Static Private Attributes</h2></td></tr>
 
 </div>
 </div>
-<a class="anchor" id="afc4bf66056b105396b4f6c392f09ad04"></a>
+<a class="anchor" id="ab9d6341efc16fc23c5ecf1027096df2b"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">const Eigen::VectorXd &amp; GraphLaplacian::Point </td>
+          <td class="memname">Eigen::Ref&lt; const Eigen::VectorXd &gt; GraphLaplacian::Point </td>
           <td>(</td>
           <td class="paramtype">std::size_t const&#160;</td>
           <td class="paramname"><em>i</em></td><td>)</td>
@@ -605,6 +675,28 @@ Static Private Attributes</h2></td></tr>
 </div><div class="memdoc">
 
 <p>Store the default values. </p>
+
+</div>
+</div>
+<a class="anchor" id="a068763bfd48fbd2f73475dcd7c58c9f4"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">Eigen::SparseMatrix&lt;double&gt; spi::NumericalSolvers::GraphLaplacian::heatMatrix</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">private</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>The heat matrix \(\boldsymbol{P}\). </p>
 
 </div>
 </div>

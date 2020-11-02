@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['options',['options',['../classGraphLaplacianTests.html#a52bce07aea75078572082e420fb4fe87',1,'GraphLaplacianTests']]]
+  ['n',['n',['../classGraphLaplacianTests.html#a2e2fbd8d4c78e5508a7a306abdeff11d',1,'GraphLaplacianTests']]]
 ];
