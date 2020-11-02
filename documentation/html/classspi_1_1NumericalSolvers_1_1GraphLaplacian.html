@@ -135,7 +135,7 @@ Public Member Functions</h2></td></tr>
 <tr class="memdesc:acb41d0c5d96c7aad4b9dd02d0c1b09de"><td class="mdescLeft">&#160;</td><td class="mdescRight">How many samples are in the collection?  <a href="#acb41d0c5d96c7aad4b9dd02d0c1b09de">More...</a><br /></td></tr>
 <tr class="separator:acb41d0c5d96c7aad4b9dd02d0c1b09de"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a51e754608491894348bbf91ccef5fe25"><td class="memItemLeft" align="right" valign="top">double&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classspi_1_1NumericalSolvers_1_1GraphLaplacian.html#a51e754608491894348bbf91ccef5fe25">SquaredBandwidth</a> () const </td></tr>
-<tr class="memdesc:a51e754608491894348bbf91ccef5fe25"><td class="mdescLeft">&#160;</td><td class="mdescRight">The squared bandwdwidth \(h^\).  <a href="#a51e754608491894348bbf91ccef5fe25">More...</a><br /></td></tr>
+<tr class="memdesc:a51e754608491894348bbf91ccef5fe25"><td class="mdescLeft">&#160;</td><td class="mdescRight">The squared bandwdwidth \(h^{2}\).  <a href="#a51e754608491894348bbf91ccef5fe25">More...</a><br /></td></tr>
 <tr class="separator:a51e754608491894348bbf91ccef5fe25"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ab9d6341efc16fc23c5ecf1027096df2b"><td class="memItemLeft" align="right" valign="top">Eigen::Ref&lt; const Eigen::VectorXd &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classspi_1_1NumericalSolvers_1_1GraphLaplacian.html#ab9d6341efc16fc23c5ecf1027096df2b">Point</a> (std::size_t const i) const </td></tr>
 <tr class="memdesc:ab9d6341efc16fc23c5ecf1027096df2b"><td class="mdescLeft">&#160;</td><td class="mdescRight">Get the \(i^{th}\) point from the point cloud.  <a href="#ab9d6341efc16fc23c5ecf1027096df2b">More...</a><br /></td></tr>
@@ -155,6 +155,9 @@ Public Member Functions</h2></td></tr>
 <tr class="memitem:afcdc9cd363fd0aff5d4cd1df134a370f"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classspi_1_1NumericalSolvers_1_1GraphLaplacian.html#afcdc9cd363fd0aff5d4cd1df134a370f">ConstructHeatMatrix</a> ()</td></tr>
 <tr class="memdesc:afcdc9cd363fd0aff5d4cd1df134a370f"><td class="mdescLeft">&#160;</td><td class="mdescRight">Construct the heat matrix \(\boldsymbol{P}\).  <a href="#afcdc9cd363fd0aff5d4cd1df134a370f">More...</a><br /></td></tr>
 <tr class="separator:afcdc9cd363fd0aff5d4cd1df134a370f"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a558441a75364a86399f14dba940659e5"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classspi_1_1NumericalSolvers_1_1GraphLaplacian.html#a558441a75364a86399f14dba940659e5">HeatMatrixEigenvalues</a> (const size_t neig, Eigen::Ref&lt; Eigen::VectorXd &gt; eigenvalues) const </td></tr>
+<tr class="memdesc:a558441a75364a86399f14dba940659e5"><td class="mdescLeft">&#160;</td><td class="mdescRight">Compute the eigenvalues of the heat matrix \(\boldsymbol{P}\).  <a href="#a558441a75364a86399f14dba940659e5">More...</a><br /></td></tr>
+<tr class="separator:a558441a75364a86399f14dba940659e5"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pri-types"></a>
 Private Types</h2></td></tr>
@@ -379,6 +382,7 @@ Static Private Attributes</h2></td></tr>
 </div><div class="memdoc">
 
 <p>Construct the heat matrix \(\boldsymbol{P}\). </p>
+<p>Construct the heat matrix \(\boldsymbol{P}\)&mdash;this function overwrites any existing information in spi::NumericalSolvers::heatMatrix. </p>
 
 </div>
 </div>
@@ -560,6 +564,41 @@ Static Private Attributes</h2></td></tr>
 
 </div>
 </div>
+<a class="anchor" id="a558441a75364a86399f14dba940659e5"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void GraphLaplacian::HeatMatrixEigenvalues </td>
+          <td>(</td>
+          <td class="paramtype">const size_t&#160;</td>
+          <td class="paramname"><em>neig</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">Eigen::Ref&lt; Eigen::VectorXd &gt;&#160;</td>
+          <td class="paramname"><em>eigenvalues</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td> const</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Compute the eigenvalues of the heat matrix \(\boldsymbol{P}\). </p>
+<p>This function does not recompute \(\boldsymbol{P}\), but it computes the largest eigenvalues of the currently stored value. </p><dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[in]</td><td class="paramname">neig</td><td>Compute the <code>neig</code> largest eigenvalues </td></tr>
+    <tr><td class="paramdir">[out]</td><td class="paramname">eigenvalues</td><td>The <code>neig</code> largest eigenvalues </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
 <a class="anchor" id="a35f2096a52555c21f507e9fa9004cce8"></a>
 <div class="memitem">
 <div class="memproto">
@@ -684,8 +723,8 @@ Static Private Attributes</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p>The squared bandwdwidth \(h^\). </p>
-<dl class="section return"><dt>Returns</dt><dd>The squared bandwidth \(h^2\) </dd></dl>
+<p>The squared bandwdwidth \(h^{2}\). </p>
+<dl class="section return"><dt>Returns</dt><dd>The squared bandwidth \(h^{2}\) </dd></dl>
 
 </div>
 </div>
