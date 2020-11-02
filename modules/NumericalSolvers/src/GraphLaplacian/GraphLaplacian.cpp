@@ -5,18 +5,23 @@ using namespace muq::SamplingAlgorithms;
 using namespace spi::Tools;
 using namespace spi::NumericalSolvers;
 
+double GraphLaplacian::DefaultParameters::SquaredBandwidth(YAML::Node const& options) {
+  const double bandwidth = options["Bandwidth"].as<double>(defaults.bandwidth);
+  return bandwidth*bandwidth;
+}
+
 GraphLaplacian::GraphLaplacian(std::shared_ptr<RandomVariable> const& rv, YAML::Node const& options) :
   cloud(SampleRandomVariable(rv, options["NumSamples"].as<std::size_t>())),
-  maxLeaf(options["MaxLeaf"].as<std::size_t>(defaults.maxLeaf)),
-  kdtree(cloud.StateDim(), cloud, nanoflann::KDTreeSingleIndexAdaptorParams(maxLeaf))
+  kdtree(cloud.StateDim(), cloud, nanoflann::KDTreeSingleIndexAdaptorParams(options["MaxLeaf"].as<std::size_t>(defaults.maxLeaf))),
+  bandwidth2(DefaultParameters::SquaredBandwidth(options))
 {
   Initialize(options);
 }
 
 GraphLaplacian::GraphLaplacian(std::shared_ptr<muq::SamplingAlgorithms::SampleCollection> const& samples, YAML::Node const& options) :
   cloud(samples),
-  maxLeaf(options["MaxLeaf"].as<std::size_t>(defaults.maxLeaf)),
-  kdtree(cloud.StateDim(), cloud, nanoflann::KDTreeSingleIndexAdaptorParams(maxLeaf))
+  kdtree(cloud.StateDim(), cloud, nanoflann::KDTreeSingleIndexAdaptorParams(options["MaxLeaf"].as<std::size_t>(defaults.maxLeaf))),
+  bandwidth2(DefaultParameters::SquaredBandwidth(options))
 {
   Initialize(options);
 }
@@ -38,9 +43,9 @@ std::shared_ptr<muq::SamplingAlgorithms::SampleCollection> GraphLaplacian::Sampl
   return samples;
 }
 
-std::size_t GraphLaplacian::NumSamples() const { return cloud.kdtree_get_point_count(); }
+double GraphLaplacian::SquaredBandwidth() const { return bandwidth2; }
 
-std::size_t GraphLaplacian::KDTreeMaxLeaf() const { return maxLeaf; }
+std::size_t GraphLaplacian::NumSamples() const { return cloud.kdtree_get_point_count(); }
 
 Eigen::Ref<const Eigen::VectorXd> GraphLaplacian::Point(std::size_t const i) const {
   assert(i<NumSamples());
@@ -52,12 +57,9 @@ void GraphLaplacian::BuildKDTree() {
   kdtree.buildIndex();
 }
 
-void GraphLaplacian::FindNeighbors(Eigen::VectorXd const& x, double const r, std::vector<std::pair<std::size_t, double> >& neighbors) const {
+void GraphLaplacian::FindNeighbors(Eigen::Ref<const Eigen::VectorXd> const& x, double const r2, std::vector<std::pair<std::size_t, double> >& neighbors) const {
   // make sure the state size matches
   assert(x.size()==cloud.StateDim());
-
-  // need to use the squared radius
-  const double r2 = r*r;
 
   // unsorted radius set
   nanoflann::RadiusResultSet<double, std::size_t> resultSet(r2, neighbors); // use squared radius because kd tree metric is the squared euclidean distance
@@ -66,7 +68,7 @@ void GraphLaplacian::FindNeighbors(Eigen::VectorXd const& x, double const r, std
   kdtree.findNeighbors(resultSet, x.data(), nanoflann::SearchParams());
 }
 
-double GraphLaplacian::FindNeighbors(Eigen::VectorXd const& x, std::size_t const k, std::vector<std::pair<std::size_t, double> >& neighbors) const {
+double GraphLaplacian::FindNeighbors(Eigen::Ref<const Eigen::VectorXd> const& x, std::size_t const k, std::vector<std::pair<std::size_t, double> >& neighbors) const {
   // make sure the state size matches
   assert(x.size()==cloud.StateDim());
 
@@ -92,7 +94,7 @@ double GraphLaplacian::FindNeighbors(Eigen::VectorXd const& x, std::size_t const
   return resultSet.worstDist();
 }
 
-double GraphLaplacian::EvaluateKernel(Eigen::VectorXd const& x, double const h2, std::vector<std::pair<std::size_t, double> >& neighbors) const {
+double GraphLaplacian::EvaluateKernel(Eigen::Ref<const Eigen::VectorXd> const& x, double const h2, std::vector<std::pair<std::size_t, double> >& neighbors) const {
   assert(kernel);
 
   // loop through the nearest neighbors
@@ -110,15 +112,56 @@ void GraphLaplacian::ConstructHeatMatrix() {
   // build the kd-tree based on the samples
   BuildKDTree();
 
+  // the number of samples
+  const std::size_t n = NumSamples();
+
+  // the sum of the kernel functions between sample i and its nearest neighbors
+  Eigen::VectorXd kernelsum(n);
+
   // loop through the samples
-  for( std::size_t i=0; i<NumSamples(); ++i ) {
+  std::vector<std::vector<std::pair<std::size_t, double> > > neighbors(n);
+  std::size_t numentries = 0; // used to count the number of nonzero entries
+  for( std::size_t i=0; i<n; ++i ) {
     // get the state for this sample
     const Eigen::Ref<const Eigen::VectorXd> x = Point(i);
 
-    std::cout << x.transpose() << std::endl;
+    // find the nearest neighbors
+    FindNeighbors(x, bandwidth2, neighbors[i]);
+    numentries += neighbors[i].size();
+
+    // evaluate the kernel function at the neighbors
+    kernelsum(i) = EvaluateKernel(x, bandwidth2, neighbors[i]);
   }
 
-  std::cout << "Construct heat matrix" << std::endl;
+  // construct the nonzero entries of the heat matrix
+  ConstructHeatMatrix(kernelsum, neighbors, numentries);
+}
+
+void GraphLaplacian::ConstructHeatMatrix(Eigen::Ref<const Eigen::VectorXd> const& kernelsum, std::vector<std::vector<std::pair<std::size_t, double> > >& neighbors, std::size_t const numentries) {
+  // create the nonzero entries
+  std::vector<Eigen::Triplet<double> > entries;
+  entries.reserve(numentries);
+
+  // the number of samples
+  const std::size_t n = NumSamples();
+
+  // loop through each element
+  for( std::size_t i=0; i<n; ++i ) {
+    // loop through the neighbors and comptue the corrected kernel
+    double sum = 0.0;
+    for( auto& it : neighbors[i] ) {
+      it.second /= std::sqrt(kernelsum(i)*kernelsum(it.first));
+      sum += it.second;
+    }
+
+    // loop through the neighbors and add the normalized kernel to the matrix
+    for( const auto& it : neighbors[i] ) {
+      entries.push_back(Eigen::Triplet<double>(i, it.first, it.second/sum));
+    }
+  }
+
+  // create the heat matrix
+  heatMatrix.setFromTriplets(entries.begin(), entries.end());
 }
 
 GraphLaplacian::PointCloud::PointCloud(std::shared_ptr<SampleCollection> const& samples) : samples(samples) {}

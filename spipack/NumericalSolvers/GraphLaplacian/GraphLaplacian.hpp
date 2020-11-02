@@ -44,8 +44,9 @@ namespace NumericalSolvers {
       Parameter Key | Type | Default Value | Description |
       ------------- | ------------- | ------------- | ------------- |
       "NumSamples"   | std::size_t | - | In the case where a random variable is passed to the constructor, we draw \f$n\f$ samples from the distribution.   |
-      "MaxLeaf"   | std::size_t | 10 | The maximum leaf size for the kd tree (nanoflann parameter). |
-      "KernelOptions"   | YAML::Node | - | The options for the kernel function (spi::Tools::CompactKernel). |
+      "MaxLeaf"   | std::size_t | <tt>10</tt> | The maximum leaf size for the kd tree (nanoflann parameter). |
+      "KernelOptions"   | YAML::Node | - | The options for the compact kernel function \f$k(\theta)\f$ (spi::Tools::CompactKernel). |
+      "Bandwidth"  | double   | <tt>1.0</tt> | The bandwith \f$h\f$ that defines the kernel \f$k_h = k(h^{-1} \theta)\f$.
 */
 class GraphLaplacian {
 public:
@@ -72,8 +73,11 @@ public:
   */
   std::size_t NumSamples() const;
 
-  /// Get the max leaf size for the kd stree (nanoflann parameter)
-  std::size_t KDTreeMaxLeaf() const;
+  /// The squared bandwdwidth \f$h^\f$
+  /**
+    \return The squared bandwidth \f$h^2\f$
+  */
+  double SquaredBandwidth() const;
 
   /// Get the \f$i^{th}\f$ point from the point cloud.
   Eigen::Ref<const Eigen::VectorXd> Point(std::size_t const i) const;
@@ -88,10 +92,10 @@ public:
   /**
     Find all of the points \f$\{\boldsymbol{x}^{(j)}\}_{j=1}^{k} \subseteq \{\boldsymbol{x}^{(i)}\}_{i=1}^{n}\f$ such that \f$\|\boldsymbol{x}-\boldsymbol{x}^{(j)}\| \leq r\f$, where \f$r>0\f$ is a given radius.
     @param[in] x The given point \f$\boldsymbol{x}\f$
-    @param[in] r The search radius \f$r\f$
+    @param[in] r2 The squared search radius \f$r\f$
     @param[out] neighbors A vector of the nearest neighbors. First: the neighbor's index, Second: the squared distance (\f$d^2 = \boldsymbol{x} \cdot \boldsymbol{x}^{(j)}\f$) between the point \f$\boldsymbol{x}\f$ and the neighbor
   */
-  void FindNeighbors(Eigen::VectorXd const& x, double const r, std::vector<std::pair<std::size_t, double> >& neighbors) const;
+  void FindNeighbors(Eigen::Ref<const Eigen::VectorXd> const& x, double const r2, std::vector<std::pair<std::size_t, double> >& neighbors) const;
 
   /// Find the \f$k\f$ points that are closest to a given point \f$\boldsymbol{x}\f$
   /**
@@ -101,7 +105,7 @@ public:
     @param[out] neighbors A vector of the nearest neighbors. First: the neighbor's index, Second: the squared distance (\f$d^2 = \boldsymbol{x} \cdot \boldsymbol{x}^{(j)}\f$) between the point \f$\boldsymbol{x}\f$ and the neighbor
     \return The squared distance to the furtherest point from \f$\boldsymbol{x}\f$
   */
-  double FindNeighbors(Eigen::VectorXd const& x, std::size_t const k, std::vector<std::pair<std::size_t, double> >& neighbors) const;
+  double FindNeighbors(Eigen::Ref<const Eigen::VectorXd> const& x, std::size_t const k, std::vector<std::pair<std::size_t, double> >& neighbors) const;
 
   /// Evaluate kernel at neighbors
   /**
@@ -111,7 +115,7 @@ public:
     @param[in,out] neighbors A vector of the nearest neighbors. First: the neighbor's index, Second: (input) the squared distance (\f$\boldsymbol{x} \cdot \boldsymbol{x}^{(j)}\f$) between the point \f$\boldsymbol{x}\f$ and the neighbor, (output) the kernel evaluation \f$k(\boldsymbol{x}, \boldsymbol{x}^{(j)})\f$
     \return The sum of the kernel evaluations \f$d(\boldsymbol{x}) = \sum_{j=1}^{k} k_h(\|\boldsymbol{x}-\boldsymbol{x}^{(j)}\|^2)\f$
   */
-  double EvaluateKernel(Eigen::VectorXd const& x, double const h2, std::vector<std::pair<std::size_t, double> >& neighbors) const;
+  double EvaluateKernel(Eigen::Ref<const Eigen::VectorXd> const& x, double const h2, std::vector<std::pair<std::size_t, double> >& neighbors) const;
 
   /// Construct the heat matrix \f$\boldsymbol{P}\f$
   /**
@@ -174,21 +178,26 @@ private:
     std::shared_ptr<muq::SamplingAlgorithms::SampleCollection> samples;
   };
 
-  /// Initialize the graph Laplacian 
+  /// Initialize the graph Laplacian
   /**
     Must be called by every constructor.
     @param[in] options The options for the graph Laplacian
   */
   void Initialize(YAML::Node const& options);
 
+  /// Construct the heat matrix given kernel evaluation at each point's neighbors
+  /**
+    @param[in] kernelsum The \f$i^{th}\f$ entry is the sum \f$d^{(i)} = \sum_{j=1}^{n} k_h(\|\boldsymbol{x}^{(i)}-\boldsymbol{x}^{(j)}\|^2)\f$
+    @param[in] neighbors Each entry is a vector of nearest neighbors for the corresponding point. Each nearest neighbor is the index of the sample and (input) the kernel evaluation \f$k_h(\|\boldsymbol{x}^{(i)}-\boldsymbol{x}^{(j)}\|^2)\f$ (output) the corrected kernel evaluation \f$k_h(\|\boldsymbol{x}^{(i)}-\boldsymbol{x}^{(j)}\|^2) / \sqrt{d^{(i)} d^{(j)}} \f$
+    @param[in] numentries A guess of the number of non-zero entries in the matrix (defaults to zero)
+  */
+  void ConstructHeatMatrix(Eigen::Ref<const Eigen::VectorXd> const& kernelsum, std::vector<std::vector<std::pair<std::size_t, double> > >& neighbors, std::size_t const numentries = 0);
+
   /// The heat matrix \f$\boldsymbol{P}\f$
   Eigen::SparseMatrix<double> heatMatrix;
 
   /// The point cloud that we will use to approximate the weighted Laplacian (and solve the weighted Poisson equation)
   const PointCloud cloud;
-
-  /// The max leaf for the kd-tree
-  const std::size_t maxLeaf;
 
   /// The nanoflann kd-tree type
   typedef nanoflann::KDTreeSingleIndexAdaptor<nanoflann::L2_Simple_Adaptor<double, PointCloud>, PointCloud> NanoflannKDTree;
@@ -202,10 +211,21 @@ private:
   */
   std::shared_ptr<spi::Tools::CompactKernel> kernel;
 
+  /// The squared bandwidth parameter \f$h^2\f$
+  /**
+    This parameter defines the kernel \f$k_h(\theta) = k(h^{-2} \theta^2)\f$.
+  */
+  const double bandwidth2;
+
   /// The default values for the spi::NumericalSolvers::GraphLaplacian class.
   struct DefaultParameters {
-    /// The max leaf for the kd-tree defaults to \f$10\f$.
+    static double SquaredBandwidth(YAML::Node const& options);
+
+    /// The maximum leaf size (nanoflann parameter) defaults to \f$10\f$
     inline static const std::size_t maxLeaf = 10;
+
+    /// The bandwidth parameter defaults to \f$1\f$
+    inline static const double bandwidth = 1.0;
   };
 
   /// Store the default values

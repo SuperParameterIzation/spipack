@@ -36,29 +36,39 @@ else()
   set(shared_library_suffix ".so")
 endif()
 
-Dependency(YAML)
-Dependency(EIGEN3)
-Dependency(BOOST)
-Dependency(HDF5)
-Dependency(MUQ)
-Dependency(GTEST)
-
 set(SPIPACK_BUILT_DEPENDENCIES )
+
+Dependency(YAML)
 if( SPIPACK_BUILT_YAML )
   list(APPEND SPIPACK_BUILT_DEPENDENCIES YAML)
 endif()
-if( SPIPACK_BUILT_MUQ )
-  list(APPEND SPIPACK_BUILT_DEPENDENCIES MUQ)
-endif()
-if( SPIPACK_BUILT_HDF5 )
-  list(APPEND SPIPACK_BUILT_DEPENDENCIES HDF5)
-endif()
-if( SPIPACK_BUILT_BOOST )
-  list(APPEND SPIPACK_BUILT_DEPENDENCIES BOOST)
-endif()
+
+Dependency(EIGEN3)
 if( SPIPACK_BUILT_EIGEN3 )
   list(APPEND SPIPACK_BUILT_DEPENDENCIES EIGEN3)
 endif()
+
+Dependency(SPECTRA)
+if( SPIPACK_BUILT_SPECTRA )
+  list(APPEND SPIPACK_BUILT_DEPENDENCIES SPECTRA)
+endif()
+
+Dependency(BOOST)
+if( SPIPACK_BUILT_BOOST )
+  list(APPEND SPIPACK_BUILT_DEPENDENCIES BOOST)
+endif()
+
+Dependency(HDF5)
+if( SPIPACK_BUILT_HDF5 )
+  list(APPEND SPIPACK_BUILT_DEPENDENCIES HDF5)
+endif()
+
+Dependency(MUQ)
+if( SPIPACK_BUILT_MUQ )
+  list(APPEND SPIPACK_BUILT_DEPENDENCIES MUQ)
+endif()
+
+Dependency(GTEST)
 
 # add the header only submodules
 list(APPEND SPIPACK_EXTERNAL_INCLUDE_DIRS

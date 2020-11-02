@@ -18,6 +18,7 @@ public:
     // set the options for the graph laplacian
     options["MaxLeaf"] = maxLeaf;
     options["NumSamples"] = n;
+    options["Bandwidth"] = bandwidth;
 
     // set the kernel options
     YAML::Node kernelOptions;
@@ -30,8 +31,8 @@ public:
     // make sure the graph laplacian has enough samples
     EXPECT_EQ(laplacian->NumSamples(), n);
 
-    // make the the kd tree max leaf is the value we set
-    EXPECT_EQ(laplacian->KDTreeMaxLeaf(), maxLeaf);
+    // check the bandwidth
+    EXPECT_NEAR(laplacian->SquaredBandwidth(), bandwidth*bandwidth, 1.0e-10);
   }
 
 protected:
@@ -59,6 +60,9 @@ protected:
 
   /// The max leaf size for the kd tree
   const std::size_t maxLeaf = 15;
+
+  /// The bandwidth for the kernel
+  const double bandwidth = 0.35;
 
   /// The options for the graph Laplacian
   YAML::Node options;
@@ -98,7 +102,7 @@ TEST_F(GraphLaplacianTests, FindNearestNeighbors_Radius) {
 
   // find all of the points within a choosen radius
   std::vector<std::pair<std::size_t, double> > neighbors;
-  laplacian->FindNeighbors(x, r, neighbors);
+  laplacian->FindNeighbors(x, r*r, neighbors);
 
   // make sure the index of the neighbors is valid and they are within the correct radius
   for( const auto& it : neighbors ) {
@@ -115,7 +119,7 @@ TEST_F(GraphLaplacianTests, FindNearestNeighbors_Radius) {
   }
 
   // evaluate the kernel function at the neighbors
-  const double kernelsum = laplacian->EvaluateKernel(x, r, neighbors);
+  const double kernelsum = laplacian->EvaluateKernel(x, r*r, neighbors);
 
   // the distances should now be the kernel evaluation
   for( const auto& it : neighbors ) {
