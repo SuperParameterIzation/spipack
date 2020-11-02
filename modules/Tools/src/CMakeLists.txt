@@ -1,5 +1,7 @@
 set(SOURCE
   Kernels/Kernel.cpp
+  Kernels/IsotropicKernel.cpp
+  Kernels/CompactKernel.cpp
   Kernels/HatKernel.cpp
 )
 
