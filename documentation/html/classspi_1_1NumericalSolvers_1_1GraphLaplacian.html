@@ -151,9 +151,6 @@ Public Member Functions</h2></td></tr>
 <tr class="memitem:afacc9bf991bb83130031f75ea3a78686"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classspi_1_1NumericalSolvers_1_1GraphLaplacian.html#afacc9bf991bb83130031f75ea3a78686">EvaluateKernel</a> (Eigen::VectorXd const &amp;x, double const h2, std::vector&lt; std::pair&lt; std::size_t, double &gt; &gt; &amp;neighbors) const </td></tr>
 <tr class="memdesc:afacc9bf991bb83130031f75ea3a78686"><td class="mdescLeft">&#160;</td><td class="mdescRight">Evaluate kernel at neighbors.  <a href="#afacc9bf991bb83130031f75ea3a78686">More...</a><br /></td></tr>
 <tr class="separator:afacc9bf991bb83130031f75ea3a78686"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a125d83383ea328174e45a9cce8a80248"><td class="memItemLeft" align="right" valign="top">virtual double&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classspi_1_1NumericalSolvers_1_1GraphLaplacian.html#a125d83383ea328174e45a9cce8a80248">Kernel</a> (double const theta) const </td></tr>
-<tr class="memdesc:a125d83383ea328174e45a9cce8a80248"><td class="mdescLeft">&#160;</td><td class="mdescRight">Evaluate the kernel function.  <a href="#a125d83383ea328174e45a9cce8a80248">More...</a><br /></td></tr>
-<tr class="separator:a125d83383ea328174e45a9cce8a80248"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pri-types"></a>
 Private Types</h2></td></tr>
@@ -178,6 +175,9 @@ Private Attributes</h2></td></tr>
 <tr class="memitem:a662f08a000e6a9c3e2c6d98e3250cd74"><td class="memItemLeft" align="right" valign="top"><a class="el" href="classspi_1_1NumericalSolvers_1_1GraphLaplacian.html#a04d6290144ce3dfc7fc94cbe16e1c645">NanoflannKDTree</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classspi_1_1NumericalSolvers_1_1GraphLaplacian.html#a662f08a000e6a9c3e2c6d98e3250cd74">kdtree</a></td></tr>
 <tr class="memdesc:a662f08a000e6a9c3e2c6d98e3250cd74"><td class="mdescLeft">&#160;</td><td class="mdescRight">The nanoflann kd-tree.  <a href="#a662f08a000e6a9c3e2c6d98e3250cd74">More...</a><br /></td></tr>
 <tr class="separator:a662f08a000e6a9c3e2c6d98e3250cd74"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:adfc06d32ef3223612f8f94ba023c3a7c"><td class="memItemLeft" align="right" valign="top">std::shared_ptr&lt; <a class="el" href="classspi_1_1Tools_1_1CompactKernel.html">spi::Tools::CompactKernel</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classspi_1_1NumericalSolvers_1_1GraphLaplacian.html#adfc06d32ef3223612f8f94ba023c3a7c">kernel</a></td></tr>
+<tr class="memdesc:adfc06d32ef3223612f8f94ba023c3a7c"><td class="mdescLeft">&#160;</td><td class="mdescRight">The kernel function.  <a href="#adfc06d32ef3223612f8f94ba023c3a7c">More...</a><br /></td></tr>
+<tr class="separator:adfc06d32ef3223612f8f94ba023c3a7c"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pri-static-attribs"></a>
 Static Private Attributes</h2></td></tr>
@@ -193,13 +193,16 @@ Static Private Attributes</h2></td></tr>
 <p> This class uses \(n\) samples \(\{\boldsymbol{x}^{(i)}\}_{i=1}^{n}\) such that \(\boldsymbol{x}^{(i)} \sim \psi\) to approximate the action of this operator and to solve the weighted Poisson equation (given the right hand side \(R\)) </p><p class="formulaDsp">
 \begin{equation*} \nabla_{\psi}^2 H = R \end{equation*}
 </p>
-<p> such that \(\mathbb{E}_{\psi}[H] = 0\). <b>Configuration Parameters:</b> </p><table class="doxtable">
+<p> such that \(\mathbb{E}_{\psi}[H] = 0\).</p>
+<p><b>Configuration Parameters:</b> </p><table class="doxtable">
 <tr>
 <th>Parameter Key </th><th>Type </th><th>Default Value </th><th>Description  </th></tr>
 <tr>
 <td>"NumSamples" </td><td>std::size_t </td><td>- </td><td>In the case where a random variable is passed to the constructor, we draw \(n\) samples from the distribution. </td></tr>
 <tr>
 <td>"MaxLeaf" </td><td>std::size_t </td><td>10 </td><td>The maximum leaf size for the kd tree (nanoflann parameter). </td></tr>
+<tr>
+<td>"KernelOptions" </td><td>YAML::Node </td><td>- </td><td>The options for the kernel function. </td></tr>
 </table>
 </div><h2 class="groupheader">Member Typedef Documentation</h2>
 <a class="anchor" id="a04d6290144ce3dfc7fc94cbe16e1c645"></a>
@@ -481,43 +484,6 @@ Static Private Attributes</h2></td></tr>
 
 </div>
 </div>
-<a class="anchor" id="a125d83383ea328174e45a9cce8a80248"></a>
-<div class="memitem">
-<div class="memproto">
-<table class="mlabels">
-  <tr>
-  <td class="mlabels-left">
-      <table class="memname">
-        <tr>
-          <td class="memname">double GraphLaplacian::Kernel </td>
-          <td>(</td>
-          <td class="paramtype">double const&#160;</td>
-          <td class="paramname"><em>theta</em></td><td>)</td>
-          <td> const</td>
-        </tr>
-      </table>
-  </td>
-  <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">virtual</span></span>  </td>
-  </tr>
-</table>
-</div><div class="memdoc">
-
-<p>Evaluate the kernel function. </p>
-<p>The kernel is a decreasing function \(k: \mathbb{R}^{+} \mapsto \mathbb{R}^{+}\) such that \(k(\theta) = 0\) if \(\theta \notin [0,1]\).</p>
-<p>The base class implementation is </p><p class="formulaDsp">
-\begin{equation*} k(\theta) = \begin{cases} 1 &amp; \mbox{if } \theta \in [0,1] \\ 0 &amp; \mbox{else.} \end{cases} \end{equation*}
-</p>
- <dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramdir">[in]</td><td class="paramname">theta</td><td>The input to the kernel \(\theta\) </td></tr>
-  </table>
-  </dd>
-</dl>
-<dl class="section return"><dt>Returns</dt><dd>The kernel evaluation \(k(\theta)\) </dd></dl>
-
-</div>
-</div>
 <a class="anchor" id="acb41d0c5d96c7aad4b9dd02d0c1b09de"></a>
 <div class="memitem">
 <div class="memproto">
@@ -661,6 +627,29 @@ Static Private Attributes</h2></td></tr>
 </div><div class="memdoc">
 
 <p>The nanoflann kd-tree. </p>
+
+</div>
+</div>
+<a class="anchor" id="adfc06d32ef3223612f8f94ba023c3a7c"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">std::shared_ptr&lt;<a class="el" href="classspi_1_1Tools_1_1CompactKernel.html">spi::Tools::CompactKernel</a>&gt; spi::NumericalSolvers::GraphLaplacian::kernel</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">private</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>The kernel function. </p>
+<p>The kernel function \(k(\theta) = k(h^{-2} \|\boldsymbol{x}_1-\boldsymbol{x}_2\|^2)\). </p>
 
 </div>
 </div>

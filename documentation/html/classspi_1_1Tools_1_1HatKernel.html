@@ -95,7 +95,6 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <div class="header">
   <div class="summary">
 <a href="#pub-methods">Public Member Functions</a> &#124;
-<a href="#pro-methods">Protected Member Functions</a> &#124;
 <a href="classspi_1_1Tools_1_1HatKernel-members.html">List of all members</a>  </div>
   <div class="headertitle">
 <div class="title">spi::Tools::HatKernel Class Reference</div>  </div>
@@ -125,6 +124,9 @@ Public Member Functions</h2></td></tr>
 <tr class="separator:a132f20e40774fa349c4b6bd3803c3b7a"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:aa57771dd8a0c498fa54a47b9b73f0903"><td class="memItemLeft" align="right" valign="top">virtual&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classspi_1_1Tools_1_1HatKernel.html#aa57771dd8a0c498fa54a47b9b73f0903">~HatKernel</a> ()=default</td></tr>
 <tr class="separator:aa57771dd8a0c498fa54a47b9b73f0903"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a53c50cdce9c46d600ce8434b508c63ad"><td class="memItemLeft" align="right" valign="top">virtual double&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classspi_1_1Tools_1_1HatKernel.html#a53c50cdce9c46d600ce8434b508c63ad">EvaluateCompactKernel</a> (double const theta) const override</td></tr>
+<tr class="memdesc:a53c50cdce9c46d600ce8434b508c63ad"><td class="mdescLeft">&#160;</td><td class="mdescRight">Evaluate the hat kernel function \(k(\theta)\).  <a href="#a53c50cdce9c46d600ce8434b508c63ad">More...</a><br /></td></tr>
+<tr class="separator:a53c50cdce9c46d600ce8434b508c63ad"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="inherit_header pub_methods_classspi_1_1Tools_1_1CompactKernel"><td colspan="2" onclick="javascript:toggleInherit('pub_methods_classspi_1_1Tools_1_1CompactKernel')"><img src="closed.png" alt="-"/>&#160;Public Member Functions inherited from <a class="el" href="classspi_1_1Tools_1_1CompactKernel.html">spi::Tools::CompactKernel</a></td></tr>
 <tr class="memitem:abfb14fc1dbd560d73617ecb9f6097171 inherit pub_methods_classspi_1_1Tools_1_1CompactKernel"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classspi_1_1Tools_1_1CompactKernel.html#abfb14fc1dbd560d73617ecb9f6097171">CompactKernel</a> (YAML::Node const &amp;options)</td></tr>
 <tr class="memdesc:abfb14fc1dbd560d73617ecb9f6097171 inherit pub_methods_classspi_1_1Tools_1_1CompactKernel"><td class="mdescLeft">&#160;</td><td class="mdescRight">Construct a compact kernel.  <a href="#abfb14fc1dbd560d73617ecb9f6097171">More...</a><br /></td></tr>
@@ -155,12 +157,6 @@ Public Member Functions</h2></td></tr>
 <tr class="memitem:a5db50d7b2306da5e41070d9a8ca7b700 inherit pub_methods_classspi_1_1Tools_1_1Kernel"><td class="memItemLeft" align="right" valign="top">double&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classspi_1_1Tools_1_1Kernel.html#a5db50d7b2306da5e41070d9a8ca7b700">operator()</a> (Eigen::Ref&lt; const Eigen::VectorXd &gt; const &amp;x1, Eigen::Ref&lt; const Eigen::VectorXd &gt; const &amp;x2) const </td></tr>
 <tr class="memdesc:a5db50d7b2306da5e41070d9a8ca7b700 inherit pub_methods_classspi_1_1Tools_1_1Kernel"><td class="mdescLeft">&#160;</td><td class="mdescRight">Evaluate the kernel function \(k(\boldsymbol{x}_1, \boldsymbol{x}_2)\).  <a href="#a5db50d7b2306da5e41070d9a8ca7b700">More...</a><br /></td></tr>
 <tr class="separator:a5db50d7b2306da5e41070d9a8ca7b700 inherit pub_methods_classspi_1_1Tools_1_1Kernel"><td class="memSeparator" colspan="2">&#160;</td></tr>
-</table><table class="memberdecls">
-<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pro-methods"></a>
-Protected Member Functions</h2></td></tr>
-<tr class="memitem:a53c50cdce9c46d600ce8434b508c63ad"><td class="memItemLeft" align="right" valign="top">virtual double&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classspi_1_1Tools_1_1HatKernel.html#a53c50cdce9c46d600ce8434b508c63ad">EvaluateCompactKernel</a> (double const theta) const override</td></tr>
-<tr class="memdesc:a53c50cdce9c46d600ce8434b508c63ad"><td class="mdescLeft">&#160;</td><td class="mdescRight">Evaluate the hat kernel function \(k(\theta)\).  <a href="#a53c50cdce9c46d600ce8434b508c63ad">More...</a><br /></td></tr>
-<tr class="separator:a53c50cdce9c46d600ce8434b508c63ad"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="inherited"></a>
 Additional Inherited Members</h2></td></tr>
@@ -277,7 +273,7 @@ Additional Inherited Members</h2></td></tr>
       </table>
   </td>
   <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">override</span><span class="mlabel">protected</span><span class="mlabel">virtual</span></span>  </td>
+<span class="mlabels"><span class="mlabel">override</span><span class="mlabel">virtual</span></span>  </td>
   </tr>
 </table>
 </div><div class="memdoc">
