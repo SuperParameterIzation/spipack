@@ -158,9 +158,9 @@ Public Member Functions</h2></td></tr>
 <tr class="memitem:ae56d0699192510dbb7a30fbc46a46a93"><td class="memItemLeft" align="right" valign="top">const Eigen::Ref&lt; const Eigen::SparseMatrix&lt; double &gt; &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classspi_1_1NumericalSolvers_1_1GraphLaplacian.html#ae56d0699192510dbb7a30fbc46a46a93">HeatMatrix</a> () const </td></tr>
 <tr class="memdesc:ae56d0699192510dbb7a30fbc46a46a93"><td class="mdescLeft">&#160;</td><td class="mdescRight">Get a reference to the heat matrix.  <a href="#ae56d0699192510dbb7a30fbc46a46a93">More...</a><br /></td></tr>
 <tr class="separator:ae56d0699192510dbb7a30fbc46a46a93"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a558441a75364a86399f14dba940659e5"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classspi_1_1NumericalSolvers_1_1GraphLaplacian.html#a558441a75364a86399f14dba940659e5">HeatMatrixEigenvalues</a> (const size_t neig, Eigen::Ref&lt; Eigen::VectorXd &gt; eigenvalues) const </td></tr>
-<tr class="memdesc:a558441a75364a86399f14dba940659e5"><td class="mdescLeft">&#160;</td><td class="mdescRight">Compute the eigenvalues of the heat matrix \(\boldsymbol{P}\).  <a href="#a558441a75364a86399f14dba940659e5">More...</a><br /></td></tr>
-<tr class="separator:a558441a75364a86399f14dba940659e5"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a03279e64ab9915c5350e22f3dc69f7ba"><td class="memItemLeft" align="right" valign="top">Eigen::VectorXd&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classspi_1_1NumericalSolvers_1_1GraphLaplacian.html#a03279e64ab9915c5350e22f3dc69f7ba">HeatMatrixEigenvalues</a> (const size_t neig) const </td></tr>
+<tr class="memdesc:a03279e64ab9915c5350e22f3dc69f7ba"><td class="mdescLeft">&#160;</td><td class="mdescRight">Compute the eigenvalues of the heat matrix \(\boldsymbol{P}\).  <a href="#a03279e64ab9915c5350e22f3dc69f7ba">More...</a><br /></td></tr>
+<tr class="separator:a03279e64ab9915c5350e22f3dc69f7ba"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a8ddffff40a02cc184185ae3729cce78d"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classspi_1_1NumericalSolvers_1_1GraphLaplacian.html#a8ddffff40a02cc184185ae3729cce78d">SolveWeightedPoisson</a> (Eigen::Ref&lt; Eigen::VectorXd &gt; vec)</td></tr>
 <tr class="memdesc:a8ddffff40a02cc184185ae3729cce78d"><td class="mdescLeft">&#160;</td><td class="mdescRight">Solve the weighted Poisson problem.  <a href="#a8ddffff40a02cc184185ae3729cce78d">More...</a><br /></td></tr>
 <tr class="separator:a8ddffff40a02cc184185ae3729cce78d"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -179,6 +179,15 @@ Private Member Functions</h2></td></tr>
 <tr class="memitem:a3680c4c3cd4919ec6c30fb0c04d2c293"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classspi_1_1NumericalSolvers_1_1GraphLaplacian.html#a3680c4c3cd4919ec6c30fb0c04d2c293">ConstructHeatMatrix</a> (Eigen::Ref&lt; const Eigen::VectorXd &gt; const &amp;kernelsum, std::vector&lt; std::vector&lt; std::pair&lt; std::size_t, double &gt; &gt; &gt; &amp;neighbors, std::size_t const numentries=0)</td></tr>
 <tr class="memdesc:a3680c4c3cd4919ec6c30fb0c04d2c293"><td class="mdescLeft">&#160;</td><td class="mdescRight">Construct the heat matrix given kernel evaluation at each point's neighbors.  <a href="#a3680c4c3cd4919ec6c30fb0c04d2c293">More...</a><br /></td></tr>
 <tr class="separator:a3680c4c3cd4919ec6c30fb0c04d2c293"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a4aaf542c851bb5f9984f716a08a92e90"><td class="memItemLeft" align="right" valign="top">Eigen::VectorXd&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classspi_1_1NumericalSolvers_1_1GraphLaplacian.html#a4aaf542c851bb5f9984f716a08a92e90">ComputeSparseEigenvalues</a> (std::size_t const neig, Eigen::SparseMatrix&lt; double &gt; const &amp;mat, bool const computeLargest=true) const </td></tr>
+<tr class="memdesc:a4aaf542c851bb5f9984f716a08a92e90"><td class="mdescLeft">&#160;</td><td class="mdescRight">Compute the eigenvalues of a sparse matrix.  <a href="#a4aaf542c851bb5f9984f716a08a92e90">More...</a><br /></td></tr>
+<tr class="separator:a4aaf542c851bb5f9984f716a08a92e90"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a79e06efcc20a85aa3725ee4e1ee1b74a"><td class="memItemLeft" align="right" valign="top">Eigen::VectorXd&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classspi_1_1NumericalSolvers_1_1GraphLaplacian.html#a79e06efcc20a85aa3725ee4e1ee1b74a">ComputeLargestSparseEigenvalues</a> (std::size_t const neig, Eigen::SparseMatrix&lt; double &gt; const &amp;mat) const </td></tr>
+<tr class="memdesc:a79e06efcc20a85aa3725ee4e1ee1b74a"><td class="mdescLeft">&#160;</td><td class="mdescRight">Compute the largest eigenvalues of a sparse matrix.  <a href="#a79e06efcc20a85aa3725ee4e1ee1b74a">More...</a><br /></td></tr>
+<tr class="separator:a79e06efcc20a85aa3725ee4e1ee1b74a"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:af59d3fc9cc9a928fad01d9a6eb846edf"><td class="memItemLeft" align="right" valign="top">Eigen::VectorXd&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classspi_1_1NumericalSolvers_1_1GraphLaplacian.html#af59d3fc9cc9a928fad01d9a6eb846edf">ComputeSmallestSparseEigenvalues</a> (std::size_t const neig, Eigen::SparseMatrix&lt; double &gt; const &amp;mat) const </td></tr>
+<tr class="memdesc:af59d3fc9cc9a928fad01d9a6eb846edf"><td class="mdescLeft">&#160;</td><td class="mdescRight">Compute the smallest eigenvalues of a sparse matrix.  <a href="#af59d3fc9cc9a928fad01d9a6eb846edf">More...</a><br /></td></tr>
+<tr class="separator:af59d3fc9cc9a928fad01d9a6eb846edf"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pri-static-methods"></a>
 Static Private Member Functions</h2></td></tr>
@@ -203,6 +212,12 @@ Private Attributes</h2></td></tr>
 <tr class="memitem:aee4e4d94cbb874111cf6160dfae7e4d6"><td class="memItemLeft" align="right" valign="top">const double&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classspi_1_1NumericalSolvers_1_1GraphLaplacian.html#aee4e4d94cbb874111cf6160dfae7e4d6">bandwidth2</a></td></tr>
 <tr class="memdesc:aee4e4d94cbb874111cf6160dfae7e4d6"><td class="mdescLeft">&#160;</td><td class="mdescRight">The squared bandwidth parameter \(h^2\).  <a href="#aee4e4d94cbb874111cf6160dfae7e4d6">More...</a><br /></td></tr>
 <tr class="separator:aee4e4d94cbb874111cf6160dfae7e4d6"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a6e779dac573c2f5bd7736a4dce82cde6"><td class="memItemLeft" align="right" valign="top">const double&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classspi_1_1NumericalSolvers_1_1GraphLaplacian.html#a6e779dac573c2f5bd7736a4dce82cde6">eigensolverTol</a></td></tr>
+<tr class="memdesc:a6e779dac573c2f5bd7736a4dce82cde6"><td class="mdescLeft">&#160;</td><td class="mdescRight">The tolerance for the sparse eigensolver.  <a href="#a6e779dac573c2f5bd7736a4dce82cde6">More...</a><br /></td></tr>
+<tr class="separator:a6e779dac573c2f5bd7736a4dce82cde6"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a3d087c175d93d9039baa28bf95722ce4"><td class="memItemLeft" align="right" valign="top">const std::size_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classspi_1_1NumericalSolvers_1_1GraphLaplacian.html#a3d087c175d93d9039baa28bf95722ce4">eigensolverMaxIt</a></td></tr>
+<tr class="memdesc:a3d087c175d93d9039baa28bf95722ce4"><td class="mdescLeft">&#160;</td><td class="mdescRight">The maximum number of iterations for the sparse eigensolver.  <a href="#a3d087c175d93d9039baa28bf95722ce4">More...</a><br /></td></tr>
+<tr class="separator:a3d087c175d93d9039baa28bf95722ce4"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pri-static-attribs"></a>
 Static Private Attributes</h2></td></tr>
@@ -237,6 +252,10 @@ Static Private Attributes</h2></td></tr>
 <td>"KernelOptions" </td><td>YAML::Node </td><td>- </td><td>The options for the compact kernel function \(k(\theta)\) (<a class="el" href="classspi_1_1Tools_1_1CompactKernel.html" title="An implementation of a compact kernel. ">spi::Tools::CompactKernel</a>). </td></tr>
 <tr>
 <td>"Bandwidth" </td><td>double </td><td><code>1.0</code> </td><td>The bandwith \(h\) that defines the kernel \(k_h = k(h^{-1} \theta)\). </td></tr>
+<tr>
+<td>"EigenSolverTol" </td><td>double </td><td><code>10^{-5}</code> </td><td>The tolerance for the sparse eigensolver. </td></tr>
+<tr>
+<td>"EigenSolverMaxIt" </td><td>std::size_t </td><td><code>10^{3}</code> </td><td>The maximum number of iterations for the sparse eigensolver. </td></tr>
 </table>
 </div><h2 class="groupheader">Member Typedef Documentation</h2>
 <a class="anchor" id="a04d6290144ce3dfc7fc94cbe16e1c645"></a>
@@ -371,6 +390,143 @@ Static Private Attributes</h2></td></tr>
 
 <p>Update the kd-tree. </p>
 <p>(re-)Build the kd-tree based on the samples. </p>
+
+</div>
+</div>
+<a class="anchor" id="a79e06efcc20a85aa3725ee4e1ee1b74a"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">Eigen::VectorXd GraphLaplacian::ComputeLargestSparseEigenvalues </td>
+          <td>(</td>
+          <td class="paramtype">std::size_t const&#160;</td>
+          <td class="paramname"><em>neig</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">Eigen::SparseMatrix&lt; double &gt; const &amp;&#160;</td>
+          <td class="paramname"><em>mat</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td> const</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">private</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Compute the largest eigenvalues of a sparse matrix. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[in]</td><td class="paramname">neig</td><td>The number of eigenvalues we wish to compute </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">mat</td><td>We are computing the eigenvalues of this matrix </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a class="anchor" id="af59d3fc9cc9a928fad01d9a6eb846edf"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">Eigen::VectorXd GraphLaplacian::ComputeSmallestSparseEigenvalues </td>
+          <td>(</td>
+          <td class="paramtype">std::size_t const&#160;</td>
+          <td class="paramname"><em>neig</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">Eigen::SparseMatrix&lt; double &gt; const &amp;&#160;</td>
+          <td class="paramname"><em>mat</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td> const</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">private</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Compute the smallest eigenvalues of a sparse matrix. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[in]</td><td class="paramname">neig</td><td>The number of eigenvalues we wish to compute </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">mat</td><td>We are computing the eigenvalues of this matrix </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a class="anchor" id="a4aaf542c851bb5f9984f716a08a92e90"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">Eigen::VectorXd GraphLaplacian::ComputeSparseEigenvalues </td>
+          <td>(</td>
+          <td class="paramtype">std::size_t const&#160;</td>
+          <td class="paramname"><em>neig</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">Eigen::SparseMatrix&lt; double &gt; const &amp;&#160;</td>
+          <td class="paramname"><em>mat</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">bool const&#160;</td>
+          <td class="paramname"><em>computeLargest</em> = <code>true</code>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td> const</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">private</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Compute the eigenvalues of a sparse matrix. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[in]</td><td class="paramname">neig</td><td>The number of eigenvalues we wish to compute </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">mat</td><td>We are computing the eigenvalues of this matrix </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">computeLargest</td><td>True: (default) compute the <code>neig</code> largest eigenvalues, False: compute the <code>neig</code> smallest eigenvalues. </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>The eigenvalues </dd></dl>
 
 </div>
 </div>
@@ -587,26 +743,16 @@ Static Private Attributes</h2></td></tr>
 
 </div>
 </div>
-<a class="anchor" id="a558441a75364a86399f14dba940659e5"></a>
+<a class="anchor" id="a03279e64ab9915c5350e22f3dc69f7ba"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">void GraphLaplacian::HeatMatrixEigenvalues </td>
+          <td class="memname">Eigen::VectorXd GraphLaplacian::HeatMatrixEigenvalues </td>
           <td>(</td>
           <td class="paramtype">const size_t&#160;</td>
-          <td class="paramname"><em>neig</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">Eigen::Ref&lt; Eigen::VectorXd &gt;&#160;</td>
-          <td class="paramname"><em>eigenvalues</em>&#160;</td>
-        </tr>
-        <tr>
-          <td></td>
-          <td>)</td>
-          <td></td><td> const</td>
+          <td class="paramname"><em>neig</em></td><td>)</td>
+          <td> const</td>
         </tr>
       </table>
 </div><div class="memdoc">
@@ -615,10 +761,10 @@ Static Private Attributes</h2></td></tr>
 <p>This function does not recompute \(\boldsymbol{P}\), but it computes the largest eigenvalues of the currently stored value. </p><dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramdir">[in]</td><td class="paramname">neig</td><td>Compute the <code>neig</code> largest eigenvalues </td></tr>
-    <tr><td class="paramdir">[out]</td><td class="paramname">eigenvalues</td><td>The <code>neig</code> largest eigenvalues </td></tr>
   </table>
   </dd>
 </dl>
+<dl class="section return"><dt>Returns</dt><dd>The <code>neig</code> largest eigenvalues </dd></dl>
 
 </div>
 </div>
@@ -834,6 +980,50 @@ Static Private Attributes</h2></td></tr>
 </div><div class="memdoc">
 
 <p>Store the default values. </p>
+
+</div>
+</div>
+<a class="anchor" id="a3d087c175d93d9039baa28bf95722ce4"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">const std::size_t spi::NumericalSolvers::GraphLaplacian::eigensolverMaxIt</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">private</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>The maximum number of iterations for the sparse eigensolver. </p>
+
+</div>
+</div>
+<a class="anchor" id="a6e779dac573c2f5bd7736a4dce82cde6"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">const double spi::NumericalSolvers::GraphLaplacian::eigensolverTol</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">private</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>The tolerance for the sparse eigensolver. </p>
 
 </div>
 </div>
