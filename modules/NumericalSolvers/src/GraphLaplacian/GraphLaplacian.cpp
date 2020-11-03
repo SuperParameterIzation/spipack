@@ -294,7 +294,7 @@ solver.factorize(laplace);
 
   std::cout << "sollved!" << std::endl;
 
-  std::cout << vec0.transpose() << std::endl;
+  //std::cout << vec0.transpose() << std::endl;
 }
 
 GraphLaplacian::PointCloud::PointCloud(std::shared_ptr<SampleCollection> const& samples) : samples(samples) {}
