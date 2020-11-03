@@ -202,7 +202,7 @@ TEST_F(GraphLaplacianTests, ConstructHeatMatrix) {
 }
 
 TEST(WeightedPoissonProblem, Solve) {
-  /*// the dimension of the problem
+  // the dimension of the problem
   const std::size_t dim = 6;
 
   // create a standard Gaussian random variable
@@ -212,7 +212,9 @@ TEST(WeightedPoissonProblem, Solve) {
   // the options for the graph Laplacian
   YAML::Node options;
   options["NumSamples"] = 1000;
-  options["Bandwidth"] = 0.5;
+  options["Bandwidth"] = 0.25;
+  //options["EigenSolverMaxIt"] = 10000;
+  options["EigenSolverTol"] = 1.0e-4;
 
   // set the kernel options
   YAML::Node kernelOptions;
@@ -228,5 +230,5 @@ TEST(WeightedPoissonProblem, Solve) {
   // solve the weighted Poisson problem
   laplacian->SolveWeightedPoisson(rhs);
 
-  std::cout << rhs(0) << std::endl;*/
+  std::cout << rhs(0) << std::endl;
 }

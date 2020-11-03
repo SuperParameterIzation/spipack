@@ -11,7 +11,7 @@ message(STATUS "")
 # Check flags
 ###############################################
 
-set(CMAKE_CXX_FLAGS ${CMAKE_CXX_FLAGS} "-w -g --std=c++17 -pthread")
+set(CMAKE_CXX_FLAGS ${CMAKE_CXX_FLAGS} "-w -g --std=c++17 -pthread -O3 -msse4 -mavx")
 
 ###############################################
 # Find dependencies

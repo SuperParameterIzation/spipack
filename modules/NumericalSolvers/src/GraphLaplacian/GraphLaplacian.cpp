@@ -193,12 +193,14 @@ Eigen::VectorXd GraphLaplacian::ComputeLargestSparseEigenvalues(std::size_t cons
   Spectra::SparseGenMatProd<double> matvec(heatMatrix);
 
   // construct eigen solver object, requesting the largest neig eigenvalues
-  Spectra::GenEigsSolver<double, Spectra::LARGEST_MAGN, Spectra::SparseGenMatProd<double> > eigsolver(&matvec, neig, 2*neig+1);
+  Spectra::GenEigsSolver<double, Spectra::LARGEST_MAGN, Spectra::SparseGenMatProd<double> > eigsolver(&matvec, neig, 10*neig);
 
   // initialize and compute
   eigsolver.init();
-  const int ncomputed = eigsolver.compute(1000, 1.0e-5);
+  const int ncomputed = eigsolver.compute(eigensolverMaxIt, eigensolverTol);
   assert(ncomputed==neig);
+
+  std::cout << "largest: " << eigsolver.eigenvalues() << std::endl;
 
   // get the results
   return eigsolver.eigenvalues().real();
@@ -209,11 +211,12 @@ Eigen::VectorXd GraphLaplacian::ComputeSmallestSparseEigenvalues(std::size_t con
   Spectra::SparseGenMatProd<double> matvec(heatMatrix);
 
   // construct eigen solver object, requesting the largest neig eigenvalues
-  Spectra::GenEigsSolver<double, Spectra::SMALLEST_MAGN, Spectra::SparseGenMatProd<double> > eigsolver(&matvec, neig, 2*neig+1);
+  Spectra::GenEigsSolver<double, Spectra::SMALLEST_MAGN, Spectra::SparseGenMatProd<double> > eigsolver(&matvec, neig, 10*neig);
 
   // initialize and compute
   eigsolver.init();
-  const int ncomputed = eigsolver.compute(1000, 1.0e-5);
+  const int ncomputed = eigsolver.compute(eigensolverMaxIt, eigensolverTol);
+  std::cout << "smallest: " << eigsolver.eigenvalues().transpose() << std::endl;
   assert(ncomputed==neig);
 
   // get the results
@@ -242,9 +245,11 @@ void GraphLaplacian::SolveWeightedPoisson(Eigen::Ref<Eigen::VectorXd> vec) {
   laplace -= heatMatrix;
   laplace /= bandwidth2;
 
-  std::cout << "coeff: " << laplace.coeff(5, 5) << std::endl;
-
   std::cout << "laplace matrix entries (no bc): " << laplace.nonZeros() << std::endl;
+
+  //std::cout << "smallest eig values (no bc): " << ComputeSmallestSparseEigenvalues(1, laplace).transpose() << std::endl;
+
+  //std::cout << "largest eig values (no bc): " << ComputeLargestSparseEigenvalues(1, laplace).transpose() << std::endl;
 
   /*for( std::size_t j=0; j<2; ++j ) {
     for( std::size_t i=0; i<n; ++i ) {
@@ -289,7 +294,7 @@ solver.factorize(laplace);
 
   std::cout << "sollved!" << std::endl;
 
-  //std::cout << vec0.transpose() << std::endl;
+  std::cout << vec0.transpose() << std::endl;
 }
 
 GraphLaplacian::PointCloud::PointCloud(std::shared_ptr<SampleCollection> const& samples) : samples(samples) {}
