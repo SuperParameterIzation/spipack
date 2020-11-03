@@ -13,7 +13,8 @@ set(GTEST_SOURCE
     PARENT_SCOPE)
 
 set(EXAMPLES_SOURCE
-  modules/_run-examples.cpp
-  PARENT_SCOPE)
+      modules/_run-examples.cpp
+      ${NUMERICAL_SOLVERS_EXAMPLES}
+    PARENT_SCOPE)
 
 set(SPIPACK_LIBRARIES ${SPIPACK_LIBRARIES} PARENT_SCOPE)
