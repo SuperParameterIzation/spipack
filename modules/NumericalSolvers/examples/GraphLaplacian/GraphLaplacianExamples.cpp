@@ -11,7 +11,7 @@ using namespace spi::NumericalSolvers;
 
 TEST(GraphLaplacianExamples, ComputeHeatEigenvalues) {
   // the dimension of the problem
-  const std::size_t dim = 6;
+  const std::size_t dim = 2;
 
   // create a standard Gaussian random variable
   std::vector<std::pair<double, double> > bounds(dim, std::pair<double, double>(1.0, 0.0));
@@ -31,6 +31,9 @@ TEST(GraphLaplacianExamples, ComputeHeatEigenvalues) {
 
   // create the graph laplacian
   auto laplacian = std::make_shared<GraphLaplacian>(rv, options);
+
+  // write the samples to file
+  laplacian->WriteToFile("output.h5");
 
   // construct the heat matrix
   laplacian->ConstructHeatMatrix();

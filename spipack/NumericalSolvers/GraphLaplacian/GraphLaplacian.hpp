@@ -145,6 +145,12 @@ public:
   */
   double EigensolverTolerance() const;
 
+  /// Write the samples to file
+  /**
+    @param[in] filename The name of the file where we are writing the data
+  */
+  void WriteToFile(std::string const& filename) const;
+
 private:
 
   /// Create a sample collection by sampling a random variable

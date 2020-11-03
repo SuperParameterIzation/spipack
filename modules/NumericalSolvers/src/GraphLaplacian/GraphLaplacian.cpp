@@ -1,4 +1,3 @@
-
 #include "spipack/NumericalSolvers/GraphLaplacian/GraphLaplacian.hpp"
 
 #include <Spectra/GenEigsSolver.h>
@@ -298,6 +297,8 @@ solver.factorize(laplace);
 }
 
 double GraphLaplacian::EigensolverTolerance() const { return eigensolverTol; }
+
+void GraphLaplacian::WriteToFile(std::string const& filename) const {}
 
 GraphLaplacian::PointCloud::PointCloud(std::shared_ptr<SampleCollection> const& samples) : samples(samples) {}
 
