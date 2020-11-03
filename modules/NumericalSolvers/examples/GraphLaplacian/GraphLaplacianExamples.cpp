@@ -21,8 +21,8 @@ TEST(GraphLaplacianExamples, ComputeHeatEigenvalues) {
   YAML::Node options;
   options["NumSamples"] = 1000;
   options["Bandwidth"] = 0.25;
-  //options["EigenSolverMaxIt"] = 10000;
-  options["EigenSolverTol"] = 1.0e-4;
+  //options["EigensolverMaxIt"] = 10000;
+  options["EigensolverTol"] = 1.0e-4;
 
   // set the kernel options
   YAML::Node kernelOptions;
@@ -31,4 +31,16 @@ TEST(GraphLaplacianExamples, ComputeHeatEigenvalues) {
 
   // create the graph laplacian
   auto laplacian = std::make_shared<GraphLaplacian>(rv, options);
+
+  // construct the heat matrix
+  laplacian->ConstructHeatMatrix();
+
+  // compute the largest eigenvalues
+  const std::size_t neig = 10;
+  const Eigen::VectorXd eigenvalues = laplacian->HeatMatrixEigenvalues(neig);
+
+  std::cout << eigenvalues.transpose() << std::endl;
+
+  // the largest eigenvalue is 1
+  EXPECT_NEAR(eigenvalues(0), 1.0, 10.0*laplacian->EigensolverTolerance());
 }

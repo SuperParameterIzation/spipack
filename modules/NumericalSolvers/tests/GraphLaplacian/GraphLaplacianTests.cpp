@@ -20,7 +20,7 @@ public:
     options["MaxLeaf"] = maxLeaf;
     options["NumSamples"] = n;
     options["Bandwidth"] = bandwidth;
-    options["EigenSolverTol"] = eigensolverTol;
+    options["EigensolverTol"] = eigensolverTol;
 
     // set the kernel options
     YAML::Node kernelOptions;
@@ -213,8 +213,8 @@ TEST(WeightedPoissonProblem, Solve) {
   YAML::Node options;
   options["NumSamples"] = 1000;
   options["Bandwidth"] = 0.25;
-  //options["EigenSolverMaxIt"] = 10000;
-  options["EigenSolverTol"] = 1.0e-4;
+  //options["EigensolverMaxIt"] = 10000;
+  options["EigensolverTol"] = 1.0e-4;
 
   // set the kernel options
   YAML::Node kernelOptions;

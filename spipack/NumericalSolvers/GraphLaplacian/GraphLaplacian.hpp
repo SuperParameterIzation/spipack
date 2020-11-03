@@ -47,8 +47,8 @@ namespace NumericalSolvers {
       "MaxLeaf"   | std::size_t | <tt>10</tt> | The maximum leaf size for the kd tree (nanoflann parameter). |
       "KernelOptions"   | YAML::Node | - | The options for the compact kernel function \f$k(\theta)\f$ (spi::Tools::CompactKernel). |
       "Bandwidth"  | double   | <tt>1.0</tt> | The bandwith \f$h\f$ that defines the kernel \f$k_h = k(h^{-1} \theta)\f$.
-      "EigenSolverTol"  | double   | <tt>10^{-5}</tt> | The tolerance for the sparse eigensolver.
-      "EigenSolverMaxIt"  | std::size_t   | <tt>10^{3}</tt> | The maximum number of iterations for the sparse eigensolver.
+      "EigensolverTol"  | double   | <tt>10^{-5}</tt> | The tolerance for the sparse eigensolver.
+      "EigensolverMaxIt"  | std::size_t   | <tt>10^{3}</tt> | The maximum number of iterations for the sparse eigensolver.
 */
 class GraphLaplacian {
 public:

@@ -18,8 +18,8 @@ GraphLaplacian::GraphLaplacian(std::shared_ptr<RandomVariable> const& rv, YAML::
   cloud(SampleRandomVariable(rv, options["NumSamples"].as<std::size_t>())),
   kdtree(cloud.StateDim(), cloud, nanoflann::KDTreeSingleIndexAdaptorParams(options["MaxLeaf"].as<std::size_t>(defaults.maxLeaf))),
   bandwidth2(DefaultParameters::SquaredBandwidth(options)),
-  eigensolverTol(options["EigenSolverTol"].as<double>(defaults.eigensolverTol)),
-  eigensolverMaxIt(options["EigenSolverMaxIt"].as<std::size_t>(defaults.eigensolverMaxIt))
+  eigensolverTol(options["EigensolverTol"].as<double>(defaults.eigensolverTol)),
+  eigensolverMaxIt(options["EigensolverMaxIt"].as<std::size_t>(defaults.eigensolverMaxIt))
 {
   Initialize(options);
 }
@@ -28,8 +28,8 @@ GraphLaplacian::GraphLaplacian(std::shared_ptr<muq::SamplingAlgorithms::SampleCo
   cloud(samples),
   kdtree(cloud.StateDim(), cloud, nanoflann::KDTreeSingleIndexAdaptorParams(options["MaxLeaf"].as<std::size_t>(defaults.maxLeaf))),
   bandwidth2(DefaultParameters::SquaredBandwidth(options)),
-  eigensolverTol(options["EigenSolverTol"].as<double>(defaults.eigensolverTol)),
-  eigensolverMaxIt(options["EigenSolverMaxIt"].as<std::size_t>(defaults.eigensolverMaxIt))
+  eigensolverTol(options["EigensolverTol"].as<double>(defaults.eigensolverTol)),
+  eigensolverMaxIt(options["EigensolverMaxIt"].as<std::size_t>(defaults.eigensolverMaxIt))
 {
   Initialize(options);
 }
