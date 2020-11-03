@@ -5,6 +5,6 @@ var searchData=
   ['hatkernel_2ecpp',['HatKernel.cpp',['../HatKernel_8cpp.html',1,'']]],
   ['hatkernel_2ehpp',['HatKernel.hpp',['../HatKernel_8hpp.html',1,'']]],
   ['hatkerneltests_2ecpp',['HatKernelTests.cpp',['../HatKernelTests_8cpp.html',1,'']]],
-  ['heatmatrix',['heatMatrix',['../classspi_1_1NumericalSolvers_1_1GraphLaplacian.html#a068763bfd48fbd2f73475dcd7c58c9f4',1,'spi::NumericalSolvers::GraphLaplacian']]],
+  ['heatmatrix',['heatMatrix',['../classspi_1_1NumericalSolvers_1_1GraphLaplacian.html#a068763bfd48fbd2f73475dcd7c58c9f4',1,'spi::NumericalSolvers::GraphLaplacian::heatMatrix()'],['../classspi_1_1NumericalSolvers_1_1GraphLaplacian.html#ae56d0699192510dbb7a30fbc46a46a93',1,'spi::NumericalSolvers::GraphLaplacian::HeatMatrix() const ']]],
   ['heatmatrixeigenvalues',['HeatMatrixEigenvalues',['../classspi_1_1NumericalSolvers_1_1GraphLaplacian.html#a558441a75364a86399f14dba940659e5',1,'spi::NumericalSolvers::GraphLaplacian']]]
 ];
