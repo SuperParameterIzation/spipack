@@ -123,6 +123,9 @@ public:
   */
   void ConstructHeatMatrix();
 
+  /// Get a reference to the heat matrix
+  const Eigen::Ref<const Eigen::SparseMatrix<double> > HeatMatrix() const;
+
   /// Compute the eigenvalues of the heat matrix \f$\boldsymbol{P}\f$
   /**
     This function does not recompute \f$\boldsymbol{P}\f$, but it computes the largest eigenvalues of the currently stored value.
@@ -130,6 +133,9 @@ public:
     @param[out] eigenvalues The <tt>neig</tt> largest eigenvalues
   */
   void HeatMatrixEigenvalues(const size_t neig, Eigen::Ref<Eigen::VectorXd> eigenvalues) const;
+
+  /// Solve the weighted Poisson problem
+  void SolveWeightedPoisson(Eigen::Ref<Eigen::VectorXd> vec);
 
 private:
 

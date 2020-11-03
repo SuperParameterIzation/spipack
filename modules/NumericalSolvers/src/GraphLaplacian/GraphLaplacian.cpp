@@ -130,10 +130,17 @@ void GraphLaplacian::ConstructHeatMatrix() {
 
     // find the nearest neighbors
     FindNeighbors(x, bandwidth2, neighbors[i]);
+    double h2 = bandwidth2;
+    // make sure we have at least 3 neighbors
+    if( neighbors[i].size()<3 ) {
+      neighbors[i].clear();
+      h2 = FindNeighbors(x, (std::size_t)3, neighbors[i]);
+    }
+
     numentries += neighbors[i].size();
 
     // evaluate the kernel function at the neighbors
-    kernelsum(i) = EvaluateKernel(x, bandwidth2, neighbors[i]);
+    kernelsum(i) = EvaluateKernel(x, h2, neighbors[i]);
   }
 
   // construct the nonzero entries of the heat matrix
@@ -178,10 +185,87 @@ void GraphLaplacian::HeatMatrixEigenvalues(const size_t neig, Eigen::Ref<Eigen::
 
   // initialize and compute
   eigsolver.init();
-  eigsolver.compute();
+  const int ncomputed = eigsolver.compute(1000, 1.0e-5);
 
   // get the results
   eigenvalues = eigsolver.eigenvalues().real();
+
+  // set the not-converged eigenvalues to nan
+  for( std::size_t i=ncomputed; i<neig; ++i ) {
+    eigenvalues(i) = std::numeric_limits<double>::quiet_NaN();
+  }
+}
+
+const Eigen::Ref<const Eigen::SparseMatrix<double> > GraphLaplacian::HeatMatrix() const { return heatMatrix; }
+
+void GraphLaplacian::SolveWeightedPoisson(Eigen::Ref<Eigen::VectorXd> vec) {
+  // construct the heat matrix
+  ConstructHeatMatrix();
+
+  std::cout << "num heat matrix entries: " << heatMatrix.nonZeros() << std::endl;
+
+  // the number of samples
+  const std::size_t n = NumSamples();
+  assert(n==heatMatrix.rows());
+  assert(n==heatMatrix.cols());
+
+  // initalize the discrete Laplacian as an identity
+  Eigen::SparseMatrix<double> laplace(n, n);
+  laplace.setIdentity();
+
+  std::cout << "laplace matrix entries (identity): " << laplace.nonZeros() << std::endl;
+
+  laplace -= heatMatrix;
+  laplace /= bandwidth2;
+
+  std::cout << "coeff: " << laplace.coeff(5, 5) << std::endl;
+
+  std::cout << "laplace matrix entries (no bc): " << laplace.nonZeros() << std::endl;
+
+  /*for( std::size_t j=0; j<2; ++j ) {
+    for( std::size_t i=0; i<n; ++i ) {
+      std::cout << laplace.coeff(j, i) << " ";
+    }
+    std::cout << std::endl;
+  }
+  std::cout << std::endl;*/
+
+  //if( laplace.isCompressed() ) { laplace.uncompress(); }
+
+  //laplace.prune([](int i, int j, float) { return (i!=0 && i!=1); });
+  laplace.prune([](int i, int j, float) { return i!=0; });
+  for( std::size_t i=0; i<n; ++i ) {
+    laplace.coeffRef(0, i) = 1.0;
+    //laplace.coeffRef(1, i) = 1.0;
+  }
+  //laplace.coeffRef(0, 0) = 1.0;
+  //laplace.coeffRef(1, 1) = 1.0;
+  vec(0) = 0.0;
+  //vec(1) = 0.0;
+
+  /*for( std::size_t j=0; j<2; ++j ) {
+    for( std::size_t i=0; i<n; ++i ) {
+      std::cout << laplace.coeff(j, i) << " ";
+    }
+    std::cout << std::endl;
+  }
+  std::cout << std::endl;*/
+
+  std::cout << "laplace matrix entries (with bc): " << laplace.nonZeros() << std::endl;
+
+
+  Eigen::SparseLU<Eigen::SparseMatrix<double> > solver;
+
+  // Compute the ordering permutation vector from the structural pattern of A
+solver.analyzePattern(laplace);
+// Compute the numerical factorization
+solver.factorize(laplace);
+  assert(solver.info()==Eigen::Success);
+  auto vec0 = solver.solve(vec);
+
+  std::cout << "sollved!" << std::endl;
+
+  //std::cout << vec0.transpose() << std::endl;
 }
 
 GraphLaplacian::PointCloud::PointCloud(std::shared_ptr<SampleCollection> const& samples) : samples(samples) {}

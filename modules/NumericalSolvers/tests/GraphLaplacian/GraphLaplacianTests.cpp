@@ -1,5 +1,6 @@
 #include <gtest/gtest.h>
 
+#include <MUQ/Modeling/Distributions/UniformBox.h>
 #include <MUQ/Modeling/Distributions/Gaussian.h>
 
 #include "spipack/NumericalSolvers/GraphLaplacian/GraphLaplacian.hpp"
@@ -56,13 +57,13 @@ protected:
   inline static const unsigned int dim = 4;
 
   /// The number of samples
-  const std::size_t n = 10000;
+  const std::size_t n = 1000;
 
   /// The max leaf size for the kd tree
   const std::size_t maxLeaf = 15;
 
   /// The bandwidth for the kernel
-  const double bandwidth = 0.35;
+  const double bandwidth = 0.75;
 
   /// The options for the graph Laplacian
   YAML::Node options;
@@ -180,9 +181,49 @@ TEST_F(GraphLaplacianTests, ConstructHeatMatrix) {
   // construct the heat matrix
   laplacian->ConstructHeatMatrix();
 
+  // the sum of the heat matrix rows should be 1
+  const Eigen::Ref<const Eigen::SparseMatrix<double> > heat = laplacian->HeatMatrix();
+  for( std::size_t i=0; i<laplacian->NumSamples(); ++i ) {
+    double sum = 0.0;
+    for( std::size_t j=0; j<laplacian->NumSamples(); ++j ) {
+      sum += heat.coeff(i, j);
+    }
+    EXPECT_NEAR(sum, 1.0, 1.0e-10);
+  }
+
   // the largest eigenvalue is 1
   const std::size_t neig = 1;
   Eigen::VectorXd eigenvalues(neig);
   laplacian->HeatMatrixEigenvalues(neig, eigenvalues);
   EXPECT_NEAR(eigenvalues(0), 1.0, 1.0e-10);
+}
+
+TEST(WeightedPoissonProblem, Solve) {
+  // the dimension of the problem
+  const std::size_t dim = 6;
+
+  // create a standard Gaussian random variable
+  std::vector<std::pair<double, double> > bounds(dim, std::pair<double, double>(1.0, 0.0));
+  auto rv = std::make_shared<UniformBox>(bounds)->AsVariable();
+
+  // the options for the graph Laplacian
+  YAML::Node options;
+  options["NumSamples"] = 10000;
+  options["Bandwidth"] = 0.05;
+
+  // set the kernel options
+  YAML::Node kernelOptions;
+  kernelOptions["Kernel"] = "HatKernel";
+  options["KernelOptions"] = kernelOptions;
+
+  // create the graph laplacian
+  auto laplacian = std::make_shared<GraphLaplacian>(rv, options);
+
+  // create the right hand side for the weighted poisson problem
+  Eigen::VectorXd rhs = Eigen::VectorXd::Ones(laplacian->NumSamples());
+
+  // solve the weighted Poisson problem
+  laplacian->SolveWeightedPoisson(rhs);
+
+  std::cout << rhs(0) << std::endl;
 }
