@@ -46,6 +46,13 @@ if( NOT DEFINED SPIPACK_GTEST_DIR )
 	add_dependencies(run-tests GTEST)
 endif()
 
+add_executable(run-examples ${EXAMPLES_SOURCE})
+target_link_libraries(run-examples ${SPIPACK_EXTERNAL_LIBRARIES} ${SPIPACK_LIBRARIES} ${GTEST_LIBRARIES})
+add_dependencies(run-examples ${SPIPACK_LIBRARIES})
+if( NOT DEFINED SPIPACK_GTEST_DIR )
+	add_dependencies(run-examples GTEST)
+endif()
+
 ###############################################
 # Build the documentation (doxygen)
 ###############################################
