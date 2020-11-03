@@ -155,9 +155,15 @@ Public Member Functions</h2></td></tr>
 <tr class="memitem:afcdc9cd363fd0aff5d4cd1df134a370f"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classspi_1_1NumericalSolvers_1_1GraphLaplacian.html#afcdc9cd363fd0aff5d4cd1df134a370f">ConstructHeatMatrix</a> ()</td></tr>
 <tr class="memdesc:afcdc9cd363fd0aff5d4cd1df134a370f"><td class="mdescLeft">&#160;</td><td class="mdescRight">Construct the heat matrix \(\boldsymbol{P}\).  <a href="#afcdc9cd363fd0aff5d4cd1df134a370f">More...</a><br /></td></tr>
 <tr class="separator:afcdc9cd363fd0aff5d4cd1df134a370f"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ae56d0699192510dbb7a30fbc46a46a93"><td class="memItemLeft" align="right" valign="top">const Eigen::Ref&lt; const Eigen::SparseMatrix&lt; double &gt; &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classspi_1_1NumericalSolvers_1_1GraphLaplacian.html#ae56d0699192510dbb7a30fbc46a46a93">HeatMatrix</a> () const </td></tr>
+<tr class="memdesc:ae56d0699192510dbb7a30fbc46a46a93"><td class="mdescLeft">&#160;</td><td class="mdescRight">Get a reference to the heat matrix.  <a href="#ae56d0699192510dbb7a30fbc46a46a93">More...</a><br /></td></tr>
+<tr class="separator:ae56d0699192510dbb7a30fbc46a46a93"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a558441a75364a86399f14dba940659e5"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classspi_1_1NumericalSolvers_1_1GraphLaplacian.html#a558441a75364a86399f14dba940659e5">HeatMatrixEigenvalues</a> (const size_t neig, Eigen::Ref&lt; Eigen::VectorXd &gt; eigenvalues) const </td></tr>
 <tr class="memdesc:a558441a75364a86399f14dba940659e5"><td class="mdescLeft">&#160;</td><td class="mdescRight">Compute the eigenvalues of the heat matrix \(\boldsymbol{P}\).  <a href="#a558441a75364a86399f14dba940659e5">More...</a><br /></td></tr>
 <tr class="separator:a558441a75364a86399f14dba940659e5"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a8ddffff40a02cc184185ae3729cce78d"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classspi_1_1NumericalSolvers_1_1GraphLaplacian.html#a8ddffff40a02cc184185ae3729cce78d">SolveWeightedPoisson</a> (Eigen::Ref&lt; Eigen::VectorXd &gt; vec)</td></tr>
+<tr class="memdesc:a8ddffff40a02cc184185ae3729cce78d"><td class="mdescLeft">&#160;</td><td class="mdescRight">Solve the weighted Poisson problem.  <a href="#a8ddffff40a02cc184185ae3729cce78d">More...</a><br /></td></tr>
+<tr class="separator:a8ddffff40a02cc184185ae3729cce78d"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pri-types"></a>
 Private Types</h2></td></tr>
@@ -564,6 +570,23 @@ Static Private Attributes</h2></td></tr>
 
 </div>
 </div>
+<a class="anchor" id="ae56d0699192510dbb7a30fbc46a46a93"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">const Eigen::Ref&lt; const Eigen::SparseMatrix&lt; double &gt; &gt; GraphLaplacian::HeatMatrix </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td> const</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Get a reference to the heat matrix. </p>
+
+</div>
+</div>
 <a class="anchor" id="a558441a75364a86399f14dba940659e5"></a>
 <div class="memitem">
 <div class="memproto">
@@ -707,6 +730,24 @@ Static Private Attributes</h2></td></tr>
   </table>
   </dd>
 </dl>
+
+</div>
+</div>
+<a class="anchor" id="a8ddffff40a02cc184185ae3729cce78d"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void GraphLaplacian::SolveWeightedPoisson </td>
+          <td>(</td>
+          <td class="paramtype">Eigen::Ref&lt; Eigen::VectorXd &gt;&#160;</td>
+          <td class="paramname"><em>vec</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Solve the weighted Poisson problem. </p>
 
 </div>
 </div>
