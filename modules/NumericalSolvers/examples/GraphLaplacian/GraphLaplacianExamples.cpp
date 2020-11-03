@@ -19,9 +19,8 @@ TEST(GraphLaplacianExamples, ComputeHeatEigenvalues) {
 
   // the options for the graph Laplacian
   YAML::Node options;
-  options["NumSamples"] = 1000;
+  options["NumSamples"] = 10000;
   options["Bandwidth"] = 0.25;
-  //options["EigensolverMaxIt"] = 10000;
   options["EigensolverTol"] = 1.0e-4;
 
   // set the kernel options

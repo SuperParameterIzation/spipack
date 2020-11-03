@@ -3,6 +3,9 @@
 #include <Spectra/GenEigsSolver.h>
 #include <Spectra/MatOp/SparseGenMatProd.h>
 
+#include <MUQ/Utilities/HDF5/HDF5File.h>
+
+using namespace muq::Utilities;
 using namespace muq::Modeling;
 using namespace muq::SamplingAlgorithms;
 using namespace spi::Tools;
@@ -298,7 +301,12 @@ solver.factorize(laplace);
 
 double GraphLaplacian::EigensolverTolerance() const { return eigensolverTol; }
 
-void GraphLaplacian::WriteToFile(std::string const& filename) const {}
+void GraphLaplacian::WriteToFile(std::string const& filename) const {
+  // create an hdf5 file
+  auto file = std::make_shared<HDF5File>(filename);
+
+  file->Close();
+}
 
 GraphLaplacian::PointCloud::PointCloud(std::shared_ptr<SampleCollection> const& samples) : samples(samples) {}
 
