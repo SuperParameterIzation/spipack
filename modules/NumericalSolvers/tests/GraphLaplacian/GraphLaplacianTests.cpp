@@ -20,6 +20,7 @@ public:
     options["MaxLeaf"] = maxLeaf;
     options["NumSamples"] = n;
     options["Bandwidth"] = bandwidth;
+    options["EigenSolverTol"] = eigensolverTol;
 
     // set the kernel options
     YAML::Node kernelOptions;
@@ -64,6 +65,9 @@ protected:
 
   /// The bandwidth for the kernel
   const double bandwidth = 0.75;
+
+  /// The tolerance for the eigensolver
+  const double eigensolverTol = 1.0e-6;
 
   /// The options for the graph Laplacian
   YAML::Node options;
@@ -193,13 +197,12 @@ TEST_F(GraphLaplacianTests, ConstructHeatMatrix) {
 
   // the largest eigenvalue is 1
   const std::size_t neig = 1;
-  Eigen::VectorXd eigenvalues(neig);
-  laplacian->HeatMatrixEigenvalues(neig, eigenvalues);
-  EXPECT_NEAR(eigenvalues(0), 1.0, 1.0e-10);
+  const Eigen::VectorXd eigenvalues = laplacian->HeatMatrixEigenvalues(neig);
+  EXPECT_NEAR(eigenvalues(0), 1.0, 10.0*eigensolverTol);
 }
 
 TEST(WeightedPoissonProblem, Solve) {
-  // the dimension of the problem
+  /*// the dimension of the problem
   const std::size_t dim = 6;
 
   // create a standard Gaussian random variable
@@ -208,8 +211,8 @@ TEST(WeightedPoissonProblem, Solve) {
 
   // the options for the graph Laplacian
   YAML::Node options;
-  options["NumSamples"] = 10000;
-  options["Bandwidth"] = 0.05;
+  options["NumSamples"] = 1000;
+  options["Bandwidth"] = 0.5;
 
   // set the kernel options
   YAML::Node kernelOptions;
@@ -225,5 +228,5 @@ TEST(WeightedPoissonProblem, Solve) {
   // solve the weighted Poisson problem
   laplacian->SolveWeightedPoisson(rhs);
 
-  std::cout << rhs(0) << std::endl;
+  std::cout << rhs(0) << std::endl;*/
 }

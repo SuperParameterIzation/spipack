@@ -47,6 +47,8 @@ namespace NumericalSolvers {
       "MaxLeaf"   | std::size_t | <tt>10</tt> | The maximum leaf size for the kd tree (nanoflann parameter). |
       "KernelOptions"   | YAML::Node | - | The options for the compact kernel function \f$k(\theta)\f$ (spi::Tools::CompactKernel). |
       "Bandwidth"  | double   | <tt>1.0</tt> | The bandwith \f$h\f$ that defines the kernel \f$k_h = k(h^{-1} \theta)\f$.
+      "EigenSolverTol"  | double   | <tt>10^{-5}</tt> | The tolerance for the sparse eigensolver.
+      "EigenSolverMaxIt"  | std::size_t   | <tt>10^{3}</tt> | The maximum number of iterations for the sparse eigensolver.
 */
 class GraphLaplacian {
 public:
@@ -130,9 +132,9 @@ public:
   /**
     This function does not recompute \f$\boldsymbol{P}\f$, but it computes the largest eigenvalues of the currently stored value.
     @param[in] neig Compute the <tt>neig</tt> largest eigenvalues
-    @param[out] eigenvalues The <tt>neig</tt> largest eigenvalues
+    \return The <tt>neig</tt> largest eigenvalues
   */
-  void HeatMatrixEigenvalues(const size_t neig, Eigen::Ref<Eigen::VectorXd> eigenvalues) const;
+  Eigen::VectorXd HeatMatrixEigenvalues(const size_t neig) const;
 
   /// Solve the weighted Poisson problem
   void SolveWeightedPoisson(Eigen::Ref<Eigen::VectorXd> vec);
@@ -208,6 +210,29 @@ private:
   */
   void ConstructHeatMatrix(Eigen::Ref<const Eigen::VectorXd> const& kernelsum, std::vector<std::vector<std::pair<std::size_t, double> > >& neighbors, std::size_t const numentries = 0);
 
+  /// Compute the eigenvalues of a sparse matrix
+  /**
+    @param[in] neig The number of eigenvalues we wish to compute
+    @param[in] mat We are computing the eigenvalues of this matrix
+    @param[in] computeLargest True: (default) compute the <tt>neig</tt> largest eigenvalues, False: compute the <tt>neig</tt> smallest eigenvalues.
+    \return The eigenvalues 
+  */
+  Eigen::VectorXd ComputeSparseEigenvalues(std::size_t const neig, Eigen::SparseMatrix<double> const& mat, bool const computeLargest = true) const;
+
+  /// Compute the largest eigenvalues of a sparse matrix
+  /**
+    @param[in] neig The number of eigenvalues we wish to compute
+    @param[in] mat We are computing the eigenvalues of this matrix
+  */
+  Eigen::VectorXd ComputeLargestSparseEigenvalues(std::size_t const neig, Eigen::SparseMatrix<double> const& mat) const;
+
+  /// Compute the smallest eigenvalues of a sparse matrix
+  /**
+    @param[in] neig The number of eigenvalues we wish to compute
+    @param[in] mat We are computing the eigenvalues of this matrix
+  */
+  Eigen::VectorXd ComputeSmallestSparseEigenvalues(std::size_t const neig, Eigen::SparseMatrix<double> const& mat) const;
+
   /// The heat matrix \f$\boldsymbol{P}\f$
   Eigen::SparseMatrix<double> heatMatrix;
 
@@ -232,6 +257,12 @@ private:
   */
   const double bandwidth2;
 
+  /// The tolerance for the sparse eigensolver.
+  const double eigensolverTol;
+
+  /// The maximum number of iterations for the sparse eigensolver.
+  const std::size_t eigensolverMaxIt;
+
   /// The default values for the spi::NumericalSolvers::GraphLaplacian class.
   struct DefaultParameters {
     static double SquaredBandwidth(YAML::Node const& options);
@@ -241,6 +272,12 @@ private:
 
     /// The bandwidth parameter defaults to \f$1\f$
     inline static const double bandwidth = 1.0;
+
+    /// The tolerance for the sparse eigensolver is \f$10^{-5}\f$
+    inline static const double eigensolverTol = 1.0e-5;
+
+    /// The maximum number of iterations for the sparse eigensolver \f$10^{3}\f$
+    inline static const std::size_t eigensolverMaxIt = 1.0e3;
   };
 
   /// Store the default values

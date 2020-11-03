@@ -1,3 +1,4 @@
+
 #include "spipack/NumericalSolvers/GraphLaplacian/GraphLaplacian.hpp"
 
 #include <Spectra/GenEigsSolver.h>
@@ -16,7 +17,9 @@ double GraphLaplacian::DefaultParameters::SquaredBandwidth(YAML::Node const& opt
 GraphLaplacian::GraphLaplacian(std::shared_ptr<RandomVariable> const& rv, YAML::Node const& options) :
   cloud(SampleRandomVariable(rv, options["NumSamples"].as<std::size_t>())),
   kdtree(cloud.StateDim(), cloud, nanoflann::KDTreeSingleIndexAdaptorParams(options["MaxLeaf"].as<std::size_t>(defaults.maxLeaf))),
-  bandwidth2(DefaultParameters::SquaredBandwidth(options))
+  bandwidth2(DefaultParameters::SquaredBandwidth(options)),
+  eigensolverTol(options["EigenSolverTol"].as<double>(defaults.eigensolverTol)),
+  eigensolverMaxIt(options["EigenSolverMaxIt"].as<std::size_t>(defaults.eigensolverMaxIt))
 {
   Initialize(options);
 }
@@ -24,7 +27,9 @@ GraphLaplacian::GraphLaplacian(std::shared_ptr<RandomVariable> const& rv, YAML::
 GraphLaplacian::GraphLaplacian(std::shared_ptr<muq::SamplingAlgorithms::SampleCollection> const& samples, YAML::Node const& options) :
   cloud(samples),
   kdtree(cloud.StateDim(), cloud, nanoflann::KDTreeSingleIndexAdaptorParams(options["MaxLeaf"].as<std::size_t>(defaults.maxLeaf))),
-  bandwidth2(DefaultParameters::SquaredBandwidth(options))
+  bandwidth2(DefaultParameters::SquaredBandwidth(options)),
+  eigensolverTol(options["EigenSolverTol"].as<double>(defaults.eigensolverTol)),
+  eigensolverMaxIt(options["EigenSolverMaxIt"].as<std::size_t>(defaults.eigensolverMaxIt))
 {
   Initialize(options);
 }
@@ -174,9 +179,16 @@ void GraphLaplacian::ConstructHeatMatrix(Eigen::Ref<const Eigen::VectorXd> const
   heatMatrix.setFromTriplets(entries.begin(), entries.end());
 }
 
-void GraphLaplacian::HeatMatrixEigenvalues(const size_t neig, Eigen::Ref<Eigen::VectorXd> eigenvalues) const {
-  assert(eigenvalues.size()==neig);
+Eigen::VectorXd GraphLaplacian::HeatMatrixEigenvalues(const size_t neig) const {
+  return ComputeLargestSparseEigenvalues(neig, heatMatrix);
+}
 
+Eigen::VectorXd GraphLaplacian::ComputeSparseEigenvalues(std::size_t const neig, Eigen::SparseMatrix<double> const& mat, bool const computeLargest) const {
+  if( computeLargest ) { return ComputeLargestSparseEigenvalues(neig, mat); }
+  return ComputeSmallestSparseEigenvalues(neig, mat);
+}
+
+Eigen::VectorXd GraphLaplacian::ComputeLargestSparseEigenvalues(std::size_t const neig, Eigen::SparseMatrix<double> const& mat) const {
   // wrapper for space mat-vecs
   Spectra::SparseGenMatProd<double> matvec(heatMatrix);
 
@@ -186,14 +198,26 @@ void GraphLaplacian::HeatMatrixEigenvalues(const size_t neig, Eigen::Ref<Eigen::
   // initialize and compute
   eigsolver.init();
   const int ncomputed = eigsolver.compute(1000, 1.0e-5);
+  assert(ncomputed==neig);
 
   // get the results
-  eigenvalues = eigsolver.eigenvalues().real();
+  return eigsolver.eigenvalues().real();
+}
 
-  // set the not-converged eigenvalues to nan
-  for( std::size_t i=ncomputed; i<neig; ++i ) {
-    eigenvalues(i) = std::numeric_limits<double>::quiet_NaN();
-  }
+Eigen::VectorXd GraphLaplacian::ComputeSmallestSparseEigenvalues(std::size_t const neig, Eigen::SparseMatrix<double> const& mat) const {
+  // wrapper for space mat-vecs
+  Spectra::SparseGenMatProd<double> matvec(heatMatrix);
+
+  // construct eigen solver object, requesting the largest neig eigenvalues
+  Spectra::GenEigsSolver<double, Spectra::SMALLEST_MAGN, Spectra::SparseGenMatProd<double> > eigsolver(&matvec, neig, 2*neig+1);
+
+  // initialize and compute
+  eigsolver.init();
+  const int ncomputed = eigsolver.compute(1000, 1.0e-5);
+  assert(ncomputed==neig);
+
+  // get the results
+  return eigsolver.eigenvalues().real();
 }
 
 const Eigen::Ref<const Eigen::SparseMatrix<double> > GraphLaplacian::HeatMatrix() const { return heatMatrix; }
