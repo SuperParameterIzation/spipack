@@ -139,6 +139,12 @@ public:
   /// Solve the weighted Poisson problem
   void SolveWeightedPoisson(Eigen::Ref<Eigen::VectorXd> vec);
 
+  /// Get the solver tolerance for the sparse eigenvalue solver
+  /**
+    \return The solver tolerance for the sparse eigenvalue solver
+  */
+  double EigensolverTolerance() const;
+
 private:
 
   /// Create a sample collection by sampling a random variable
@@ -215,7 +221,7 @@ private:
     @param[in] neig The number of eigenvalues we wish to compute
     @param[in] mat We are computing the eigenvalues of this matrix
     @param[in] computeLargest True: (default) compute the <tt>neig</tt> largest eigenvalues, False: compute the <tt>neig</tt> smallest eigenvalues.
-    \return The eigenvalues 
+    \return The eigenvalues
   */
   Eigen::VectorXd ComputeSparseEigenvalues(std::size_t const neig, Eigen::SparseMatrix<double> const& mat, bool const computeLargest = true) const;
 

@@ -297,6 +297,8 @@ solver.factorize(laplace);
   //std::cout << vec0.transpose() << std::endl;
 }
 
+double GraphLaplacian::EigensolverTolerance() const { return eigensolverTol; }
+
 GraphLaplacian::PointCloud::PointCloud(std::shared_ptr<SampleCollection> const& samples) : samples(samples) {}
 
 std::size_t GraphLaplacian::PointCloud::kdtree_get_point_count() const {
