@@ -63,7 +63,7 @@ configure_file(cmake/SPIPACKConfig.cmake.in "${PROJECT_BINARY_DIR}${CMAKE_FILES_
 
 # Install the SPIPACKConfig.cmake file
 install(FILES "${PROJECT_BINARY_DIR}${CMAKE_FILES_DIRECTORY}/${CMAKE_PROJECT_NAME}Config.cmake"
-        DESTINATION "${CMAKE_INSTALL_PREFIX}/CMake/${CMAKE_PROJECT_NAME}"
+        DESTINATION "${CMAKE_INSTALL_PREFIX}"
 	    COMPONENT dev)
 
 # install all the SPIPACK headers

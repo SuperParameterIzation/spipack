@@ -40,6 +40,7 @@ script:
 after_success:
   - cd $TRAVIS_BUILD_DIR/examples/NumericalSolvers/heat-matrix-eigenvalues/build/
   - cmake .. -DSPIPACK_DIR=~/.local
+  - make
   - ./run-heat-matrix-eigenvalues
   - cd $TRAVIS_BUILD_DIR/documentation
   #- chmod +x GenerateDocumentation.sh
