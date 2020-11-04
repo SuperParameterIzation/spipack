@@ -161,9 +161,7 @@ private:
   static std::shared_ptr<muq::SamplingAlgorithms::SampleCollection> SampleRandomVariable(std::shared_ptr<muq::Modeling::RandomVariable> const& rv, std::size_t const n);
 
   /// Interpret the particle locations as a point cloud
-  class PointCloud {
-  public:
-
+  struct PointCloud {
     /// Construct the point cloud given samples from the underlying distribution \f$\psi\f$
     /**
       @param[in] samples Samples from the underlying distribution \f$\psi\f$
@@ -202,7 +200,6 @@ private:
     */
     std::size_t StateDim() const;
 
-  private:
     /// Samples from the distribution \f$\psi\f$
     std::shared_ptr<muq::SamplingAlgorithms::SampleCollection> samples;
   };

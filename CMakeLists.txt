@@ -47,11 +47,37 @@ if( SPIPACK_BUILT_GTEST )
 endif()
 
 #add_executable(run-examples ${EXAMPLES_SOURCE})
-#target_link_libraries(run-examples ${SPIPACK_EXTERNAL_LIBRARIES} ${SPIPACK_LIBRARIES} ${GTEST_LIBRARIES})
+#target_link_libraries(run-examples #${SPIPACK_EXTERNAL_LIBRARIES} ${SPIPACK_LIBRARIES} ${GTEST_LIBRARIES})
 #add_dependencies(run-examples ${SPIPACK_LIBRARIES})
 #if( SPIPACK_BUILT_GTEST )
 #	add_dependencies(run-examples GTEST)
 #endif()
+
+###############################################
+# Install SPIPACK
+###############################################
+
+# Create the SPIPACKConfig.cmake file
+configure_file(cmake/SPIPACKConfig.cmake.in "${PROJECT_BINARY_DIR}/${CMAKE_PROJECT_NAME}Config.cmake" @ONLY)
+configure_file(cmake/SPIPACKConfig.cmake.in "${PROJECT_BINARY_DIR}${CMAKE_FILES_DIRECTORY}/${CMAKE_PROJECT_NAME}Config.cmake" @ONLY)
+
+# Install the SPIPACKConfig.cmake file
+install(FILES "${PROJECT_BINARY_DIR}${CMAKE_FILES_DIRECTORY}/${CMAKE_PROJECT_NAME}Config.cmake"
+        DESTINATION "${CMAKE_INSTALL_PREFIX}/CMake/${CMAKE_PROJECT_NAME}"
+	    COMPONENT dev)
+
+# install all the SPIPACK headers
+install(DIRECTORY spipack
+        DESTINATION "${CMAKE_INSTALL_PREFIX}/include"
+	      FILES_MATCHING PATTERN "*.hpp")
+
+set(SPIPACK_EXPORT_LIBRARIES "")
+FOREACH(BUILT_LIB ${SPIPACK_LIBRARIES})
+	list(APPEND SPIPACK_EXPORT_LIBRARIES ${CMAKE_INSTALL_PREFIX}/lib/${library_prefix}${BUILT_LIB}${shared_library_suffix})
+ENDFOREACH()
+
+set(CMAKE_LIBRARY_OUTPUT_DIRECTORY ${INSTALL_LIB_DIR})
+set(CMAKE_ARCHIVE_OUTPUT_DIRECTORY ${INSTALL_LIB_DIR})
 
 ###############################################
 # Build the documentation (doxygen)

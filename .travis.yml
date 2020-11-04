@@ -21,23 +21,26 @@ matrix:
             - doxygen-latex
             - doxygen-gui
             - graphviz
-
       env:
         - CXX=g++-9
         - CC=gcc-9
 
 before_script:
+  - pwd $TRAVIS_BUILD_DIR
   - cd $TRAVIS_BUILD_DIR/build
-  - cmake ..
+  - cmake .. -DCMAKE_INSTALL_PREFIX=~/.local
 
 script:
   - cd $TRAVIS_BUILD_DIR/build
-  - make -j5
+  - make -j5 install
   - cd ..
   - ./build/run-tests
 
 # generate and deploy documentation
 after_success:
+  - cd $TRAVIS_BUILD/examples/NumericalSolvers/heat-matrix-eigenvalues/build/
+  - cmake .. -DSPIPACK_DIR=~/.local
+  - ./run-heat-matrix-eigenvalues
   - cd $TRAVIS_BUILD_DIR/documentation
-  - chmod +x GenerateDocumentation.sh
-  - ./GenerateDocumentation.sh
+  #- chmod +x GenerateDocumentation.sh
+  #- ./GenerateDocumentation.sh

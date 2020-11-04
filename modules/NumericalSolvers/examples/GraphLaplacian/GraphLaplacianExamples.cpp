@@ -19,7 +19,7 @@ TEST(GraphLaplacianExamples, ComputeHeatEigenvalues) {
 
   // the options for the graph Laplacian
   YAML::Node options;
-  options["NumSamples"] = 10000;
+  options["NumSamples"] = 5000;
   options["Bandwidth"] = 0.25;
   options["EigensolverTol"] = 1.0e-4;
 

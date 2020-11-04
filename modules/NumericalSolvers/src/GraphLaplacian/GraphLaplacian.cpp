@@ -305,6 +305,9 @@ void GraphLaplacian::WriteToFile(std::string const& filename) const {
   // create an hdf5 file
   auto file = std::make_shared<HDF5File>(filename);
 
+  // output the collection to file
+  cloud.samples->WriteToFile(filename, "/samples");
+
   file->Close();
 }
 
