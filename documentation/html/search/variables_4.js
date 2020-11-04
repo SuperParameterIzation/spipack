@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['heatmatrix',['heatMatrix',['../classspi_1_1NumericalSolvers_1_1GraphLaplacian.html#a068763bfd48fbd2f73475dcd7c58c9f4',1,'spi::NumericalSolvers::GraphLaplacian']]]
+  ['features',['features',['../feature__tests_8c.html#a1582568e32f689337602a16bf8a5bff0',1,'features():&#160;feature_tests.c'],['../feature__tests_8cxx.html#a1582568e32f689337602a16bf8a5bff0',1,'features():&#160;feature_tests.cxx']]]
 ];
