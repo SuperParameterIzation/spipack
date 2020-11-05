@@ -15,5 +15,7 @@ set(SOURCE
   _heat-matrix-eigenvalues.cpp
 )
 
+message(STATUS ${SPIPACK_LIBRARIES})
+
 add_executable(run-heat-matrix-eigenvalues ${SOURCE})
 target_link_libraries(run-heat-matrix-eigenvalues ${SPIPACK_EXTERNAL_LIBRARIES} ${SPIPACK_LIBRARIES})
