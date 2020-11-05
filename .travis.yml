@@ -48,6 +48,7 @@ after_success:
   #- make
   - cd ..
   - pip3 install h5py
+  - pip3 install matplotlib
   #- ./build/run-heat-matrix-eigenvalues
   - python3 _plot_result.py
   - cd $TRAVIS_BUILD_DIR/documentation
