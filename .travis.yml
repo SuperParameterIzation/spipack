@@ -21,6 +21,7 @@ matrix:
             - doxygen-latex
             - doxygen-gui
             - graphviz
+            - python3-pip
       env:
         - CXX=g++-9
         - CC=gcc-9

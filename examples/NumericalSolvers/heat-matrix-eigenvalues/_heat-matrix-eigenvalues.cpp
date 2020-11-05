@@ -31,7 +31,7 @@ int main(int argc, char **argv) {
   auto laplacian = std::make_shared<GraphLaplacian>(rv, options);
 
   // write the samples to file
-  laplacian->WriteToFile("samples.h5", "/samples");
+  laplacian->WriteToFile("samples.h5", "samples");
 
   // construct the heat matrix
   laplacian->ConstructHeatMatrix();

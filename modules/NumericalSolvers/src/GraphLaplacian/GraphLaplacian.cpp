@@ -307,7 +307,7 @@ void GraphLaplacian::WriteToFile(std::string const& filename, std::string const&
 
   // output the collection to file
   const std::string dataset_ = (dataset.at(0)=='/'? dataset : "/"+dataset);
-  cloud.samples->WriteToFile(filename, dataset);
+  cloud.samples->WriteToFile(filename, dataset_);
 
   file->Close();
 }

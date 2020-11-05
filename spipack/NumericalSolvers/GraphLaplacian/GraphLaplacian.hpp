@@ -148,9 +148,9 @@ public:
   /// Write the samples to file
   /**
     @param[in] filename The name of the file where we are writing the data
-    @param[in] dataset The name of the dataset where the samples are stored inside the file (defaults to <tt>"/samples"</tt>)
+    @param[in] dataset The name of the dataset where the samples are stored inside the file (defaults to <tt>"/"</tt>)
   */
-  void WriteToFile(std::string const& filename, std::string const& dataset = "/samples") const;
+  void WriteToFile(std::string const& filename, std::string const& dataset = "/") const;
 
 private:
 
