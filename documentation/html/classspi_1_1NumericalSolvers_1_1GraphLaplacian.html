@@ -167,9 +167,9 @@ Public Member Functions</h2></td></tr>
 <tr class="memitem:a792f9eff952556b1f8942276224cf80c"><td class="memItemLeft" align="right" valign="top">double&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classspi_1_1NumericalSolvers_1_1GraphLaplacian.html#a792f9eff952556b1f8942276224cf80c">EigensolverTolerance</a> () const </td></tr>
 <tr class="memdesc:a792f9eff952556b1f8942276224cf80c"><td class="mdescLeft">&#160;</td><td class="mdescRight">Get the solver tolerance for the sparse eigenvalue solver.  <a href="#a792f9eff952556b1f8942276224cf80c">More...</a><br /></td></tr>
 <tr class="separator:a792f9eff952556b1f8942276224cf80c"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:abaa6609d20d752f3855f61f26aae63d9"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classspi_1_1NumericalSolvers_1_1GraphLaplacian.html#abaa6609d20d752f3855f61f26aae63d9">WriteToFile</a> (std::string const &amp;filename) const </td></tr>
-<tr class="memdesc:abaa6609d20d752f3855f61f26aae63d9"><td class="mdescLeft">&#160;</td><td class="mdescRight">Write the samples to file.  <a href="#abaa6609d20d752f3855f61f26aae63d9">More...</a><br /></td></tr>
-<tr class="separator:abaa6609d20d752f3855f61f26aae63d9"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a7de734fa9c07bd4ab07d60835b092cc6"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classspi_1_1NumericalSolvers_1_1GraphLaplacian.html#a7de734fa9c07bd4ab07d60835b092cc6">WriteToFile</a> (std::string const &amp;filename, std::string const &amp;dataset=&quot;/samples&quot;) const </td></tr>
+<tr class="memdesc:a7de734fa9c07bd4ab07d60835b092cc6"><td class="mdescLeft">&#160;</td><td class="mdescRight">Write the samples to file.  <a href="#a7de734fa9c07bd4ab07d60835b092cc6">More...</a><br /></td></tr>
+<tr class="separator:a7de734fa9c07bd4ab07d60835b092cc6"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pri-types"></a>
 Private Types</h2></td></tr>
@@ -939,7 +939,7 @@ Static Private Attributes</h2></td></tr>
 
 </div>
 </div>
-<a class="anchor" id="abaa6609d20d752f3855f61f26aae63d9"></a>
+<a class="anchor" id="a7de734fa9c07bd4ab07d60835b092cc6"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
@@ -947,8 +947,18 @@ Static Private Attributes</h2></td></tr>
           <td class="memname">void GraphLaplacian::WriteToFile </td>
           <td>(</td>
           <td class="paramtype">std::string const &amp;&#160;</td>
-          <td class="paramname"><em>filename</em></td><td>)</td>
-          <td> const</td>
+          <td class="paramname"><em>filename</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">std::string const &amp;&#160;</td>
+          <td class="paramname"><em>dataset</em> = <code>&quot;/samples&quot;</code>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td> const</td>
         </tr>
       </table>
 </div><div class="memdoc">
@@ -957,6 +967,7 @@ Static Private Attributes</h2></td></tr>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramdir">[in]</td><td class="paramname">filename</td><td>The name of the file where we are writing the data </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">dataset</td><td>The name of the dataset where the samples are stored inside the file (defaults to <code>"/samples"</code>) </td></tr>
   </table>
   </dd>
 </dl>
