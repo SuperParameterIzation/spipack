@@ -19,3 +19,6 @@ message(STATUS ${SPIPACK_LIBRARIES})
 
 add_executable(run-heat-matrix-eigenvalues ${SOURCE})
 target_link_libraries(run-heat-matrix-eigenvalues ${SPIPACK_EXTERNAL_LIBRARIES} ${SPIPACK_LIBRARIES})
+if(NOT CMAKE_SOURCE_DIR STREQUAL CMAKE_CURRENT_SOURCE_DIR) # add dependencies if this is not a stand alone project
+  add_dependencies(run-heat-matrix-eigenvalues spiNS spiTS)
+endif()
