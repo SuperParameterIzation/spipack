@@ -1,5 +1,6 @@
 var searchData=
 [
-  ['rpath',['rpath',['../link_8txt.html#ac4d2c4f2d8dce3ca6caf65214732a2b8',1,'link.txt']]],
-  ['rv',['rv',['../classGraphLaplacianTests.html#aa32419ad2a92d474af4e21008c5a3955',1,'GraphLaplacianTests']]]
+  ['samples',['samples',['../structspi_1_1NumericalSolvers_1_1GraphLaplacian_1_1PointCloud.html#abebcbf9454f7b6e2d59bff6406db2409',1,'spi::NumericalSolvers::GraphLaplacian::PointCloud::samples()'],['../namespace__plot__result.html#a7890339c67d627c6b7e4334096812504',1,'_plot_result.samples()']]],
+  ['scatter',['scatter',['../namespace__plot__result.html#a75ee7360d0f8d0d5c17e776a0a0049f8',1,'_plot_result']]],
+  ['std',['std',['../CMakeLists_8txt.html#a74f1ce2eb667ae060cbeba3a048ca2fa',1,'CMakeLists.txt']]]
 ];
