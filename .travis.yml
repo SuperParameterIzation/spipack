@@ -25,6 +25,7 @@ matrix:
         - CXX=g++-9
         - CC=gcc-9
 
+
 before_script:
   - pwd $TRAVIS_BUILD_DIR
   - cd $TRAVIS_BUILD_DIR/build
@@ -42,6 +43,7 @@ after_success:
   #- cmake .. -DSPIPACK_DIR=~/.local
   #- make
   - cd ..
+  - pip install -I numpy
   #- ./build/run-heat-matrix-eigenvalues
   - python3 _plot_result.py
   - cd $TRAVIS_BUILD_DIR/documentation

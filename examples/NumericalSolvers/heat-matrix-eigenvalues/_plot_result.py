@@ -21,4 +21,5 @@ import matplotlib.cm as cm
 from matplotlib.colors import Normalize
 import pylab
 
-print("hello world!")
+# load the data file
+file = h5py.File('samples.h5', 'r')
