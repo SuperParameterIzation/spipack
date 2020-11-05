@@ -74,6 +74,9 @@ def MakeFigure(totalWidthPts, fraction, presentationVersion = False):
 hdf5file = h5py.File('samples.h5', 'r')
 
 samples = hdf5file['/samples'] [()].T
+eigenvalues = hdf5file['/heat matrix eigenvalues'] [()].T [0]
+
+print(eigenvalues)
 
 fig = MakeFigure(425, 0.9, False)
 ax = plt.gca()
