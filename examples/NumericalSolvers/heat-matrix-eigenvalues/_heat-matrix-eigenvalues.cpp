@@ -37,7 +37,15 @@ int main(int argc, char **argv) {
   // write the samples to file
   laplacian->WriteToFile(filename);
 
-  // construct the heat matrix
+  // build the kd tree
+  laplacian->BuildKDTree();
+
+  // loop through each sample
+  for( unsigned int i=0; i<laplacian->NumSamples(); ++i ) {
+    std::cout << " i: " << i << std::endl;
+  }
+
+  /*// construct the heat matrix
   laplacian->ConstructHeatMatrix();
 
   // the largest eigenvalue is 1
@@ -47,5 +55,5 @@ int main(int argc, char **argv) {
   // open the file
   auto hdf5file = std::make_shared<HDF5File>(filename);
   hdf5file->WriteMatrix("/heat matrix eigenvalues", eigenvalues);
-  hdf5file->Close();
+  hdf5file->Close();*/
 }
