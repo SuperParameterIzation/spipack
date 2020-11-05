@@ -6,5 +6,6 @@ var searchData=
   ['hatkernel_2ehpp',['HatKernel.hpp',['../HatKernel_8hpp.html',1,'']]],
   ['hatkerneltests_2ecpp',['HatKernelTests.cpp',['../HatKernelTests_8cpp.html',1,'']]],
   ['heatmatrix',['HeatMatrix',['../classspi_1_1NumericalSolvers_1_1GraphLaplacian.html#ae56d0699192510dbb7a30fbc46a46a93',1,'spi::NumericalSolvers::GraphLaplacian::HeatMatrix() const '],['../classspi_1_1NumericalSolvers_1_1GraphLaplacian.html#a068763bfd48fbd2f73475dcd7c58c9f4',1,'spi::NumericalSolvers::GraphLaplacian::heatMatrix()']]],
-  ['heatmatrixeigenvalues',['HeatMatrixEigenvalues',['../classspi_1_1NumericalSolvers_1_1GraphLaplacian.html#a03279e64ab9915c5350e22f3dc69f7ba',1,'spi::NumericalSolvers::GraphLaplacian']]]
+  ['heatmatrixeigenvalues',['HeatMatrixEigenvalues',['../classspi_1_1NumericalSolvers_1_1GraphLaplacian.html#a03279e64ab9915c5350e22f3dc69f7ba',1,'spi::NumericalSolvers::GraphLaplacian']]],
+  ['hex',['HEX',['../CMakeCCompilerId_8c.html#a46d5d95daa1bef867bd0179594310ed5',1,'HEX():&#160;CMakeCCompilerId.c'],['../CMakeCXXCompilerId_8cpp.html#a46d5d95daa1bef867bd0179594310ed5',1,'HEX():&#160;CMakeCXXCompilerId.cpp']]]
 ];
