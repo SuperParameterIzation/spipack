@@ -93,6 +93,4 @@ endif(DOXYGEN_FOUND)
 # Build the examples
 ###############################################
 
-set(SPIPACK_LIBRARIES ${SPIPACK_EXPORT_LIBRARIES})
-
 add_subdirectory(examples EXCLUDE_FROM_ALL)
