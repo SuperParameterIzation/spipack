@@ -33,7 +33,7 @@ matrix:
 before_script:
   - pwd $TRAVIS_BUILD_DIR
   - cd $TRAVIS_BUILD_DIR/build
-  - cmake .. -DCMAKE_INSTALL_PREFIX=~/.local
+  - cmake .. -DCMAKE_INSTALL_PREFIX=~/local
 
 script:
   - cd $TRAVIS_BUILD_DIR/build
@@ -44,7 +44,7 @@ script:
 # generate and deploy documentation
 after_success:
   - cd $TRAVIS_BUILD_DIR/examples/NumericalSolvers/heat-matrix-eigenvalues/build/
-  - cmake .. -DSPIPACK_DIR=~/.local
+  - cmake .. -DSPIPACK_DIR=~/local
   - make
   - cd ..
   - pip3 install h5py
