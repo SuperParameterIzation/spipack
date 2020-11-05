@@ -301,12 +301,13 @@ solver.factorize(laplace);
 
 double GraphLaplacian::EigensolverTolerance() const { return eigensolverTol; }
 
-void GraphLaplacian::WriteToFile(std::string const& filename) const {
+void GraphLaplacian::WriteToFile(std::string const& filename, std::string const& dataset) const {
   // create an hdf5 file
   auto file = std::make_shared<HDF5File>(filename);
 
   // output the collection to file
-  cloud.samples->WriteToFile(filename, "/samples");
+  const std::string dataset_ = (dataset.at(0)=='/'? dataset : "/"+dataset);
+  cloud.samples->WriteToFile(filename, dataset);
 
   file->Close();
 }

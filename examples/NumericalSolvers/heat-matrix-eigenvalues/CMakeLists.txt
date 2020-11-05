@@ -9,6 +9,8 @@ set(CMAKE_CXX_COMPILER ${SPIPACK_CXX_COMPILER})
 
 include_directories(${SPIPACK_INCLUDE_DIRS})
 
+message(STATUS ${SPIPACK_LIBRARIES})
+
 set(SOURCE
   _heat-matrix-eigenvalues.cpp
 )

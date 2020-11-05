@@ -205,7 +205,7 @@ TEST(WeightedPoissonProblem, Solve) {
   /*// the dimension of the problem
   const std::size_t dim = 6;
 
-  // create a standard Gaussian random variable
+  // create a random variable
   std::vector<std::pair<double, double> > bounds(dim, std::pair<double, double>(1.0, 0.0));
   auto rv = std::make_shared<UniformBox>(bounds)->AsVariable();
 

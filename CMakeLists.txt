@@ -57,6 +57,11 @@ endif()
 # Install SPIPACK
 ###############################################
 
+set(SPIPACK_EXPORT_LIBRARIES "")
+FOREACH(BUILT_LIB ${SPIPACK_LIBRARIES})
+	list(APPEND SPIPACK_EXPORT_LIBRARIES ${CMAKE_INSTALL_PREFIX}/lib/${library_prefix}${BUILT_LIB}${shared_library_suffix})
+ENDFOREACH()
+
 # Create the SPIPACKConfig.cmake file
 configure_file(cmake/SPIPACKConfig.cmake.in "${PROJECT_BINARY_DIR}/${CMAKE_PROJECT_NAME}Config.cmake" @ONLY)
 configure_file(cmake/SPIPACKConfig.cmake.in "${PROJECT_BINARY_DIR}${CMAKE_FILES_DIRECTORY}/${CMAKE_PROJECT_NAME}Config.cmake" @ONLY)
@@ -70,11 +75,6 @@ install(FILES "${PROJECT_BINARY_DIR}${CMAKE_FILES_DIRECTORY}/${CMAKE_PROJECT_NAM
 install(DIRECTORY spipack
         DESTINATION "${CMAKE_INSTALL_PREFIX}/include"
 	      FILES_MATCHING PATTERN "*.hpp")
-
-set(SPIPACK_EXPORT_LIBRARIES "")
-FOREACH(BUILT_LIB ${SPIPACK_LIBRARIES})
-	list(APPEND SPIPACK_EXPORT_LIBRARIES ${CMAKE_INSTALL_PREFIX}/lib/${library_prefix}${BUILT_LIB}${shared_library_suffix})
-ENDFOREACH()
 
 set(CMAKE_LIBRARY_OUTPUT_DIRECTORY ${INSTALL_LIB_DIR})
 set(CMAKE_ARCHIVE_OUTPUT_DIRECTORY ${INSTALL_LIB_DIR})
