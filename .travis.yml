@@ -33,23 +33,25 @@ matrix:
 before_script:
   - pwd $TRAVIS_BUILD_DIR
   - cd $TRAVIS_BUILD_DIR/build
-  - cmake .. -DCMAKE_INSTALL_PREFIX=/home/install
+  - cmake ..
 
 script:
   - cd $TRAVIS_BUILD_DIR/build
-  - make -j5 install
+  - make -j5
+  - make -j5 examples
   - cd ..
   - ./build/run-tests
 
 # generate and deploy documentation
 after_success:
-  - cd $TRAVIS_BUILD_DIR/examples/NumericalSolvers/heat-matrix-eigenvalues/build/
-  - cmake .. -DSPIPACK_DIR=/home/install
-  - make
-  - cd ..
+  - cd $TRAVIS_BUILD_DIR/build/
+  #- cmake .. -DSPIPACK_DIR=/home/install
+  #- make
+  #- cd ..
   - pip3 install h5py
   - pip3 install matplotlib
-  - ./build/run-heat-matrix-eigenvalues
+  - ./examples/NumericalSolvers/heat-matrix-eigenvalues/run-heat-matrix-eigenvalues
+  - mkdir figures/
   - python3 _plot_result.py
   - cd $TRAVIS_BUILD_DIR/documentation
   - chmod +x GenerateDocumentation.sh

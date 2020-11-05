@@ -95,3 +95,9 @@ if(DOXYGEN_FOUND)
         COMMENT "Generating API documentation with Doxygen" VERBATIM
     )
 endif(DOXYGEN_FOUND)
+
+###############################################
+# Build the examples
+###############################################
+
+add_subdirectory(examples EXCLUDE_FROM_ALL)
