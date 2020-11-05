@@ -13,6 +13,8 @@ var searchData=
   ['spipack_5fregister_5fkernel',['SPIPACK_REGISTER_KERNEL',['../Kernel_8hpp.html#a8ae8ec2e80b673a0f007c905121dfbe0',1,'Kernel.hpp']]],
   ['squaredbandwidth',['SquaredBandwidth',['../classspi_1_1NumericalSolvers_1_1GraphLaplacian.html#a51e754608491894348bbf91ccef5fe25',1,'spi::NumericalSolvers::GraphLaplacian::SquaredBandwidth()'],['../structspi_1_1NumericalSolvers_1_1GraphLaplacian_1_1DefaultParameters.html#a2cb82f0969aea386970990b2142d5c84',1,'spi::NumericalSolvers::GraphLaplacian::DefaultParameters::SquaredBandwidth()']]],
   ['statedim',['StateDim',['../structspi_1_1NumericalSolvers_1_1GraphLaplacian_1_1PointCloud.html#a368a56632d9251e9606812212c19d5aa',1,'spi::NumericalSolvers::GraphLaplacian::PointCloud']]],
-  ['std',['std',['../CMakeLists_8txt.html#a74f1ce2eb667ae060cbeba3a048ca2fa',1,'CMakeLists.txt']]],
+  ['std',['std',['../CMakeLists_8txt.html#a74f1ce2eb667ae060cbeba3a048ca2fa',1,'std():&#160;CMakeLists.txt'],['../link_8txt.html#a202cefaa65a8c993b626ff2119fa6399',1,'std():&#160;link.txt']]],
+  ['stringify',['STRINGIFY',['../CMakeCCompilerId_8c.html#a43e1cad902b6477bec893cb6430bd6c8',1,'STRINGIFY():&#160;CMakeCCompilerId.c'],['../CMakeCXXCompilerId_8cpp.html#a43e1cad902b6477bec893cb6430bd6c8',1,'STRINGIFY():&#160;CMakeCXXCompilerId.cpp']]],
+  ['stringify_5fhelper',['STRINGIFY_HELPER',['../CMakeCCompilerId_8c.html#a2ae9b72bb13abaabfcf2ee0ba7d3fa1d',1,'STRINGIFY_HELPER():&#160;CMakeCCompilerId.c'],['../CMakeCXXCompilerId_8cpp.html#a2ae9b72bb13abaabfcf2ee0ba7d3fa1d',1,'STRINGIFY_HELPER():&#160;CMakeCXXCompilerId.cpp']]],
   ['tools',['Tools',['../namespacespi_1_1Tools.html',1,'spi']]]
 ];
