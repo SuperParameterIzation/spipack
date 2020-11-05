@@ -22,9 +22,9 @@ int main(int argc, char **argv) {
 
   // the options for the graph Laplacian
   YAML::Node options;
-  options["NumSamples"] = 1000;
+  options["NumSamples"] = 10000;
   options["Bandwidth"] = 0.25;
-  options["EigensolverTol"] = 1.0e-4;
+  options["EigensolverTol"] = 1.0e-10;
 
   // set the kernel options
   YAML::Node kernelOptions;

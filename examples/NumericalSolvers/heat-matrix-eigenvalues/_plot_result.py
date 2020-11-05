@@ -76,8 +76,6 @@ hdf5file = h5py.File('samples.h5', 'r')
 samples = hdf5file['/samples'] [()].T
 eigenvalues = hdf5file['/heat matrix eigenvalues'] [()].T [0]
 
-print(eigenvalues)
-
 fig = MakeFigure(425, 0.9, False)
 ax = plt.gca()
 scatter = ax.scatter(samples.T[0], samples.T[1])
@@ -87,4 +85,14 @@ ax.spines['top'].set_visible(False)
 ax.yaxis.set_ticks_position('left')
 ax.xaxis.set_ticks_position('bottom')
 plt.savefig('figures/Samples.pdf', format='pdf', bbox_inches='tight')
+plt.close(fig)
+
+fig = MakeFigure(425, 0.9, False)
+ax = plt.gca()
+ax.plot(eigenvalues)
+ax.spines['right'].set_visible(False)
+ax.spines['top'].set_visible(False)
+ax.yaxis.set_ticks_position('left')
+ax.xaxis.set_ticks_position('bottom')
+plt.savefig('figures/HeatMatrixEigenvalues.pdf', format='pdf', bbox_inches='tight')
 plt.close(fig)
