@@ -57,7 +57,7 @@ double GraphLaplacian::SquaredBandwidth() const { return bandwidth2; }
 
 std::size_t GraphLaplacian::NumSamples() const { return cloud.kdtree_get_point_count(); }
 
-Eigen::Ref<const Eigen::VectorXd> GraphLaplacian::Point(std::size_t const i) const {
+Eigen::Ref<Eigen::VectorXd const> GraphLaplacian::Point(std::size_t const i) const {
   assert(i<NumSamples());
   return cloud.Point(i);
 }
@@ -326,7 +326,7 @@ double GraphLaplacian::PointCloud::kdtree_get_pt(std::size_t const p, std::size_
   return samples->at(p)->state[0][i];
 }
 
-Eigen::Ref<const Eigen::VectorXd> GraphLaplacian::PointCloud::Point(std::size_t const i) const {
+Eigen::Ref<Eigen::VectorXd const> GraphLaplacian::PointCloud::Point(std::size_t const i) const {
   assert(samples);
   assert(i<samples->size());
   return samples->at(i)->state[0];

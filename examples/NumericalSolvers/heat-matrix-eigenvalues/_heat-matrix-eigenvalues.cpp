@@ -46,6 +46,9 @@ int main(int argc, char **argv) {
   // loop through each sample
   std::vector<std::vector<std::pair<std::size_t, double> > > neighbors(laplacian->NumSamples());
   for( unsigned int i=0; i<laplacian->NumSamples(); ++i ) {
+    // get a reference to the ith point
+    Eigen::Ref<Eigen::VectorXd const> point = laplacian->Point(i);
+
     // find the nearest neighbors for each sample
     //const double h2 = laplacian->FindNeighbors(neighbors[i]);
   }

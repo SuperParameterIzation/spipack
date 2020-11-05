@@ -82,7 +82,7 @@ public:
   double SquaredBandwidth() const;
 
   /// Get the \f$i^{th}\f$ point from the point cloud.
-  Eigen::Ref<const Eigen::VectorXd> Point(std::size_t const i) const;
+  Eigen::Ref<Eigen::VectorXd const> Point(std::size_t const i) const;
 
   /// Update the kd-tree
   /**
@@ -193,7 +193,7 @@ private:
     inline bool kdtree_get_bbox(BBOX& bb) const { return false; }
 
     /// Get the \f$i^{th}\f$ point from the GraphLaplacian::PointCloud::samples.
-    Eigen::Ref<const Eigen::VectorXd> Point(std::size_t const i) const;
+    Eigen::Ref<Eigen::VectorXd const> Point(std::size_t const i) const;
 
     /// The dimension of the state
     /**
