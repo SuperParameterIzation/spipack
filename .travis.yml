@@ -37,7 +37,7 @@ before_script:
 
 script:
   - cd $TRAVIS_BUILD_DIR/build
-  - make -j5 examples
+  - make -j5 examples VERBOSE=1
   - cd ..
   - ./build/run-tests
 
