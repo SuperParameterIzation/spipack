@@ -5,7 +5,7 @@ set(SOURCE
 message(STATUS ${SPIPACK_EXTERNAL_LIBRARIES})
 
 add_library(spiNS SHARED ${SOURCE})
-target_link_libraries(spiNS ${SPIPACK_EXTERNAL_LIBRARIES})
+target_link_libraries(spiNS spiTS ${SPIPACK_EXTERNAL_LIBRARIES})
 add_dependencies(spiNS spiTS ${SPIPACK_BUILT_DEPENDENCIES})
 
 install(TARGETS spiNS
