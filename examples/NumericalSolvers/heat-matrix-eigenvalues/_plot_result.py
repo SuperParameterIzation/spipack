@@ -74,7 +74,7 @@ def MakeFigure(totalWidthPts, fraction, presentationVersion = False):
 # load the data file
 hdf5file = h5py.File('samples.h5', 'r')
 
-samples = hdf5file['/samples/samples'] [()].T
+samples = hdf5file['/samples'] [()].T
 
 fig = MakeFigure(425, 0.9, False)
 ax = plt.gca()
