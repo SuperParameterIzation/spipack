@@ -16,13 +16,16 @@ int main(int argc, char **argv) {
   // the output filename
   const std::string filename = "samples.h5";
 
+  // numerical parameters
+  const std::size_t numNeighbors = 10;
+
   // create a uniform random variable
   std::vector<std::pair<double, double> > bounds(dim, std::pair<double, double>(1.0, 0.0));
   auto rv = std::make_shared<UniformBox>(bounds)->AsVariable();
 
   // the options for the graph Laplacian
   YAML::Node options;
-  options["NumSamples"] = 10000;
+  options["NumSamples"] = 5000;
   options["Bandwidth"] = 0.25;
   options["EigensolverTol"] = 1.0e-10;
 
@@ -41,8 +44,10 @@ int main(int argc, char **argv) {
   laplacian->BuildKDTree();
 
   // loop through each sample
+  std::vector<std::vector<std::pair<std::size_t, double> > > neighbors(laplacian->NumSamples());
   for( unsigned int i=0; i<laplacian->NumSamples(); ++i ) {
-    std::cout << " i: " << i << std::endl;
+    // find the nearest neighbors for each sample
+    //const double h2 = laplacian->FindNeighbors(neighbors[i]);
   }
 
   /*// construct the heat matrix
