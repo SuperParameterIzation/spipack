@@ -43,7 +43,7 @@ after_success:
   #- cmake .. -DSPIPACK_DIR=~/.local
   #- make
   - cd ..
-  - pip install -I numpy
+  - pip3 install -I numpy
   #- ./build/run-heat-matrix-eigenvalues
   - python3 _plot_result.py
   - cd $TRAVIS_BUILD_DIR/documentation
