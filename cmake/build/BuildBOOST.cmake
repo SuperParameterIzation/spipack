@@ -84,6 +84,13 @@ if(SPIPACK_USE_LIBC11)
         BOOST
         PREFIX ${CMAKE_CURRENT_BINARY_DIR}/external/boost
         URL ${BOOST_EXTERNAL_SOURCE}
+        LOG_DOWNLOAD OFF
+        LOG_UPDATE OFF
+        LOG_PATCH OFF
+        LOG_CONFIGURE OFF
+        LOG_BUILD OFF
+        LOG_INSTALL OFF
+        LOG_TEST OFF
         PATCH_COMMAND cp ${CMAKE_CURRENT_SOURCE_DIR}/external/boost/shared_ptr_helper.hpp ${CMAKE_CURRENT_BINARY_DIR}/external/boost/src/BOOST/boost/serialization/shared_ptr_helper.hpp
         UPDATE_COMMAND ""
         CONFIGURE_COMMAND mv ${CMAKE_CURRENT_BINARY_DIR}/user-config.jam ${BOOST_BUILD_DIR}/user-config.jam && ${BOOST_BUILD_DIR}/bootstrap.sh --prefix=${Boost_INSTALL_DIR} --without-icu
@@ -96,6 +103,7 @@ else(SPIPACK_USE_LIBC11)
           BOOST
           PREFIX ${CMAKE_CURRENT_BINARY_DIR}/external/boost
           URL ${BOOST_EXTERNAL_SOURCE}
+          LOG_DOWNLOAD OFF
           PATCH_COMMAND cp ${CMAKE_CURRENT_SOURCE_DIR}/external/boost/shared_ptr_helper.hpp ${CMAKE_CURRENT_BINARY_DIR}/external/boost/src/BOOST/boost/serialization/shared_ptr_helper.hpp
           UPDATE_COMMAND ""
           CONFIGURE_COMMAND mv ${CMAKE_CURRENT_BINARY_DIR}/user-config.jam ${BOOST_BUILD_DIR}/user-config.jam && ${BOOST_BUILD_DIR}/bootstrap.sh --prefix=${Boost_INSTALL_DIR} --without-icu

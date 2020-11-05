@@ -38,13 +38,14 @@ before_script:
 script:
   - cd $TRAVIS_BUILD_DIR/build
   - make -j5
+  - make -j5 examples
   - cd ..
   - ./build/run-tests
 
 # generate and deploy documentation
 after_success:
   - cd $TRAVIS_BUILD_DIR/build/
-  - make -j5 examples
+  #- make -j5 examples
   #- cmake .. -DSPIPACK_DIR=/home/install
   #- make
   #- cd ..
