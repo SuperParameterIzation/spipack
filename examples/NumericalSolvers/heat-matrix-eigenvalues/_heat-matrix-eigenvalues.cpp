@@ -46,5 +46,6 @@ int main(int argc, char **argv) {
 
   // open the file
   auto hdf5file = std::make_shared<HDF5File>(filename);
+  hdf5file->WriteMatrix("/heat matrix eigenvalues", eigenvalues);
   hdf5file->Close();
 }
