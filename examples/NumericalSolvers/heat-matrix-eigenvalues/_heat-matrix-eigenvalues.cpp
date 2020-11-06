@@ -31,7 +31,7 @@ int main(int argc, char **argv) {
 
   // set the kernel options
   YAML::Node kernelOptions;
-  kernelOptions["Kernel"] = "HatKernel";
+  kernelOptions["Kernel"] = "ExponentialKernel";
   options["KernelOptions"] = kernelOptions;
 
   // create the graph laplacian

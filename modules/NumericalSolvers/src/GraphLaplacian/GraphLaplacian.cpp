@@ -40,7 +40,7 @@ GraphLaplacian::GraphLaplacian(std::shared_ptr<muq::SamplingAlgorithms::SampleCo
 
 void GraphLaplacian::Initialize(YAML::Node const& options) {
   // create the kernel
-  kernel = CompactKernel::Construct(options["KernelOptions"]);
+  kernel = IsotropicKernel::Construct(options["KernelOptions"]);
   assert(kernel);
 
   // initialize the sparse heat matrix
@@ -111,11 +111,11 @@ void GraphLaplacian::EvaluateKernel(std::size_t const ind, Eigen::Ref<const Eige
   assert(kernelEval.cols()==bandwidthIndex+1);
   double para = 1.0;
   for( std::size_t l=0; l<bandwidthIndex+1; ++l ) {
-    std::cout << "self kernel: " << kernel->EvaluateCompactKernel(0.0) << std::endl;
+    std::cout << "self kernel: " << kernel->EvaluateIsotropicKernel(0.0) << std::endl;
     kernelEval(0, l) = 1.0;
     for( std::size_t j=0; j<neighbors.size(); ++j ) {
-      std::cout << "neighbor kernel: " << kernel->EvaluateCompactKernel(neighbors[j].second/(para*bandwidth(ind)*bandwidth(neighbors[j].first))) << std::endl;
-      std::cout << "para: " << para << " rj " << bandwidth(neighbors[j].first) << std::endl;
+      std::cout << "neighbor kernel: " << kernel->EvaluateIsotropicKernel(neighbors[j].second/(para*bandwidth(ind)*bandwidth(neighbors[j].first))) << std::endl;
+      std::cout << "para: " << para << " val: " << neighbors[j].second/(para*bandwidth(ind)*bandwidth(neighbors[j].first)) << std::endl;
       //std::cout << "para: " << para << " ri*rj " <<
       kernelEval(j+1, l) = 1.0;
     }
@@ -130,7 +130,7 @@ double GraphLaplacian::EvaluateKernel(Eigen::Ref<const Eigen::VectorXd> const& x
   double sum = 0.0;
   for( auto& neigh : neighbors ) {
     // compute the kernel between the given point and its neighbor
-    neigh.second = kernel->EvaluateCompactKernel(neigh.second/h2);
+    neigh.second = kernel->EvaluateIsotropicKernel(neigh.second/h2);
     sum += neigh.second;
   }
 
