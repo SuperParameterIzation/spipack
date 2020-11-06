@@ -2,6 +2,9 @@
 
 using namespace spi::Tools;
 
+SPIPACK_REGISTER_KERNEL(ExponentialKernel)
+SPIPACK_REGISTER_ISOTROPIC_KERNEL(ExponentialKernel)
+
 ExponentialKernel::ExponentialKernel(YAML::Node const& options) :
   IsotropicKernel(options),
   mag(options["Magnitude"].as<double>(1.0)),
