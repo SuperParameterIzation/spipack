@@ -47,9 +47,13 @@ TEST(HatKernelTests, IsotropicKernelConstructor) {
 TEST(HatKernelTests, CompactKernelConstructor) {
   const unsigned int dim = 5;
 
+  // the magnitude of the kernel
+  const double mag = 2.0;
+
   // the options for this kernel
   YAML::Node options;
   options["Kernel"] = "HatKernel";
+  options["Magnitude"] = mag;
 
   // create a hat kernel
   std::shared_ptr<CompactKernel> kernel = CompactKernel::Construct(options);
@@ -60,11 +64,11 @@ TEST(HatKernelTests, CompactKernelConstructor) {
   const Eigen::VectorXd x1 = Eigen::VectorXd::Zero(dim, 1);
   Eigen::VectorXd x2 = Eigen::VectorXd::Ones(dim, 1);
   x2 = 0.3*x2/x2.norm();
-  EXPECT_DOUBLE_EQ(kernel->Evaluate(x1, x2), 1.0);
-  EXPECT_DOUBLE_EQ(kernel->operator()(0.1), 1.0);
+  EXPECT_DOUBLE_EQ(kernel->Evaluate(x1, x2), mag);
+  EXPECT_DOUBLE_EQ(kernel->operator()(0.1), mag);
 }
 
-TEST(HatKernelTests, Evaluate) {
+TEST(HatKernelTests, EvaluateDefault) {
   const unsigned int dim = 5;
 
   // the options for this kernel
@@ -79,6 +83,37 @@ TEST(HatKernelTests, Evaluate) {
     x2 = 0.3*x2/x2.norm();
     EXPECT_DOUBLE_EQ(kernel.Evaluate(x1, x2), 1.0);
     EXPECT_DOUBLE_EQ(kernel(0.1), 1.0);
+  }
+
+  Eigen::VectorXd diff = x1;
+
+  { // check outside the kernel support
+    Eigen::VectorXd x2 = Eigen::VectorXd::Ones(dim, 1);
+    x2 = 1.3*x2/x2.norm();
+    EXPECT_DOUBLE_EQ(kernel.Evaluate(x1, x2), 0.0);
+    EXPECT_DOUBLE_EQ(kernel(1.1), 0.0);
+  }
+}
+
+TEST(HatKernelTests, Evaluate) {
+  const unsigned int dim = 5;
+
+  // the magnitude of the kernel
+  const double mag = 2.0;
+
+  // the options for this kernel
+  YAML::Node options;
+  options["Magnitude"] = mag;
+
+  // create a hat kernel
+  const HatKernel kernel(options);
+
+  const Eigen::VectorXd x1 = Eigen::VectorXd::Zero(dim, 1);
+  { // check inside the kernel support
+    Eigen::VectorXd x2 = Eigen::VectorXd::Ones(dim, 1);
+    x2 = 0.3*x2/x2.norm();
+    EXPECT_DOUBLE_EQ(kernel.Evaluate(x1, x2), mag);
+    EXPECT_DOUBLE_EQ(kernel(0.1), mag);
   }
 
   Eigen::VectorXd diff = x1;

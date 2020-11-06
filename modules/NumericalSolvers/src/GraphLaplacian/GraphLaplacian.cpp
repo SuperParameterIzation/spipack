@@ -19,6 +19,7 @@ double GraphLaplacian::DefaultParameters::SquaredBandwidth(YAML::Node const& opt
 GraphLaplacian::GraphLaplacian(std::shared_ptr<RandomVariable> const& rv, YAML::Node const& options) :
   cloud(SampleRandomVariable(rv, options["NumSamples"].as<std::size_t>())),
   kdtree(cloud.StateDim(), cloud, nanoflann::KDTreeSingleIndexAdaptorParams(options["MaxLeaf"].as<std::size_t>(defaults.maxLeaf))),
+  bandwidthIndex(options["BandwidthIndex"].as<std::size_t>(defaults.bandwidthIndex)),
   bandwidth2(DefaultParameters::SquaredBandwidth(options)),
   eigensolverTol(options["EigensolverTol"].as<double>(defaults.eigensolverTol)),
   eigensolverMaxIt(options["EigensolverMaxIt"].as<std::size_t>(defaults.eigensolverMaxIt))
@@ -29,6 +30,7 @@ GraphLaplacian::GraphLaplacian(std::shared_ptr<RandomVariable> const& rv, YAML::
 GraphLaplacian::GraphLaplacian(std::shared_ptr<muq::SamplingAlgorithms::SampleCollection> const& samples, YAML::Node const& options) :
   cloud(samples),
   kdtree(cloud.StateDim(), cloud, nanoflann::KDTreeSingleIndexAdaptorParams(options["MaxLeaf"].as<std::size_t>(defaults.maxLeaf))),
+  bandwidthIndex(options["BandwidthIndex"].as<std::size_t>(defaults.bandwidthIndex)),
   bandwidth2(DefaultParameters::SquaredBandwidth(options)),
   eigensolverTol(options["EigensolverTol"].as<double>(defaults.eigensolverTol)),
   eigensolverMaxIt(options["EigensolverMaxIt"].as<std::size_t>(defaults.eigensolverMaxIt))
@@ -104,6 +106,23 @@ double GraphLaplacian::FindNeighbors(Eigen::Ref<const Eigen::VectorXd> const& x,
   return resultSet.worstDist();
 }
 
+void GraphLaplacian::EvaluateKernel(std::size_t const ind, Eigen::Ref<const Eigen::VectorXd> const& x, std::vector<std::pair<std::size_t, double> >& neighbors, Eigen::Ref<Eigen::VectorXd const> const& bandwidth, Eigen::Ref<Eigen::MatrixXd> kernelEval) const {
+  assert(kernelEval.rows()==neighbors.size()+1);
+  assert(kernelEval.cols()==bandwidthIndex+1);
+  double para = 1.0;
+  for( std::size_t l=0; l<bandwidthIndex+1; ++l ) {
+    std::cout << "self kernel: " << kernel->EvaluateCompactKernel(0.0) << std::endl;
+    kernelEval(0, l) = 1.0;
+    for( std::size_t j=0; j<neighbors.size(); ++j ) {
+      std::cout << "neighbor kernel: " << kernel->EvaluateCompactKernel(neighbors[j].second/(para*bandwidth(ind)*bandwidth(neighbors[j].first))) << std::endl;
+      std::cout << "para: " << para << " rj " << bandwidth(neighbors[j].first) << std::endl;
+      //std::cout << "para: " << para << " ri*rj " <<
+      kernelEval(j+1, l) = 1.0;
+    }
+    para *= 2.0;
+  }
+}
+
 double GraphLaplacian::EvaluateKernel(Eigen::Ref<const Eigen::VectorXd> const& x, double const h2, std::vector<std::pair<std::size_t, double> >& neighbors) const {
   assert(kernel);
 
@@ -117,6 +136,8 @@ double GraphLaplacian::EvaluateKernel(Eigen::Ref<const Eigen::VectorXd> const& x
 
   return sum;
 }
+
+std::size_t GraphLaplacian::BandwidthIndex() const { return bandwidthIndex; }
 
 void GraphLaplacian::ConstructHeatMatrix() {
   // build the kd-tree based on the samples

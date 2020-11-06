@@ -20,6 +20,7 @@ public:
     options["MaxLeaf"] = maxLeaf;
     options["NumSamples"] = n;
     options["Bandwidth"] = bandwidth;
+    options["BandwidthIndex"] = bandwidthIndex;
     options["EigensolverTol"] = eigensolverTol;
 
     // set the kernel options
@@ -32,6 +33,9 @@ public:
   virtual void TearDown() override {
     // make sure the graph laplacian has enough samples
     EXPECT_EQ(laplacian->NumSamples(), n);
+
+    // make sure the bandwidth parameter is correct
+    EXPECT_EQ(laplacian->BandwidthIndex(), bandwidthIndex);
 
     // check the bandwidth
     EXPECT_NEAR(laplacian->SquaredBandwidth(), bandwidth*bandwidth, 1.0e-10);
@@ -62,6 +66,9 @@ protected:
 
   /// The max leaf size for the kd tree
   const std::size_t maxLeaf = 15;
+
+  // The bandwidth index parameter
+  const std::size_t bandwidthIndex = 4;
 
   /// The bandwidth for the kernel
   const double bandwidth = 0.75;

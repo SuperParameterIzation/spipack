@@ -26,9 +26,19 @@ namespace NumericalSolvers {
   \f{equation*}{
     \nabla_{\psi}^2 H = R
   \f}
-  such that \f$\mathbb{E}_{\psi}[H] = 0\f$.
+  such that \f$\mathbb{E}_{\psi}[H] = 0\f$. Let \f$I(i,j)\f$ be the index of the \f$j^{th}\f$ furthest point from the sample \f$\boldsymbol{x}^{(i)}\f$ (note that \f$I(i,0)=i\f$) and let \f$\{ \boldsymbol{x}^{(I(i,j))} \}_{j=0}^{k}\f$ be the \f$k\f$ nearest neighbors. For each sample, define the squared bandwith parameter
+  \f{equation*}{
+    r_i^2 = \max_{j \in [1,k]}{\left( \|\boldsymbol{x}^{(i)} - \boldsymbol{x}^{(I(i,j))} \|^2 \right)}
+  \f}
 
-  Define a compact kernel function \f$k: \mathbb{R}^{+} \mapsto \mathbb{R}^{+}\f$ such that \f$k(\theta)\f$ is decreasing and \f$k(\theta) = 0\f$ if \f$\theta \notin [0,1]\f$ (i.e., the support of the kernel is \f$[0,1]\f$). Define the matrix \f$\boldsymbol{K}\f$ such that the \f$(i^{th}, j^{th})\f$ component is
+  Define a compact kernel function \f$k: \mathbb{R}^{+} \mapsto \mathbb{R}^{+}\f$ such that \f$k(\theta)\f$ is decreasing and \f$k(\theta) = 0\f$ if \f$\theta \notin [0,1]\f$ (i.e., the support of the kernel is \f$[0,1]\f$). Let
+  \f{equation*}{
+    k_{l}(\boldsymbol{x}^{(i)}, \boldsymbol{x}^{(I(i,j))}) = k\left( \frac{\| \boldsymbol{x}^{(i)} - \boldsymbol{x}^{(I(i,j))} \|^2}{2^l r_i r_j} \right)
+  \f}
+
+
+
+  Define the matrix \f$\boldsymbol{K}\f$ such that the \f$(i^{th}, j^{th})\f$ component is
   \f{equation*}{
     K_{ij} = \frac{k(h^{-2} \|\boldsymbol{x}^{(i)} -\boldsymbol{x}^{(i)}\|^2)}{\sqrt{d^{(i)} d^{(j)}}},
   \f}
@@ -47,6 +57,7 @@ namespace NumericalSolvers {
       "MaxLeaf"   | std::size_t | <tt>10</tt> | The maximum leaf size for the kd tree (nanoflann parameter). |
       "KernelOptions"   | YAML::Node | - | The options for the compact kernel function \f$k(\theta)\f$ (spi::Tools::CompactKernel). |
       "Bandwidth"  | double   | <tt>1.0</tt> | The bandwith \f$h\f$ that defines the kernel \f$k_h = k(h^{-1} \theta)\f$.
+      "BandwidthIndex"  | std::size_t   | <tt>1</tt> | The bandwith index is the maximum value of \f$l\f$ that defines the kernel \f$k_l(\boldsymbol{x}^{(i)}, \boldsymbol{x}^{(j)}) = k((2^l r_i r_j)^{-1} \| \boldsymbol{x}^{(i)} - \boldsymbol{x}^{(j)} \|^2)\f$.
       "EigensolverTol"  | double   | <tt>10^{-5}</tt> | The tolerance for the sparse eigensolver.
       "EigensolverMaxIt"  | std::size_t   | <tt>10^{3}</tt> | The maximum number of iterations for the sparse eigensolver.
 */
@@ -94,7 +105,7 @@ public:
   /**
     Find all of the points \f$\{\boldsymbol{x}^{(j)}\}_{j=1}^{k} \subseteq \{\boldsymbol{x}^{(i)}\}_{i=1}^{n}\f$ such that \f$\|\boldsymbol{x}-\boldsymbol{x}^{(j)}\| \leq r\f$, where \f$r>0\f$ is a given radius.
     @param[in] x The given point \f$\boldsymbol{x}\f$
-    @param[in] r2 The squared search radius \f$r\f$
+    @param[in] r2 The squared search radius \f$r_i^2 = \max_{j \in [1,k]}{\left( \|\boldsymbol{x}^{(i)} - \boldsymbol{x}^{(I(i,j))} \|^2 \right)}\f$
     @param[out] neighbors A vector of the nearest neighbors. First: the neighbor's index, Second: the squared distance (\f$d^2 = \boldsymbol{x} \cdot \boldsymbol{x}^{(j)}\f$) between the point \f$\boldsymbol{x}\f$ and the neighbor
   */
   void FindNeighbors(Eigen::Ref<const Eigen::VectorXd> const& x, double const r2, std::vector<std::pair<std::size_t, double> >& neighbors) const;
@@ -118,6 +129,15 @@ public:
     \return The sum of the kernel evaluations \f$d(\boldsymbol{x}) = \sum_{j=1}^{k} k_h(\|\boldsymbol{x}-\boldsymbol{x}^{(j)}\|^2)\f$
   */
   double EvaluateKernel(Eigen::Ref<const Eigen::VectorXd> const& x, double const h2, std::vector<std::pair<std::size_t, double> >& neighbors) const;
+
+  /**
+    @param[in] ind The index of the current point
+    @param[in] x The given point \f$\boldsymbol{x}^{(i)}\f$
+    @param[in] neighbors A vector of the nearest neighbors. First: the neighbor's index, Second: the squared distance (\f$\boldsymbol{x} \cdot \boldsymbol{x}^{(j)}\f$) between the point \f$\boldsymbol{x}\f$ and the neighbor
+    @param[in] bandwidth The bandwidth \f$r_i = \max_{j \in [1,k]}{\left( \|\boldsymbol{x}^{(i)} - \boldsymbol{x}^{(I(i,j))} \| \right)}\f$
+    @param[out] kernelEval The \f$j^{th}\f$ row corresponds to the \f$j^{th}\f$ neighbor and each column stores the kernel evaluation \f$k_l(\boldsymbol{x}, \boldsymbol{x}^{(j)})\f$ for index \f$l\f$.
+  */
+  void EvaluateKernel(std::size_t const ind, Eigen::Ref<const Eigen::VectorXd> const& x, std::vector<std::pair<std::size_t, double> >& neighbors, Eigen::Ref<Eigen::VectorXd const> const& bandwidth, Eigen::Ref<Eigen::MatrixXd> kernelEval) const;
 
   /// Construct the heat matrix \f$\boldsymbol{P}\f$
   /**
@@ -151,6 +171,12 @@ public:
     @param[in] dataset The name of the dataset where the samples are stored inside the file (defaults to <tt>"/"</tt>)
   */
   void WriteToFile(std::string const& filename, std::string const& dataset = "/") const;
+
+  /// The bandwidth index parameter
+  /**
+  \return The bandwith index parameter that defines the kernel \f$k_l(\boldsymbol{x}^{(i)}, \boldsymbol{x}^{(j)}) = k((2^l r_i r_j)^{-1} \| \boldsymbol{x}^{(i)} - \boldsymbol{x}^{(j)} \|^2)\f$.
+  */
+  std::size_t BandwidthIndex() const;
 
 private:
 
@@ -261,6 +287,9 @@ private:
   */
   std::shared_ptr<spi::Tools::CompactKernel> kernel;
 
+  /// The bandwidth index that defines the kernel \f$k_l(\boldsymbol{x}^{(i)}, \boldsymbol{x}^{(j)}) = k((2^l r_i r_j)^{-1} \| \boldsymbol{x}^{(i)} - \boldsymbol{x}^{(j)} \|^2)\f$.
+  const std::size_t bandwidthIndex;
+
   /// The squared bandwidth parameter \f$h^2\f$
   /**
     This parameter defines the kernel \f$k_h(\theta) = k(h^{-2} \theta^2)\f$.
@@ -282,6 +311,9 @@ private:
 
     /// The bandwidth parameter defaults to \f$1\f$
     inline static const double bandwidth = 1.0;
+
+    /// The bandwidth index that defaults to \f$1\f$
+    inline static const std::size_t bandwidthIndex = 1;
 
     /// The tolerance for the sparse eigensolver is \f$10^{-5}\f$
     inline static const double eigensolverTol = 1.0e-5;

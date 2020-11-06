@@ -2,6 +2,7 @@ set(SOURCE
   Kernels/Kernel.cpp
   Kernels/IsotropicKernel.cpp
   Kernels/CompactKernel.cpp
+  Kernels/ExponentialKernel.cpp
   Kernels/HatKernel.cpp
 )
 
