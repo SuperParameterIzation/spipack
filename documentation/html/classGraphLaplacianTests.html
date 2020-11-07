@@ -131,6 +131,14 @@ Protected Attributes</h2></td></tr>
 <tr class="memitem:a16d5fc577d602fc64bc21c0dc815a4ed"><td class="memItemLeft" align="right" valign="top">const std::size_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classGraphLaplacianTests.html#a16d5fc577d602fc64bc21c0dc815a4ed">maxLeaf</a> = 15</td></tr>
 <tr class="memdesc:a16d5fc577d602fc64bc21c0dc815a4ed"><td class="mdescLeft">&#160;</td><td class="mdescRight">The max leaf size for the kd tree.  <a href="#a16d5fc577d602fc64bc21c0dc815a4ed">More...</a><br /></td></tr>
 <tr class="separator:a16d5fc577d602fc64bc21c0dc815a4ed"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aa9c78ef24431279dd6257e6fff7fc3fc"><td class="memItemLeft" align="right" valign="top">const std::pair&lt; double, double &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classGraphLaplacianTests.html#aa9c78ef24431279dd6257e6fff7fc3fc">bandwidthRange</a> = std::pair&lt;double, double&gt;(-20.0, 10.0)</td></tr>
+<tr class="memdesc:aa9c78ef24431279dd6257e6fff7fc3fc"><td class="mdescLeft">&#160;</td><td class="mdescRight">The range for the bandwidth parameter \(2^{l}\) (this is the range of \(l\))  <a href="#aa9c78ef24431279dd6257e6fff7fc3fc">More...</a><br /></td></tr>
+<tr class="separator:aa9c78ef24431279dd6257e6fff7fc3fc"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a02419ce42a7c9892985418aedca18e5f"><td class="memItemLeft" align="right" valign="top">const std::size_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classGraphLaplacianTests.html#a02419ce42a7c9892985418aedca18e5f">numBandwidthSteps</a> = 25</td></tr>
+<tr class="memdesc:a02419ce42a7c9892985418aedca18e5f"><td class="mdescLeft">&#160;</td><td class="mdescRight">The number of steps in the discretization of the bandwidth parameter range.  <a href="#a02419ce42a7c9892985418aedca18e5f">More...</a><br /></td></tr>
+<tr class="separator:a02419ce42a7c9892985418aedca18e5f"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:af1a36af73af080b9cef5742e7e27779f"><td class="memItemLeft" align="right" valign="top">const int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classGraphLaplacianTests.html#af1a36af73af080b9cef5742e7e27779f">bandwidthIndex</a> = 4</td></tr>
+<tr class="separator:af1a36af73af080b9cef5742e7e27779f"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a163d32323707f1c5d32f261a89f7ebbe"><td class="memItemLeft" align="right" valign="top">const double&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classGraphLaplacianTests.html#a163d32323707f1c5d32f261a89f7ebbe">bandwidth</a> = 0.75</td></tr>
 <tr class="memdesc:a163d32323707f1c5d32f261a89f7ebbe"><td class="mdescLeft">&#160;</td><td class="mdescRight">The bandwidth for the kernel.  <a href="#a163d32323707f1c5d32f261a89f7ebbe">More...</a><br /></td></tr>
 <tr class="separator:a163d32323707f1c5d32f261a89f7ebbe"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -253,6 +261,48 @@ Static Protected Attributes</h2></td></tr>
 
 </div>
 </div>
+<a class="anchor" id="af1a36af73af080b9cef5742e7e27779f"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">const int GraphLaplacianTests::bandwidthIndex = 4</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">protected</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a class="anchor" id="aa9c78ef24431279dd6257e6fff7fc3fc"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">const std::pair&lt;double, double&gt; GraphLaplacianTests::bandwidthRange = std::pair&lt;double, double&gt;(-20.0, 10.0)</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">protected</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>The range for the bandwidth parameter \(2^{l}\) (this is the range of \(l\)) </p>
+
+</div>
+</div>
 <a class="anchor" id="abe551b8b442a60a6035f5d88ac6d68ab"></a>
 <div class="memitem">
 <div class="memproto">
@@ -360,6 +410,28 @@ Static Protected Attributes</h2></td></tr>
 </div><div class="memdoc">
 
 <p>The number of samples. </p>
+
+</div>
+</div>
+<a class="anchor" id="a02419ce42a7c9892985418aedca18e5f"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">const std::size_t GraphLaplacianTests::numBandwidthSteps = 25</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">protected</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>The number of steps in the discretization of the bandwidth parameter range. </p>
 
 </div>
 </div>

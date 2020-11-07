@@ -100,26 +100,12 @@ Functions</h2></td></tr>
 <tr class="separator:a32f8bb96a8f83dbc1f93a1262e804e3a"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a9bd2f2d4ca2cd5f5bf02565a7c6d0472"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="modules_2NumericalSolvers_2src_2CMakeLists_8txt.html#a9bd2f2d4ca2cd5f5bf02565a7c6d0472">add_library</a> (spiNS SHARED ${SOURCE}) target_link_libraries(spiNS spiTS $</td></tr>
 <tr class="separator:a9bd2f2d4ca2cd5f5bf02565a7c6d0472"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a6d3ee9e3f7b51b58e18a9131609b30c5"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="modules_2NumericalSolvers_2src_2CMakeLists_8txt.html#a6d3ee9e3f7b51b58e18a9131609b30c5">add_dependencies</a> (spiNS spiTS ${SPIPACK_BUILT_DEPENDENCIES}) install(TARGETS spiNS EXPORT $</td></tr>
-<tr class="separator:a6d3ee9e3f7b51b58e18a9131609b30c5"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ab7dc6086b0becd1789c80a6d6a7b27eb"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="modules_2NumericalSolvers_2src_2CMakeLists_8txt.html#ab7dc6086b0becd1789c80a6d6a7b27eb">if</a> (DEFINED SPIPACK_BUILT_DEPENDENCIES) add_dependencies(spiNS spiTS $</td></tr>
+<tr class="separator:ab7dc6086b0becd1789c80a6d6a7b27eb"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a2638519a92c90e8884950e66085b7b0a"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="modules_2NumericalSolvers_2src_2CMakeLists_8txt.html#a2638519a92c90e8884950e66085b7b0a">endif</a> () install(TARGETS spiNS EXPORT $</td></tr>
+<tr class="separator:a2638519a92c90e8884950e66085b7b0a"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <h2 class="groupheader">Function Documentation</h2>
-<a class="anchor" id="a6d3ee9e3f7b51b58e18a9131609b30c5"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">add_dependencies </td>
-          <td>(</td>
-          <td class="paramtype">spiNS spiTS ${SPIPACK_BUILT_DEPENDENCIES}&#160;</td>
-          <td class="paramname"></td><td>)</td>
-          <td></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-</div>
-</div>
 <a class="anchor" id="a9bd2f2d4ca2cd5f5bf02565a7c6d0472"></a>
 <div class="memitem">
 <div class="memproto">
@@ -129,6 +115,37 @@ Functions</h2></td></tr>
           <td>(</td>
           <td class="paramtype">spiNS SHARED ${SOURCE}&#160;</td>
           <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a class="anchor" id="a2638519a92c90e8884950e66085b7b0a"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">endif </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a class="anchor" id="ab7dc6086b0becd1789c80a6d6a7b27eb"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">if </td>
+          <td>(</td>
+          <td class="paramtype">DEFINED&#160;</td>
+          <td class="paramname"><em>SPIPACK_BUILT_DEPENDENCIES</em></td><td>)</td>
           <td></td>
         </tr>
       </table>

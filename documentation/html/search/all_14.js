@@ -1,6 +1,7 @@
 var searchData=
 [
   ['_7ecompactkernel',['~CompactKernel',['../classspi_1_1Tools_1_1CompactKernel.html#abb59f4a0fe4c19cbe8e2823aebd959de',1,'spi::Tools::CompactKernel']]],
+  ['_7eexponentialkernel',['~ExponentialKernel',['../classspi_1_1Tools_1_1ExponentialKernel.html#af66178dd1703951301d0eb8527181045',1,'spi::Tools::ExponentialKernel']]],
   ['_7egraphlaplacian',['~GraphLaplacian',['../classspi_1_1NumericalSolvers_1_1GraphLaplacian.html#af533e7a08281524ec2f3c70a236c864f',1,'spi::NumericalSolvers::GraphLaplacian']]],
   ['_7ehatkernel',['~HatKernel',['../classspi_1_1Tools_1_1HatKernel.html#aa57771dd8a0c498fa54a47b9b73f0903',1,'spi::Tools::HatKernel']]],
   ['_7eisotropickernel',['~IsotropicKernel',['../classspi_1_1Tools_1_1IsotropicKernel.html#a651bb4e82d526ccde698f58296d7b337',1,'spi::Tools::IsotropicKernel']]],

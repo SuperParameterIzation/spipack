@@ -95,6 +95,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <div class="header">
   <div class="summary">
 <a href="#pub-methods">Public Member Functions</a> &#124;
+<a href="#pri-attribs">Private Attributes</a> &#124;
 <a href="classspi_1_1Tools_1_1HatKernel-members.html">List of all members</a>  </div>
   <div class="headertitle">
 <div class="title">spi::Tools::HatKernel Class Reference</div>  </div>
@@ -158,6 +159,12 @@ Public Member Functions</h2></td></tr>
 <tr class="memdesc:a5db50d7b2306da5e41070d9a8ca7b700 inherit pub_methods_classspi_1_1Tools_1_1Kernel"><td class="mdescLeft">&#160;</td><td class="mdescRight">Evaluate the kernel function \(k(\boldsymbol{x}_1, \boldsymbol{x}_2)\).  <a href="#a5db50d7b2306da5e41070d9a8ca7b700">More...</a><br /></td></tr>
 <tr class="separator:a5db50d7b2306da5e41070d9a8ca7b700 inherit pub_methods_classspi_1_1Tools_1_1Kernel"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pri-attribs"></a>
+Private Attributes</h2></td></tr>
+<tr class="memitem:a1b8e3ddd49564a95ebce4201390215fc"><td class="memItemLeft" align="right" valign="top">const double&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classspi_1_1Tools_1_1HatKernel.html#a1b8e3ddd49564a95ebce4201390215fc">mag</a></td></tr>
+<tr class="memdesc:a1b8e3ddd49564a95ebce4201390215fc"><td class="mdescLeft">&#160;</td><td class="mdescRight">The magnitude of the kernel (the parameter \(a\)).  <a href="#a1b8e3ddd49564a95ebce4201390215fc">More...</a><br /></td></tr>
+<tr class="separator:a1b8e3ddd49564a95ebce4201390215fc"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="inherited"></a>
 Additional Inherited Members</h2></td></tr>
 <tr class="inherit_header pub_types_classspi_1_1Tools_1_1CompactKernel"><td colspan="2" onclick="javascript:toggleInherit('pub_types_classspi_1_1Tools_1_1CompactKernel')"><img src="closed.png" alt="-"/>&#160;Public Types inherited from <a class="el" href="classspi_1_1Tools_1_1CompactKernel.html">spi::Tools::CompactKernel</a></td></tr>
@@ -205,9 +212,16 @@ Additional Inherited Members</h2></td></tr>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><p>An implementation of the hat kernel. </p>
 <p>The hat kernel is a compact kernel (<a class="el" href="classspi_1_1Tools_1_1CompactKernel.html" title="An implementation of a compact kernel. ">spi::Tools::CompactKernel</a>) such that </p><p class="formulaDsp">
-\begin{equation*} k(\theta) = \begin{cases} 1 &amp; \mbox{if } \theta \in [0,1] \\ 0 &amp; \mbox{else.} \end{cases} \end{equation*}
+\begin{equation*} k(\theta) = \begin{cases} a &amp; \mbox{if } \theta \in [0,1] \\ 0 &amp; \mbox{else.} \end{cases} \end{equation*}
 </p>
- </div><h2 class="groupheader">Constructor &amp; Destructor Documentation</h2>
+<p> given the parameter \(a&gt;0\).</p>
+<p><b>Configuration Parameters:</b> </p><table class="doxtable">
+<tr>
+<th>Parameter Key </th><th>Type </th><th>Default Value </th><th>Description  </th></tr>
+<tr>
+<td>"Magnitude" </td><td>double </td><td><code>1.0</code> </td><td>The magnitude of the kernel (the parameter \(a\)). </td></tr>
+</table>
+</div><h2 class="groupheader">Constructor &amp; Destructor Documentation</h2>
 <a class="anchor" id="a132f20e40774fa349c4b6bd3803c3b7a"></a>
 <div class="memitem">
 <div class="memproto">
@@ -279,7 +293,7 @@ Additional Inherited Members</h2></td></tr>
 </div><div class="memdoc">
 
 <p>Evaluate the hat kernel function \(k(\theta)\). </p>
-<p>We have already checked that \(\theta \leq 1\)&mdash;this function implements the support of the kernel. Therefore, we just need to return \(1\). </p><dl class="params"><dt>Parameters</dt><dd>
+<p>We have already checked that \(\theta \leq 1\)&mdash;this function implements the support of the kernel. Therefore, we just need to return the magnitude \(a\). </p><dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramdir">[in]</td><td class="paramname">theta</td><td>The value of \(\theta = \|\boldsymbol{x}_1-\boldsymbol{x}_2\|^2\) (note that \(0 \leq \theta \leq 1\)) </td></tr>
   </table>
@@ -288,6 +302,29 @@ Additional Inherited Members</h2></td></tr>
 <dl class="section return"><dt>Returns</dt><dd>The kernel evaluation \(k(\theta)\) </dd></dl>
 
 <p>Implements <a class="el" href="classspi_1_1Tools_1_1CompactKernel.html#ae8cdbdca5016c4afe3186d9ec4d0e742">spi::Tools::CompactKernel</a>.</p>
+
+</div>
+</div>
+<h2 class="groupheader">Member Data Documentation</h2>
+<a class="anchor" id="a1b8e3ddd49564a95ebce4201390215fc"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">const double spi::Tools::HatKernel::mag</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">private</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>The magnitude of the kernel (the parameter \(a\)). </p>
 
 </div>
 </div>
