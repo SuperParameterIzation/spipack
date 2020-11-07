@@ -12,7 +12,7 @@ namespace Tools {
   \f{equation*}{
     k(\theta) = \begin{cases}
       a & \mbox{if } \theta \in [0,1] \\
-      0 & \mbox{else.}
+      0 & \mbox{else}
     \end{cases}
   \f}
   given the parameter \f$a>0\f$.

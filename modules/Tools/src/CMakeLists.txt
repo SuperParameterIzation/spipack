@@ -4,6 +4,7 @@ set(SOURCE
   Kernels/CompactKernel.cpp
   Kernels/ExponentialKernel.cpp
   Kernels/HatKernel.cpp
+  Kernels/BumpKernel.cpp
 )
 
 message(STATUS ${SPIPACK_EXTERNAL_LIBRARIES})
