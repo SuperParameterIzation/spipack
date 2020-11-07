@@ -10,7 +10,9 @@ message(STATUS ${SPIPACK_EXTERNAL_LIBRARIES})
 
 add_library(spiTS SHARED ${SOURCE})
 target_link_libraries(spiTS ${SPIPACK_EXTERNAL_LIBRARIES})
-add_dependencies(spiTS ${SPIPACK_BUILT_DEPENDENCIES})
+if( DEFINED SPIPACK_BUILT_DEPENDENCIES )
+    add_dependencies(spiTS ${SPIPACK_BUILT_DEPENDENCIES})
+endif()
 
 install(TARGETS spiTS
                 EXPORT ${CMAKE_PROJECT_NAME}Depends

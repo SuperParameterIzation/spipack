@@ -1,6 +1,6 @@
 find_package(PkgConfig)
 
-if(NOT DEFINED ${CMAKE_PROJECT_NAME}_YamlCpp_DIR)
+if(NOT DEFINED SPIPACK_YAML_DIR)
 	pkg_check_modules(PC_YamlCpp QUIET libyaml-cpp)
 	set(YamlCpp_DEFINITIONS ${PC_YamlCpp_CFLAGS_OTHER})
 
@@ -13,11 +13,11 @@ if(NOT DEFINED ${CMAKE_PROJECT_NAME}_YamlCpp_DIR)
 
 else()
 	find_path(YamlCpp_INCLUDE_DIR NAMES yaml-cpp/yaml.h
-	          HINTS ${${CMAKE_PROJECT_NAME}_YamlCpp_DIR}
+	          HINTS ${SPIPACK_YAML_DIR}
 		  PATH_SUFFIXES include NO_DEFAULT_PATH)
 
 	find_library(YamlCpp_LIBRARY NAMES yaml-cpp
-	             HINTS ${${CMAKE_PROJECT_NAME}_YamlCpp_DIR}
+	             HINTS ${SPIPACK_YAML_DIR}
 		     PATH_SUFFIXES lib lib64 NO_DEFAULT_PATH)
 endif()
 

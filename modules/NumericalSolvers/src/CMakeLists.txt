@@ -6,7 +6,9 @@ message(STATUS ${SPIPACK_EXTERNAL_LIBRARIES})
 
 add_library(spiNS SHARED ${SOURCE})
 target_link_libraries(spiNS spiTS ${SPIPACK_EXTERNAL_LIBRARIES})
-add_dependencies(spiNS spiTS ${SPIPACK_BUILT_DEPENDENCIES})
+if( DEFINED SPIPACK_BUILT_DEPENDENCIES )
+    add_dependencies(spiNS spiTS ${SPIPACK_BUILT_DEPENDENCIES})
+endif()
 
 install(TARGETS spiNS
         EXPORT ${CMAKE_PROJECT_NAME}Depends
