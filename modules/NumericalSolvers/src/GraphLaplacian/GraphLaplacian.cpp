@@ -119,7 +119,7 @@ void GraphLaplacian::EvaluateKernel(std::size_t const ind, Eigen::Ref<const Eige
       //std::cout << "para: " << para << " ri*rj " <<
       kernelEval(j+1, l) = 1.0;
     }
-    para *= 2.0;
+    para /= 2.0;
   }
 }
 

@@ -1,7 +1,7 @@
 #ifndef EXPONENTIALKERNEL_HPP_
 #define EXPONENTIALKERNEL_HPP_
 
-#include "spipack/Tools/Kernels/CompactKernel.hpp"
+#include "spipack/Tools/Kernels/IsotropicKernel.hpp"
 
 namespace spi {
 namespace Tools {
