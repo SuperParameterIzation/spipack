@@ -19,7 +19,9 @@ double GraphLaplacian::DefaultParameters::SquaredBandwidth(YAML::Node const& opt
 GraphLaplacian::GraphLaplacian(std::shared_ptr<RandomVariable> const& rv, YAML::Node const& options) :
   cloud(SampleRandomVariable(rv, options["NumSamples"].as<std::size_t>())),
   kdtree(cloud.StateDim(), cloud, nanoflann::KDTreeSingleIndexAdaptorParams(options["MaxLeaf"].as<std::size_t>(defaults.maxLeaf))),
-  bandwidthIndex(options["BandwidthIndex"].as<std::size_t>(defaults.bandwidthIndex)),
+  bandwidthRange(std::pair<double, double>(options["BandwidthRange.Min"].as<double>(defaults.bandwidthRange.first),options["BandwidthRange.Max"].as<double>(defaults.bandwidthRange.second))),
+  numBandwidthSteps(options["NumBandwidthSteps"].as<std::size_t>(defaults.numBandwidthSteps)),
+  bandwidthIndex(options["BandwidthIndex"].as<int>(defaults.bandwidthIndex)),
   bandwidth2(DefaultParameters::SquaredBandwidth(options)),
   eigensolverTol(options["EigensolverTol"].as<double>(defaults.eigensolverTol)),
   eigensolverMaxIt(options["EigensolverMaxIt"].as<std::size_t>(defaults.eigensolverMaxIt))
@@ -30,7 +32,9 @@ GraphLaplacian::GraphLaplacian(std::shared_ptr<RandomVariable> const& rv, YAML::
 GraphLaplacian::GraphLaplacian(std::shared_ptr<muq::SamplingAlgorithms::SampleCollection> const& samples, YAML::Node const& options) :
   cloud(samples),
   kdtree(cloud.StateDim(), cloud, nanoflann::KDTreeSingleIndexAdaptorParams(options["MaxLeaf"].as<std::size_t>(defaults.maxLeaf))),
-  bandwidthIndex(options["BandwidthIndex"].as<std::size_t>(defaults.bandwidthIndex)),
+  bandwidthRange(std::pair<double, double>(options["BandwidthRange.Min"].as<double>(defaults.bandwidthRange.first),options["BandwidthRange.Max"].as<double>(defaults.bandwidthRange.second))),
+  numBandwidthSteps(options["NumBandwidthSteps"].as<std::size_t>(defaults.numBandwidthSteps)),
+  bandwidthIndex(options["BandwidthIndex"].as<int>(defaults.bandwidthIndex)),
   bandwidth2(DefaultParameters::SquaredBandwidth(options)),
   eigensolverTol(options["EigensolverTol"].as<double>(defaults.eigensolverTol)),
   eigensolverMaxIt(options["EigensolverMaxIt"].as<std::size_t>(defaults.eigensolverMaxIt))
@@ -110,8 +114,10 @@ void GraphLaplacian::EvaluateKernel(std::size_t const ind, Eigen::Ref<const Eige
   assert(kernelEval.rows()==neighbors.size()+1);
   assert(kernelEval.cols()==bandwidthIndex+1);
   double para = 1.0;
-  for( std::size_t l=0; l<bandwidthIndex+1; ++l ) {
-    std::cout << "self kernel: " << kernel->EvaluateIsotropicKernel(0.0) << std::endl;
+  //std::cout << "HERE" << std::endl;
+  for( int l=-bandwidthIndex; l<bandwidthIndex+1; ++l ) {
+    //std::cout << "ell: " << l << std::endl;
+    /*std::cout << "self kernel: " << kernel->EvaluateIsotropicKernel(0.0) << std::endl;
     kernelEval(0, l) = 1.0;
     for( std::size_t j=0; j<neighbors.size(); ++j ) {
       std::cout << "neighbor kernel: " << kernel->EvaluateIsotropicKernel(neighbors[j].second/(para*bandwidth(ind)*bandwidth(neighbors[j].first))) << std::endl;
@@ -119,7 +125,7 @@ void GraphLaplacian::EvaluateKernel(std::size_t const ind, Eigen::Ref<const Eige
       //std::cout << "para: " << para << " ri*rj " <<
       kernelEval(j+1, l) = 1.0;
     }
-    para /= 2.0;
+    para /= 2.0;*/
   }
 }
 
@@ -138,6 +144,18 @@ double GraphLaplacian::EvaluateKernel(Eigen::Ref<const Eigen::VectorXd> const& x
 }
 
 std::size_t GraphLaplacian::BandwidthIndex() const { return bandwidthIndex; }
+
+std::pair<double, double> GraphLaplacian::BandwidthRange() const { return bandwidthRange; }
+
+Eigen::VectorXd GraphLaplacian::BandwidthParameterCandidates() const {
+  // the candidate exponents
+  Eigen::VectorXd candidates = Eigen::VectorXd::LinSpaced(numBandwidthSteps+1, bandwidthRange.first, bandwidthRange.second);
+
+  // raise 2 to the exponent
+  for( std::size_t i=0; i<candidates.size(); ++i ) { candidates(i) = std::pow(2.0, candidates(i)); }
+
+  return candidates;
+}
 
 void GraphLaplacian::ConstructHeatMatrix() {
   // build the kd-tree based on the samples

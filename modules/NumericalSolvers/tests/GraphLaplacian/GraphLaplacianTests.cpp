@@ -19,6 +19,9 @@ public:
     // set the options for the graph laplacian
     options["MaxLeaf"] = maxLeaf;
     options["NumSamples"] = n;
+    options["BandwidthRange.Min"] = bandwidthRange.first;
+    options["BandwidthRange.Max"] = bandwidthRange.second;
+    options["NumBandwidthSteps"] = numBandwidthSteps;
     options["Bandwidth"] = bandwidth;
     options["BandwidthIndex"] = bandwidthIndex;
     options["EigensolverTol"] = eigensolverTol;
@@ -38,7 +41,14 @@ public:
     EXPECT_EQ(laplacian->BandwidthIndex(), bandwidthIndex);
 
     // check the bandwidth
+    EXPECT_NEAR(laplacian->BandwidthRange().first, bandwidthRange.first, 1.0e-10);
+    EXPECT_NEAR(laplacian->BandwidthRange().second, bandwidthRange.second, 1.0e-10);
     EXPECT_NEAR(laplacian->SquaredBandwidth(), bandwidth*bandwidth, 1.0e-10);
+
+    const Eigen::VectorXd candidateBandwidths = laplacian->BandwidthParameterCandidates();
+    EXPECT_EQ(candidateBandwidths.size(), numBandwidthSteps+1);
+    EXPECT_NEAR(candidateBandwidths(0), std::pow(2.0, bandwidthRange.first), 1.0e-10);
+    EXPECT_NEAR(candidateBandwidths(numBandwidthSteps), std::pow(2.0, bandwidthRange.second), 1.0e-10);
   }
 
 protected:
@@ -67,8 +77,14 @@ protected:
   /// The max leaf size for the kd tree
   const std::size_t maxLeaf = 15;
 
+  /// The range for the bandwidth parameter \f$2^{l}\f$ (this is the range of \f$l\f$)
+  const std::pair<double, double> bandwidthRange = std::pair<double, double>(-20.0, 10.0);
+
+  /// The number of steps in the discretization of the bandwidth parameter range
+  const std::size_t numBandwidthSteps = 25;
+
   // The bandwidth index parameter
-  const std::size_t bandwidthIndex = 4;
+  const int bandwidthIndex = 4;
 
   /// The bandwidth for the kernel
   const double bandwidth = 0.75;

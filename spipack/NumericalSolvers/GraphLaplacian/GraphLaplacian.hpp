@@ -57,7 +57,7 @@ namespace NumericalSolvers {
       "MaxLeaf"   | std::size_t | <tt>10</tt> | The maximum leaf size for the kd tree (nanoflann parameter). |
       "KernelOptions"   | YAML::Node | - | The options for the compact kernel function \f$k(\theta)\f$ (spi::Tools::CompactKernel). |
       "Bandwidth"  | double   | <tt>1.0</tt> | The bandwith \f$h\f$ that defines the kernel \f$k_h = k(h^{-1} \theta)\f$.
-      "BandwidthIndex"  | std::size_t   | <tt>1</tt> | The bandwith index is the maximum value of \f$l\f$ that defines the kernel \f$k_l(\boldsymbol{x}^{(i)}, \boldsymbol{x}^{(j)}) = k((2^l r_i r_j)^{-1} \| \boldsymbol{x}^{(i)} - \boldsymbol{x}^{(j)} \|^2)\f$.
+      "BandwidthIndex"  | int   | <tt>1</tt> | The bandwith index is the maximum value of \f$l\f$ that defines the kernel \f$k_l(\boldsymbol{x}^{(i)}, \boldsymbol{x}^{(j)}) = k((2^l r_i r_j)^{-1} \| \boldsymbol{x}^{(i)} - \boldsymbol{x}^{(j)} \|^2)\f$.
       "EigensolverTol"  | double   | <tt>10^{-5}</tt> | The tolerance for the sparse eigensolver.
       "EigensolverMaxIt"  | std::size_t   | <tt>10^{3}</tt> | The maximum number of iterations for the sparse eigensolver.
 */
@@ -178,6 +178,19 @@ public:
   */
   std::size_t BandwidthIndex() const;
 
+  /// The range of the bandwidth parameter \f$2^{l}\f$
+  /**
+  We must choose the bandwidth parameter from the range \f$[2^{l_{min}}, 2^{l_{max}}]\f$.
+  \return The range \f$[l_{min}, l_{max}]\f$.
+  */
+  std::pair<double, double> BandwidthRange() const;
+
+  /// Compute the candidate bandwidth parameters
+  /**
+  \return The possible bandwidth parameters \f$\epsilon = 2^{l_i}\f$.
+  */
+  Eigen::VectorXd BandwidthParameterCandidates() const;
+
 private:
 
   /// Create a sample collection by sampling a random variable
@@ -287,8 +300,20 @@ private:
   */
   std::shared_ptr<spi::Tools::IsotropicKernel> kernel;
 
+  /// The maximum and minimum range for the bandwidth index
+  /**
+  We choose the bandwidth parameter \f$2^{l}\f$; these parameters determine the [min, max] range for \f$l\f$.
+  */
+  const std::pair<double, double> bandwidthRange;
+
+  /// The bandwidth step parameter
+  /**
+  We choose the bandwidth parameter from the range \f$[2^{l_{min}}, 2^{l_{max}}]\f$; we discretize this range to \f$\{2^{l_i}\}_{i=1}^{n}\f$. This is the number of points \f$n\f$.
+  */
+  const std::size_t numBandwidthSteps;
+
   /// The bandwidth index that defines the kernel \f$k_l(\boldsymbol{x}^{(i)}, \boldsymbol{x}^{(j)}) = k((2^l r_i r_j)^{-1} \| \boldsymbol{x}^{(i)} - \boldsymbol{x}^{(j)} \|^2)\f$.
-  const std::size_t bandwidthIndex;
+  const int bandwidthIndex;
 
   /// The squared bandwidth parameter \f$h^2\f$
   /**
@@ -309,11 +334,20 @@ private:
     /// The maximum leaf size (nanoflann parameter) defaults to \f$10\f$
     inline static const std::size_t maxLeaf = 10;
 
+    /// The maximum and minimum range for the bandwidth index defaults to \f$[-1,1]\f$
+    /**
+    We choose the bandwidth parameter \f$2^{l}\f$; these parameters determine the [min, max] range for \f$l\f$.
+    */
+    inline static const std::pair<double, double> bandwidthRange = std::pair<double, double>(-1.0, 1.0);
+
+    /// The default number of bandwidth steps is \f$1\f$.
+    inline static const std::size_t numBandwidthSteps = 1;
+
     /// The bandwidth parameter defaults to \f$1\f$
     inline static const double bandwidth = 1.0;
 
     /// The bandwidth index that defaults to \f$1\f$
-    inline static const std::size_t bandwidthIndex = 1;
+    inline static const int bandwidthIndex = 1;
 
     /// The tolerance for the sparse eigensolver is \f$10^{-5}\f$
     inline static const double eigensolverTol = 1.0e-5;
