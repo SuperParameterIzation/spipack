@@ -185,6 +185,12 @@ public:
   */
   std::pair<double, double> BandwidthRange() const;
 
+  /// The number of steps in the discretized bandwith range
+  /**
+  \return The number of steps in the discretized bandwith range
+  */
+  std::size_t NumBandwidthSteps() const;
+
   /// Compute the candidate bandwidth parameters
   /**
   \return The possible bandwidth parameters \f$\epsilon = 2^{l_i}\f$.
@@ -334,19 +340,19 @@ private:
     /// The maximum leaf size (nanoflann parameter) defaults to \f$10\f$
     inline static const std::size_t maxLeaf = 10;
 
-    /// The maximum and minimum range for the bandwidth index defaults to \f$[-1,1]\f$
+    /// The maximum and minimum range for the bandwidth index defaults to \f$[-10,10]\f$
     /**
     We choose the bandwidth parameter \f$2^{l}\f$; these parameters determine the [min, max] range for \f$l\f$.
     */
-    inline static const std::pair<double, double> bandwidthRange = std::pair<double, double>(-1.0, 1.0);
+    inline static const std::pair<double, double> bandwidthRange = std::pair<double, double>(-10.0, 10.0);
 
     /// The default number of bandwidth steps is \f$1\f$.
-    inline static const std::size_t numBandwidthSteps = 1;
+    inline static const std::size_t numBandwidthSteps = 10;
 
     /// The bandwidth parameter defaults to \f$1\f$
     inline static const double bandwidth = 1.0;
 
-    /// The bandwidth index that defaults to \f$1\f$
+    /// The bandwidth index that defaults to \f$10\f$
     inline static const int bandwidthIndex = 1;
 
     /// The tolerance for the sparse eigensolver is \f$10^{-5}\f$

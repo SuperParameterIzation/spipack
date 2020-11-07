@@ -43,6 +43,7 @@ public:
     // check the bandwidth
     EXPECT_NEAR(laplacian->BandwidthRange().first, bandwidthRange.first, 1.0e-10);
     EXPECT_NEAR(laplacian->BandwidthRange().second, bandwidthRange.second, 1.0e-10);
+    EXPECT_EQ(laplacian->NumBandwidthSteps(), numBandwidthSteps);
     EXPECT_NEAR(laplacian->SquaredBandwidth(), bandwidth*bandwidth, 1.0e-10);
 
     const Eigen::VectorXd candidateBandwidths = laplacian->BandwidthParameterCandidates();

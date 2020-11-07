@@ -59,7 +59,7 @@ int main(int argc, char **argv) {
     Eigen::Ref<Eigen::VectorXd const> point = laplacian->Point(i);
 
     // evaluate the kernel at this point
-    Eigen::MatrixXd kernelEval(numNeighbors+1, laplacian->BandwidthIndex()+1);
+    Eigen::MatrixXd kernelEval(numNeighbors+1, laplacian->NumBandwidthSteps()+1);
     laplacian->EvaluateKernel(i, point, neighbors[i], squaredBandwidth.array().sqrt(), kernelEval);
   }
 

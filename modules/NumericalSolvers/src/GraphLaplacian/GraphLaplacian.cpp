@@ -112,20 +112,15 @@ double GraphLaplacian::FindNeighbors(Eigen::Ref<const Eigen::VectorXd> const& x,
 
 void GraphLaplacian::EvaluateKernel(std::size_t const ind, Eigen::Ref<const Eigen::VectorXd> const& x, std::vector<std::pair<std::size_t, double> >& neighbors, Eigen::Ref<Eigen::VectorXd const> const& bandwidth, Eigen::Ref<Eigen::MatrixXd> kernelEval) const {
   assert(kernelEval.rows()==neighbors.size()+1);
-  assert(kernelEval.cols()==bandwidthIndex+1);
-  double para = 1.0;
-  //std::cout << "HERE" << std::endl;
-  for( int l=-bandwidthIndex; l<bandwidthIndex+1; ++l ) {
-    //std::cout << "ell: " << l << std::endl;
-    /*std::cout << "self kernel: " << kernel->EvaluateIsotropicKernel(0.0) << std::endl;
-    kernelEval(0, l) = 1.0;
-    for( std::size_t j=0; j<neighbors.size(); ++j ) {
-      std::cout << "neighbor kernel: " << kernel->EvaluateIsotropicKernel(neighbors[j].second/(para*bandwidth(ind)*bandwidth(neighbors[j].first))) << std::endl;
-      std::cout << "para: " << para << " val: " << neighbors[j].second/(para*bandwidth(ind)*bandwidth(neighbors[j].first)) << std::endl;
-      //std::cout << "para: " << para << " ri*rj " <<
-      kernelEval(j+1, l) = 1.0;
-    }
-    para /= 2.0;*/
+  assert(kernelEval.cols()==numBandwidthSteps+1);
+
+  // get the candidate bandwidth parameters
+  const Eigen::VectorXd bandwidthPara = BandwidthParameterCandidates();
+
+  // loop through the possible bandwith parameters
+  for( std::size_t l=0; l<bandwidthPara.size(); ++l ) {
+    //std::cout << "eps: " << bandwidthPara(l) << std::endl;
+    //std::cout << "ri: " << bandwidth(ind) << " rj " << bandwidth(ind) << std::endl;
   }
 }
 
@@ -144,6 +139,8 @@ double GraphLaplacian::EvaluateKernel(Eigen::Ref<const Eigen::VectorXd> const& x
 }
 
 std::size_t GraphLaplacian::BandwidthIndex() const { return bandwidthIndex; }
+
+std::size_t GraphLaplacian::NumBandwidthSteps() const { return numBandwidthSteps; }
 
 std::pair<double, double> GraphLaplacian::BandwidthRange() const { return bandwidthRange; }
 
