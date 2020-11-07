@@ -96,30 +96,16 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="func-members"></a>
 Functions</h2></td></tr>
-<tr class="memitem:a03a0afbe52ba53aa7dc67a245a45cc65"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="modules_2Tools_2src_2CMakeLists_8txt.html#a03a0afbe52ba53aa7dc67a245a45cc65">set</a> (SOURCE Kernels/Kernel.cpp Kernels/IsotropicKernel.cpp Kernels/CompactKernel.cpp Kernels/HatKernel.cpp) message(STATUS $</td></tr>
-<tr class="separator:a03a0afbe52ba53aa7dc67a245a45cc65"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a29029ff1c921a737fdd949d4e369fb6f"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="modules_2Tools_2src_2CMakeLists_8txt.html#a29029ff1c921a737fdd949d4e369fb6f">set</a> (SOURCE Kernels/Kernel.cpp Kernels/IsotropicKernel.cpp Kernels/CompactKernel.cpp Kernels/ExponentialKernel.cpp Kernels/HatKernel.cpp) message(STATUS $</td></tr>
+<tr class="separator:a29029ff1c921a737fdd949d4e369fb6f"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a1f9105745a719515a0e61667a7da46de"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="modules_2Tools_2src_2CMakeLists_8txt.html#a1f9105745a719515a0e61667a7da46de">add_library</a> (spiTS SHARED ${SOURCE}) target_link_libraries(spiTS $</td></tr>
 <tr class="separator:a1f9105745a719515a0e61667a7da46de"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a4e7831cbd76a56450eef69e027971305"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="modules_2Tools_2src_2CMakeLists_8txt.html#a4e7831cbd76a56450eef69e027971305">add_dependencies</a> (spiTS ${SPIPACK_BUILT_DEPENDENCIES}) install(TARGETS spiTS EXPORT $</td></tr>
-<tr class="separator:a4e7831cbd76a56450eef69e027971305"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a788f92b11e8d07081882ed3bb2fbdc03"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="modules_2Tools_2src_2CMakeLists_8txt.html#a788f92b11e8d07081882ed3bb2fbdc03">if</a> (DEFINED SPIPACK_BUILT_DEPENDENCIES) add_dependencies(spiTS $</td></tr>
+<tr class="separator:a788f92b11e8d07081882ed3bb2fbdc03"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a7fb05bd384b619b1656fa9441e2a6624"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="modules_2Tools_2src_2CMakeLists_8txt.html#a7fb05bd384b619b1656fa9441e2a6624">endif</a> () install(TARGETS spiTS EXPORT $</td></tr>
+<tr class="separator:a7fb05bd384b619b1656fa9441e2a6624"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <h2 class="groupheader">Function Documentation</h2>
-<a class="anchor" id="a4e7831cbd76a56450eef69e027971305"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">add_dependencies </td>
-          <td>(</td>
-          <td class="paramtype">spiTS ${SPIPACK_BUILT_DEPENDENCIES}&#160;</td>
-          <td class="paramname"></td><td>)</td>
-          <td></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-</div>
-</div>
 <a class="anchor" id="a1f9105745a719515a0e61667a7da46de"></a>
 <div class="memitem">
 <div class="memproto">
@@ -136,14 +122,45 @@ Functions</h2></td></tr>
 
 </div>
 </div>
-<a class="anchor" id="a03a0afbe52ba53aa7dc67a245a45cc65"></a>
+<a class="anchor" id="a7fb05bd384b619b1656fa9441e2a6624"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">endif </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a class="anchor" id="a788f92b11e8d07081882ed3bb2fbdc03"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">if </td>
+          <td>(</td>
+          <td class="paramtype">DEFINED&#160;</td>
+          <td class="paramname"><em>SPIPACK_BUILT_DEPENDENCIES</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a class="anchor" id="a29029ff1c921a737fdd949d4e369fb6f"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
           <td class="memname">set </td>
           <td>(</td>
-          <td class="paramtype">SOURCE Kernels/Kernel.cpp Kernels/IsotropicKernel.cpp Kernels/CompactKernel.cpp Kernels/HatKernel.&#160;</td>
+          <td class="paramtype">SOURCE Kernels/Kernel.cpp Kernels/IsotropicKernel.cpp Kernels/CompactKernel.cpp Kernels/ExponentialKernel.cpp Kernels/HatKernel.&#160;</td>
           <td class="paramname"><em>cpp</em></td><td>)</td>
           <td></td>
         </tr>

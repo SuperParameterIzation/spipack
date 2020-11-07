@@ -115,9 +115,18 @@ Static Public Attributes</h2></td></tr>
 <tr class="memitem:a42c136c2743f6493a6c24c9597a7dce8"><td class="memItemLeft" align="right" valign="top">static const std::size_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structspi_1_1NumericalSolvers_1_1GraphLaplacian_1_1DefaultParameters.html#a42c136c2743f6493a6c24c9597a7dce8">maxLeaf</a> = 10</td></tr>
 <tr class="memdesc:a42c136c2743f6493a6c24c9597a7dce8"><td class="mdescLeft">&#160;</td><td class="mdescRight">The maximum leaf size (nanoflann parameter) defaults to \(10\).  <a href="#a42c136c2743f6493a6c24c9597a7dce8">More...</a><br /></td></tr>
 <tr class="separator:a42c136c2743f6493a6c24c9597a7dce8"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ac92e309d6f44b6ec629bffa193cf7d9c"><td class="memItemLeft" align="right" valign="top">static const std::pair&lt; double, double &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structspi_1_1NumericalSolvers_1_1GraphLaplacian_1_1DefaultParameters.html#ac92e309d6f44b6ec629bffa193cf7d9c">bandwidthRange</a> = std::pair&lt;double, double&gt;(-1.0, 1.0)</td></tr>
+<tr class="memdesc:ac92e309d6f44b6ec629bffa193cf7d9c"><td class="mdescLeft">&#160;</td><td class="mdescRight">The maximum and minimum range for the bandwidth index defaults to \([-1,1]\).  <a href="#ac92e309d6f44b6ec629bffa193cf7d9c">More...</a><br /></td></tr>
+<tr class="separator:ac92e309d6f44b6ec629bffa193cf7d9c"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aa2d3e90221ed61b80087636414e0c62d"><td class="memItemLeft" align="right" valign="top">static const std::size_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structspi_1_1NumericalSolvers_1_1GraphLaplacian_1_1DefaultParameters.html#aa2d3e90221ed61b80087636414e0c62d">numBandwidthSteps</a> = 1</td></tr>
+<tr class="memdesc:aa2d3e90221ed61b80087636414e0c62d"><td class="mdescLeft">&#160;</td><td class="mdescRight">The default number of bandwidth steps is \(1\).  <a href="#aa2d3e90221ed61b80087636414e0c62d">More...</a><br /></td></tr>
+<tr class="separator:aa2d3e90221ed61b80087636414e0c62d"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:afe23efeb61b88b9e012dcaaa9f7907fe"><td class="memItemLeft" align="right" valign="top">static const double&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structspi_1_1NumericalSolvers_1_1GraphLaplacian_1_1DefaultParameters.html#afe23efeb61b88b9e012dcaaa9f7907fe">bandwidth</a> = 1.0</td></tr>
 <tr class="memdesc:afe23efeb61b88b9e012dcaaa9f7907fe"><td class="mdescLeft">&#160;</td><td class="mdescRight">The bandwidth parameter defaults to \(1\).  <a href="#afe23efeb61b88b9e012dcaaa9f7907fe">More...</a><br /></td></tr>
 <tr class="separator:afe23efeb61b88b9e012dcaaa9f7907fe"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a69a4a94c88e6bac3bc98d0e6cae0c7f2"><td class="memItemLeft" align="right" valign="top">static const int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structspi_1_1NumericalSolvers_1_1GraphLaplacian_1_1DefaultParameters.html#a69a4a94c88e6bac3bc98d0e6cae0c7f2">bandwidthIndex</a> = 1</td></tr>
+<tr class="memdesc:a69a4a94c88e6bac3bc98d0e6cae0c7f2"><td class="mdescLeft">&#160;</td><td class="mdescRight">The bandwidth index that defaults to \(1\).  <a href="#a69a4a94c88e6bac3bc98d0e6cae0c7f2">More...</a><br /></td></tr>
+<tr class="separator:a69a4a94c88e6bac3bc98d0e6cae0c7f2"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a6c7000802534aab542eb74924a23897a"><td class="memItemLeft" align="right" valign="top">static const double&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structspi_1_1NumericalSolvers_1_1GraphLaplacian_1_1DefaultParameters.html#a6c7000802534aab542eb74924a23897a">eigensolverTol</a> = 1.0e-5</td></tr>
 <tr class="memdesc:a6c7000802534aab542eb74924a23897a"><td class="mdescLeft">&#160;</td><td class="mdescRight">The tolerance for the sparse eigensolver is \(10^{-5}\).  <a href="#a6c7000802534aab542eb74924a23897a">More...</a><br /></td></tr>
 <tr class="separator:a6c7000802534aab542eb74924a23897a"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -172,6 +181,51 @@ Static Public Attributes</h2></td></tr>
 </div><div class="memdoc">
 
 <p>The bandwidth parameter defaults to \(1\). </p>
+
+</div>
+</div>
+<a class="anchor" id="a69a4a94c88e6bac3bc98d0e6cae0c7f2"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">const int spi::NumericalSolvers::GraphLaplacian::DefaultParameters::bandwidthIndex = 1</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">static</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>The bandwidth index that defaults to \(1\). </p>
+
+</div>
+</div>
+<a class="anchor" id="ac92e309d6f44b6ec629bffa193cf7d9c"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">const std::pair&lt;double, double&gt; spi::NumericalSolvers::GraphLaplacian::DefaultParameters::bandwidthRange = std::pair&lt;double, double&gt;(-1.0, 1.0)</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">static</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>The maximum and minimum range for the bandwidth index defaults to \([-1,1]\). </p>
+<p>We choose the bandwidth parameter \(2^{l}\); these parameters determine the [min, max] range for \(l\). </p>
 
 </div>
 </div>
@@ -238,6 +292,28 @@ Static Public Attributes</h2></td></tr>
 </div><div class="memdoc">
 
 <p>The maximum leaf size (nanoflann parameter) defaults to \(10\). </p>
+
+</div>
+</div>
+<a class="anchor" id="aa2d3e90221ed61b80087636414e0c62d"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">const std::size_t spi::NumericalSolvers::GraphLaplacian::DefaultParameters::numBandwidthSteps = 1</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">static</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>The default number of bandwidth steps is \(1\). </p>
 
 </div>
 </div>
