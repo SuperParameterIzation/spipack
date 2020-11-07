@@ -4,7 +4,7 @@ var searchData=
   ['kdtree_5fget_5fbbox',['kdtree_get_bbox',['../structspi_1_1NumericalSolvers_1_1GraphLaplacian_1_1PointCloud.html#a5d55cc7fc09d76583fe838d514c01da7',1,'spi::NumericalSolvers::GraphLaplacian::PointCloud']]],
   ['kdtree_5fget_5fpoint_5fcount',['kdtree_get_point_count',['../structspi_1_1NumericalSolvers_1_1GraphLaplacian_1_1PointCloud.html#ac59a158746e9dbe244d6807cb15d0997',1,'spi::NumericalSolvers::GraphLaplacian::PointCloud']]],
   ['kdtree_5fget_5fpt',['kdtree_get_pt',['../structspi_1_1NumericalSolvers_1_1GraphLaplacian_1_1PointCloud.html#a13dd0fe0f4d6f96eeef465de20109880',1,'spi::NumericalSolvers::GraphLaplacian::PointCloud']]],
-  ['kernel',['Kernel',['../classspi_1_1Tools_1_1Kernel.html#abad469b2fb318cc20da3488c6d5ed140',1,'spi::Tools::Kernel::Kernel()'],['../classspi_1_1NumericalSolvers_1_1GraphLaplacian.html#aeca80b25da921f1c97c53b86a3fb58d0',1,'spi::NumericalSolvers::GraphLaplacian::kernel()']]],
+  ['kernel',['kernel',['../classspi_1_1NumericalSolvers_1_1GraphLaplacian.html#aeca80b25da921f1c97c53b86a3fb58d0',1,'spi::NumericalSolvers::GraphLaplacian::kernel()'],['../classspi_1_1Tools_1_1Kernel.html#abad469b2fb318cc20da3488c6d5ed140',1,'spi::Tools::Kernel::Kernel()']]],
   ['kernel',['Kernel',['../classspi_1_1Tools_1_1Kernel.html',1,'spi::Tools']]],
   ['kernel_2ecpp',['Kernel.cpp',['../Kernel_8cpp.html',1,'']]],
   ['kernel_2ehpp',['Kernel.hpp',['../Kernel_8hpp.html',1,'']]],

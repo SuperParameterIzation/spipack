@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['exponentialkernel',['ExponentialKernel',['../classspi_1_1Tools_1_1ExponentialKernel.html',1,'spi::Tools']]]
+  ['defaultparameters',['DefaultParameters',['../structspi_1_1NumericalSolvers_1_1GraphLaplacian_1_1DefaultParameters.html',1,'spi::NumericalSolvers::GraphLaplacian']]]
 ];
