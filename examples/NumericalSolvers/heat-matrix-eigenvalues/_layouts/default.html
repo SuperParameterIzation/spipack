@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="{{ site.lang | default: "en-US" }}">
+  <!-- Mathjax Support -->
+<script type="text/javascript" async
+  src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-MML-AM_CHTML">
+</script>
+  <head>
+    <meta charset="UTF-8">
+    <title>{% if page.title %}{{ page.title }} | {% endif %}{{ site.title | default: site.github.repository_name }} by {{ site.github.owner_name }}</title>
+    <meta name="description" content="{{ page.description | default: site.description | default: site.github.project_tagline }}"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="theme-color" content="#157878">
+    <link href='https://fonts.googleapis.com/css?family=Open+Sans:400,700' rel='stylesheet' type='text/css'>
+    <link rel="stylesheet" href="{{ '/assets/css/style.css?v=' | append: site.github.build_revision | relative_url }}">
+  </head>
+  <body>
+    <section class="page-header">
+      <h1 class="project-name">SPI-PACK</h1>
+      <h2 class="project-tagline"><b>S</b>uper<b>P</b>arameter<b>I</b>zation software <b>PACK</b>age</h2>
+      {% include navigation.html %}
+    </section>
+    <section class="main-content">
+      <a id="mycontent"></a>
+      {{ content }}
+      {% include footer.html %}
+    </section>
+  </body>
+</html>
