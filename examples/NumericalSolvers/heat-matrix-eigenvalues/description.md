@@ -10,6 +10,6 @@ $$ b^2 \psi$$
 
 $$
 \begin{equation}
-  \nabla \psi = 0
+  \nabla \psi = 0 \tag{abc}\label{eq:one}
 \end{equation}
 $$
