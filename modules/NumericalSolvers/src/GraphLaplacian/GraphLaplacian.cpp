@@ -44,7 +44,7 @@ GraphLaplacian::GraphLaplacian(std::shared_ptr<muq::SamplingAlgorithms::SampleCo
 
 void GraphLaplacian::Initialize(YAML::Node const& options) {
   // create the kernel
-  kernel = IsotropicKernel::Construct(options["KernelOptions"]);
+  kernel = CompactKernel::Construct(options["KernelOptions"]);
   assert(kernel);
 
   // initialize the sparse heat matrix
@@ -131,7 +131,7 @@ double GraphLaplacian::EvaluateKernel(Eigen::Ref<const Eigen::VectorXd> const& x
   double sum = 0.0;
   for( auto& neigh : neighbors ) {
     // compute the kernel between the given point and its neighbor
-    neigh.second = kernel->EvaluateIsotropicKernel(neigh.second/h2);
+    neigh.second = kernel->EvaluateCompactKernel(neigh.second/h2);
     sum += neigh.second;
   }
 

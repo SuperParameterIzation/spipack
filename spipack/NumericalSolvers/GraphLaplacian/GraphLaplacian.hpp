@@ -11,7 +11,7 @@
 
 #include <MUQ/SamplingAlgorithms/SampleCollection.h>
 
-#include "spipack/Tools/Kernels/IsotropicKernel.hpp"
+#include "spipack/Tools/Kernels/CompactKernel.hpp"
 
 namespace spi {
 namespace NumericalSolvers {
@@ -304,7 +304,7 @@ private:
   /**
     The kernel function \f$k(\theta) = k(h^{-2} \|\boldsymbol{x}_1-\boldsymbol{x}_2\|^2)\f$.
   */
-  std::shared_ptr<spi::Tools::IsotropicKernel> kernel;
+  std::shared_ptr<spi::Tools::CompactKernel> kernel;
 
   /// The maximum and minimum range for the bandwidth index
   /**

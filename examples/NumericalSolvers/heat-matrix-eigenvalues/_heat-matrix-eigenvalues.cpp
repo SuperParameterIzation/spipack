@@ -1,6 +1,6 @@
 #include <iostream>
 
-#include <MUQ/Modeling/Distributions/UniformBox.h>
+#include <MUQ/Modeling/Distributions/Gaussian.h>
 
 #include <spipack/NumericalSolvers/GraphLaplacian/GraphLaplacian.hpp>
 
@@ -20,8 +20,9 @@ int main(int argc, char **argv) {
   const std::size_t numNeighbors = 10;
 
   // create a uniform random variable
-  std::vector<std::pair<double, double> > bounds(dim, std::pair<double, double>(1.0, 0.0));
-  auto rv = std::make_shared<UniformBox>(bounds)->AsVariable();
+  //std::vector<std::pair<double, double> > bounds(dim, std::pair<double, double>(1.0, 0.0));
+  //auto rv = std::make_shared<UniformBox>(bounds)->AsVariable();
+  auto rv = std::make_shared<Gaussian>(dim)->AsVariable();
 
   // the options for the graph Laplacian
   YAML::Node options;
@@ -31,14 +32,14 @@ int main(int argc, char **argv) {
 
   // set the kernel options
   YAML::Node kernelOptions;
-  kernelOptions["Kernel"] = "ExponentialKernel";
+  kernelOptions["Kernel"] = "BumpKernel";
   options["KernelOptions"] = kernelOptions;
 
   // create the graph laplacian
   auto laplacian = std::make_shared<GraphLaplacian>(rv, options);
 
   // write the samples to file
-  //laplacian->WriteToFile(filename);
+  laplacian->WriteToFile(filename);
 
   // build the kd tree
   laplacian->BuildKDTree();
@@ -51,7 +52,7 @@ int main(int argc, char **argv) {
     Eigen::Ref<Eigen::VectorXd const> point = laplacian->Point(i);
 
     // find the nearest neighbors for each sample
-    squaredBandwidth(i) = laplacian->FindNeighbors(point, numNeighbors, neighbors[i]);
+    squaredBandwidth(i) = std::log(laplacian->FindNeighbors(point, numNeighbors, neighbors[i]));
   }
 
   for( std::size_t i=0; i<laplacian->NumSamples(); ++i ) {
@@ -71,8 +72,8 @@ int main(int argc, char **argv) {
   const Eigen::VectorXd eigenvalues = laplacian->HeatMatrixEigenvalues(neig);*/
 
   // open the file
-  /*auto hdf5file = std::make_shared<HDF5File>(filename);
+  auto hdf5file = std::make_shared<HDF5File>(filename);
   //hdf5file->WriteMatrix("/heat matrix eigenvalues", eigenvalues);
   hdf5file->WriteMatrix("/squared bandwidth", squaredBandwidth);
-  hdf5file->Close();*/
+  hdf5file->Close();
 }

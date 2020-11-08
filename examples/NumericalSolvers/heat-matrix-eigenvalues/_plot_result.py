@@ -77,9 +77,11 @@ samples = hdf5file['/samples'] [()].T
 squaredBandwidth = hdf5file['/squared bandwidth'] [()].T [0]
 #eigenvalues = hdf5file['/heat matrix eigenvalues'] [()].T [0]
 
+print(squaredBandwidth)
+
 fig = MakeFigure(425, 0.9, False)
 ax = plt.gca()
-scatter = ax.scatter(samples.T[0], samples.T[1], s=3, c=squaredBandwidth)
+scatter = ax.scatter(samples.T[0], samples.T[1], s=3, c=squaredBandwidth, vmin=min(squaredBandwidth), vmax=max(squaredBandwidth))
 plt.colorbar(scatter)
 ax.spines['right'].set_visible(False)
 ax.spines['top'].set_visible(False)
