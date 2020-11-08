@@ -119,8 +119,11 @@ void GraphLaplacian::EvaluateKernel(std::size_t const ind, Eigen::Ref<const Eige
 
   // loop through the possible bandwith parameters
   for( std::size_t l=0; l<bandwidthPara.size(); ++l ) {
-    //std::cout << "eps: " << bandwidthPara(l) << std::endl;
+  //  std::cout << "eps: " << bandwidthPara(l) << std::endl;
     //std::cout << "ri: " << bandwidth(ind) << " rj " << bandwidth(ind) << std::endl;
+    for( const auto& neigh : neighbors ) {
+    //  std::cout << "ind: " << ind << " neigh ind: " << neigh.first << std::endl;
+    }
   }
 }
 

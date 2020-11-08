@@ -6,4 +6,10 @@ layout: default
 
 Consider a random variable
 
-\\( a^2 = b^2 \\) $a^2 \theta$ $$ b^2 \psi$$
+$$ b^2 \psi$$
+
+$$
+\begin{equation}
+  \nabla \psi = 0
+\end{equation}
+$$

@@ -52,7 +52,7 @@ int main(int argc, char **argv) {
     Eigen::Ref<Eigen::VectorXd const> point = laplacian->Point(i);
 
     // find the nearest neighbors for each sample
-    squaredBandwidth(i) = std::log(laplacian->FindNeighbors(point, numNeighbors, neighbors[i]));
+    squaredBandwidth(i) = laplacian->FindNeighbors(point, numNeighbors, neighbors[i]);
   }
 
   for( std::size_t i=0; i<laplacian->NumSamples(); ++i ) {
@@ -74,6 +74,6 @@ int main(int argc, char **argv) {
   // open the file
   auto hdf5file = std::make_shared<HDF5File>(filename);
   //hdf5file->WriteMatrix("/heat matrix eigenvalues", eigenvalues);
-  hdf5file->WriteMatrix("/squared bandwidth", squaredBandwidth);
+  hdf5file->WriteMatrix("/log squared bandwidth", squaredBandwidth.array().log().matrix().eval());
   hdf5file->Close();
 }
