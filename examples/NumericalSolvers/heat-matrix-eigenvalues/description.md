@@ -1,4 +1,6 @@
+---
 layout: default
+---
 
 ## Heat matrix eigenvalues
 
