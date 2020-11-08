@@ -122,26 +122,29 @@ public:
 
   /// Evaluate kernel at neighbors
   /**
-    Given a point \f$\boldsymbol{x}\f$ and its nearest neighbors \f$\{\boldsymbol{x}^{(j)}\}_{j=1}^{k}\f$, compute the kernel function \f$k_h(\|\boldsymbol{x} - \boldsymbol{x}^{(j)}\|^2) = k(h^{-2} \|\boldsymbol{x} - \boldsymbol{x}^{(j)}\|^2)\f$.
-    @param[in] x The given point \f$\boldsymbol{x}\f$
-    @param[in] h2 The squared bandwidth \f$h^2\f$ that defines the kernel.
-    @param[in,out] neighbors A vector of the nearest neighbors. First: the neighbor's index, Second: (input) the squared distance (\f$\boldsymbol{x} \cdot \boldsymbol{x}^{(j)}\f$) between the point \f$\boldsymbol{x}\f$ and the neighbor, (output) the kernel evaluation \f$k(\boldsymbol{x}, \boldsymbol{x}^{(j)})\f$
-    \return The sum of the kernel evaluations \f$d(\boldsymbol{x}) = \sum_{j=1}^{k} k_h(\|\boldsymbol{x}-\boldsymbol{x}^{(j)}\|^2)\f$
+  Given a point \f$\boldsymbol{x}\f$ and its nearest neighbors \f$\{\boldsymbol{x}^{(j)}\}_{j=1}^{k}\f$, compute the kernel function \f$k_h(\|\boldsymbol{x} - \boldsymbol{x}^{(j)}\|^2) = k(h^{-2} \|\boldsymbol{x} - \boldsymbol{x}^{(j)}\|^2)\f$.
+  @param[in] x The given point \f$\boldsymbol{x}\f$
+  @param[in] h2 The squared bandwidth \f$h^2\f$ that defines the kernel.
+  @param[in,out] neighbors A vector of the nearest neighbors. First: the neighbor's index, Second: (input) the squared distance (\f$\boldsymbol{x} \cdot \boldsymbol{x}^{(j)}\f$) between the point \f$\boldsymbol{x}\f$ and the neighbor, (output) the kernel evaluation \f$k(\boldsymbol{x}, \boldsymbol{x}^{(j)})\f$
+  \return The sum of the kernel evaluations \f$d(\boldsymbol{x}) = \sum_{j=1}^{k} k_h(\|\boldsymbol{x}-\boldsymbol{x}^{(j)}\|^2)\f$
   */
   double EvaluateKernel(Eigen::Ref<const Eigen::VectorXd> const& x, double const h2, std::vector<std::pair<std::size_t, double> >& neighbors) const;
 
   /**
-    @param[in] ind The index of the current point
-    @param[in] x The given point \f$\boldsymbol{x}^{(i)}\f$
-    @param[in] neighbors A vector of the nearest neighbors. First: the neighbor's index, Second: the squared distance (\f$\boldsymbol{x} \cdot \boldsymbol{x}^{(j)}\f$) between the point \f$\boldsymbol{x}\f$ and the neighbor
-    @param[in] bandwidth The bandwidth \f$r_i = \max_{j \in [1,k]}{\left( \|\boldsymbol{x}^{(i)} - \boldsymbol{x}^{(I(i,j))} \| \right)}\f$
-    @param[out] kernelEval The \f$j^{th}\f$ row corresponds to the \f$j^{th}\f$ neighbor and each column stores the kernel evaluation \f$k_l(\boldsymbol{x}, \boldsymbol{x}^{(j)})\f$ for index \f$l\f$.
+  @param[in] bandwidth The bandwidth \f$r_i = \max_{j \in [1,k]}{\left( \|\boldsymbol{x}^{(i)} - \boldsymbol{x}^{(I(i,j))} \| \right)}\f$
   */
-  void EvaluateKernel(std::size_t const ind, Eigen::Ref<const Eigen::VectorXd> const& x, std::vector<std::pair<std::size_t, double> >& neighbors, Eigen::Ref<Eigen::VectorXd const> const& bandwidth, Eigen::Ref<Eigen::MatrixXd> kernelEval) const;
+  void EvaluateKernel(Eigen::Ref<Eigen::VectorXd const> const& bandwidth) const;
+
+  /**
+  @param[in] bandwidthPara The bandwidth parameter \f$\epsilon\f$
+  @param[in] bandwidth The bandwidth \f$r_i = \max_{j \in [1,k]}{\left( \|\boldsymbol{x}^{(i)} - \boldsymbol{x}^{(I(i,j))} \| \right)}\f$
+  @param[out] kernmat The kernel matrix such that \f$K_{ij} = k(\|\boldsymbol{x}^{(i)}-\boldsymbol{x}^{(j)}\|^2/(\epsilon r_i r_j))\f$
+  */
+  void KernelMatrix(double const bandwidthPara, Eigen::Ref<Eigen::VectorXd const> const& bandwidth, Eigen::SparseMatrix<double>& kernmat) const;
 
   /// Construct the heat matrix \f$\boldsymbol{P}\f$
   /**
-    Construct the heat matrix \f$\boldsymbol{P}\f$---this function overwrites any existing information in spi::NumericalSolvers::heatMatrix.
+  Construct the heat matrix \f$\boldsymbol{P}\f$---this function overwrites any existing information in spi::NumericalSolvers::heatMatrix.
   */
   void ConstructHeatMatrix();
 
@@ -196,6 +199,12 @@ public:
   \return The possible bandwidth parameters \f$\epsilon = 2^{l_i}\f$.
   */
   Eigen::VectorXd BandwidthParameterCandidates() const;
+
+  /// Get the kernel (spi::Tools::CompactKernel)
+  /**
+  \return A pointer to the kernel used to construct the graph Laplacian
+  */
+  std::shared_ptr<const spi::Tools::CompactKernel> Kernel() const;
 
 private:
 

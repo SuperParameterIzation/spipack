@@ -5,6 +5,8 @@
 
 #include <MUQ/Utilities/HDF5/HDF5File.h>
 
+#include "spipack/Tools/SortVector.hpp"
+
 using namespace muq::Utilities;
 using namespace muq::Modeling;
 using namespace muq::SamplingAlgorithms;
@@ -110,19 +112,81 @@ double GraphLaplacian::FindNeighbors(Eigen::Ref<const Eigen::VectorXd> const& x,
   return resultSet.worstDist();
 }
 
-void GraphLaplacian::EvaluateKernel(std::size_t const ind, Eigen::Ref<const Eigen::VectorXd> const& x, std::vector<std::pair<std::size_t, double> >& neighbors, Eigen::Ref<Eigen::VectorXd const> const& bandwidth, Eigen::Ref<Eigen::MatrixXd> kernelEval) const {
-  assert(kernelEval.rows()==neighbors.size()+1);
-  assert(kernelEval.cols()==numBandwidthSteps+1);
+void GraphLaplacian::KernelMatrix(double const bandwidthPara, Eigen::Ref<Eigen::VectorXd const> const& bandwidth, Eigen::SparseMatrix<double>& kernmat) const {
+  assert(kernmat.cols()==bandwidth.size());
+  assert(kernmat.rows()==bandwidth.size());
 
+  for( std::size_t i=0; i<bandwidth.size(); ++i ) {
+    // compute the bandwith parameter for each pair of points
+    Eigen::VectorXd theta = Eigen::VectorXd::Constant(bandwidth.size()-i, bandwidthPara*bandwidth(i));
+    theta = theta.array()*bandwidth.tail(bandwidth.size()-i).array();
+    for( std::size_t j=i; j<bandwidth.size(); ++j ) {
+      const Eigen::VectorXd diff = Point(i)-Point(j);
+      theta(j-i) = diff.dot(diff)/theta(j-i);
+    }
+
+    // order them from smallest to largest
+    const std::vector<std::size_t> sortind = SortVector<Eigen::VectorXd>::Ascending(theta);
+
+    for( std::size_t j=0; j<theta.size(); ++j ) {
+      // if the distance is greater than one, the compact kernel is zero
+      if( theta(sortind[j])>1.0 ) { break; }
+
+      // evaluate the kernel
+      const double kern = kernel->EvaluateCompactKernel(theta(sortind[j]));
+
+      // insert into the matrix
+      kernmat.coeffRef(i, sortind[j]+i) = kern;
+      if( j>0 ) { kernmat.coeffRef(sortind[j]+i, i) = kern; }
+    }
+  }
+}
+
+void GraphLaplacian::EvaluateKernel(Eigen::Ref<Eigen::VectorXd const> const& bandwidth) const {
   // get the candidate bandwidth parameters
   const Eigen::VectorXd bandwidthPara = BandwidthParameterCandidates();
 
+  // sort the bandwidth from smallest to largest
+  const std::vector<std::size_t> sortind = SortVector<Eigen::VectorXd>::Ascending(bandwidth);
+
   // loop through the possible bandwith parameters
   for( std::size_t l=0; l<bandwidthPara.size(); ++l ) {
-  //  std::cout << "eps: " << bandwidthPara(l) << std::endl;
-    //std::cout << "ri: " << bandwidth(ind) << " rj " << bandwidth(ind) << std::endl;
-    for( const auto& neigh : neighbors ) {
-    //  std::cout << "ind: " << ind << " neigh ind: " << neigh.first << std::endl;
+    std::cout << std::endl << std::endl << std::endl;
+    std::cout << "eps: " << bandwidthPara(l) << std::endl;
+    for( std::size_t i=0; i<bandwidth.size(); ++i ) {
+      // order the neighbors
+      std::vector<std::size_t> ind(kdtree.m_size);
+      std::vector<double> dist(kdtree.m_size);
+      kdtree.knnSearch(Point(i).data(), kdtree.m_size, ind.data(), dist.data());
+
+      //std::cout << "dist size: " << dist.size() << std::endl;
+
+      //for( unsigned)
+
+      /*for( std::size_t j=0; j<bandwidth.size(); ++j ) {
+        //const double band = bandwidthPara(l)*bandwidth(ind)*bandwidth(neigh.first);
+        const double band = bandwidthPara(l)*bandwidth(i)*bandwidth(sortind[j]);
+        std::cout << "band: " << band << std::endl;
+
+        const Eigen::VectorXd diff = Point(i)-Point(sortind[j]);
+        const double val = diff.dot(diff)/band;
+
+        //std::cout << "val: " << val << std::endl;
+
+        // if we are outside of the support of the kernel
+        if( val>1.0 ) { continue; }
+
+        //std::cout << "val: " << val << std::endl;
+
+        // find all of the neighbors within this bandwidth
+        //std::vector<std::pair<std::size_t, double> > new_neighbors;
+        //FindNeighbors(x, band, new_neighbors);
+
+        //std::cout << "new neighbors size: " << new_neighbors.size() << std::endl;
+        //std::cout << "bandwidth: " << band << " val: " << neigh.second/band << std::endl;
+        //std::cout << "kernel eval: " << kernel->EvaluateCompactKernel(neigh.second/band) << std::endl;
+        //  std::cout << "ind: " << ind << " neigh ind: " << neigh.first << std::endl;
+      }*/
     }
   }
 }
@@ -339,6 +403,8 @@ solver.factorize(laplace);
 }
 
 double GraphLaplacian::EigensolverTolerance() const { return eigensolverTol; }
+
+std::shared_ptr<const spi::Tools::CompactKernel> GraphLaplacian::Kernel() const { return kernel; }
 
 void GraphLaplacian::WriteToFile(std::string const& filename, std::string const& dataset) const {
   // create an hdf5 file

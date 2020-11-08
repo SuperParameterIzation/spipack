@@ -82,6 +82,8 @@ TEST(BumpKernelTests, EvaluateDefault) {
     x2 = 0.3*x2/x2.norm();
     const double theta = x2.dot(x2);
     EXPECT_NEAR(kernel.Evaluate(x1, x2), std::exp(1.0-1.0/(1-theta)), 1.0e-10);
+    EXPECT_NEAR(kernel.EvaluateIsotropicKernel(0.1), std::exp(1.0-1.0/0.9), 1.0e-10);
+    EXPECT_NEAR(kernel.EvaluateCompactKernel(0.1), std::exp(1.0-1.0/0.9), 1.0e-10);
     EXPECT_NEAR(kernel(0.1), std::exp(1.0-1.0/0.9), 1.0e-10);
     EXPECT_DOUBLE_EQ(kernel(1.0), 0.0);
   }
@@ -90,6 +92,8 @@ TEST(BumpKernelTests, EvaluateDefault) {
     Eigen::VectorXd x2 = Eigen::VectorXd::Random(dim, 1);
     x2 = 1.3*x2/x2.norm();
     EXPECT_DOUBLE_EQ(kernel.Evaluate(x1, x2), 0.0);
+    EXPECT_DOUBLE_EQ(kernel.EvaluateIsotropicKernel(1.1), 0.0);
+    EXPECT_DOUBLE_EQ(kernel.EvaluateCompactKernel(1.1), 0.0);
     EXPECT_DOUBLE_EQ(kernel(1.1), 0.0);
   }
 }
@@ -116,6 +120,8 @@ TEST(BumpKernelTests, Evaluate) {
     x2 = 0.3*x2/x2.norm();
     const double theta = x2.dot(x2);
     EXPECT_NEAR(kernel.Evaluate(x1, x2), mag*std::exp(scale*(1.0-1.0/(1-std::pow(theta, expon)))), 1.0e-10);
+    EXPECT_NEAR(kernel.EvaluateIsotropicKernel(0.1), mag*std::exp(scale*(1.0-1.0/(1.0-std::pow(0.1, expon)))), 1.0e-10);
+    EXPECT_NEAR(kernel.EvaluateCompactKernel(0.1), mag*std::exp(scale*(1.0-1.0/(1.0-std::pow(0.1, expon)))), 1.0e-10);
     EXPECT_NEAR(kernel(0.1), mag*std::exp(scale*(1.0-1.0/(1.0-std::pow(0.1, expon)))), 1.0e-10);
   }
 
@@ -123,6 +129,8 @@ TEST(BumpKernelTests, Evaluate) {
     Eigen::VectorXd x2 = Eigen::VectorXd::Random(dim, 1);
     x2 = 1.3*x2/x2.norm();
     EXPECT_DOUBLE_EQ(kernel.Evaluate(x1, x2), 0.0);
+    EXPECT_DOUBLE_EQ(kernel.EvaluateIsotropicKernel(1.1), 0.0);
+    EXPECT_DOUBLE_EQ(kernel.EvaluateCompactKernel(1.1), 0.0);
     EXPECT_DOUBLE_EQ(kernel(1.1), 0.0);
   }
 }

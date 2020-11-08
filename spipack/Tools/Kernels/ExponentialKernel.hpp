@@ -32,14 +32,14 @@ public:
 
   virtual ~ExponentialKernel() = default;
 
-private:
-
   /// Evaluate the hat kernel function \f$k(\theta)\f$
   /**
     @param[in] theta The value of \f$\theta = \|\boldsymbol{x}_1-\boldsymbol{x}_2\|^2\f$ (note that \f$0 \leq \theta \leq 1\f$)
     \return The kernel evaluation \f$k(\theta)\f$
   */
   virtual double EvaluateIsotropicKernel(double const theta) const override;
+
+private:
 
   /// The magnitude parameter \f$a_0\f$
   const double mag;

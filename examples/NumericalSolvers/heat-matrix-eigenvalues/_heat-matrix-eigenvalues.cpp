@@ -29,6 +29,9 @@ int main(int argc, char **argv) {
   options["NumSamples"] = 5000;
   options["BandwidthIndex"] = 4;
   options["EigensolverTol"] = 1.0e-10;
+  options["BandwidthRange.Min"] = -10.0;
+  options["BandwidthRange.Max"] = 1.0;
+  options["NumBandwidthSteps"] = 10;
 
   // set the kernel options
   YAML::Node kernelOptions;
@@ -55,14 +58,16 @@ int main(int argc, char **argv) {
     squaredBandwidth(i) = laplacian->FindNeighbors(point, numNeighbors, neighbors[i]);
   }
 
-  for( std::size_t i=0; i<laplacian->NumSamples(); ++i ) {
+  laplacian->EvaluateKernel(squaredBandwidth.array().sqrt());
+
+  /*for( std::size_t i=0; i<laplacian->NumSamples(); ++i ) {
     // get a reference to the ith point
     Eigen::Ref<Eigen::VectorXd const> point = laplacian->Point(i);
 
     // evaluate the kernel at this point
     Eigen::MatrixXd kernelEval(numNeighbors+1, laplacian->NumBandwidthSteps()+1);
     laplacian->EvaluateKernel(i, point, neighbors[i], squaredBandwidth.array().sqrt(), kernelEval);
-  }
+  }*/
 
   /*// construct the heat matrix
   laplacian->ConstructHeatMatrix();

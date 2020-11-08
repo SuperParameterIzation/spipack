@@ -11,7 +11,4 @@ HatKernel::HatKernel(YAML::Node const& options) :
   mag(options["Magnitude"].as<double>(1.0))
 {}
 
-double HatKernel::EvaluateCompactKernel(double const theta) const {
-  // we have already checked that theta<=1---this function implements the support of the kernel. Therefore, we just need to return the magnitude
-  return mag;
-}
+double HatKernel::EvaluateCompactKernelImpl(double const theta) const { return mag; }

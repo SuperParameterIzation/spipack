@@ -57,6 +57,7 @@ TEST(ExponentialKernelTests, EvaluateDefault) {
   Eigen::VectorXd x2 = Eigen::VectorXd::Ones(dim, 1);
   x2 = 0.3*x2/x2.norm();
   EXPECT_DOUBLE_EQ(kernel.Evaluate(x1, x2), std::exp(-x2.dot(x2)));
+  EXPECT_DOUBLE_EQ(kernel.EvaluateIsotropicKernel(0.1), std::exp(-0.1));
   EXPECT_DOUBLE_EQ(kernel(0.1), std::exp(-0.1));
 }
 
@@ -81,5 +82,6 @@ TEST(ExponentialKernelTests, Evaluate) {
   Eigen::VectorXd x2 = Eigen::VectorXd::Ones(dim, 1);
   x2 = 0.3*x2/x2.norm();
   EXPECT_DOUBLE_EQ(kernel.Evaluate(x1, x2), mag*std::exp(-scale*std::pow(x2.dot(x2), expon)));
+  EXPECT_DOUBLE_EQ(kernel.EvaluateIsotropicKernel(0.1), mag*std::exp(-scale*std::pow(0.1, expon)));
   EXPECT_DOUBLE_EQ(kernel(0.1), mag*std::exp(-scale*std::pow(0.1, expon)));
 }

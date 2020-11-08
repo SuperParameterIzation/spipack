@@ -33,13 +33,15 @@ public:
 
   virtual ~HatKernel() = default;
 
+protected:
+
   /// Evaluate the hat kernel function \f$k(\theta)\f$
   /**
     We have already checked that \f$\theta \leq 1\f$---this function implements the support of the kernel. Therefore, we just need to return the magnitude \f$a\f$.
     @param[in] theta The value of \f$\theta = \|\boldsymbol{x}_1-\boldsymbol{x}_2\|^2\f$ (note that \f$0 \leq \theta \leq 1\f$)
     \return The kernel evaluation \f$k(\theta)\f$
   */
-  virtual double EvaluateCompactKernel(double const theta) const override;
+  virtual double EvaluateCompactKernelImpl(double const theta) const override;
 
 private:
 

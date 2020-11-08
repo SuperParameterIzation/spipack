@@ -3,10 +3,13 @@
 #include <MUQ/Modeling/Distributions/UniformBox.h>
 #include <MUQ/Modeling/Distributions/Gaussian.h>
 
+#include "spipack/Tools/Kernels/HatKernel.hpp"
+
 #include "spipack/NumericalSolvers/GraphLaplacian/GraphLaplacian.hpp"
 
 using namespace muq::Modeling;
 using namespace muq::SamplingAlgorithms;
+using namespace spi::Tools;
 using namespace spi::NumericalSolvers;
 
 class GraphLaplacianTests : public::testing::Test {
@@ -39,6 +42,11 @@ public:
 
     // make sure the bandwidth parameter is correct
     EXPECT_EQ(laplacian->BandwidthIndex(), bandwidthIndex);
+
+    // check the kernel
+    EXPECT_TRUE(laplacian->Kernel());
+    std::shared_ptr<HatKernel const> kern = std::dynamic_pointer_cast<HatKernel const>(laplacian->Kernel());
+    EXPECT_TRUE(kern);
 
     // check the bandwidth
     EXPECT_NEAR(laplacian->BandwidthRange().first, bandwidthRange.first, 1.0e-10);
@@ -200,6 +208,60 @@ TEST_F(GraphLaplacianTests, FindNearestNeighbors_NumNeighbors) {
     EXPECT_DOUBLE_EQ(it.second, 1.0);
   }
   EXPECT_DOUBLE_EQ(kernelsum, (double)k);
+}
+
+TEST_F(GraphLaplacianTests, ConstructKernelMatrix) {
+  // the kernel bandwidth parameter
+  const double eps = 0.75;
+
+  // the number of nearest neighbors---used to define the variable bandwidth
+  const std::size_t numNeighbors = 10;
+
+  // create the graph laplacian from samples
+  auto samples = CreateFromSamples();
+
+  // build the kd tree
+  laplacian->BuildKDTree();
+
+  // loop through each sample and compute the squared bandwidth
+  std::vector<std::vector<std::pair<std::size_t, double> > > neighbors(laplacian->NumSamples());
+  Eigen::VectorXd bandwidth(laplacian->NumSamples());
+  for( std::size_t i=0; i<laplacian->NumSamples(); ++i ) {
+    // get a reference to the ith point
+    Eigen::Ref<Eigen::VectorXd const> point = laplacian->Point(i);
+
+    // find the nearest neighbors for each sample
+    bandwidth(i) = std::sqrt(laplacian->FindNeighbors(point, numNeighbors, neighbors[i]));
+  }
+
+  // compute the kernel matrix
+  Eigen::SparseMatrix<double> kernmat(samples->size(), samples->size());
+  EXPECT_EQ(kernmat.nonZeros(), 0);
+  laplacian->KernelMatrix(eps, bandwidth, kernmat);
+  EXPECT_TRUE(kernmat.nonZeros()<samples->size()*samples->size());
+  EXPECT_TRUE(kernmat.nonZeros()>=samples->size());
+
+  // compute the expected kernel matrix
+  Eigen::MatrixXd kernmatExpected(samples->size(), samples->size());
+  {
+    auto kern = laplacian->Kernel();
+    for( std::size_t i=0; i<samples->size(); ++i ) {
+      for( std::size_t j=i; j<samples->size(); ++j ) {
+        const Eigen::VectorXd diff = samples->at(i)->state[0]-samples->at(j)->state[0];
+
+        kernmatExpected(i, j) = kern->EvaluateCompactKernel(diff.dot(diff)/(eps*bandwidth(i)*bandwidth(j)));
+        kernmatExpected(j, i) = kernmatExpected(i, j);
+      }
+    }
+  }
+
+  for( std::size_t i=0; i<samples->size(); ++i ) {
+    for( std::size_t j=0; j<samples->size(); ++j ) {
+      EXPECT_NEAR(kernmatExpected(i, j), kernmatExpected(j, i), 1.0e-10);
+      EXPECT_NEAR(kernmat.coeff(i, j), kernmat.coeff(j, i), 1.0e-10);
+      EXPECT_NEAR(kernmatExpected(i, j), kernmat.coeff(i, j), 1.0e-10);
+    }
+  }
 }
 
 TEST_F(GraphLaplacianTests, ConstructHeatMatrix) {

@@ -13,7 +13,7 @@ BumpKernel::BumpKernel(YAML::Node const& options) :
   expon(options["Exponent"].as<double>(1.0))
 {}
 
-double BumpKernel::EvaluateCompactKernel(double const theta) const {
+double BumpKernel::EvaluateCompactKernelImpl(double const theta) const {
   // if theta is near 1, return zero to avoid a seg fault
   if( std::abs(theta-1.0)<1.0e-10 ) { return 0.0; }
 

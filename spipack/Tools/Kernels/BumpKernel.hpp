@@ -35,12 +35,14 @@ public:
 
   virtual ~BumpKernel() = default;
 
+protected:
+
   /// Evaluate the hat kernel function \f$k(\theta)\f$
   /**
     @param[in] theta The value of \f$\theta\f$ (note that \f$0 \leq \theta \leq 1\f$)
     \return The kernel evaluation \f$k(\theta)\f$
   */
-  virtual double EvaluateCompactKernel(double const theta) const override;
+  virtual double EvaluateCompactKernelImpl(double const theta) const override;
 
 private:
 

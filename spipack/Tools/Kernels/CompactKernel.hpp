@@ -52,9 +52,17 @@ public:
     @param[in] theta The value of \f$\theta = \|\boldsymbol{x}_1-\boldsymbol{x}_2\|^2\f$ (note that \f$0 \leq \theta \leq 1\f$)
     \return The kernel evaluation \f$k(\theta)\f$
   */
-  virtual double EvaluateCompactKernel(double const theta) const = 0;
+  double EvaluateCompactKernel(double const theta) const;
 
 protected:
+
+  /// Evaluate the kernel function \f$k(\theta)\f$
+  /**
+    We have already checked that \f$\theta \leq 1\f$---this function implements the support of the kernel.
+    @param[in] theta The value of \f$\theta = \|\boldsymbol{x}_1-\boldsymbol{x}_2\|^2\f$ (note that \f$0 \leq \theta \leq 1\f$)
+    \return The kernel evaluation \f$k(\theta)\f$
+  */
+  virtual double EvaluateCompactKernelImpl(double const theta) const = 0;
 
 private:
 };

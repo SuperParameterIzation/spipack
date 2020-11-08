@@ -81,6 +81,8 @@ TEST(HatKernelTests, EvaluateDefault) {
     Eigen::VectorXd x2 = Eigen::VectorXd::Random(dim, 1);
     x2 = 0.3*x2/x2.norm();
     EXPECT_DOUBLE_EQ(kernel.Evaluate(x1, x2), 1.0);
+    EXPECT_DOUBLE_EQ(kernel.EvaluateIsotropicKernel(0.1), 1.0);
+    EXPECT_DOUBLE_EQ(kernel.EvaluateCompactKernel(0.1), 1.0);
     EXPECT_DOUBLE_EQ(kernel(0.1), 1.0);
   }
 
@@ -88,6 +90,8 @@ TEST(HatKernelTests, EvaluateDefault) {
     Eigen::VectorXd x2 = Eigen::VectorXd::Random(dim, 1);
     x2 = 1.3*x2/x2.norm();
     EXPECT_DOUBLE_EQ(kernel.Evaluate(x1, x2), 0.0);
+    EXPECT_DOUBLE_EQ(kernel.EvaluateIsotropicKernel(1.1), 0.0);
+    EXPECT_DOUBLE_EQ(kernel.EvaluateCompactKernel(1.1), 0.0);
     EXPECT_DOUBLE_EQ(kernel(1.1), 0.0);
   }
 }
@@ -110,6 +114,8 @@ TEST(HatKernelTests, Evaluate) {
     Eigen::VectorXd x2 = Eigen::VectorXd::Random(dim, 1);
     x2 = 0.3*x2/x2.norm();
     EXPECT_DOUBLE_EQ(kernel.Evaluate(x1, x2), mag);
+    EXPECT_DOUBLE_EQ(kernel.EvaluateCompactKernel(0.1), mag);
+    EXPECT_DOUBLE_EQ(kernel.EvaluateIsotropicKernel(0.1), mag);
     EXPECT_DOUBLE_EQ(kernel(0.1), mag);
   }
 
@@ -117,6 +123,8 @@ TEST(HatKernelTests, Evaluate) {
     Eigen::VectorXd x2 = Eigen::VectorXd::Random(dim, 1);
     x2 = 1.3*x2/x2.norm();
     EXPECT_DOUBLE_EQ(kernel.Evaluate(x1, x2), 0.0);
+    EXPECT_DOUBLE_EQ(kernel.EvaluateIsotropicKernel(1.1), 0.0);
+    EXPECT_DOUBLE_EQ(kernel.EvaluateCompactKernel(1.1), 0.0);
     EXPECT_DOUBLE_EQ(kernel(1.1), 0.0);
   }
 }
