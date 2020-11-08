@@ -1,6 +1,6 @@
 var searchData=
 [
-  ['hatkernel_2ecpp',['HatKernel.cpp',['../HatKernel_8cpp.html',1,'']]],
-  ['hatkernel_2ehpp',['HatKernel.hpp',['../HatKernel_8hpp.html',1,'']]],
-  ['hatkerneltests_2ecpp',['HatKernelTests.cpp',['../HatKernelTests_8cpp.html',1,'']]]
+  ['graphlaplacian_2ecpp',['GraphLaplacian.cpp',['../GraphLaplacian_8cpp.html',1,'']]],
+  ['graphlaplacian_2ehpp',['GraphLaplacian.hpp',['../GraphLaplacian_8hpp.html',1,'']]],
+  ['graphlaplaciantests_2ecpp',['GraphLaplacianTests.cpp',['../GraphLaplacianTests_8cpp.html',1,'']]]
 ];
