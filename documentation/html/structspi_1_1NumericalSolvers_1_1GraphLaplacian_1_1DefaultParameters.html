@@ -113,9 +113,9 @@ Static Public Member Functions</h2></td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-static-attribs"></a>
 Static Public Attributes</h2></td></tr>
-<tr class="memitem:a42c136c2743f6493a6c24c9597a7dce8"><td class="memItemLeft" align="right" valign="top">static const std::size_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structspi_1_1NumericalSolvers_1_1GraphLaplacian_1_1DefaultParameters.html#a42c136c2743f6493a6c24c9597a7dce8">maxLeaf</a> = 10</td></tr>
-<tr class="memdesc:a42c136c2743f6493a6c24c9597a7dce8"><td class="mdescLeft">&#160;</td><td class="mdescRight">The maximum leaf size (nanoflann parameter) defaults to \(10\).  <a href="#a42c136c2743f6493a6c24c9597a7dce8">More...</a><br /></td></tr>
-<tr class="separator:a42c136c2743f6493a6c24c9597a7dce8"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a06e33321aada2b0a368bfd71f8ed08cc"><td class="memItemLeft" align="right" valign="top">static const std::size_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structspi_1_1NumericalSolvers_1_1GraphLaplacian_1_1DefaultParameters.html#a06e33321aada2b0a368bfd71f8ed08cc">numNearestNeighbors</a> = 10</td></tr>
+<tr class="memdesc:a06e33321aada2b0a368bfd71f8ed08cc"><td class="mdescLeft">&#160;</td><td class="mdescRight">The default number of nearest neighbors for the bandwidth computation is \(10\).  <a href="#a06e33321aada2b0a368bfd71f8ed08cc">More...</a><br /></td></tr>
+<tr class="separator:a06e33321aada2b0a368bfd71f8ed08cc"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ac92e309d6f44b6ec629bffa193cf7d9c"><td class="memItemLeft" align="right" valign="top">static const std::pair&lt; double, double &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structspi_1_1NumericalSolvers_1_1GraphLaplacian_1_1DefaultParameters.html#ac92e309d6f44b6ec629bffa193cf7d9c">bandwidthRange</a> = std::pair&lt;double, double&gt;(-10.0, 10.0)</td></tr>
 <tr class="memdesc:ac92e309d6f44b6ec629bffa193cf7d9c"><td class="mdescLeft">&#160;</td><td class="mdescRight">The maximum and minimum range for the bandwidth index defaults to \([-10,10]\).  <a href="#ac92e309d6f44b6ec629bffa193cf7d9c">More...</a><br /></td></tr>
 <tr class="separator:ac92e309d6f44b6ec629bffa193cf7d9c"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -274,28 +274,6 @@ Static Public Attributes</h2></td></tr>
 
 </div>
 </div>
-<a class="anchor" id="a42c136c2743f6493a6c24c9597a7dce8"></a>
-<div class="memitem">
-<div class="memproto">
-<table class="mlabels">
-  <tr>
-  <td class="mlabels-left">
-      <table class="memname">
-        <tr>
-          <td class="memname">const std::size_t spi::NumericalSolvers::GraphLaplacian::DefaultParameters::maxLeaf = 10</td>
-        </tr>
-      </table>
-  </td>
-  <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">static</span></span>  </td>
-  </tr>
-</table>
-</div><div class="memdoc">
-
-<p>The maximum leaf size (nanoflann parameter) defaults to \(10\). </p>
-
-</div>
-</div>
 <a class="anchor" id="aa2d3e90221ed61b80087636414e0c62d"></a>
 <div class="memitem">
 <div class="memproto">
@@ -315,6 +293,28 @@ Static Public Attributes</h2></td></tr>
 </div><div class="memdoc">
 
 <p>The default number of bandwidth steps is \(1\). </p>
+
+</div>
+</div>
+<a class="anchor" id="a06e33321aada2b0a368bfd71f8ed08cc"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">const std::size_t spi::NumericalSolvers::GraphLaplacian::DefaultParameters::numNearestNeighbors = 10</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">static</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>The default number of nearest neighbors for the bandwidth computation is \(10\). </p>
 
 </div>
 </div>

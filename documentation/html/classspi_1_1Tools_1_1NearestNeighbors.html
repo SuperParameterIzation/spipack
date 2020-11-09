@@ -108,6 +108,9 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 </div><!--header-->
 <div class="contents">
 
+<p>Find the nearest neighbors for points in sample collection.  
+ <a href="classspi_1_1Tools_1_1NearestNeighbors.html#details">More...</a></p>
+
 <p><code>#include &lt;<a class="el" href="NearestNeighbors_8hpp_source.html">NearestNeighbors.hpp</a>&gt;</code></p>
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="nested-classes"></a>
@@ -116,7 +119,7 @@ Classes</h2></td></tr>
 <tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">A point cloud used by nanoflann to find the nearest neighbors.  <a href="classspi_1_1Tools_1_1NearestNeighbors_1_1Cloud.html#details">More...</a><br /></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structspi_1_1Tools_1_1NearestNeighbors_1_1DefaultParameters.html">DefaultParameters</a></td></tr>
-<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">The default values for the <a class="el" href="classspi_1_1Tools_1_1NearestNeighbors.html">spi::Tools::NearestNeighbors</a> class.  <a href="structspi_1_1Tools_1_1NearestNeighbors_1_1DefaultParameters.html#details">More...</a><br /></td></tr>
+<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">The default values for the <a class="el" href="classspi_1_1Tools_1_1NearestNeighbors.html" title="Find the nearest neighbors for points in sample collection. ">spi::Tools::NearestNeighbors</a> class.  <a href="structspi_1_1Tools_1_1NearestNeighbors_1_1DefaultParameters.html#details">More...</a><br /></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-methods"></a>
@@ -138,15 +141,18 @@ Public Member Functions</h2></td></tr>
 <tr class="memitem:aec62874949c4a0515a1d90d5c4ebea33"><td class="memItemLeft" align="right" valign="top">std::size_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classspi_1_1Tools_1_1NearestNeighbors.html#aec62874949c4a0515a1d90d5c4ebea33">StateDim</a> () const </td></tr>
 <tr class="memdesc:aec62874949c4a0515a1d90d5c4ebea33"><td class="mdescLeft">&#160;</td><td class="mdescRight">The state dimension.  <a href="#aec62874949c4a0515a1d90d5c4ebea33">More...</a><br /></td></tr>
 <tr class="separator:aec62874949c4a0515a1d90d5c4ebea33"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a6206fffec8889fd39b8db0361844dd4a"><td class="memItemLeft" align="right" valign="top">std::shared_ptr&lt; const muq::SamplingAlgorithms::SampleCollection &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classspi_1_1Tools_1_1NearestNeighbors.html#a6206fffec8889fd39b8db0361844dd4a">Samples</a> () const </td></tr>
+<tr class="memdesc:a6206fffec8889fd39b8db0361844dd4a"><td class="mdescLeft">&#160;</td><td class="mdescRight">The sample collection.  <a href="#a6206fffec8889fd39b8db0361844dd4a">More...</a><br /></td></tr>
+<tr class="separator:a6206fffec8889fd39b8db0361844dd4a"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a08f9fd339445cd90ef6169183c8d8d46"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classspi_1_1Tools_1_1NearestNeighbors.html#a08f9fd339445cd90ef6169183c8d8d46">BuildKDTrees</a> () const </td></tr>
 <tr class="memdesc:a08f9fd339445cd90ef6169183c8d8d46"><td class="mdescLeft">&#160;</td><td class="mdescRight">Build the kd-trees.  <a href="#a08f9fd339445cd90ef6169183c8d8d46">More...</a><br /></td></tr>
 <tr class="separator:a08f9fd339445cd90ef6169183c8d8d46"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ab643fc3f94a39bb0414782233d8371ac"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classspi_1_1Tools_1_1NearestNeighbors.html#ab643fc3f94a39bb0414782233d8371ac">FindNeighbors</a> (Eigen::Ref&lt; const Eigen::VectorXd &gt; const &amp;point, double const radius2, std::vector&lt; std::pair&lt; std::size_t, double &gt; &gt; &amp;neighbors, std::size_t const &amp;lag=0) const </td></tr>
 <tr class="memdesc:ab643fc3f94a39bb0414782233d8371ac"><td class="mdescLeft">&#160;</td><td class="mdescRight">Find the nearest neighbors.  <a href="#ab643fc3f94a39bb0414782233d8371ac">More...</a><br /></td></tr>
 <tr class="separator:ab643fc3f94a39bb0414782233d8371ac"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a4f6af2c98fe16f3b0de835f1c48a796d"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classspi_1_1Tools_1_1NearestNeighbors.html#a4f6af2c98fe16f3b0de835f1c48a796d">FindNeighbors</a> (Eigen::Ref&lt; const Eigen::VectorXd &gt; const &amp;point, std::size_t const k, std::vector&lt; std::pair&lt; std::size_t, double &gt; &gt; &amp;neighbors, std::size_t const &amp;lag=0) const </td></tr>
-<tr class="memdesc:a4f6af2c98fe16f3b0de835f1c48a796d"><td class="mdescLeft">&#160;</td><td class="mdescRight">Find the nearest neighbors.  <a href="#a4f6af2c98fe16f3b0de835f1c48a796d">More...</a><br /></td></tr>
-<tr class="separator:a4f6af2c98fe16f3b0de835f1c48a796d"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a2dae89c063e39e6fa713c3d152dae491"><td class="memItemLeft" align="right" valign="top">double&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classspi_1_1Tools_1_1NearestNeighbors.html#a2dae89c063e39e6fa713c3d152dae491">FindNeighbors</a> (Eigen::Ref&lt; const Eigen::VectorXd &gt; const &amp;point, std::size_t const k, std::vector&lt; std::pair&lt; std::size_t, double &gt; &gt; &amp;neighbors, std::size_t const &amp;lag=0) const </td></tr>
+<tr class="memdesc:a2dae89c063e39e6fa713c3d152dae491"><td class="mdescLeft">&#160;</td><td class="mdescRight">Find the nearest neighbors.  <a href="#a2dae89c063e39e6fa713c3d152dae491">More...</a><br /></td></tr>
+<tr class="separator:a2dae89c063e39e6fa713c3d152dae491"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pri-types"></a>
 Private Types</h2></td></tr>
@@ -185,7 +191,9 @@ Static Private Attributes</h2></td></tr>
 <tr class="separator:a663e83d2c5e279f7c5506baf2867fbd9"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
-<div class="textblock"><p><b>Configuration Parameters:</b> </p><table class="doxtable">
+<div class="textblock"><p>Find the nearest neighbors for points in sample collection. </p>
+<p>Given \(\{\boldsymbol{x}^{(i)}\}_{i=1}^{n}\) samples from the distribution \(\psi\), this class finds the nearest neighbors \(\{\boldsymbol{x}^{(j)}\}_{j=1}^{k}\) to a given point \(\boldsymbol{x}\).</p>
+<p><b>Configuration Parameters:</b> </p><table class="doxtable">
 <tr>
 <th>Parameter Key </th><th>Type </th><th>Default Value </th><th>Description  </th></tr>
 <tr>
@@ -379,12 +387,12 @@ Static Private Attributes</h2></td></tr>
 
 </div>
 </div>
-<a class="anchor" id="a4f6af2c98fe16f3b0de835f1c48a796d"></a>
+<a class="anchor" id="a2dae89c063e39e6fa713c3d152dae491"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">void NearestNeighbors::FindNeighbors </td>
+          <td class="memname">double NearestNeighbors::FindNeighbors </td>
           <td>(</td>
           <td class="paramtype">Eigen::Ref&lt; const Eigen::VectorXd &gt; const &amp;&#160;</td>
           <td class="paramname"><em>point</em>, </td>
@@ -425,6 +433,7 @@ Static Private Attributes</h2></td></tr>
   </table>
   </dd>
 </dl>
+<dl class="section return"><dt>Returns</dt><dd>The smallest radius that contains all of the points </dd></dl>
 
 </div>
 </div>
@@ -543,6 +552,23 @@ Static Private Attributes</h2></td></tr>
   </table>
   </dd>
 </dl>
+
+</div>
+</div>
+<a class="anchor" id="a6206fffec8889fd39b8db0361844dd4a"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">std::shared_ptr&lt; const SampleCollection &gt; NearestNeighbors::Samples </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td> const</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>The sample collection. </p>
 
 </div>
 </div>

@@ -111,8 +111,8 @@ Variables</h2></td></tr>
 <tr class="separator:ac07d28d72ab82f66f56614340ab3edba"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a7890339c67d627c6b7e4334096812504"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespace__plot__result.html#a7890339c67d627c6b7e4334096812504">samples</a> = <a class="el" href="namespace__plot__result.html#ac07d28d72ab82f66f56614340ab3edba">hdf5file</a>['/samples'][()].T</td></tr>
 <tr class="separator:a7890339c67d627c6b7e4334096812504"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a5dd6cd15273597c231139e4536e38ee4"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespace__plot__result.html#a5dd6cd15273597c231139e4536e38ee4">logSquaredBandwidth</a> = <a class="el" href="namespace__plot__result.html#ac07d28d72ab82f66f56614340ab3edba">hdf5file</a>['/log squared <a class="el" href="namespace__plot__result.html#a62b8fbbf513bb3bcffcaaf3b96506343">bandwidth</a>'][()].T[0]</td></tr>
-<tr class="separator:a5dd6cd15273597c231139e4536e38ee4"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a8deb157eca4a01c6566d061bb0bb957d"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespace__plot__result.html#a8deb157eca4a01c6566d061bb0bb957d">logBandwidth</a> = <a class="el" href="namespace__plot__result.html#ac07d28d72ab82f66f56614340ab3edba">hdf5file</a>['/log <a class="el" href="namespace__plot__result.html#a62b8fbbf513bb3bcffcaaf3b96506343">bandwidth</a>'][()].T[0]</td></tr>
+<tr class="separator:a8deb157eca4a01c6566d061bb0bb957d"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a62b8fbbf513bb3bcffcaaf3b96506343"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespace__plot__result.html#a62b8fbbf513bb3bcffcaaf3b96506343">bandwidth</a> = <a class="el" href="namespace__plot__result.html#ac07d28d72ab82f66f56614340ab3edba">hdf5file</a>['/bandwidth parameter candidate'][()].T[0]</td></tr>
 <tr class="separator:a62b8fbbf513bb3bcffcaaf3b96506343"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ad310442870c0b915f1ab924eb21ceb4c"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespace__plot__result.html#ad310442870c0b915f1ab924eb21ceb4c">sigmaprime</a> = <a class="el" href="namespace__plot__result.html#ac07d28d72ab82f66f56614340ab3edba">hdf5file</a>['/sigma prime'][()].T[0]</td></tr>
@@ -123,12 +123,14 @@ Variables</h2></td></tr>
 <tr class="separator:a6e39593effbebea8d8ddb94eca917056"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a21d24af5e38715b851cd8e4a3d4dcb35"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespace__plot__result.html#a21d24af5e38715b851cd8e4a3d4dcb35">ax</a> = plt.gca()</td></tr>
 <tr class="separator:a21d24af5e38715b851cd8e4a3d4dcb35"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a75ee7360d0f8d0d5c17e776a0a0049f8"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespace__plot__result.html#a75ee7360d0f8d0d5c17e776a0a0049f8">scatter</a> = ax.scatter(samples.T[0], samples.T[1], s=3, c=<a class="el" href="namespace__plot__result.html#a5dd6cd15273597c231139e4536e38ee4">logSquaredBandwidth</a>, vmin=min(<a class="el" href="namespace__plot__result.html#a5dd6cd15273597c231139e4536e38ee4">logSquaredBandwidth</a>), vmax=max(<a class="el" href="namespace__plot__result.html#a5dd6cd15273597c231139e4536e38ee4">logSquaredBandwidth</a>))</td></tr>
+<tr class="memitem:a75ee7360d0f8d0d5c17e776a0a0049f8"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespace__plot__result.html#a75ee7360d0f8d0d5c17e776a0a0049f8">scatter</a> = ax.scatter(samples.T[0], samples.T[1], s=3, c=<a class="el" href="namespace__plot__result.html#a8deb157eca4a01c6566d061bb0bb957d">logBandwidth</a>, vmin=min(<a class="el" href="namespace__plot__result.html#a8deb157eca4a01c6566d061bb0bb957d">logBandwidth</a>), vmax=max(<a class="el" href="namespace__plot__result.html#a8deb157eca4a01c6566d061bb0bb957d">logBandwidth</a>))</td></tr>
 <tr class="separator:a75ee7360d0f8d0d5c17e776a0a0049f8"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:af8dc480c7a384a989a9b9d5b26cb4ce6"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespace__plot__result.html#af8dc480c7a384a989a9b9d5b26cb4ce6">format</a></td></tr>
 <tr class="separator:af8dc480c7a384a989a9b9d5b26cb4ce6"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a595c97922318843afa78cf2ca96eee4d"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespace__plot__result.html#a595c97922318843afa78cf2ca96eee4d">bbox_inches</a></td></tr>
 <tr class="separator:a595c97922318843afa78cf2ca96eee4d"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a97d0836b0df1e40c525f03b0ebc23654"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespace__plot__result.html#a97d0836b0df1e40c525f03b0ebc23654">color</a></td></tr>
+<tr class="separator:a97d0836b0df1e40c525f03b0ebc23654"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:af88a0e1b0e8af3a04fcbdbac7cd1fe95"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespace__plot__result.html#af88a0e1b0e8af3a04fcbdbac7cd1fe95">markersize</a></td></tr>
 <tr class="separator:af88a0e1b0e8af3a04fcbdbac7cd1fe95"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a8fd7cf5cbb4839d3c67d0d20e83d422f"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespace__plot__result.html#a8fd7cf5cbb4839d3c67d0d20e83d422f">markeredgecolor</a></td></tr>
@@ -230,6 +232,18 @@ Variables</h2></td></tr>
 
 </div>
 </div>
+<a class="anchor" id="a97d0836b0df1e40c525f03b0ebc23654"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">_plot_result.color</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
 <a class="anchor" id="a6e39593effbebea8d8ddb94eca917056"></a>
 <div class="memitem">
 <div class="memproto">
@@ -266,12 +280,12 @@ Variables</h2></td></tr>
 
 </div>
 </div>
-<a class="anchor" id="a5dd6cd15273597c231139e4536e38ee4"></a>
+<a class="anchor" id="a8deb157eca4a01c6566d061bb0bb957d"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">_plot_result.logSquaredBandwidth = <a class="el" href="namespace__plot__result.html#ac07d28d72ab82f66f56614340ab3edba">hdf5file</a>['/log squared <a class="el" href="namespace__plot__result.html#a62b8fbbf513bb3bcffcaaf3b96506343">bandwidth</a>'][()].T[0]</td>
+          <td class="memname">_plot_result.logBandwidth = <a class="el" href="namespace__plot__result.html#ac07d28d72ab82f66f56614340ab3edba">hdf5file</a>['/log <a class="el" href="namespace__plot__result.html#a62b8fbbf513bb3bcffcaaf3b96506343">bandwidth</a>'][()].T[0]</td>
         </tr>
       </table>
 </div><div class="memdoc">
@@ -331,7 +345,7 @@ Variables</h2></td></tr>
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">_plot_result.scatter = ax.scatter(samples.T[0], samples.T[1], s=3, c=<a class="el" href="namespace__plot__result.html#a5dd6cd15273597c231139e4536e38ee4">logSquaredBandwidth</a>, vmin=min(<a class="el" href="namespace__plot__result.html#a5dd6cd15273597c231139e4536e38ee4">logSquaredBandwidth</a>), vmax=max(<a class="el" href="namespace__plot__result.html#a5dd6cd15273597c231139e4536e38ee4">logSquaredBandwidth</a>))</td>
+          <td class="memname">_plot_result.scatter = ax.scatter(samples.T[0], samples.T[1], s=3, c=<a class="el" href="namespace__plot__result.html#a8deb157eca4a01c6566d061bb0bb957d">logBandwidth</a>, vmin=min(<a class="el" href="namespace__plot__result.html#a8deb157eca4a01c6566d061bb0bb957d">logBandwidth</a>), vmax=max(<a class="el" href="namespace__plot__result.html#a8deb157eca4a01c6566d061bb0bb957d">logBandwidth</a>))</td>
         </tr>
       </table>
 </div><div class="memdoc">
