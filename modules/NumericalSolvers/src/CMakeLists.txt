@@ -1,4 +1,5 @@
 set(SOURCE
+  GraphLaplacian/SampleRepresentation.cpp
   GraphLaplacian/GraphLaplacian.cpp
 )
 
