@@ -146,6 +146,8 @@ Public Member Functions</h2></td></tr>
 <tr class="separator:ae73902463793e58788017adde8a8dc51"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a8c04436cd717507eb8b91f1745fa361d"><td class="memItemLeft" align="right" valign="top">Eigen::VectorXd&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classspi_1_1NumericalSolvers_1_1GraphLaplacian.html#a8c04436cd717507eb8b91f1745fa361d">KernelMatrix</a> (double const bandwidthPara, Eigen::Ref&lt; Eigen::VectorXd const  &gt; const &amp;bandwidth, Eigen::SparseMatrix&lt; double &gt; &amp;kernmat) const </td></tr>
 <tr class="separator:a8c04436cd717507eb8b91f1745fa361d"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ad1e8e182d6403908ef5eb1c121cb2116"><td class="memItemLeft" align="right" valign="top">Eigen::VectorXd&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classspi_1_1NumericalSolvers_1_1GraphLaplacian.html#ad1e8e182d6403908ef5eb1c121cb2116">KernelMatrix</a> (double const bandwidthPara, Eigen::Ref&lt; Eigen::VectorXd const  &gt; const &amp;bandwidth, std::vector&lt; std::vector&lt; std::pair&lt; std::size_t, double &gt; &gt; &gt; const &amp;neighbors, Eigen::SparseMatrix&lt; double &gt; &amp;kernmat) const </td></tr>
+<tr class="separator:ad1e8e182d6403908ef5eb1c121cb2116"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:afcdc9cd363fd0aff5d4cd1df134a370f"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classspi_1_1NumericalSolvers_1_1GraphLaplacian.html#afcdc9cd363fd0aff5d4cd1df134a370f">ConstructHeatMatrix</a> ()</td></tr>
 <tr class="memdesc:afcdc9cd363fd0aff5d4cd1df134a370f"><td class="mdescLeft">&#160;</td><td class="mdescRight">Construct the heat matrix \(\boldsymbol{P}\).  <a href="#afcdc9cd363fd0aff5d4cd1df134a370f">More...</a><br /></td></tr>
 <tr class="separator:afcdc9cd363fd0aff5d4cd1df134a370f"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -167,6 +169,9 @@ Public Member Functions</h2></td></tr>
 <tr class="memitem:a18b397901696aeedcba286384567fa9c"><td class="memItemLeft" align="right" valign="top">Eigen::VectorXd&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classspi_1_1NumericalSolvers_1_1GraphLaplacian.html#a18b397901696aeedcba286384567fa9c">Bandwidth</a> () const </td></tr>
 <tr class="memdesc:a18b397901696aeedcba286384567fa9c"><td class="mdescLeft">&#160;</td><td class="mdescRight">The bandwidth of each sample.  <a href="#a18b397901696aeedcba286384567fa9c">More...</a><br /></td></tr>
 <tr class="separator:a18b397901696aeedcba286384567fa9c"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ad08580ab985eb5de8d362dd8b72a98e9"><td class="memItemLeft" align="right" valign="top">Eigen::VectorXd&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classspi_1_1NumericalSolvers_1_1GraphLaplacian.html#ad08580ab985eb5de8d362dd8b72a98e9">Bandwidth</a> (std::vector&lt; std::vector&lt; std::pair&lt; std::size_t, double &gt; &gt; &gt; &amp;neighbors) const </td></tr>
+<tr class="memdesc:ad08580ab985eb5de8d362dd8b72a98e9"><td class="mdescLeft">&#160;</td><td class="mdescRight">The bandwidth of each sample.  <a href="#ad08580ab985eb5de8d362dd8b72a98e9">More...</a><br /></td></tr>
+<tr class="separator:ad08580ab985eb5de8d362dd8b72a98e9"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a3d40a40824b4b56464c85ff7e3aedb33"><td class="memItemLeft" align="right" valign="top">std::size_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classspi_1_1NumericalSolvers_1_1GraphLaplacian.html#a3d40a40824b4b56464c85ff7e3aedb33">BandwidthIndex</a> () const </td></tr>
 <tr class="memdesc:a3d40a40824b4b56464c85ff7e3aedb33"><td class="mdescLeft">&#160;</td><td class="mdescRight">The bandwidth index parameter.  <a href="#a3d40a40824b4b56464c85ff7e3aedb33">More...</a><br /></td></tr>
 <tr class="separator:a3d40a40824b4b56464c85ff7e3aedb33"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -386,6 +391,32 @@ Static Private Attributes</h2></td></tr>
 </div><div class="memdoc">
 
 <p>The bandwidth of each sample. </p>
+<dl class="section return"><dt>Returns</dt><dd>The bandwidth \(r_i = \max_{j \in [1,k]}{\left( \|\boldsymbol{x}^{(i)} - \boldsymbol{x}^{(I(i,j))} \| \right)}\) (note we do not return the squared bandwidth) </dd></dl>
+
+</div>
+</div>
+<a class="anchor" id="ad08580ab985eb5de8d362dd8b72a98e9"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">Eigen::VectorXd GraphLaplacian::Bandwidth </td>
+          <td>(</td>
+          <td class="paramtype">std::vector&lt; std::vector&lt; std::pair&lt; std::size_t, double &gt; &gt; &gt; &amp;&#160;</td>
+          <td class="paramname"><em>neighbors</em></td><td>)</td>
+          <td> const</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>The bandwidth of each sample. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[out]</td><td class="paramname">neighbors</td><td>Each entry is a list of the nearestneighbors for point \(i\). First: the index of the neighbor, Second: the squared distance to the neighbor </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>The bandwidth \(r_i = \max_{j \in [1,k]}{\left( \|\boldsymbol{x}^{(i)} - \boldsymbol{x}^{(I(i,j))} \| \right)}\) (note we do not return the squared bandwidth) </dd></dl>
 
 </div>
 </div>
@@ -874,6 +905,54 @@ Static Private Attributes</h2></td></tr>
   <table class="params">
     <tr><td class="paramdir">[in]</td><td class="paramname">bandwidthPara</td><td>The bandwidth parameter \(\epsilon\) </td></tr>
     <tr><td class="paramdir">[in]</td><td class="paramname">bandwidth</td><td>The bandwidth \(r_i = \max_{j \in [1,k]}{\left( \|\boldsymbol{x}^{(i)} - \boldsymbol{x}^{(I(i,j))} \| \right)}\) </td></tr>
+    <tr><td class="paramdir">[out]</td><td class="paramname">kernmat</td><td>The kernel matrix such that \(K_{ij} = k(\|\boldsymbol{x}^{(i)}-\boldsymbol{x}^{(j)}\|^2/(\epsilon r_i r_j))\) </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>Each entry is the sum of the corresponding row </dd></dl>
+
+</div>
+</div>
+<a class="anchor" id="ad1e8e182d6403908ef5eb1c121cb2116"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">Eigen::VectorXd GraphLaplacian::KernelMatrix </td>
+          <td>(</td>
+          <td class="paramtype">double const&#160;</td>
+          <td class="paramname"><em>bandwidthPara</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">Eigen::Ref&lt; Eigen::VectorXd const  &gt; const &amp;&#160;</td>
+          <td class="paramname"><em>bandwidth</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">std::vector&lt; std::vector&lt; std::pair&lt; std::size_t, double &gt; &gt; &gt; const &amp;&#160;</td>
+          <td class="paramname"><em>neighbors</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">Eigen::SparseMatrix&lt; double &gt; &amp;&#160;</td>
+          <td class="paramname"><em>kernmat</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td> const</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[in]</td><td class="paramname">bandwidthPara</td><td>The bandwidth parameter \(\epsilon\) </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">bandwidth</td><td>The bandwidth \(r_i = \max_{j \in [1,k]}{\left( \|\boldsymbol{x}^{(i)} - \boldsymbol{x}^{(I(i,j))} \| \right)}\) </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">neighbors</td><td>The nearest neighbors to each point&mdash;the kernel is truncated after these neighbors </td></tr>
     <tr><td class="paramdir">[out]</td><td class="paramname">kernmat</td><td>The kernel matrix such that \(K_{ij} = k(\|\boldsymbol{x}^{(i)}-\boldsymbol{x}^{(j)}\|^2/(\epsilon r_i r_j))\) </td></tr>
   </table>
   </dd>
