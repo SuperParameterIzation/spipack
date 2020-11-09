@@ -17,10 +17,11 @@ int main(int argc, char **argv) {
   const std::string filename = "samples.h5";
 
   // the number of samples
-  const std::size_t n = 5000;
+  const std::size_t n = 10000;
 
   // numerical parameters
-  const std::size_t numNeighbors = 10;
+  const std::size_t numNeighbors = 25.0*std::log(n);
+  //const std::size_t numNeighbors = 10;
 
   // create a uniform random variable
   //std::vector<std::pair<double, double> > bounds(dim, std::pair<double, double>(1.0, 0.0));
@@ -31,7 +32,7 @@ int main(int argc, char **argv) {
   YAML::Node nnOptions;
   nnOptions["NumSamples"] = n;
   nnOptions["Stride"] = n/5;
-  
+
   // the options for the graph Laplacian
   YAML::Node options;
   options["NearestNeighbors"] = nnOptions;
@@ -39,7 +40,7 @@ int main(int argc, char **argv) {
   options["BandwidthIndex"] = 4;
   options["EigensolverTol"] = 1.0e-10;
   options["BandwidthRange.Min"] = -20.0;
-  options["BandwidthRange.Max"] = 20.0;
+  options["BandwidthRange.Max"] = 3.0;
   options["NumBandwidthSteps"] = 100;
 
   // set the kernel options
@@ -57,10 +58,19 @@ int main(int argc, char **argv) {
   laplacian->BuildKDTrees();
 
   // compute the bandwidth
-  const Eigen::VectorXd bandwidth = laplacian->Bandwidth();
+  std::vector<std::vector<std::pair<std::size_t, double> > > neighbors;
+  const Eigen::VectorXd squaredBandwidth = laplacian->SquaredBandwidth(neighbors);
 
   // compute sigma prime
-  const Eigen::Matrix<double, Eigen::Dynamic, 2> sigmaprime = laplacian->EvaluateKernel(bandwidth);
+  std::pair<double, Eigen::SparseMatrix<double> > optimalApprox;
+  const Eigen::Matrix<double, Eigen::Dynamic, 2> sigmaprimeApprox = laplacian->TuneKernelBandwidth(squaredBandwidth.array().sqrt(), neighbors, optimalApprox);
+
+  const Eigen::VectorXd densityEstimationApprox = (1.0/(optimalApprox.first*M_PI*n))*optimalApprox.second*squaredBandwidth.array().inverse().matrix();
+
+  std::pair<double, Eigen::SparseMatrix<double> > optimal;
+  const Eigen::Matrix<double, Eigen::Dynamic, 2> sigmaprime = laplacian->TuneKernelBandwidth(squaredBandwidth.array().sqrt(), optimal);
+
+  const Eigen::VectorXd densityEstimation = (1.0/(optimal.first*M_PI*n))*optimal.second*squaredBandwidth.array().inverse().matrix();
 
   /*for( std::size_t i=0; i<laplacian->NumSamples(); ++i ) {
     // get a reference to the ith point
@@ -81,8 +91,12 @@ int main(int argc, char **argv) {
   // open the file
   auto hdf5file = std::make_shared<HDF5File>(filename);
   //hdf5file->WriteMatrix("/heat matrix eigenvalues", eigenvalues);
-  hdf5file->WriteMatrix("/log bandwidth", bandwidth.array().log().matrix().eval());
-  hdf5file->WriteMatrix("/bandwidth parameter candidate", sigmaprime.col(0).eval());
-  hdf5file->WriteMatrix("/sigma prime", sigmaprime.col(1).eval());
+  hdf5file->WriteMatrix("/log bandwidth", squaredBandwidth.array().sqrt().log().matrix().eval());
+  hdf5file->WriteMatrix("/exact/bandwidth parameter candidate", sigmaprime.col(0).eval());
+  hdf5file->WriteMatrix("/exact/sigma prime", sigmaprime.col(1).eval());
+  hdf5file->WriteMatrix("/exact/density estimation", densityEstimation);
+  hdf5file->WriteMatrix("/approx/bandwidth parameter candidate", sigmaprimeApprox.col(0).eval());
+  hdf5file->WriteMatrix("/approx/sigma prime", sigmaprimeApprox.col(1).eval());
+  hdf5file->WriteMatrix("/approx/density estimation", densityEstimationApprox);
   hdf5file->Close();
 }

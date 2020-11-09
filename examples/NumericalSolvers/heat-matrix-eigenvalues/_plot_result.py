@@ -75,12 +75,23 @@ hdf5file = h5py.File('samples.h5', 'r')
 
 samples = hdf5file['/samples'] [()].T
 logBandwidth = hdf5file['/log bandwidth'] [()].T [0]
-bandwidth = hdf5file['/bandwidth parameter candidate'] [()].T [0]
-sigmaprime = hdf5file['/sigma prime'] [()].T [0]
-#eigenvalues = hdf5file['/heat matrix eigenvalues'] [()].T [0]
+
+bandwidth = hdf5file['/exact/bandwidth parameter candidate'] [()].T [0]
+sigmaprime = hdf5file['/exact/sigma prime'] [()].T [0]
+densityEstimation = hdf5file['/exact/density estimation'] [()].T [0]
+
+bandwidthApprox = hdf5file['/approx/bandwidth parameter candidate'] [()].T [0]
+sigmaprimeApprox = hdf5file['/approx/sigma prime'] [()].T [0]
+densityEstimationApprox = hdf5file['/approx/density estimation'] [()].T [0]
 
 sigmaprimeMaxInd = np.argmax(sigmaprime)
-print('key bandwidth', bandwidth[sigmaprimeMaxInd])
+print('key bandwidth (exact)', bandwidth[sigmaprimeMaxInd])
+
+sigmaprimeApproxMaxInd = np.argmax(sigmaprimeApprox)
+print('key bandwidth (approx)', bandwidth[sigmaprimeApproxMaxInd])
+
+densityEstimationMin = min([min(densityEstimation), min(densityEstimationApprox)])
+densityEstimationMax = max([max(densityEstimation), max(densityEstimationApprox)])
 
 fig = MakeFigure(425, 0.9, False)
 ax = plt.gca()
@@ -95,9 +106,33 @@ plt.close(fig)
 
 fig = MakeFigure(425, 0.9, False)
 ax = plt.gca()
+scatter = ax.scatter(samples.T[0], samples.T[1], s=3, c=densityEstimation, vmin=0.0, vmax=0.15)
+plt.colorbar(scatter)
+ax.spines['right'].set_visible(False)
+ax.spines['top'].set_visible(False)
+ax.yaxis.set_ticks_position('left')
+ax.xaxis.set_ticks_position('bottom')
+plt.savefig('figures/DensityEstimation.pdf', format='pdf', bbox_inches='tight')
+plt.close(fig)
+
+fig = MakeFigure(425, 0.9, False)
+ax = plt.gca()
+scatter = ax.scatter(samples.T[0], samples.T[1], s=3, c=densityEstimationApprox, vmin=0.0, vmax=0.15)
+plt.colorbar(scatter)
+ax.spines['right'].set_visible(False)
+ax.spines['top'].set_visible(False)
+ax.yaxis.set_ticks_position('left')
+ax.xaxis.set_ticks_position('bottom')
+plt.savefig('figures/densityEstimationApprox.pdf', format='pdf', bbox_inches='tight')
+plt.close(fig)
+
+fig = MakeFigure(425, 0.9, False)
+ax = plt.gca()
 ax.plot([min(bandwidth), max(bandwidth)], [1, 1], '--', color='#737373')
-ax.semilogx(bandwidth, sigmaprime)
-ax.plot(bandwidth[sigmaprimeMaxInd], sigmaprime[sigmaprimeMaxInd], 'o', markersize=3, markeredgecolor='#a50f15', markerfacecolor='#a50f15')
+ax.semilogx(bandwidth, sigmaprime, color='#d73027')
+ax.plot(bandwidth[sigmaprimeMaxInd], sigmaprime[sigmaprimeMaxInd], 'o', markersize=3, markeredgecolor='#d73027', markerfacecolor='#d73027')
+ax.semilogx(bandwidthApprox, sigmaprimeApprox, color='#4575b4')
+ax.plot(bandwidthApprox[sigmaprimeApproxMaxInd], sigmaprimeApprox[sigmaprimeApproxMaxInd], 'o', markersize=3, markeredgecolor='#4575b4', markerfacecolor='#4575b4')
 ax.set_xlim([min(bandwidth), max(bandwidth)])
 ax.set_ylim([0, 1])
 ax.set_xlabel(r'$\epsilon_l$')

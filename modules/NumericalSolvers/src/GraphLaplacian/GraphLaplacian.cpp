@@ -13,18 +13,12 @@ using namespace muq::SamplingAlgorithms;
 using namespace spi::Tools;
 using namespace spi::NumericalSolvers;
 
-double GraphLaplacian::DefaultParameters::SquaredBandwidth(YAML::Node const& options) {
-  const double bandwidth = options["Bandwidth"].as<double>(defaults.bandwidth);
-  return bandwidth*bandwidth;
-}
-
 GraphLaplacian::GraphLaplacian(std::shared_ptr<RandomVariable> const& rv, YAML::Node const& options) :
 samples(rv, options["NearestNeighbors"]),
 numNearestNeighbors(options["NumNearestNeighbors"].as<std::size_t>(defaults.numNearestNeighbors)),
 bandwidthRange(std::pair<double, double>(options["BandwidthRange.Min"].as<double>(defaults.bandwidthRange.first),options["BandwidthRange.Max"].as<double>(defaults.bandwidthRange.second))),
 numBandwidthSteps(options["NumBandwidthSteps"].as<std::size_t>(defaults.numBandwidthSteps)),
-bandwidthIndex(options["BandwidthIndex"].as<int>(defaults.bandwidthIndex)),
-bandwidth2(DefaultParameters::SquaredBandwidth(options)),
+tuneBandwidthParameter(options["TuneBandwidth"].as<bool>(defaults.tuneBandwidthParameter)),
 eigensolverTol(options["EigensolverTol"].as<double>(defaults.eigensolverTol)),
 eigensolverMaxIt(options["EigensolverMaxIt"].as<std::size_t>(defaults.eigensolverMaxIt))
 {
@@ -36,8 +30,7 @@ samples(samples, options["NearestNeighbors"]),
 numNearestNeighbors(options["NumNearestNeighbors"].as<std::size_t>(defaults.numNearestNeighbors)),
 bandwidthRange(std::pair<double, double>(options["BandwidthRange.Min"].as<double>(defaults.bandwidthRange.first),options["BandwidthRange.Max"].as<double>(defaults.bandwidthRange.second))),
 numBandwidthSteps(options["NumBandwidthSteps"].as<std::size_t>(defaults.numBandwidthSteps)),
-bandwidthIndex(options["BandwidthIndex"].as<int>(defaults.bandwidthIndex)),
-bandwidth2(DefaultParameters::SquaredBandwidth(options)),
+tuneBandwidthParameter(options["TuneBandwidth"].as<bool>(defaults.tuneBandwidthParameter)),
 eigensolverTol(options["EigensolverTol"].as<double>(defaults.eigensolverTol)),
 eigensolverMaxIt(options["EigensolverMaxIt"].as<std::size_t>(defaults.eigensolverMaxIt))
 {
@@ -53,8 +46,6 @@ void GraphLaplacian::Initialize(YAML::Node const& options) {
   heatMatrix.resize(NumSamples(), NumSamples());
 }
 
-double GraphLaplacian::SquaredBandwidth() const { return bandwidth2; }
-
 std::size_t GraphLaplacian::NumSamples() const { return samples.NumSamples(); }
 
 Eigen::Ref<Eigen::VectorXd const> GraphLaplacian::Point(std::size_t const i) const {
@@ -62,12 +53,14 @@ Eigen::Ref<Eigen::VectorXd const> GraphLaplacian::Point(std::size_t const i) con
   return samples.Point(i);
 }
 
+bool GraphLaplacian::TuneBandwidthParameter() const { return tuneBandwidthParameter; }
+
 void GraphLaplacian::BuildKDTrees() {
   // (re-)build the kd-tree
   samples.BuildKDTrees();
 }
 
-Eigen::VectorXd GraphLaplacian::Bandwidth(std::vector<std::vector<std::pair<std::size_t, double> > >& neighbors) const {
+Eigen::VectorXd GraphLaplacian::SquaredBandwidth(std::vector<std::vector<std::pair<std::size_t, double> > >& neighbors) const {
   // the number of samples
   const std::size_t n = NumSamples();
 
@@ -76,15 +69,15 @@ Eigen::VectorXd GraphLaplacian::Bandwidth(std::vector<std::vector<std::pair<std:
   neighbors.resize(n);
   for( std::size_t i=0; i<n; ++i ) {
     // find the nearest neighbors for each sample
-    bandwidth(i) = std::sqrt(samples.FindNeighbors(Point(i), numNearestNeighbors, neighbors[i]));
+    bandwidth(i) = samples.FindNeighbors(Point(i), numNearestNeighbors, neighbors[i]);
   }
 
   return bandwidth;
 }
 
-Eigen::VectorXd GraphLaplacian::Bandwidth() const {
+Eigen::VectorXd GraphLaplacian::SquaredBandwidth() const {
   std::vector<std::vector<std::pair<std::size_t, double> > > neighbors;
-  return Bandwidth(neighbors);
+  return SquaredBandwidth(neighbors);
 }
 
 Eigen::VectorXd GraphLaplacian::KernelMatrix(double const bandwidthPara, Eigen::Ref<Eigen::VectorXd const> const& bandwidth, std::vector<std::vector<std::pair<std::size_t, double> > > const& neighbors, Eigen::SparseMatrix<double>& kernmat) const {
@@ -168,22 +161,35 @@ Eigen::VectorXd GraphLaplacian::KernelMatrix(double const bandwidthPara, Eigen::
   return rowsum;
 }
 
-Eigen::Matrix<double, Eigen::Dynamic, 2> GraphLaplacian::EvaluateKernel(Eigen::Ref<Eigen::VectorXd const> const& bandwidth) const {
+Eigen::VectorXd GraphLaplacian::DensityEstimation() const {
+  // compute the bandwidth
+  std::vector<std::vector<std::pair<std::size_t, double> > > neighbors;
+  const Eigen::VectorXd squaredBandwidth = SquaredBandwidth(neighbors);
+
+  return Eigen::VectorXd();
+}
+
+Eigen::Matrix<double, Eigen::Dynamic, 2> GraphLaplacian::TuneKernelBandwidth(Eigen::Ref<Eigen::VectorXd const> const& bandwidth, std::vector<std::vector<std::pair<std::size_t, double> > > const& neighbors, std::pair<double, Eigen::SparseMatrix<double> >& optimal) const {
   // get the candidate bandwidth parameters
   const Eigen::VectorXd bandwidthPara = BandwidthParameterCandidates();
 
   // the number of samples
   const std::size_t n = NumSamples();
 
+  // the potential kernel matrices
+  auto kernmatBest = std::make_shared<Eigen::SparseMatrix<double> >(n, n);
+
   // loop through the possible bandwith parameters
   Eigen::Matrix<double, Eigen::Dynamic, 2> sigmaprime(bandwidthPara.size()-1, 2);
   double logsig, logsigprev;
+  std::size_t ind;
+  double maxsigprime = 0.0;
   for( std::size_t l=0; l<bandwidthPara.size(); ++l ) {
     std::cout << std::endl << std::endl << std::endl;
     std::cout << "eps: " << bandwidthPara(l) << std::endl;
-    Eigen::SparseMatrix<double> kernmat(n, n);
-    const Eigen::VectorXd rowsum = KernelMatrix(bandwidthPara(l), bandwidth, kernmat);
-    std::cout << "computed kern mat: " << kernmat.nonZeros() << " of " << n*n << std::endl;
+    auto kernmat = std::make_shared<Eigen::SparseMatrix<double> >(n, n);
+    const Eigen::VectorXd rowsum = KernelMatrix(bandwidthPara(l), bandwidth, neighbors, *kernmat);
+    std::cout << "computed kern mat: " << kernmat->nonZeros() << " of " << n*n << std::endl;
 
     logsigprev = logsig;
     logsig = std::log(rowsum.sum()/((double)n*n));
@@ -192,8 +198,61 @@ Eigen::Matrix<double, Eigen::Dynamic, 2> GraphLaplacian::EvaluateKernel(Eigen::R
     if( l>0 ) {
       sigmaprime(l-1, 0) = bandwidthPara(l-1);
       sigmaprime(l-1, 1) = (logsig-logsigprev)/(std::log(bandwidthPara(l))-std::log(bandwidthPara(l-1)));
+      if( sigmaprime(l-1, 1)>maxsigprime ) {
+        ind = l-1;
+        maxsigprime = sigmaprime(l-1, 1);
+        kernmatBest = kernmat;
+      }
     }
   }
+
+  // set the output
+  optimal.first = bandwidthPara(ind);
+  optimal.second = *kernmatBest;
+
+  return sigmaprime;
+}
+
+Eigen::Matrix<double, Eigen::Dynamic, 2> GraphLaplacian::TuneKernelBandwidth(Eigen::Ref<Eigen::VectorXd const> const& bandwidth, std::pair<double, Eigen::SparseMatrix<double> >& optimal) const {
+  // get the candidate bandwidth parameters
+  const Eigen::VectorXd bandwidthPara = BandwidthParameterCandidates();
+
+  // the number of samples
+  const std::size_t n = NumSamples();
+
+  // the potential kernel matrices
+  auto kernmatBest = std::make_shared<Eigen::SparseMatrix<double> >(n, n);
+
+  // loop through the possible bandwith parameters
+  Eigen::Matrix<double, Eigen::Dynamic, 2> sigmaprime(bandwidthPara.size()-1, 2);
+  double logsig, logsigprev;
+  std::size_t ind;
+  double maxsigprime = 0.0;
+  for( std::size_t l=0; l<bandwidthPara.size(); ++l ) {
+    std::cout << std::endl << std::endl << std::endl;
+    std::cout << "eps: " << bandwidthPara(l) << std::endl;
+    auto kernmat = std::make_shared<Eigen::SparseMatrix<double> >(n, n);
+    const Eigen::VectorXd rowsum = KernelMatrix(bandwidthPara(l), bandwidth, *kernmat);
+    std::cout << "computed kern mat: " << kernmat->nonZeros() << " of " << n*n << std::endl;
+
+    logsigprev = logsig;
+    logsig = std::log(rowsum.sum()/((double)n*n));
+
+    std::cout << "comptued sum" << std::endl;
+    if( l>0 ) {
+      sigmaprime(l-1, 0) = bandwidthPara(l-1);
+      sigmaprime(l-1, 1) = (logsig-logsigprev)/(std::log(bandwidthPara(l))-std::log(bandwidthPara(l-1)));
+      if( sigmaprime(l-1, 1)>maxsigprime ) {
+        ind = l-1;
+        maxsigprime = sigmaprime(l-1, 1);
+        kernmatBest = kernmat;
+      }
+    }
+  }
+
+  // set the output
+  optimal.first = bandwidthPara(ind);
+  optimal.second = *kernmatBest;
 
   return sigmaprime;
 }
@@ -212,8 +271,6 @@ double GraphLaplacian::EvaluateKernel(Eigen::Ref<const Eigen::VectorXd> const& x
   return sum;
 }
 
-std::size_t GraphLaplacian::BandwidthIndex() const { return bandwidthIndex; }
-
 std::size_t GraphLaplacian::NumBandwidthSteps() const { return numBandwidthSteps; }
 
 std::pair<double, double> GraphLaplacian::BandwidthRange() const { return bandwidthRange; }
@@ -229,7 +286,7 @@ Eigen::VectorXd GraphLaplacian::BandwidthParameterCandidates() const {
 }
 
 void GraphLaplacian::ConstructHeatMatrix() {
-  // build the kd-tree based on the samples
+  /*// build the kd-tree based on the samples
   BuildKDTrees();
 
   // the number of samples
@@ -261,7 +318,7 @@ void GraphLaplacian::ConstructHeatMatrix() {
   }
 
   // construct the nonzero entries of the heat matrix
-  ConstructHeatMatrix(kernelsum, neighbors, numentries);
+  ConstructHeatMatrix(kernelsum, neighbors, numentries);*/
 }
 
 void GraphLaplacian::ConstructHeatMatrix(Eigen::Ref<const Eigen::VectorXd> const& kernelsum, std::vector<std::vector<std::pair<std::size_t, double> > >& neighbors, std::size_t const numentries) {
@@ -355,7 +412,7 @@ void GraphLaplacian::SolveWeightedPoisson(Eigen::Ref<Eigen::VectorXd> vec) {
   std::cout << "laplace matrix entries (identity): " << laplace.nonZeros() << std::endl;
 
   laplace -= heatMatrix;
-  laplace /= bandwidth2;
+  //laplace /= bandwidth2;
 
   std::cout << "laplace matrix entries (no bc): " << laplace.nonZeros() << std::endl;
 

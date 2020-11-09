@@ -123,9 +123,9 @@ double NearestNeighbors::FindNeighbors(Eigen::Ref<const Eigen::VectorXd> const& 
   auto it = std::remove_if(neighbors.begin(), neighbors.end(), [lag](std::pair<std::size_t, double> const& neigh) { return neigh.first<lag; } );
   neighbors.erase(it, neighbors.end());
 
-  double mx = 0.0;
-  for( const auto& neigh : neighbors ) { mx = std::max(mx, neigh.second); }
-  return mx;
+  double avg = 0.0;
+  for( const auto& neigh : neighbors ) { avg += neigh.second; }
+  return avg/neighbors.size();
 }
 
 NearestNeighbors::Cloud::Cloud(std::shared_ptr<const muq::SamplingAlgorithms::SampleCollection> const& samples, std::size_t const lag) :

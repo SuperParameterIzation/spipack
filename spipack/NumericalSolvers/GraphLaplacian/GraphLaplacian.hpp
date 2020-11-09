@@ -58,7 +58,6 @@ namespace NumericalSolvers {
       "NumSamples"   | std::size_t | - | In the case where a random variable is passed to the constructor, we draw \f$n\f$ samples from the distribution.   |
       "KernelOptions"   | YAML::Node | - | The options for the compact kernel function \f$k(\theta)\f$ (spi::Tools::CompactKernel). |
       "Bandwidth"  | double   | <tt>1.0</tt> | The bandwith \f$h\f$ that defines the kernel \f$k_h = k(h^{-1} \theta)\f$.
-      "BandwidthIndex"  | int   | <tt>1</tt> | The bandwith index is the maximum value of \f$l\f$ that defines the kernel \f$k_l(\boldsymbol{x}^{(i)}, \boldsymbol{x}^{(j)}) = k((2^l r_i r_j)^{-1} \| \boldsymbol{x}^{(i)} - \boldsymbol{x}^{(j)} \|^2)\f$.
       "EigensolverTol"  | double   | <tt>10^{-5}</tt> | The tolerance for the sparse eigensolver.
       "EigensolverMaxIt"  | std::size_t   | <tt>10^{3}</tt> | The maximum number of iterations for the sparse eigensolver.
 */
@@ -87,14 +86,11 @@ public:
   */
   std::size_t NumSamples() const;
 
-  /// The squared bandwdwidth \f$h^{2}\f$
-  /**
-    \return The squared bandwidth \f$h^{2}\f$
-  */
-  double SquaredBandwidth() const;
-
   /// Get the \f$i^{th}\f$ point from the point cloud.
   Eigen::Ref<Eigen::VectorXd const> Point(std::size_t const i) const;
+
+  /// Do we tune the bandwidth parameter?
+  bool TuneBandwidthParameter() const;
 
   /// Build the kd trees to find nearest neighbors
   void BuildKDTrees();
@@ -109,11 +105,23 @@ public:
   */
   double EvaluateKernel(Eigen::Ref<const Eigen::VectorXd> const& x, double const h2, std::vector<std::pair<std::size_t, double> >& neighbors) const;
 
+  /// Compute the density estimation
+  Eigen::VectorXd DensityEstimation() const;
+
   /**
   @param[in] bandwidth The bandwidth \f$r_i = \max_{j \in [1,k]}{\left( \|\boldsymbol{x}^{(i)} - \boldsymbol{x}^{(I(i,j))} \| \right)}\f$
+  @param[out] optimal First: The optimal bandwidth parameter, Second: The kernel matrix corresponding to the optimal bandwidth parameter
   \return The sigma parameter
   */
-  Eigen::Matrix<double, Eigen::Dynamic, 2> EvaluateKernel(Eigen::Ref<Eigen::VectorXd const> const& bandwidth) const;
+  Eigen::Matrix<double, Eigen::Dynamic, 2> TuneKernelBandwidth(Eigen::Ref<Eigen::VectorXd const> const& bandwidth, std::pair<double, Eigen::SparseMatrix<double> >& optimal) const;
+
+  /**
+  @param[in] bandwidth The bandwidth \f$r_i = \max_{j \in [1,k]}{\left( \|\boldsymbol{x}^{(i)} - \boldsymbol{x}^{(I(i,j))} \| \right)}\f$
+  @param[in] neighbors The nearest neighbors to each point---the kernel is truncated after these neighbors
+  @param[out] optimal First: The optimal bandwidth parameter, Second: The kernel matrix corresponding to the optimal bandwidth parameter
+  \return The sigma parameter
+  */
+  Eigen::Matrix<double, Eigen::Dynamic, 2> TuneKernelBandwidth(Eigen::Ref<Eigen::VectorXd const> const& bandwidth, std::vector<std::vector<std::pair<std::size_t, double> > > const& neighbors, std::pair<double, Eigen::SparseMatrix<double> >& optimal) const;
 
   /**
   @param[in] bandwidthPara The bandwidth parameter \f$\epsilon\f$
@@ -167,22 +175,16 @@ public:
 
   /// The bandwidth of each sample
   /**
-  \return The bandwidth \f$r_i = \max_{j \in [1,k]}{\left( \|\boldsymbol{x}^{(i)} - \boldsymbol{x}^{(I(i,j))} \| \right)}\f$ (note we do not return the squared bandwidth)
+  \return The squared bandwidth \f$r_i^2 = \max_{j \in [1,k]}{\left( \|\boldsymbol{x}^{(i)} - \boldsymbol{x}^{(I(i,j))} \|^2 \right)}\f$
   */
-  Eigen::VectorXd Bandwidth() const;
+  Eigen::VectorXd SquaredBandwidth() const;
 
   /// The bandwidth of each sample
   /**
   @param[out] neighbors Each entry is a list of the nearestneighbors for point \f$i\f$. First: the index of the neighbor, Second: the squared distance to the neighbor
-  \return The bandwidth \f$r_i = \max_{j \in [1,k]}{\left( \|\boldsymbol{x}^{(i)} - \boldsymbol{x}^{(I(i,j))} \| \right)}\f$ (note we do not return the squared bandwidth)
+  \return The bandwidth \f$r_i^2 = \max_{j \in [1,k]}{\left( \|\boldsymbol{x}^{(i)} - \boldsymbol{x}^{(I(i,j))} \|^2 \right)}\f$
   */
-  Eigen::VectorXd Bandwidth(std::vector<std::vector<std::pair<std::size_t, double> > >& neighbors) const;
-
-  /// The bandwidth index parameter
-  /**
-  \return The bandwith index parameter that defines the kernel \f$k_l(\boldsymbol{x}^{(i)}, \boldsymbol{x}^{(j)}) = k((2^l r_i r_j)^{-1} \| \boldsymbol{x}^{(i)} - \boldsymbol{x}^{(j)} \|^2)\f$.
-  */
-  std::size_t BandwidthIndex() const;
+  Eigen::VectorXd SquaredBandwidth(std::vector<std::vector<std::pair<std::size_t, double> > >& neighbors) const;
 
   /// The range of the bandwidth parameter \f$2^{l}\f$
   /**
@@ -270,20 +272,14 @@ private:
   */
   const std::pair<double, double> bandwidthRange;
 
+  /// True: tune bandwidth parameter when computing kernel matrices, False: use user-prescribed bandwidth parameter
+  const bool tuneBandwidthParameter;
+
   /// The bandwidth step parameter
   /**
   We choose the bandwidth parameter from the range \f$[2^{l_{min}}, 2^{l_{max}}]\f$; we discretize this range to \f$\{2^{l_i}\}_{i=1}^{n}\f$. This is the number of points \f$n\f$.
   */
   const std::size_t numBandwidthSteps;
-
-  /// The bandwidth index that defines the kernel \f$k_l(\boldsymbol{x}^{(i)}, \boldsymbol{x}^{(j)}) = k((2^l r_i r_j)^{-1} \| \boldsymbol{x}^{(i)} - \boldsymbol{x}^{(j)} \|^2)\f$.
-  const int bandwidthIndex;
-
-  /// The squared bandwidth parameter \f$h^2\f$
-  /**
-    This parameter defines the kernel \f$k_h(\theta) = k(h^{-2} \theta^2)\f$.
-  */
-  const double bandwidth2;
 
   /// The tolerance for the sparse eigensolver.
   const double eigensolverTol;
@@ -293,8 +289,6 @@ private:
 
   /// The default values for the spi::NumericalSolvers::GraphLaplacian class.
   struct DefaultParameters {
-    static double SquaredBandwidth(YAML::Node const& options);
-
     /// The default number of nearest neighbors for the bandwidth computation is \f$10\f$
     inline static const std::size_t numNearestNeighbors = 10;
 
@@ -304,14 +298,11 @@ private:
     */
     inline static const std::pair<double, double> bandwidthRange = std::pair<double, double>(-10.0, 10.0);
 
-    /// The default number of bandwidth steps is \f$1\f$.
+    /// The default number of bandwidth steps is \f$10\f$.
     inline static const std::size_t numBandwidthSteps = 10;
 
-    /// The bandwidth parameter defaults to \f$1\f$
-    inline static const double bandwidth = 1.0;
-
-    /// The bandwidth index that defaults to \f$10\f$
-    inline static const int bandwidthIndex = 1;
+    /// By default, do not tune the bandwidth parameter
+    inline static const bool tuneBandwidthParameter = false;
 
     /// The tolerance for the sparse eigensolver is \f$10^{-5}\f$
     inline static const double eigensolverTol = 1.0e-5;

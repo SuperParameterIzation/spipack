@@ -30,7 +30,6 @@ public:
     options["BandwidthRange.Min"] = bandwidthRange.first;
     options["BandwidthRange.Max"] = bandwidthRange.second;
     options["NumBandwidthSteps"] = numBandwidthSteps;
-    options["Bandwidth"] = bandwidth;
     options["BandwidthIndex"] = bandwidthIndex;
     options["EigensolverTol"] = eigensolverTol;
 
@@ -47,9 +46,6 @@ public:
     // make sure the graph laplacian has enough samples
     EXPECT_EQ(laplacian->NumSamples(), n);
 
-    // make sure the bandwidth parameter is correct
-    EXPECT_EQ(laplacian->BandwidthIndex(), bandwidthIndex);
-
     // check the kernel
     EXPECT_TRUE(laplacian->Kernel());
     std::shared_ptr<HatKernel const> kern = std::dynamic_pointer_cast<HatKernel const>(laplacian->Kernel());
@@ -59,7 +55,7 @@ public:
     EXPECT_NEAR(laplacian->BandwidthRange().first, bandwidthRange.first, 1.0e-10);
     EXPECT_NEAR(laplacian->BandwidthRange().second, bandwidthRange.second, 1.0e-10);
     EXPECT_EQ(laplacian->NumBandwidthSteps(), numBandwidthSteps);
-    EXPECT_NEAR(laplacian->SquaredBandwidth(), bandwidth*bandwidth, 1.0e-10);
+
 
     const Eigen::VectorXd candidateBandwidths = laplacian->BandwidthParameterCandidates();
     EXPECT_EQ(candidateBandwidths.size(), numBandwidthSteps+1);
@@ -102,9 +98,6 @@ protected:
 
   // The bandwidth index parameter
   const int bandwidthIndex = 4;
-
-  /// The bandwidth for the kernel
-  const double bandwidth = 0.75;
 
   /// The tolerance for the eigensolver
   const double eigensolverTol = 1.0e-6;
@@ -149,19 +142,19 @@ TEST_F(GraphLaplacianTests, ConstructKernelMatrix) {
 
   // compute the bandwidth
   std::vector<std::vector<std::pair<std::size_t, double> > > neighbors;
-  const Eigen::VectorXd bandwidth = laplacian->Bandwidth(neighbors);
+  const Eigen::VectorXd squaredBandwidth = laplacian->SquaredBandwidth(neighbors);
 
   // compute the kernel matrix
   Eigen::SparseMatrix<double> kernmat(samples->size(), samples->size());
   EXPECT_EQ(kernmat.nonZeros(), 0);
-  laplacian->KernelMatrix(eps, bandwidth, kernmat);
+  laplacian->KernelMatrix(eps, squaredBandwidth.array().sqrt(), kernmat);
   EXPECT_TRUE(kernmat.nonZeros()<samples->size()*samples->size());
   EXPECT_TRUE(kernmat.nonZeros()>=samples->size());
 
   // compute the approximate kernel matrix
   Eigen::SparseMatrix<double> kernmatApprox(samples->size(), samples->size());
   EXPECT_EQ(kernmatApprox.nonZeros(), 0);
-  laplacian->KernelMatrix(eps, bandwidth, neighbors, kernmatApprox);
+  laplacian->KernelMatrix(eps, squaredBandwidth.array().sqrt(), neighbors, kernmatApprox);
   EXPECT_TRUE(kernmatApprox.nonZeros()<samples->size()*samples->size());
   EXPECT_TRUE(kernmatApprox.nonZeros()>=samples->size());
 
@@ -173,7 +166,7 @@ TEST_F(GraphLaplacianTests, ConstructKernelMatrix) {
       for( std::size_t j=i; j<samples->size(); ++j ) {
         const Eigen::VectorXd diff = samples->at(i)->state[0]-samples->at(j)->state[0];
 
-        kernmatExpected(i, j) = kern->EvaluateCompactKernel(diff.dot(diff)/(eps*bandwidth(i)*bandwidth(j)));
+        kernmatExpected(i, j) = kern->EvaluateCompactKernel(diff.dot(diff)/(eps*std::sqrt(squaredBandwidth(i)*squaredBandwidth(j))));
         kernmatExpected(j, i) = kernmatExpected(i, j);
       }
     }
@@ -193,6 +186,39 @@ TEST_F(GraphLaplacianTests, ConstructKernelMatrix) {
     }
   }
 }
+
+TEST_F(GraphLaplacianTests, DensityEstimation_TunedBandwidth) {
+  options["TuneBandwidth"] = true;
+
+  // create the graph laplacian from samples
+  auto samples = CreateFromSamples();
+
+  // check the bandwidth
+  EXPECT_TRUE(laplacian->TuneBandwidthParameter());
+
+  // build the kd tree
+  laplacian->BuildKDTrees();
+
+  // estimate the density
+  const Eigen::VectorXd density = laplacian->DensityEstimation();
+}
+
+TEST_F(GraphLaplacianTests, DensityEstimation_FixedBandwidth) {
+  options["TuneBandwidth"] = false;
+
+  // create the graph laplacian from samples
+  auto samples = CreateFromSamples();
+
+  // check the bandwidth
+  EXPECT_FALSE(laplacian->TuneBandwidthParameter());
+
+  // build the kd tree
+  laplacian->BuildKDTrees();
+
+  // estimate the density
+  const Eigen::VectorXd density = laplacian->DensityEstimation();
+}
+
 
 /*TEST_F(GraphLaplacianTests, ConstructHeatMatrix) {
   // create the graph laplacian from samples
