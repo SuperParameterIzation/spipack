@@ -130,20 +130,25 @@ Public Member Functions</h2></td></tr>
 <tr class="memitem:acb41d0c5d96c7aad4b9dd02d0c1b09de"><td class="memItemLeft" align="right" valign="top">std::size_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classspi_1_1NumericalSolvers_1_1GraphLaplacian.html#acb41d0c5d96c7aad4b9dd02d0c1b09de">NumSamples</a> () const </td></tr>
 <tr class="memdesc:acb41d0c5d96c7aad4b9dd02d0c1b09de"><td class="mdescLeft">&#160;</td><td class="mdescRight">How many samples are in the collection?  <a href="#acb41d0c5d96c7aad4b9dd02d0c1b09de">More...</a><br /></td></tr>
 <tr class="separator:acb41d0c5d96c7aad4b9dd02d0c1b09de"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a51e754608491894348bbf91ccef5fe25"><td class="memItemLeft" align="right" valign="top">double&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classspi_1_1NumericalSolvers_1_1GraphLaplacian.html#a51e754608491894348bbf91ccef5fe25">SquaredBandwidth</a> () const </td></tr>
-<tr class="memdesc:a51e754608491894348bbf91ccef5fe25"><td class="mdescLeft">&#160;</td><td class="mdescRight">The squared bandwdwidth \(h^{2}\).  <a href="#a51e754608491894348bbf91ccef5fe25">More...</a><br /></td></tr>
-<tr class="separator:a51e754608491894348bbf91ccef5fe25"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ad91ca7aa5bc061a2d0870680be7128bb"><td class="memItemLeft" align="right" valign="top">Eigen::Ref&lt; Eigen::VectorXd const  &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classspi_1_1NumericalSolvers_1_1GraphLaplacian.html#ad91ca7aa5bc061a2d0870680be7128bb">Point</a> (std::size_t const i) const </td></tr>
 <tr class="memdesc:ad91ca7aa5bc061a2d0870680be7128bb"><td class="mdescLeft">&#160;</td><td class="mdescRight">Get the \(i^{th}\) point from the point cloud.  <a href="#ad91ca7aa5bc061a2d0870680be7128bb">More...</a><br /></td></tr>
 <tr class="separator:ad91ca7aa5bc061a2d0870680be7128bb"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a19fef3f11713287af5fdd576fe638fb2"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classspi_1_1NumericalSolvers_1_1GraphLaplacian.html#a19fef3f11713287af5fdd576fe638fb2">TuneBandwidthParameter</a> () const </td></tr>
+<tr class="memdesc:a19fef3f11713287af5fdd576fe638fb2"><td class="mdescLeft">&#160;</td><td class="mdescRight">Do we tune the bandwidth parameter?  <a href="#a19fef3f11713287af5fdd576fe638fb2">More...</a><br /></td></tr>
+<tr class="separator:a19fef3f11713287af5fdd576fe638fb2"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a9b0646cf58c4fc1cf345f1dd1114b0d2"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classspi_1_1NumericalSolvers_1_1GraphLaplacian.html#a9b0646cf58c4fc1cf345f1dd1114b0d2">BuildKDTrees</a> ()</td></tr>
 <tr class="memdesc:a9b0646cf58c4fc1cf345f1dd1114b0d2"><td class="mdescLeft">&#160;</td><td class="mdescRight">Build the kd trees to find nearest neighbors.  <a href="#a9b0646cf58c4fc1cf345f1dd1114b0d2">More...</a><br /></td></tr>
 <tr class="separator:a9b0646cf58c4fc1cf345f1dd1114b0d2"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a898a3fa46f68d2a05b9ba3992ab92c91"><td class="memItemLeft" align="right" valign="top">double&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classspi_1_1NumericalSolvers_1_1GraphLaplacian.html#a898a3fa46f68d2a05b9ba3992ab92c91">EvaluateKernel</a> (Eigen::Ref&lt; const Eigen::VectorXd &gt; const &amp;x, double const h2, std::vector&lt; std::pair&lt; std::size_t, double &gt; &gt; &amp;neighbors) const </td></tr>
 <tr class="memdesc:a898a3fa46f68d2a05b9ba3992ab92c91"><td class="mdescLeft">&#160;</td><td class="mdescRight">Evaluate kernel at neighbors.  <a href="#a898a3fa46f68d2a05b9ba3992ab92c91">More...</a><br /></td></tr>
 <tr class="separator:a898a3fa46f68d2a05b9ba3992ab92c91"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ae73902463793e58788017adde8a8dc51"><td class="memItemLeft" align="right" valign="top">Eigen::Matrix&lt; double, Eigen::Dynamic, 2 &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classspi_1_1NumericalSolvers_1_1GraphLaplacian.html#ae73902463793e58788017adde8a8dc51">EvaluateKernel</a> (Eigen::Ref&lt; Eigen::VectorXd const  &gt; const &amp;bandwidth) const </td></tr>
-<tr class="separator:ae73902463793e58788017adde8a8dc51"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a5844d2352357b0b629ec9e52e108aa1f"><td class="memItemLeft" align="right" valign="top">Eigen::VectorXd&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classspi_1_1NumericalSolvers_1_1GraphLaplacian.html#a5844d2352357b0b629ec9e52e108aa1f">DensityEstimation</a> () const </td></tr>
+<tr class="memdesc:a5844d2352357b0b629ec9e52e108aa1f"><td class="mdescLeft">&#160;</td><td class="mdescRight">Compute the density estimation.  <a href="#a5844d2352357b0b629ec9e52e108aa1f">More...</a><br /></td></tr>
+<tr class="separator:a5844d2352357b0b629ec9e52e108aa1f"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a4162d317bf3d7b2eff2d46ea4bf19ca0"><td class="memItemLeft" align="right" valign="top">Eigen::Matrix&lt; double, Eigen::Dynamic, 2 &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classspi_1_1NumericalSolvers_1_1GraphLaplacian.html#a4162d317bf3d7b2eff2d46ea4bf19ca0">TuneKernelBandwidth</a> (Eigen::Ref&lt; Eigen::VectorXd const  &gt; const &amp;bandwidth, std::pair&lt; double, Eigen::SparseMatrix&lt; double &gt; &gt; &amp;optimal) const </td></tr>
+<tr class="separator:a4162d317bf3d7b2eff2d46ea4bf19ca0"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a1d149e2ccca64dc37e29e9905c5424cb"><td class="memItemLeft" align="right" valign="top">Eigen::Matrix&lt; double, Eigen::Dynamic, 2 &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classspi_1_1NumericalSolvers_1_1GraphLaplacian.html#a1d149e2ccca64dc37e29e9905c5424cb">TuneKernelBandwidth</a> (Eigen::Ref&lt; Eigen::VectorXd const  &gt; const &amp;bandwidth, std::vector&lt; std::vector&lt; std::pair&lt; std::size_t, double &gt; &gt; &gt; const &amp;neighbors, std::pair&lt; double, Eigen::SparseMatrix&lt; double &gt; &gt; &amp;optimal) const </td></tr>
+<tr class="separator:a1d149e2ccca64dc37e29e9905c5424cb"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a8c04436cd717507eb8b91f1745fa361d"><td class="memItemLeft" align="right" valign="top">Eigen::VectorXd&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classspi_1_1NumericalSolvers_1_1GraphLaplacian.html#a8c04436cd717507eb8b91f1745fa361d">KernelMatrix</a> (double const bandwidthPara, Eigen::Ref&lt; Eigen::VectorXd const  &gt; const &amp;bandwidth, Eigen::SparseMatrix&lt; double &gt; &amp;kernmat) const </td></tr>
 <tr class="separator:a8c04436cd717507eb8b91f1745fa361d"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ad1e8e182d6403908ef5eb1c121cb2116"><td class="memItemLeft" align="right" valign="top">Eigen::VectorXd&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classspi_1_1NumericalSolvers_1_1GraphLaplacian.html#ad1e8e182d6403908ef5eb1c121cb2116">KernelMatrix</a> (double const bandwidthPara, Eigen::Ref&lt; Eigen::VectorXd const  &gt; const &amp;bandwidth, std::vector&lt; std::vector&lt; std::pair&lt; std::size_t, double &gt; &gt; &gt; const &amp;neighbors, Eigen::SparseMatrix&lt; double &gt; &amp;kernmat) const </td></tr>
@@ -166,15 +171,12 @@ Public Member Functions</h2></td></tr>
 <tr class="memitem:afe7076cd2aaf8cdc1daa9461cd081cb4"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classspi_1_1NumericalSolvers_1_1GraphLaplacian.html#afe7076cd2aaf8cdc1daa9461cd081cb4">WriteToFile</a> (std::string const &amp;filename, std::string const &amp;dataset=&quot;/&quot;) const </td></tr>
 <tr class="memdesc:afe7076cd2aaf8cdc1daa9461cd081cb4"><td class="mdescLeft">&#160;</td><td class="mdescRight">Write the samples to file.  <a href="#afe7076cd2aaf8cdc1daa9461cd081cb4">More...</a><br /></td></tr>
 <tr class="separator:afe7076cd2aaf8cdc1daa9461cd081cb4"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a18b397901696aeedcba286384567fa9c"><td class="memItemLeft" align="right" valign="top">Eigen::VectorXd&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classspi_1_1NumericalSolvers_1_1GraphLaplacian.html#a18b397901696aeedcba286384567fa9c">Bandwidth</a> () const </td></tr>
-<tr class="memdesc:a18b397901696aeedcba286384567fa9c"><td class="mdescLeft">&#160;</td><td class="mdescRight">The bandwidth of each sample.  <a href="#a18b397901696aeedcba286384567fa9c">More...</a><br /></td></tr>
-<tr class="separator:a18b397901696aeedcba286384567fa9c"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ad08580ab985eb5de8d362dd8b72a98e9"><td class="memItemLeft" align="right" valign="top">Eigen::VectorXd&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classspi_1_1NumericalSolvers_1_1GraphLaplacian.html#ad08580ab985eb5de8d362dd8b72a98e9">Bandwidth</a> (std::vector&lt; std::vector&lt; std::pair&lt; std::size_t, double &gt; &gt; &gt; &amp;neighbors) const </td></tr>
-<tr class="memdesc:ad08580ab985eb5de8d362dd8b72a98e9"><td class="mdescLeft">&#160;</td><td class="mdescRight">The bandwidth of each sample.  <a href="#ad08580ab985eb5de8d362dd8b72a98e9">More...</a><br /></td></tr>
-<tr class="separator:ad08580ab985eb5de8d362dd8b72a98e9"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a3d40a40824b4b56464c85ff7e3aedb33"><td class="memItemLeft" align="right" valign="top">std::size_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classspi_1_1NumericalSolvers_1_1GraphLaplacian.html#a3d40a40824b4b56464c85ff7e3aedb33">BandwidthIndex</a> () const </td></tr>
-<tr class="memdesc:a3d40a40824b4b56464c85ff7e3aedb33"><td class="mdescLeft">&#160;</td><td class="mdescRight">The bandwidth index parameter.  <a href="#a3d40a40824b4b56464c85ff7e3aedb33">More...</a><br /></td></tr>
-<tr class="separator:a3d40a40824b4b56464c85ff7e3aedb33"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a72c0625b2876af367030d82821bfa4f6"><td class="memItemLeft" align="right" valign="top">Eigen::VectorXd&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classspi_1_1NumericalSolvers_1_1GraphLaplacian.html#a72c0625b2876af367030d82821bfa4f6">SquaredBandwidth</a> () const </td></tr>
+<tr class="memdesc:a72c0625b2876af367030d82821bfa4f6"><td class="mdescLeft">&#160;</td><td class="mdescRight">The bandwidth of each sample.  <a href="#a72c0625b2876af367030d82821bfa4f6">More...</a><br /></td></tr>
+<tr class="separator:a72c0625b2876af367030d82821bfa4f6"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ad5990f4efb36678bf95af5d9e18c627b"><td class="memItemLeft" align="right" valign="top">Eigen::VectorXd&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classspi_1_1NumericalSolvers_1_1GraphLaplacian.html#ad5990f4efb36678bf95af5d9e18c627b">SquaredBandwidth</a> (std::vector&lt; std::vector&lt; std::pair&lt; std::size_t, double &gt; &gt; &gt; &amp;neighbors) const </td></tr>
+<tr class="memdesc:ad5990f4efb36678bf95af5d9e18c627b"><td class="mdescLeft">&#160;</td><td class="mdescRight">The bandwidth of each sample.  <a href="#ad5990f4efb36678bf95af5d9e18c627b">More...</a><br /></td></tr>
+<tr class="separator:ad5990f4efb36678bf95af5d9e18c627b"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a86a1e00907cc2920876d2c62b401ddb9"><td class="memItemLeft" align="right" valign="top">std::pair&lt; double, double &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classspi_1_1NumericalSolvers_1_1GraphLaplacian.html#a86a1e00907cc2920876d2c62b401ddb9">BandwidthRange</a> () const </td></tr>
 <tr class="memdesc:a86a1e00907cc2920876d2c62b401ddb9"><td class="mdescLeft">&#160;</td><td class="mdescRight">The range of the bandwidth parameter \(2^{l}\).  <a href="#a86a1e00907cc2920876d2c62b401ddb9">More...</a><br /></td></tr>
 <tr class="separator:a86a1e00907cc2920876d2c62b401ddb9"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -223,15 +225,12 @@ Private Attributes</h2></td></tr>
 <tr class="memitem:ae8e18afc8bb940fc60c2c02b902fbd08"><td class="memItemLeft" align="right" valign="top">const std::pair&lt; double, double &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classspi_1_1NumericalSolvers_1_1GraphLaplacian.html#ae8e18afc8bb940fc60c2c02b902fbd08">bandwidthRange</a></td></tr>
 <tr class="memdesc:ae8e18afc8bb940fc60c2c02b902fbd08"><td class="mdescLeft">&#160;</td><td class="mdescRight">The maximum and minimum range for the bandwidth index.  <a href="#ae8e18afc8bb940fc60c2c02b902fbd08">More...</a><br /></td></tr>
 <tr class="separator:ae8e18afc8bb940fc60c2c02b902fbd08"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a64bd9d55c419998628ae399c3a38afa7"><td class="memItemLeft" align="right" valign="top">const bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classspi_1_1NumericalSolvers_1_1GraphLaplacian.html#a64bd9d55c419998628ae399c3a38afa7">tuneBandwidthParameter</a></td></tr>
+<tr class="memdesc:a64bd9d55c419998628ae399c3a38afa7"><td class="mdescLeft">&#160;</td><td class="mdescRight">True: tune bandwidth parameter when computing kernel matrices, False: use user-prescribed bandwidth parameter.  <a href="#a64bd9d55c419998628ae399c3a38afa7">More...</a><br /></td></tr>
+<tr class="separator:a64bd9d55c419998628ae399c3a38afa7"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a90e6561ce6ab82857e03a3bdc60ac016"><td class="memItemLeft" align="right" valign="top">const std::size_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classspi_1_1NumericalSolvers_1_1GraphLaplacian.html#a90e6561ce6ab82857e03a3bdc60ac016">numBandwidthSteps</a></td></tr>
 <tr class="memdesc:a90e6561ce6ab82857e03a3bdc60ac016"><td class="mdescLeft">&#160;</td><td class="mdescRight">The bandwidth step parameter.  <a href="#a90e6561ce6ab82857e03a3bdc60ac016">More...</a><br /></td></tr>
 <tr class="separator:a90e6561ce6ab82857e03a3bdc60ac016"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ad2a2a398d3305b8705418406086cb400"><td class="memItemLeft" align="right" valign="top">const int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classspi_1_1NumericalSolvers_1_1GraphLaplacian.html#ad2a2a398d3305b8705418406086cb400">bandwidthIndex</a></td></tr>
-<tr class="memdesc:ad2a2a398d3305b8705418406086cb400"><td class="mdescLeft">&#160;</td><td class="mdescRight">The bandwidth index that defines the kernel \(k_l(\boldsymbol{x}^{(i)}, \boldsymbol{x}^{(j)}) = k((2^l r_i r_j)^{-1} \| \boldsymbol{x}^{(i)} - \boldsymbol{x}^{(j)} \|^2)\).  <a href="#ad2a2a398d3305b8705418406086cb400">More...</a><br /></td></tr>
-<tr class="separator:ad2a2a398d3305b8705418406086cb400"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:aee4e4d94cbb874111cf6160dfae7e4d6"><td class="memItemLeft" align="right" valign="top">const double&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classspi_1_1NumericalSolvers_1_1GraphLaplacian.html#aee4e4d94cbb874111cf6160dfae7e4d6">bandwidth2</a></td></tr>
-<tr class="memdesc:aee4e4d94cbb874111cf6160dfae7e4d6"><td class="mdescLeft">&#160;</td><td class="mdescRight">The squared bandwidth parameter \(h^2\).  <a href="#aee4e4d94cbb874111cf6160dfae7e4d6">More...</a><br /></td></tr>
-<tr class="separator:aee4e4d94cbb874111cf6160dfae7e4d6"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a6e779dac573c2f5bd7736a4dce82cde6"><td class="memItemLeft" align="right" valign="top">const double&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classspi_1_1NumericalSolvers_1_1GraphLaplacian.html#a6e779dac573c2f5bd7736a4dce82cde6">eigensolverTol</a></td></tr>
 <tr class="memdesc:a6e779dac573c2f5bd7736a4dce82cde6"><td class="mdescLeft">&#160;</td><td class="mdescRight">The tolerance for the sparse eigensolver.  <a href="#a6e779dac573c2f5bd7736a4dce82cde6">More...</a><br /></td></tr>
 <tr class="separator:a6e779dac573c2f5bd7736a4dce82cde6"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -247,7 +246,7 @@ Static Private Attributes</h2></td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><p>Estimate a weighted Laplacian operator using a graph Laplacian. </p>
-<p>Let \(\psi\) be a probability distribution (with corresponding probability density function). Define the weighted Laplacian operator (given some function \(H\)) </p><p class="formulaDsp">
+<p>Let $$$$ \(\psi\) be a probability distribution (with corresponding probability density function). Define the weighted Laplacian operator (given some function \(H\)) </p><p class="formulaDsp">
 \begin{equation*} \nabla_{\psi}^2 H = \psi^{-1} \nabla \cdot (\psi \nabla f). \end{equation*}
 </p>
 <p> This class uses \(n\) samples \(\{\boldsymbol{x}^{(i)}\}_{i=1}^{n}\) such that \(\boldsymbol{x}^{(i)} \sim \psi\) to approximate the action of this operator and to solve the weighted Poisson equation (given the right hand side \(R\)) </p><p class="formulaDsp">
@@ -275,8 +274,6 @@ Static Private Attributes</h2></td></tr>
 <td>"KernelOptions" </td><td>YAML::Node </td><td>- </td><td>The options for the compact kernel function \(k(\theta)\) (<a class="el" href="classspi_1_1Tools_1_1CompactKernel.html" title="An implementation of a compact kernel. ">spi::Tools::CompactKernel</a>). </td></tr>
 <tr>
 <td>"Bandwidth" </td><td>double </td><td><code>1.0</code> </td><td>The bandwith \(h\) that defines the kernel \(k_h = k(h^{-1} \theta)\). </td></tr>
-<tr>
-<td>"BandwidthIndex" </td><td>int </td><td><code>1</code> </td><td>The bandwith index is the maximum value of \(l\) that defines the kernel \(k_l(\boldsymbol{x}^{(i)}, \boldsymbol{x}^{(j)}) = k((2^l r_i r_j)^{-1} \| \boldsymbol{x}^{(i)} - \boldsymbol{x}^{(j)} \|^2)\). </td></tr>
 <tr>
 <td>"EigensolverTol" </td><td>double </td><td><code>10^{-5}</code> </td><td>The tolerance for the sparse eigensolver. </td></tr>
 <tr>
@@ -377,67 +374,6 @@ Static Private Attributes</h2></td></tr>
 </div>
 </div>
 <h2 class="groupheader">Member Function Documentation</h2>
-<a class="anchor" id="a18b397901696aeedcba286384567fa9c"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">Eigen::VectorXd GraphLaplacian::Bandwidth </td>
-          <td>(</td>
-          <td class="paramname"></td><td>)</td>
-          <td> const</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-<p>The bandwidth of each sample. </p>
-<dl class="section return"><dt>Returns</dt><dd>The bandwidth \(r_i = \max_{j \in [1,k]}{\left( \|\boldsymbol{x}^{(i)} - \boldsymbol{x}^{(I(i,j))} \| \right)}\) (note we do not return the squared bandwidth) </dd></dl>
-
-</div>
-</div>
-<a class="anchor" id="ad08580ab985eb5de8d362dd8b72a98e9"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">Eigen::VectorXd GraphLaplacian::Bandwidth </td>
-          <td>(</td>
-          <td class="paramtype">std::vector&lt; std::vector&lt; std::pair&lt; std::size_t, double &gt; &gt; &gt; &amp;&#160;</td>
-          <td class="paramname"><em>neighbors</em></td><td>)</td>
-          <td> const</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-<p>The bandwidth of each sample. </p>
-<dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramdir">[out]</td><td class="paramname">neighbors</td><td>Each entry is a list of the nearestneighbors for point \(i\). First: the index of the neighbor, Second: the squared distance to the neighbor </td></tr>
-  </table>
-  </dd>
-</dl>
-<dl class="section return"><dt>Returns</dt><dd>The bandwidth \(r_i = \max_{j \in [1,k]}{\left( \|\boldsymbol{x}^{(i)} - \boldsymbol{x}^{(I(i,j))} \| \right)}\) (note we do not return the squared bandwidth) </dd></dl>
-
-</div>
-</div>
-<a class="anchor" id="a3d40a40824b4b56464c85ff7e3aedb33"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">std::size_t GraphLaplacian::BandwidthIndex </td>
-          <td>(</td>
-          <td class="paramname"></td><td>)</td>
-          <td> const</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-<p>The bandwidth index parameter. </p>
-<dl class="section return"><dt>Returns</dt><dd>The bandwith index parameter that defines the kernel \(k_l(\boldsymbol{x}^{(i)}, \boldsymbol{x}^{(j)}) = k((2^l r_i r_j)^{-1} \| \boldsymbol{x}^{(i)} - \boldsymbol{x}^{(j)} \|^2)\). </dd></dl>
-
-</div>
-</div>
 <a class="anchor" id="a2851a590ecb91015f34898dd54f01a08"></a>
 <div class="memitem">
 <div class="memproto">
@@ -696,6 +632,23 @@ Static Private Attributes</h2></td></tr>
 
 </div>
 </div>
+<a class="anchor" id="a5844d2352357b0b629ec9e52e108aa1f"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">Eigen::VectorXd GraphLaplacian::DensityEstimation </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td> const</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Compute the density estimation. </p>
+
+</div>
+</div>
 <a class="anchor" id="a792f9eff952556b1f8942276224cf80c"></a>
 <div class="memitem">
 <div class="memproto">
@@ -754,29 +707,6 @@ Static Private Attributes</h2></td></tr>
   </dd>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>The sum of the kernel evaluations \(d(\boldsymbol{x}) = \sum_{j=1}^{k} k_h(\|\boldsymbol{x}-\boldsymbol{x}^{(j)}\|^2)\) </dd></dl>
-
-</div>
-</div>
-<a class="anchor" id="ae73902463793e58788017adde8a8dc51"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">Eigen::Matrix&lt; double, Eigen::Dynamic, 2 &gt; GraphLaplacian::EvaluateKernel </td>
-          <td>(</td>
-          <td class="paramtype">Eigen::Ref&lt; Eigen::VectorXd const  &gt; const &amp;&#160;</td>
-          <td class="paramname"><em>bandwidth</em></td><td>)</td>
-          <td> const</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-<dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramdir">[in]</td><td class="paramname">bandwidth</td><td>The bandwidth \(r_i = \max_{j \in [1,k]}{\left( \|\boldsymbol{x}^{(i)} - \boldsymbol{x}^{(I(i,j))} \| \right)}\) </td></tr>
-  </table>
-  </dd>
-</dl>
-<dl class="section return"><dt>Returns</dt><dd>The sigma parameter </dd></dl>
 
 </div>
 </div>
@@ -1033,12 +963,12 @@ Static Private Attributes</h2></td></tr>
 
 </div>
 </div>
-<a class="anchor" id="a51e754608491894348bbf91ccef5fe25"></a>
+<a class="anchor" id="a72c0625b2876af367030d82821bfa4f6"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">double GraphLaplacian::SquaredBandwidth </td>
+          <td class="memname">Eigen::VectorXd GraphLaplacian::SquaredBandwidth </td>
           <td>(</td>
           <td class="paramname"></td><td>)</td>
           <td> const</td>
@@ -1046,8 +976,125 @@ Static Private Attributes</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p>The squared bandwdwidth \(h^{2}\). </p>
-<dl class="section return"><dt>Returns</dt><dd>The squared bandwidth \(h^{2}\) </dd></dl>
+<p>The bandwidth of each sample. </p>
+<dl class="section return"><dt>Returns</dt><dd>The squared bandwidth \(r_i^2 = \max_{j \in [1,k]}{\left( \|\boldsymbol{x}^{(i)} - \boldsymbol{x}^{(I(i,j))} \|^2 \right)}\) </dd></dl>
+
+</div>
+</div>
+<a class="anchor" id="ad5990f4efb36678bf95af5d9e18c627b"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">Eigen::VectorXd GraphLaplacian::SquaredBandwidth </td>
+          <td>(</td>
+          <td class="paramtype">std::vector&lt; std::vector&lt; std::pair&lt; std::size_t, double &gt; &gt; &gt; &amp;&#160;</td>
+          <td class="paramname"><em>neighbors</em></td><td>)</td>
+          <td> const</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>The bandwidth of each sample. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[out]</td><td class="paramname">neighbors</td><td>Each entry is a list of the nearestneighbors for point \(i\). First: the index of the neighbor, Second: the squared distance to the neighbor </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>The bandwidth \(r_i^2 = \max_{j \in [1,k]}{\left( \|\boldsymbol{x}^{(i)} - \boldsymbol{x}^{(I(i,j))} \|^2 \right)}\) </dd></dl>
+
+</div>
+</div>
+<a class="anchor" id="a19fef3f11713287af5fdd576fe638fb2"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">bool GraphLaplacian::TuneBandwidthParameter </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td> const</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Do we tune the bandwidth parameter? </p>
+
+</div>
+</div>
+<a class="anchor" id="a4162d317bf3d7b2eff2d46ea4bf19ca0"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">Eigen::Matrix&lt; double, Eigen::Dynamic, 2 &gt; GraphLaplacian::TuneKernelBandwidth </td>
+          <td>(</td>
+          <td class="paramtype">Eigen::Ref&lt; Eigen::VectorXd const  &gt; const &amp;&#160;</td>
+          <td class="paramname"><em>bandwidth</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">std::pair&lt; double, Eigen::SparseMatrix&lt; double &gt; &gt; &amp;&#160;</td>
+          <td class="paramname"><em>optimal</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td> const</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[in]</td><td class="paramname">bandwidth</td><td>The bandwidth \(r_i = \max_{j \in [1,k]}{\left( \|\boldsymbol{x}^{(i)} - \boldsymbol{x}^{(I(i,j))} \| \right)}\) </td></tr>
+    <tr><td class="paramdir">[out]</td><td class="paramname">optimal</td><td>First: The optimal bandwidth parameter, Second: The kernel matrix corresponding to the optimal bandwidth parameter </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>The sigma parameter </dd></dl>
+
+</div>
+</div>
+<a class="anchor" id="a1d149e2ccca64dc37e29e9905c5424cb"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">Eigen::Matrix&lt; double, Eigen::Dynamic, 2 &gt; GraphLaplacian::TuneKernelBandwidth </td>
+          <td>(</td>
+          <td class="paramtype">Eigen::Ref&lt; Eigen::VectorXd const  &gt; const &amp;&#160;</td>
+          <td class="paramname"><em>bandwidth</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">std::vector&lt; std::vector&lt; std::pair&lt; std::size_t, double &gt; &gt; &gt; const &amp;&#160;</td>
+          <td class="paramname"><em>neighbors</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">std::pair&lt; double, Eigen::SparseMatrix&lt; double &gt; &gt; &amp;&#160;</td>
+          <td class="paramname"><em>optimal</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td> const</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[in]</td><td class="paramname">bandwidth</td><td>The bandwidth \(r_i = \max_{j \in [1,k]}{\left( \|\boldsymbol{x}^{(i)} - \boldsymbol{x}^{(I(i,j))} \| \right)}\) </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">neighbors</td><td>The nearest neighbors to each point&mdash;the kernel is truncated after these neighbors </td></tr>
+    <tr><td class="paramdir">[out]</td><td class="paramname">optimal</td><td>First: The optimal bandwidth parameter, Second: The kernel matrix corresponding to the optimal bandwidth parameter </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>The sigma parameter </dd></dl>
 
 </div>
 </div>
@@ -1087,51 +1134,6 @@ Static Private Attributes</h2></td></tr>
 </div>
 </div>
 <h2 class="groupheader">Member Data Documentation</h2>
-<a class="anchor" id="aee4e4d94cbb874111cf6160dfae7e4d6"></a>
-<div class="memitem">
-<div class="memproto">
-<table class="mlabels">
-  <tr>
-  <td class="mlabels-left">
-      <table class="memname">
-        <tr>
-          <td class="memname">const double spi::NumericalSolvers::GraphLaplacian::bandwidth2</td>
-        </tr>
-      </table>
-  </td>
-  <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">private</span></span>  </td>
-  </tr>
-</table>
-</div><div class="memdoc">
-
-<p>The squared bandwidth parameter \(h^2\). </p>
-<p>This parameter defines the kernel \(k_h(\theta) = k(h^{-2} \theta^2)\). </p>
-
-</div>
-</div>
-<a class="anchor" id="ad2a2a398d3305b8705418406086cb400"></a>
-<div class="memitem">
-<div class="memproto">
-<table class="mlabels">
-  <tr>
-  <td class="mlabels-left">
-      <table class="memname">
-        <tr>
-          <td class="memname">const int spi::NumericalSolvers::GraphLaplacian::bandwidthIndex</td>
-        </tr>
-      </table>
-  </td>
-  <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">private</span></span>  </td>
-  </tr>
-</table>
-</div><div class="memdoc">
-
-<p>The bandwidth index that defines the kernel \(k_l(\boldsymbol{x}^{(i)}, \boldsymbol{x}^{(j)}) = k((2^l r_i r_j)^{-1} \| \boldsymbol{x}^{(i)} - \boldsymbol{x}^{(j)} \|^2)\). </p>
-
-</div>
-</div>
 <a class="anchor" id="ae8e18afc8bb940fc60c2c02b902fbd08"></a>
 <div class="memitem">
 <div class="memproto">
@@ -1330,6 +1332,28 @@ Static Private Attributes</h2></td></tr>
 </div><div class="memdoc">
 
 <p>Store the samples from \(\psi\). </p>
+
+</div>
+</div>
+<a class="anchor" id="a64bd9d55c419998628ae399c3a38afa7"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">const bool spi::NumericalSolvers::GraphLaplacian::tuneBandwidthParameter</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">private</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>True: tune bandwidth parameter when computing kernel matrices, False: use user-prescribed bandwidth parameter. </p>
 
 </div>
 </div>
