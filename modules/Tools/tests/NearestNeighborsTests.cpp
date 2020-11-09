@@ -24,6 +24,7 @@ public:
   /// Make sure everything is constructed correctly
   virtual void TearDown() override {
     EXPECT_TRUE(nn);
+    EXPECT_TRUE(nn->Samples());
 
     // check the number of samples and the state dimension
     EXPECT_EQ(nn->NumSamples(), n);
@@ -50,7 +51,7 @@ protected:
   }
 
   /// The dimension of state spaces
-  const unsigned int dim = 4;
+  const std::size_t dim = 4;
 
   /// The number of samples
   const std::size_t n = 10000;

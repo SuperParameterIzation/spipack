@@ -19,9 +19,14 @@ public:
     // create a standard Gaussian random variable
     rv = std::make_shared<Gaussian>(dim)->AsVariable();
 
+    // options for the nearest neighbor search
+    YAML::Node nnOptions;
+    nnOptions["MaxLeaf"] = maxLeaf;
+    nnOptions["NumSamples"] = n;
+    nnOptions["Stride"] = n/5;
+
     // set the options for the graph laplacian
-    options["MaxLeaf"] = maxLeaf;
-    options["NumSamples"] = n;
+    options["NearestNeighbors"] = nnOptions;
     options["BandwidthRange.Min"] = bandwidthRange.first;
     options["BandwidthRange.Max"] = bandwidthRange.second;
     options["NumBandwidthSteps"] = numBandwidthSteps;
@@ -84,7 +89,7 @@ protected:
   inline static const unsigned int dim = 4;
 
   /// The number of samples
-  const std::size_t n = 1000;
+  const std::size_t n = 10000;
 
   /// The max leaf size for the kd tree
   const std::size_t maxLeaf = 15;
@@ -129,90 +134,6 @@ TEST_F(GraphLaplacianTests, SampleCollectionConstruction) {
   }
 }
 
-TEST_F(GraphLaplacianTests, FindNearestNeighbors_Radius) {
-  // create the graph laplacian from samples
-  auto samples = CreateFromSamples();
-
-  // build the kd-tree based on the samples
-  laplacian->BuildKDTree();
-
-  // choose a new random point from the distribution
-  const Eigen::VectorXd x = rv->Sample();
-  const double r = 0.5; // the radius
-
-  // find all of the points within a choosen radius
-  std::vector<std::pair<std::size_t, double> > neighbors;
-  laplacian->FindNeighbors(x, r*r, neighbors);
-
-  // make sure the index of the neighbors is valid and they are within the correct radius
-  for( const auto& it : neighbors ) {
-    EXPECT_TRUE(it.first<n);
-    EXPECT_TRUE(it.second<r*r+1.0e-10);
-
-    // make sure that we have found the correct neighbor
-    const Eigen::VectorXd& xj = samples->at(it.first)->state[0];
-
-    // check the neighbors
-    const double diffnorm = (x-xj).norm();
-    EXPECT_TRUE(diffnorm<r+1.0e-10);
-    EXPECT_NEAR(diffnorm*diffnorm, it.second, 1.0e-10);
-  }
-
-  // evaluate the kernel function at the neighbors
-  const double kernelsum = laplacian->EvaluateKernel(x, r*r, neighbors);
-
-  // the distances should now be the kernel evaluation
-  for( const auto& it : neighbors ) {
-    // in this case, the kernel is a hat kernel, so the distance is 1
-    EXPECT_DOUBLE_EQ(it.second, 1.0);
-  }
-  EXPECT_DOUBLE_EQ(kernelsum, (double)neighbors.size());
-}
-
-TEST_F(GraphLaplacianTests, FindNearestNeighbors_NumNeighbors) {
-  // create the graph laplacian from samples
-  auto samples = CreateFromSamples();
-
-  // build the kd-tree based on the samples
-  laplacian->BuildKDTree();
-
-  // choose a new random point from the distribution
-  const Eigen::VectorXd x = rv->Sample();
-  const size_t k = 15; // the number of nearest neighbors
-
-  // find all of the points within a choosen radius
-  std::vector<std::pair<std::size_t, double> > neighbors;
-  const double furthestDist = laplacian->FindNeighbors(x, k, neighbors);
-
-  // make sure we found the correct number of nearest neighbors
-  EXPECT_EQ(neighbors.size(), k);
-
-  // make sure the index of the neighbors is valid and they are within the correct radius
-  double maxdist = 0.0;
-  for( const auto& it : neighbors ) {
-    EXPECT_TRUE(it.first<n);
-
-    // make sure that we have found the correct neighbor
-    const Eigen::VectorXd& xj = samples->at(it.first)->state[0];
-
-    // check the neighbors
-    const double diffnorm = (x-xj).norm();
-    maxdist = std::max(maxdist, diffnorm);
-    EXPECT_NEAR(diffnorm*diffnorm, it.second, 1.0e-10);
-  }
-  EXPECT_NEAR(furthestDist, maxdist*maxdist, 1.0e-10);
-
-  // evaluate the kernel function at the neighbors
-  const double kernelsum = laplacian->EvaluateKernel(x, furthestDist, neighbors);
-
-  // the distances should now be the kernel evaluation
-  for( const auto& it : neighbors ) {
-    // in this case, the kernel is a hat kernel, so the distance is 1
-    EXPECT_DOUBLE_EQ(it.second, 1.0);
-  }
-  EXPECT_DOUBLE_EQ(kernelsum, (double)k);
-}
-
 TEST_F(GraphLaplacianTests, ConstructKernelMatrix) {
   // the kernel bandwidth parameter
   const double eps = 0.75;
@@ -224,18 +145,10 @@ TEST_F(GraphLaplacianTests, ConstructKernelMatrix) {
   auto samples = CreateFromSamples();
 
   // build the kd tree
-  laplacian->BuildKDTree();
+  laplacian->BuildKDTrees();
 
-  // loop through each sample and compute the squared bandwidth
-  std::vector<std::vector<std::pair<std::size_t, double> > > neighbors(laplacian->NumSamples());
-  Eigen::VectorXd bandwidth(laplacian->NumSamples());
-  for( std::size_t i=0; i<laplacian->NumSamples(); ++i ) {
-    // get a reference to the ith point
-    Eigen::Ref<Eigen::VectorXd const> point = laplacian->Point(i);
-
-    // find the nearest neighbors for each sample
-    bandwidth(i) = std::sqrt(laplacian->FindNeighbors(point, numNeighbors, neighbors[i]));
-  }
+  // compute the bandwidth
+  const Eigen::VectorXd bandwidth = laplacian->Bandwidth();
 
   // compute the kernel matrix
   Eigen::SparseMatrix<double> kernmat(samples->size(), samples->size());
@@ -267,7 +180,7 @@ TEST_F(GraphLaplacianTests, ConstructKernelMatrix) {
   }
 }
 
-TEST_F(GraphLaplacianTests, ConstructHeatMatrix) {
+/*TEST_F(GraphLaplacianTests, ConstructHeatMatrix) {
   // create the graph laplacian from samples
   auto samples = CreateFromSamples();
 
@@ -288,7 +201,7 @@ TEST_F(GraphLaplacianTests, ConstructHeatMatrix) {
   const std::size_t neig = 1;
   const Eigen::VectorXd eigenvalues = laplacian->HeatMatrixEigenvalues(neig);
   EXPECT_NEAR(eigenvalues(0), 1.0, 10.0*eigensolverTol);
-}
+}*/
 
 TEST(WeightedPoissonProblem, Solve) {
   /*// the dimension of the problem

@@ -19,27 +19,27 @@ double GraphLaplacian::DefaultParameters::SquaredBandwidth(YAML::Node const& opt
 }
 
 GraphLaplacian::GraphLaplacian(std::shared_ptr<RandomVariable> const& rv, YAML::Node const& options) :
-  cloud(SampleRandomVariable(rv, options["NumSamples"].as<std::size_t>())),
-  kdtree(cloud.StateDim(), cloud, nanoflann::KDTreeSingleIndexAdaptorParams(options["MaxLeaf"].as<std::size_t>(defaults.maxLeaf))),
-  bandwidthRange(std::pair<double, double>(options["BandwidthRange.Min"].as<double>(defaults.bandwidthRange.first),options["BandwidthRange.Max"].as<double>(defaults.bandwidthRange.second))),
-  numBandwidthSteps(options["NumBandwidthSteps"].as<std::size_t>(defaults.numBandwidthSteps)),
-  bandwidthIndex(options["BandwidthIndex"].as<int>(defaults.bandwidthIndex)),
-  bandwidth2(DefaultParameters::SquaredBandwidth(options)),
-  eigensolverTol(options["EigensolverTol"].as<double>(defaults.eigensolverTol)),
-  eigensolverMaxIt(options["EigensolverMaxIt"].as<std::size_t>(defaults.eigensolverMaxIt))
+samples(rv, options["NearestNeighbors"]),
+numNearestNeighbors(options["NumNearestNeighbors"].as<std::size_t>(defaults.numNearestNeighbors)),
+bandwidthRange(std::pair<double, double>(options["BandwidthRange.Min"].as<double>(defaults.bandwidthRange.first),options["BandwidthRange.Max"].as<double>(defaults.bandwidthRange.second))),
+numBandwidthSteps(options["NumBandwidthSteps"].as<std::size_t>(defaults.numBandwidthSteps)),
+bandwidthIndex(options["BandwidthIndex"].as<int>(defaults.bandwidthIndex)),
+bandwidth2(DefaultParameters::SquaredBandwidth(options)),
+eigensolverTol(options["EigensolverTol"].as<double>(defaults.eigensolverTol)),
+eigensolverMaxIt(options["EigensolverMaxIt"].as<std::size_t>(defaults.eigensolverMaxIt))
 {
   Initialize(options);
 }
 
 GraphLaplacian::GraphLaplacian(std::shared_ptr<SampleCollection> const& samples, YAML::Node const& options) :
-  cloud(samples),
-  kdtree(cloud.StateDim(), cloud, nanoflann::KDTreeSingleIndexAdaptorParams(options["MaxLeaf"].as<std::size_t>(defaults.maxLeaf))),
-  bandwidthRange(std::pair<double, double>(options["BandwidthRange.Min"].as<double>(defaults.bandwidthRange.first),options["BandwidthRange.Max"].as<double>(defaults.bandwidthRange.second))),
-  numBandwidthSteps(options["NumBandwidthSteps"].as<std::size_t>(defaults.numBandwidthSteps)),
-  bandwidthIndex(options["BandwidthIndex"].as<int>(defaults.bandwidthIndex)),
-  bandwidth2(DefaultParameters::SquaredBandwidth(options)),
-  eigensolverTol(options["EigensolverTol"].as<double>(defaults.eigensolverTol)),
-  eigensolverMaxIt(options["EigensolverMaxIt"].as<std::size_t>(defaults.eigensolverMaxIt))
+samples(samples, options["NearestNeighbors"]),
+numNearestNeighbors(options["NumNearestNeighbors"].as<std::size_t>(defaults.numNearestNeighbors)),
+bandwidthRange(std::pair<double, double>(options["BandwidthRange.Min"].as<double>(defaults.bandwidthRange.first),options["BandwidthRange.Max"].as<double>(defaults.bandwidthRange.second))),
+numBandwidthSteps(options["NumBandwidthSteps"].as<std::size_t>(defaults.numBandwidthSteps)),
+bandwidthIndex(options["BandwidthIndex"].as<int>(defaults.bandwidthIndex)),
+bandwidth2(DefaultParameters::SquaredBandwidth(options)),
+eigensolverTol(options["EigensolverTol"].as<double>(defaults.eigensolverTol)),
+eigensolverMaxIt(options["EigensolverMaxIt"].as<std::size_t>(defaults.eigensolverMaxIt))
 {
   Initialize(options);
 }
@@ -53,72 +53,44 @@ void GraphLaplacian::Initialize(YAML::Node const& options) {
   heatMatrix.resize(NumSamples(), NumSamples());
 }
 
-std::shared_ptr<muq::SamplingAlgorithms::SampleCollection> GraphLaplacian::SampleRandomVariable(std::shared_ptr<RandomVariable> const& rv, std::size_t const n) {
-  // add random samples into a sample collection
-  auto samples = std::make_shared<SampleCollection>();
-  for( std::size_t i=0; i<n; ++i ) { samples->Add(std::make_shared<SamplingState>(rv->Sample())); }
-
-  return samples;
-}
-
 double GraphLaplacian::SquaredBandwidth() const { return bandwidth2; }
 
-std::size_t GraphLaplacian::NumSamples() const { return cloud.kdtree_get_point_count(); }
+std::size_t GraphLaplacian::NumSamples() const { return samples.NumSamples(); }
 
 Eigen::Ref<Eigen::VectorXd const> GraphLaplacian::Point(std::size_t const i) const {
   assert(i<NumSamples());
-  return cloud.Point(i);
+  return samples.Point(i);
 }
 
-void GraphLaplacian::BuildKDTree() {
+void GraphLaplacian::BuildKDTrees() {
   // (re-)build the kd-tree
-  kdtree.buildIndex();
+  samples.BuildKDTrees();
 }
 
-void GraphLaplacian::FindNeighbors(Eigen::Ref<const Eigen::VectorXd> const& x, double const r2, std::vector<std::pair<std::size_t, double> >& neighbors) const {
-  // make sure the state size matches
-  assert(x.size()==cloud.StateDim());
+Eigen::VectorXd GraphLaplacian::Bandwidth() const {
+  // the number of samples
+  const std::size_t n = NumSamples();
 
-  // unsorted radius set
-  nanoflann::RadiusResultSet<double, std::size_t> resultSet(r2, neighbors); // use squared radius because kd tree metric is the squared euclidean distance
+  // loop through each sample and compute the squared bandwidth
+  Eigen::VectorXd bandwidth(n);
+  for( std::size_t i=0; i<n; ++i ) {
+    // find the nearest neighbors for each sample
+    std::vector<std::pair<std::size_t, double> > neighbors;
+    bandwidth(i) = std::sqrt(samples.FindNeighbors(Point(i), numNearestNeighbors, neighbors));
+  }
 
-  // find the nearest neighbors---neighbors in a specified radius
-  kdtree.findNeighbors(resultSet, x.data(), nanoflann::SearchParams());
+  return bandwidth;
 }
 
-double GraphLaplacian::FindNeighbors(Eigen::Ref<const Eigen::VectorXd> const& x, std::size_t const k, std::vector<std::pair<std::size_t, double> >& neighbors) const {
-  // make sure the state size matches
-  assert(x.size()==cloud.StateDim());
-
-  // make sure we have enough points
-  assert(k>0);
-  assert(k<=NumSamples());
-
-  // find the nearest neighbors
-  std::vector<std::size_t> indices(k);
-  std::vector<double> squaredDists(k);
-  nanoflann::KNNResultSet<double, std::size_t> resultSet(k);
-  resultSet.init(&indices[0], &squaredDists[0]);
-  kdtree.findNeighbors(resultSet, x.data(), nanoflann::SearchParams());
-
-  assert(indices.size()==k);
-  assert(squaredDists.size()==k);
-
-  // store the indices/distances in the output vector
-  neighbors.reserve(indices.size());
-  std::transform(indices.begin(), indices.end(), squaredDists.begin(), std::back_inserter(neighbors),
-               [](std::size_t a, double b) { return std::make_pair(a, b); });
-
-  return resultSet.worstDist();
-}
-
-void GraphLaplacian::KernelMatrix(double const bandwidthPara, Eigen::Ref<Eigen::VectorXd const> const& bandwidth, Eigen::SparseMatrix<double>& kernmat) const {
+Eigen::VectorXd GraphLaplacian::KernelMatrix(double const bandwidthPara, Eigen::Ref<Eigen::VectorXd const> const& bandwidth, Eigen::SparseMatrix<double>& kernmat) const {
   assert(kernmat.cols()==bandwidth.size());
   assert(kernmat.rows()==bandwidth.size());
 
   // reserve n*log(n) entries (just a guess)
   std::vector<Eigen::Triplet<double> > entries;
   entries.reserve(std::size_t(NumSamples()*std::log((double)NumSamples())));
+
+  Eigen::VectorXd rowsum = Eigen::VectorXd::Zero(bandwidth.size());
 
   for( std::size_t i=0; i<bandwidth.size(); ++i ) {
     // compute the bandwith parameter for each pair of points
@@ -128,53 +100,29 @@ void GraphLaplacian::KernelMatrix(double const bandwidthPara, Eigen::Ref<Eigen::
     // the max bandwidth
     std::vector<std::pair<std::size_t, double> > neighbors;
     const double maxband = theta.maxCoeff();
-    FindNeighbors(Point(i), maxband, neighbors);
-
-    //std::cout << "neighbors: " << neighbors.size() << std::endl;
+    samples.FindNeighbors(Point(i), maxband, neighbors, i);
 
     for( const auto& neigh : neighbors ) {
-      if( neigh.first<i ) { continue; }
+      assert(neigh.first>=i);
 
       const double para = neigh.second/theta(neigh.first-i);
       if( para>1.0 ) { continue; }
-
-      //std::cout << neigh.first << " " << para << std::endl;
 
       // evaluate the kernel
       const double kern = kernel->EvaluateCompactKernel(para);
 
       // insert into the matrix
       entries.push_back(Eigen::Triplet<double>(i, neigh.first, kern));
-      if( neigh.first!=i ) { entries.push_back(Eigen::Triplet<double>(neigh.first, i, kern)); }
+      rowsum(i) += kern;
+      if( neigh.first!=i ) {
+        entries.push_back(Eigen::Triplet<double>(neigh.first, i, kern));
+        rowsum(i) += kern;
+      }
     }
-    //std::cout << std::endl;
-
-    /*for( std::size_t j=i; j<bandwidth.size(); ++j ) {
-      const Eigen::VectorXd diff = Point(i)-Point(j);
-      theta(j-i) = diff.dot(diff)/theta(j-i);
-    }*/
-
-    /*// order them from smallest to largest
-    const std::vector<std::size_t> sortind = SortVector<Eigen::VectorXd>::Ascending(theta);
-
-    for( std::size_t j=0; j<theta.size(); ++j ) {
-      // if the distance is greater than one, the compact kernel is zero
-      if( theta(sortind[j])>1.0 ) { break; }
-
-      std::cout << sortind[j]+i << " " << theta(sortind[j]) << std::endl;
-
-      // evaluate the kernel
-      const double kern = kernel->EvaluateCompactKernel(theta(sortind[j]));
-
-      // insert into the matrix
-      entries.push_back(Eigen::Triplet<double>(i, sortind[j]+i, kern));
-      if( j>0 ) { entries.push_back(Eigen::Triplet<double>(sortind[j]+i, i, kern)); }
-    }*/
-
-    //std::cout << std::endl << "-----------" << std::endl << std::endl;
   }
 
   kernmat.setFromTriplets(entries.begin(), entries.end());
+  return rowsum;
 }
 
 Eigen::Matrix<double, Eigen::Dynamic, 2> GraphLaplacian::EvaluateKernel(Eigen::Ref<Eigen::VectorXd const> const& bandwidth) const {
@@ -191,11 +139,11 @@ Eigen::Matrix<double, Eigen::Dynamic, 2> GraphLaplacian::EvaluateKernel(Eigen::R
     std::cout << std::endl << std::endl << std::endl;
     std::cout << "eps: " << bandwidthPara(l) << std::endl;
     Eigen::SparseMatrix<double> kernmat(n, n);
-    KernelMatrix(bandwidthPara(l), bandwidth, kernmat);
+    const Eigen::VectorXd rowsum = KernelMatrix(bandwidthPara(l), bandwidth, kernmat);
     std::cout << "computed kern mat: " << kernmat.nonZeros() << " of " << n*n << std::endl;
 
     logsigprev = logsig;
-    logsig = std::log(kernmat.sum()/((double)n*n));
+    logsig = std::log(rowsum.sum()/((double)n*n));
 
     std::cout << "comptued sum" << std::endl;
     if( l>0 ) {
@@ -239,7 +187,7 @@ Eigen::VectorXd GraphLaplacian::BandwidthParameterCandidates() const {
 
 void GraphLaplacian::ConstructHeatMatrix() {
   // build the kd-tree based on the samples
-  BuildKDTree();
+  BuildKDTrees();
 
   // the number of samples
   const std::size_t n = NumSamples();
@@ -255,12 +203,12 @@ void GraphLaplacian::ConstructHeatMatrix() {
     const Eigen::Ref<const Eigen::VectorXd> x = Point(i);
 
     // find the nearest neighbors
-    FindNeighbors(x, bandwidth2, neighbors[i]);
+    samples.FindNeighbors(x, bandwidth2, neighbors[i]);
     double h2 = bandwidth2;
     // make sure we have at least 3 neighbors
     if( neighbors[i].size()<3 ) {
       neighbors[i].clear();
-      h2 = FindNeighbors(x, (std::size_t)3, neighbors[i]);
+      h2 = samples.FindNeighbors(x, (std::size_t)3, neighbors[i]);
     }
 
     numentries += neighbors[i].size();
@@ -428,33 +376,7 @@ void GraphLaplacian::WriteToFile(std::string const& filename, std::string const&
 
   // output the collection to file
   const std::string dataset_ = (dataset.at(0)=='/'? dataset : "/"+dataset);
-  cloud.samples->WriteToFile(filename, dataset_);
+  samples.Samples()->WriteToFile(filename, dataset_);
 
   file->Close();
-}
-
-GraphLaplacian::PointCloud::PointCloud(std::shared_ptr<SampleCollection> const& samples) : samples(samples) {}
-
-std::size_t GraphLaplacian::PointCloud::kdtree_get_point_count() const {
-  assert(samples);
-  return samples->size();
-}
-
-double GraphLaplacian::PointCloud::kdtree_get_pt(std::size_t const p, std::size_t const i) const {
-  assert(samples);
-  assert(p<samples->size());
-  assert(i<samples->at(p)->state[0].size());
-  return samples->at(p)->state[0][i];
-}
-
-Eigen::Ref<Eigen::VectorXd const> GraphLaplacian::PointCloud::Point(std::size_t const i) const {
-  assert(samples);
-  assert(i<samples->size());
-  return samples->at(i)->state[0];
-}
-
-std::size_t GraphLaplacian::PointCloud::StateDim() const {
-  assert(samples);
-  assert(samples->size()>0);
-  return samples->at(0)->state[0].size();
 }

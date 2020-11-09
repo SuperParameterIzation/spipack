@@ -20,7 +20,7 @@ samples(samples)
 
 void NearestNeighbors::Initialize(YAML::Node const& options) {
   // get the stride
-  const std::size_t stride = options["Stride"].as<double>(NumSamples()<100? NumSamples() : (size_t)(NumSamples()/100));
+  const std::size_t stride = options["Stride"].as<double>(NumSamples()<5? NumSamples() : (size_t)(NumSamples()/5));
 
   // reserve memory
   clouds.reserve(NumSamples()/stride+1);
@@ -62,6 +62,11 @@ std::size_t NearestNeighbors::StateDim() const {
   return samples->at(0)->state[0].size();
 }
 
+std::shared_ptr<const SampleCollection> NearestNeighbors::Samples() const {
+  assert(samples);
+  return samples;
+}
+
 void NearestNeighbors::BuildKDTrees() const {
   for( const auto& kdtree : kdtrees ) {
     assert(kdtree);
@@ -94,7 +99,7 @@ void NearestNeighbors::FindNeighbors(Eigen::Ref<const Eigen::VectorXd> const& po
   neighbors.erase(it, neighbors.end());
 }
 
-void NearestNeighbors::FindNeighbors(Eigen::Ref<const Eigen::VectorXd> const& point, std::size_t const k, std::vector<std::pair<std::size_t, double> >& neighbors, std::size_t const& lag) const {
+double NearestNeighbors::FindNeighbors(Eigen::Ref<const Eigen::VectorXd> const& point, std::size_t const k, std::vector<std::pair<std::size_t, double> >& neighbors, std::size_t const& lag) const {
   // make sure the state size matches
   assert(point.size()==StateDim());
   assert(k>0);
@@ -117,6 +122,10 @@ void NearestNeighbors::FindNeighbors(Eigen::Ref<const Eigen::VectorXd> const& po
   // remove the ones that should have been ignored
   auto it = std::remove_if(neighbors.begin(), neighbors.end(), [lag](std::pair<std::size_t, double> const& neigh) { return neigh.first<lag; } );
   neighbors.erase(it, neighbors.end());
+
+  double mx = 0.0;
+  for( const auto& neigh : neighbors ) { mx = std::max(mx, neigh.second); }
+  return mx;
 }
 
 NearestNeighbors::Cloud::Cloud(std::shared_ptr<const muq::SamplingAlgorithms::SampleCollection> const& samples, std::size_t const lag) :

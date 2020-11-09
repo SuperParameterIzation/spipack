@@ -11,6 +11,8 @@
 
 #include <MUQ/SamplingAlgorithms/SampleCollection.h>
 
+#include "spipack/Tools/NearestNeighbors.hpp"
+
 #include "spipack/Tools/Kernels/CompactKernel.hpp"
 
 namespace spi {
@@ -54,7 +56,6 @@ namespace NumericalSolvers {
       Parameter Key | Type | Default Value | Description |
       ------------- | ------------- | ------------- | ------------- |
       "NumSamples"   | std::size_t | - | In the case where a random variable is passed to the constructor, we draw \f$n\f$ samples from the distribution.   |
-      "MaxLeaf"   | std::size_t | <tt>10</tt> | The maximum leaf size for the kd tree (nanoflann parameter). |
       "KernelOptions"   | YAML::Node | - | The options for the compact kernel function \f$k(\theta)\f$ (spi::Tools::CompactKernel). |
       "Bandwidth"  | double   | <tt>1.0</tt> | The bandwith \f$h\f$ that defines the kernel \f$k_h = k(h^{-1} \theta)\f$.
       "BandwidthIndex"  | int   | <tt>1</tt> | The bandwith index is the maximum value of \f$l\f$ that defines the kernel \f$k_l(\boldsymbol{x}^{(i)}, \boldsymbol{x}^{(j)}) = k((2^l r_i r_j)^{-1} \| \boldsymbol{x}^{(i)} - \boldsymbol{x}^{(j)} \|^2)\f$.
@@ -95,30 +96,8 @@ public:
   /// Get the \f$i^{th}\f$ point from the point cloud.
   Eigen::Ref<Eigen::VectorXd const> Point(std::size_t const i) const;
 
-  /// Update the kd-tree
-  /**
-    (re-)Build the kd-tree based on the samples.
-  */
-  void BuildKDTree();
-
-  /// Find the points that are within radius \f$r\f$ of a given point \f$\boldsymbol{x}\f$
-  /**
-    Find all of the points \f$\{\boldsymbol{x}^{(j)}\}_{j=1}^{k} \subseteq \{\boldsymbol{x}^{(i)}\}_{i=1}^{n}\f$ such that \f$\|\boldsymbol{x}-\boldsymbol{x}^{(j)}\| \leq r\f$, where \f$r>0\f$ is a given radius.
-    @param[in] x The given point \f$\boldsymbol{x}\f$
-    @param[in] r2 The squared search radius \f$r_i^2 = \max_{j \in [1,k]}{\left( \|\boldsymbol{x}^{(i)} - \boldsymbol{x}^{(I(i,j))} \|^2 \right)}\f$
-    @param[out] neighbors A vector of the nearest neighbors. First: the neighbor's index, Second: the squared distance (\f$d^2 = \boldsymbol{x} \cdot \boldsymbol{x}^{(j)}\f$) between the point \f$\boldsymbol{x}\f$ and the neighbor
-  */
-  void FindNeighbors(Eigen::Ref<const Eigen::VectorXd> const& x, double const r2, std::vector<std::pair<std::size_t, double> >& neighbors) const;
-
-  /// Find the \f$k\f$ points that are closest to a given point \f$\boldsymbol{x}\f$
-  /**
-    Find the closest \f$k\f$ points \f$\{\boldsymbol{x}^{(j)}\}_{j=1}^{k} \subseteq \{\boldsymbol{x}^{(i)}\}_{i=1}^{n}\f$.
-    @param[in] x The given point \f$\boldsymbol{x}\f$
-    @param[in] k The number of nearest neighbors \f$k\f$
-    @param[out] neighbors A vector of the nearest neighbors. First: the neighbor's index, Second: the squared distance (\f$d^2 = \boldsymbol{x} \cdot \boldsymbol{x}^{(j)}\f$) between the point \f$\boldsymbol{x}\f$ and the neighbor
-    \return The squared distance to the furtherest point from \f$\boldsymbol{x}\f$
-  */
-  double FindNeighbors(Eigen::Ref<const Eigen::VectorXd> const& x, std::size_t const k, std::vector<std::pair<std::size_t, double> >& neighbors) const;
+  /// Build the kd trees to find nearest neighbors
+  void BuildKDTrees();
 
   /// Evaluate kernel at neighbors
   /**
@@ -140,8 +119,9 @@ public:
   @param[in] bandwidthPara The bandwidth parameter \f$\epsilon\f$
   @param[in] bandwidth The bandwidth \f$r_i = \max_{j \in [1,k]}{\left( \|\boldsymbol{x}^{(i)} - \boldsymbol{x}^{(I(i,j))} \| \right)}\f$
   @param[out] kernmat The kernel matrix such that \f$K_{ij} = k(\|\boldsymbol{x}^{(i)}-\boldsymbol{x}^{(j)}\|^2/(\epsilon r_i r_j))\f$
+  \return Each entry is the sum of the corresponding row
   */
-  void KernelMatrix(double const bandwidthPara, Eigen::Ref<Eigen::VectorXd const> const& bandwidth, Eigen::SparseMatrix<double>& kernmat) const;
+  Eigen::VectorXd KernelMatrix(double const bandwidthPara, Eigen::Ref<Eigen::VectorXd const> const& bandwidth, Eigen::SparseMatrix<double>& kernmat) const;
 
   /// Construct the heat matrix \f$\boldsymbol{P}\f$
   /**
@@ -176,6 +156,9 @@ public:
   */
   void WriteToFile(std::string const& filename, std::string const& dataset = "/") const;
 
+  /// The bandwidth of each sample
+  Eigen::VectorXd Bandwidth() const;
+
   /// The bandwidth index parameter
   /**
   \return The bandwith index parameter that defines the kernel \f$k_l(\boldsymbol{x}^{(i)}, \boldsymbol{x}^{(j)}) = k((2^l r_i r_j)^{-1} \| \boldsymbol{x}^{(i)} - \boldsymbol{x}^{(j)} \|^2)\f$.
@@ -208,57 +191,6 @@ public:
   std::shared_ptr<const spi::Tools::CompactKernel> Kernel() const;
 
 private:
-
-  /// Create a sample collection by sampling a random variable
-  /**
-    @param[in] rv The random variable that we wish to sample
-    @param[in] n Sample the random variable \f$n\f$ times
-  */
-  static std::shared_ptr<muq::SamplingAlgorithms::SampleCollection> SampleRandomVariable(std::shared_ptr<muq::Modeling::RandomVariable> const& rv, std::size_t const n);
-
-  /// Interpret the particle locations as a point cloud
-  struct PointCloud {
-    /// Construct the point cloud given samples from the underlying distribution \f$\psi\f$
-    /**
-      @param[in] samples Samples from the underlying distribution \f$\psi\f$
-    */
-    PointCloud(std::shared_ptr<muq::SamplingAlgorithms::SampleCollection> const& samples);
-
-    virtual ~PointCloud() = default;
-
-    /// Get the number of samples (from \f$\psi\f$)
-    /**
-      \return The number of points in the sample collection (GraphLaplacian::PointCloud::samples)
-    */
-    std::size_t kdtree_get_point_count() const;
-
-    /// Get the \f$i^{th}\f$ component of the \f$p^{th}\f$ point
-    /**
-      @param[in] p We want to access this particle number
-      @param[in] i We want this index of the particle location
-      \return The \f$i^{th}\f$ component of the \f$p^{th}\f$ point in GraphLaplacian::PointCloud::samples
-    */
-    double kdtree_get_pt(std::size_t const p, std::size_t const i) const;
-
-    /// Optional bounding-box computation
-    /**
-      \return Return <tt>false</tt> to default to a standard bounding box computation loop
-    */
-    template<class BBOX>
-    inline bool kdtree_get_bbox(BBOX& bb) const { return false; }
-
-    /// Get the \f$i^{th}\f$ point from the GraphLaplacian::PointCloud::samples.
-    Eigen::Ref<Eigen::VectorXd const> Point(std::size_t const i) const;
-
-    /// The dimension of the state
-    /**
-      The samples \f$x \sim \psi\f$ are in \f$\mathbb{R}^{d}\f$. This function returns the dimension \f$d\f$ (size of the first sample).
-    */
-    std::size_t StateDim() const;
-
-    /// Samples from the distribution \f$\psi\f$
-    std::shared_ptr<muq::SamplingAlgorithms::SampleCollection> samples;
-  };
 
   /// Initialize the graph Laplacian
   /**
@@ -298,23 +230,20 @@ private:
   */
   Eigen::VectorXd ComputeSmallestSparseEigenvalues(std::size_t const neig, Eigen::SparseMatrix<double> const& mat) const;
 
+  /// Store the samples from \f$\psi\f$.
+  const spi::Tools::NearestNeighbors samples;
+
   /// The heat matrix \f$\boldsymbol{P}\f$
   Eigen::SparseMatrix<double> heatMatrix;
-
-  /// The point cloud that we will use to approximate the weighted Laplacian (and solve the weighted Poisson equation)
-  const PointCloud cloud;
-
-  /// The nanoflann kd-tree type
-  typedef nanoflann::KDTreeSingleIndexAdaptor<nanoflann::L2_Simple_Adaptor<double, PointCloud>, PointCloud> NanoflannKDTree;
-
-  /// The nanoflann kd-tree
-	NanoflannKDTree kdtree;
 
   /// The kernel function
   /**
     The kernel function \f$k(\theta) = k(h^{-2} \|\boldsymbol{x}_1-\boldsymbol{x}_2\|^2)\f$.
   */
   std::shared_ptr<spi::Tools::CompactKernel> kernel;
+
+  /// The number of nearest neighbors used to compute the bandwidth
+  const std::size_t numNearestNeighbors;
 
   /// The maximum and minimum range for the bandwidth index
   /**
@@ -347,8 +276,8 @@ private:
   struct DefaultParameters {
     static double SquaredBandwidth(YAML::Node const& options);
 
-    /// The maximum leaf size (nanoflann parameter) defaults to \f$10\f$
-    inline static const std::size_t maxLeaf = 10;
+    /// The default number of nearest neighbors for the bandwidth computation is \f$10\f$
+    inline static const std::size_t numNearestNeighbors = 10;
 
     /// The maximum and minimum range for the bandwidth index defaults to \f$[-10,10]\f$
     /**

@@ -12,7 +12,10 @@
 namespace spi {
 namespace Tools {
 
+/// Find the nearest neighbors for points in sample collection
 /**
+Given \f$\{\boldsymbol{x}^{(i)}\}_{i=1}^{n}\f$ samples from the distribution \f$\psi\f$, this class finds the nearest neighbors \f$\{\boldsymbol{x}^{(j)}\}_{j=1}^{k}\f$ to a given point \f$\boldsymbol{x}\f$.
+
 <B>Configuration Parameters:</B>
 Parameter Key | Type | Default Value | Description |
 ------------- | ------------- | ------------- | ------------- |
@@ -58,6 +61,9 @@ public:
   */
   std::size_t StateDim() const;
 
+  /// The sample collection
+  std::shared_ptr<const muq::SamplingAlgorithms::SampleCollection> Samples() const;
+
   /// Build the kd-trees
   void BuildKDTrees() const;
 
@@ -76,8 +82,9 @@ public:
   @param[in] k The number of nearest neighbors \f$k\f$
   @param[out] neighbors A vector of the nearest neighbors. First: the neighbor's index, Second: the squared distance (\f$d^2 = \boldsymbol{x} \cdot \boldsymbol{x}^{(j)}\f$) between the point \f$\boldsymbol{x}\f$ and the neighbor
   @param[in] lag Ignore the first <tt>lag</tt> samples (defaults to \f$0\f$)
+  \return The smallest radius that contains all of the points
   */
-  void FindNeighbors(Eigen::Ref<const Eigen::VectorXd> const& point, std::size_t const k, std::vector<std::pair<std::size_t, double> >& neighbors, std::size_t const& lag = 0) const;
+  double FindNeighbors(Eigen::Ref<const Eigen::VectorXd> const& point, std::size_t const k, std::vector<std::pair<std::size_t, double> >& neighbors, std::size_t const& lag = 0) const;
 
 private:
 
@@ -151,9 +158,6 @@ private:
   struct DefaultParameters {
     /// The maximum leaf size (nanoflann parameter) defaults to \f$10\f$
     inline static const std::size_t maxLeaf = 10;
-
-    /// The stride defaults to 100
-    inline static const std::size_t stride = 100;
   };
 
   /// Store the default values

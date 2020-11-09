@@ -16,6 +16,9 @@ int main(int argc, char **argv) {
   // the output filename
   const std::string filename = "samples.h5";
 
+  // the number of samples
+  const std::size_t n = 5000;
+
   // numerical parameters
   const std::size_t numNeighbors = 10;
 
@@ -24,13 +27,19 @@ int main(int argc, char **argv) {
   //auto rv = std::make_shared<UniformBox>(bounds)->AsVariable();
   auto rv = std::make_shared<Gaussian>(dim)->AsVariable();
 
+  // options for the nearest neighbor search
+    YAML::Node nnOptions;
+    nnOptions["NumSamples"] = n;
+    nnOptions["Stride"] = n/5;
+
   // the options for the graph Laplacian
   YAML::Node options;
-  options["NumSamples"] = 5000;
+  options["NearestNeighbors"] = nnOptions;
+  options["NumNearestNeighbors"] = numNeighbors;
   options["BandwidthIndex"] = 4;
   options["EigensolverTol"] = 1.0e-10;
   options["BandwidthRange.Min"] = -20.0;
-  options["BandwidthRange.Max"] = 10.0;
+  options["BandwidthRange.Max"] = 20.0;
   options["NumBandwidthSteps"] = 100;
 
   // set the kernel options
@@ -45,20 +54,13 @@ int main(int argc, char **argv) {
   laplacian->WriteToFile(filename);
 
   // build the kd tree
-  laplacian->BuildKDTree();
+  laplacian->BuildKDTrees();
 
-  // loop through each sample
-  std::vector<std::vector<std::pair<std::size_t, double> > > neighbors(laplacian->NumSamples());
-  Eigen::VectorXd squaredBandwidth(laplacian->NumSamples());
-  for( std::size_t i=0; i<laplacian->NumSamples(); ++i ) {
-    // get a reference to the ith point
-    Eigen::Ref<Eigen::VectorXd const> point = laplacian->Point(i);
+  // compute the bandwidth
+  const Eigen::VectorXd bandwidth = laplacian->Bandwidth();
 
-    // find the nearest neighbors for each sample
-    squaredBandwidth(i) = laplacian->FindNeighbors(point, numNeighbors, neighbors[i]);
-  }
-
-  const Eigen::Matrix<double, Eigen::Dynamic, 2> sigmaprime = laplacian->EvaluateKernel(squaredBandwidth.array().sqrt());
+  // compute sigma prime
+  const Eigen::Matrix<double, Eigen::Dynamic, 2> sigmaprime = laplacian->EvaluateKernel(bandwidth);
 
   /*for( std::size_t i=0; i<laplacian->NumSamples(); ++i ) {
     // get a reference to the ith point
@@ -79,7 +81,7 @@ int main(int argc, char **argv) {
   // open the file
   auto hdf5file = std::make_shared<HDF5File>(filename);
   //hdf5file->WriteMatrix("/heat matrix eigenvalues", eigenvalues);
-  hdf5file->WriteMatrix("/log squared bandwidth", squaredBandwidth.array().log().matrix().eval());
+  hdf5file->WriteMatrix("/log bandwidth", bandwidth.array().log().matrix().eval());
   hdf5file->WriteMatrix("/bandwidth parameter candidate", sigmaprime.col(0).eval());
   hdf5file->WriteMatrix("/sigma prime", sigmaprime.col(1).eval());
   hdf5file->Close();
