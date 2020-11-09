@@ -20,7 +20,7 @@ namespace NumericalSolvers {
 
 /// Estimate a weighted Laplacian operator using a graph Laplacian
 /**
-  Let \f$\psi\f$ be a probability distribution (with corresponding probability density function). Define the weighted Laplacian operator (given some function \f$H\f$)
+  Let $$\psi$$ \f$\psi\f$ be a probability distribution (with corresponding probability density function). Define the weighted Laplacian operator (given some function \f$H\f$)
   \f{equation*}{
     \nabla_{\psi}^2 H = \psi^{-1} \nabla \cdot (\psi \nabla f).
   \f}

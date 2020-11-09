@@ -166,6 +166,12 @@ Eigen::VectorXd GraphLaplacian::DensityEstimation() const {
   std::vector<std::vector<std::pair<std::size_t, double> > > neighbors;
   const Eigen::VectorXd squaredBandwidth = SquaredBandwidth(neighbors);
 
+  if( tuneBandwidthParameter ) {
+    std::cout << "tune" << std::endl;
+  } else {
+    std::cout << "do not tune" << std::endl;
+  }
+
   return Eigen::VectorXd();
 }
 
