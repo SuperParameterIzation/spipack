@@ -1,5 +1,5 @@
 var searchData=
 [
-  ['numbandwidthsteps',['NumBandwidthSteps',['../classspi_1_1NumericalSolvers_1_1GraphLaplacian.html#ad0d2f256e9e542aa9685dddeef97904e',1,'spi::NumericalSolvers::GraphLaplacian']]],
-  ['numsamples',['NumSamples',['../classspi_1_1NumericalSolvers_1_1GraphLaplacian.html#acb41d0c5d96c7aad4b9dd02d0c1b09de',1,'spi::NumericalSolvers::GraphLaplacian']]]
+  ['main',['main',['../__heat-matrix-eigenvalues_8cpp.html#a3c04138a5bfe5d72780bb7e82a18e627',1,'main(int argc, char **argv):&#160;_heat-matrix-eigenvalues.cpp'],['../__run-tests_8cpp.html#a3c04138a5bfe5d72780bb7e82a18e627',1,'main(int argc, char **argv):&#160;_run-tests.cpp']]],
+  ['makefigure',['MakeFigure',['../namespace__plot__result.html#af7ed829c3b503a86ea576fa9ce86d661',1,'_plot_result']]]
 ];
