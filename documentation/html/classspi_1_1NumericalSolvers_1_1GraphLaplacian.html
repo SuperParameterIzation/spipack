@@ -127,9 +127,9 @@ Public Member Functions</h2></td></tr>
 <tr class="memitem:a900a746412cbdae9ca8d0bfb9875deb4"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classspi_1_1NumericalSolvers_1_1GraphLaplacian.html#a900a746412cbdae9ca8d0bfb9875deb4">GraphLaplacian</a> (std::shared_ptr&lt; muq::Modeling::RandomVariable &gt; const &amp;rv, YAML::Node const &amp;options)</td></tr>
 <tr class="memdesc:a900a746412cbdae9ca8d0bfb9875deb4"><td class="mdescLeft">&#160;</td><td class="mdescRight">Construct the graph laplacian by sampling a random variable from \(\psi\).  <a href="#a900a746412cbdae9ca8d0bfb9875deb4">More...</a><br /></td></tr>
 <tr class="separator:a900a746412cbdae9ca8d0bfb9875deb4"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a98c1b445a8c9ca0c93cd0e2505779af7"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classspi_1_1NumericalSolvers_1_1GraphLaplacian.html#a98c1b445a8c9ca0c93cd0e2505779af7">GraphLaplacian</a> (std::shared_ptr&lt; muq::SamplingAlgorithms::SampleCollection &gt; const &amp;samples, YAML::Node const &amp;options)</td></tr>
-<tr class="memdesc:a98c1b445a8c9ca0c93cd0e2505779af7"><td class="mdescLeft">&#160;</td><td class="mdescRight">Construct the graph laplacian given samples from the underlying distribution \(\psi\).  <a href="#a98c1b445a8c9ca0c93cd0e2505779af7">More...</a><br /></td></tr>
-<tr class="separator:a98c1b445a8c9ca0c93cd0e2505779af7"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a9ff1018efd2c82ae3a3babe37dbe254e"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classspi_1_1NumericalSolvers_1_1GraphLaplacian.html#a9ff1018efd2c82ae3a3babe37dbe254e">GraphLaplacian</a> (std::shared_ptr&lt; muq::SamplingAlgorithms::SampleCollection &gt; const &amp;samples, YAML::Node const &amp;options)</td></tr>
+<tr class="memdesc:a9ff1018efd2c82ae3a3babe37dbe254e"><td class="mdescLeft">&#160;</td><td class="mdescRight">Construct the graph laplacian given samples from the underlying distribution \(\psi\).  <a href="#a9ff1018efd2c82ae3a3babe37dbe254e">More...</a><br /></td></tr>
+<tr class="separator:a9ff1018efd2c82ae3a3babe37dbe254e"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:af533e7a08281524ec2f3c70a236c864f"><td class="memItemLeft" align="right" valign="top">virtual&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classspi_1_1NumericalSolvers_1_1GraphLaplacian.html#af533e7a08281524ec2f3c70a236c864f">~GraphLaplacian</a> ()=default</td></tr>
 <tr class="separator:af533e7a08281524ec2f3c70a236c864f"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:acb41d0c5d96c7aad4b9dd02d0c1b09de"><td class="memItemLeft" align="right" valign="top">std::size_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classspi_1_1NumericalSolvers_1_1GraphLaplacian.html#acb41d0c5d96c7aad4b9dd02d0c1b09de">NumSamples</a> () const </td></tr>
@@ -153,8 +153,8 @@ Public Member Functions</h2></td></tr>
 <tr class="memitem:a898a3fa46f68d2a05b9ba3992ab92c91"><td class="memItemLeft" align="right" valign="top">double&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classspi_1_1NumericalSolvers_1_1GraphLaplacian.html#a898a3fa46f68d2a05b9ba3992ab92c91">EvaluateKernel</a> (Eigen::Ref&lt; const Eigen::VectorXd &gt; const &amp;x, double const h2, std::vector&lt; std::pair&lt; std::size_t, double &gt; &gt; &amp;neighbors) const </td></tr>
 <tr class="memdesc:a898a3fa46f68d2a05b9ba3992ab92c91"><td class="mdescLeft">&#160;</td><td class="mdescRight">Evaluate kernel at neighbors.  <a href="#a898a3fa46f68d2a05b9ba3992ab92c91">More...</a><br /></td></tr>
 <tr class="separator:a898a3fa46f68d2a05b9ba3992ab92c91"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a94abfb20a1022fafd120c597bf4a2aa1"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classspi_1_1NumericalSolvers_1_1GraphLaplacian.html#a94abfb20a1022fafd120c597bf4a2aa1">EvaluateKernel</a> (Eigen::Ref&lt; Eigen::VectorXd const  &gt; const &amp;bandwidth) const </td></tr>
-<tr class="separator:a94abfb20a1022fafd120c597bf4a2aa1"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ae73902463793e58788017adde8a8dc51"><td class="memItemLeft" align="right" valign="top">Eigen::Matrix&lt; double, Eigen::Dynamic, 2 &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classspi_1_1NumericalSolvers_1_1GraphLaplacian.html#ae73902463793e58788017adde8a8dc51">EvaluateKernel</a> (Eigen::Ref&lt; Eigen::VectorXd const  &gt; const &amp;bandwidth) const </td></tr>
+<tr class="separator:ae73902463793e58788017adde8a8dc51"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a8ebf45d0aa18547448552fd9158275f0"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classspi_1_1NumericalSolvers_1_1GraphLaplacian.html#a8ebf45d0aa18547448552fd9158275f0">KernelMatrix</a> (double const bandwidthPara, Eigen::Ref&lt; Eigen::VectorXd const  &gt; const &amp;bandwidth, Eigen::SparseMatrix&lt; double &gt; &amp;kernmat) const </td></tr>
 <tr class="separator:a8ebf45d0aa18547448552fd9158275f0"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:afcdc9cd363fd0aff5d4cd1df134a370f"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classspi_1_1NumericalSolvers_1_1GraphLaplacian.html#afcdc9cd363fd0aff5d4cd1df134a370f">ConstructHeatMatrix</a> ()</td></tr>
@@ -358,12 +358,12 @@ Static Private Attributes</h2></td></tr>
 
 </div>
 </div>
-<a class="anchor" id="a98c1b445a8c9ca0c93cd0e2505779af7"></a>
+<a class="anchor" id="a9ff1018efd2c82ae3a3babe37dbe254e"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">GraphLaplacian::GraphLaplacian </td>
+          <td class="memname">spi::NumericalSolvers::GraphLaplacian::GraphLaplacian </td>
           <td>(</td>
           <td class="paramtype">std::shared_ptr&lt; muq::SamplingAlgorithms::SampleCollection &gt; const &amp;&#160;</td>
           <td class="paramname"><em>samples</em>, </td>
@@ -755,12 +755,12 @@ Static Private Attributes</h2></td></tr>
 
 </div>
 </div>
-<a class="anchor" id="a94abfb20a1022fafd120c597bf4a2aa1"></a>
+<a class="anchor" id="ae73902463793e58788017adde8a8dc51"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">void GraphLaplacian::EvaluateKernel </td>
+          <td class="memname">Eigen::Matrix&lt; double, Eigen::Dynamic, 2 &gt; GraphLaplacian::EvaluateKernel </td>
           <td>(</td>
           <td class="paramtype">Eigen::Ref&lt; Eigen::VectorXd const  &gt; const &amp;&#160;</td>
           <td class="paramname"><em>bandwidth</em></td><td>)</td>
@@ -774,6 +774,7 @@ Static Private Attributes</h2></td></tr>
   </table>
   </dd>
 </dl>
+<dl class="section return"><dt>Returns</dt><dd>The sigma parameter </dd></dl>
 
 </div>
 </div>

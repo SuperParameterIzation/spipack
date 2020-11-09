@@ -7,5 +7,6 @@ var searchData=
   ['_7ehatkernel',['~HatKernel',['../classspi_1_1Tools_1_1HatKernel.html#aa57771dd8a0c498fa54a47b9b73f0903',1,'spi::Tools::HatKernel']]],
   ['_7eisotropickernel',['~IsotropicKernel',['../classspi_1_1Tools_1_1IsotropicKernel.html#a651bb4e82d526ccde698f58296d7b337',1,'spi::Tools::IsotropicKernel']]],
   ['_7ekernel',['~Kernel',['../classspi_1_1Tools_1_1Kernel.html#a94625d2efab4da6a9d387e160e829150',1,'spi::Tools::Kernel']]],
+  ['_7enearestneighbors',['~NearestNeighbors',['../classspi_1_1Tools_1_1NearestNeighbors.html#acbdae007bf12aba90965e7d1b17a9496',1,'spi::Tools::NearestNeighbors']]],
   ['_7epointcloud',['~PointCloud',['../structspi_1_1NumericalSolvers_1_1GraphLaplacian_1_1PointCloud.html#ab44de8446bb02b0f2daa016027293d14',1,'spi::NumericalSolvers::GraphLaplacian::PointCloud']]]
 ];
