@@ -4,7 +4,7 @@ layout: default
 
 ## Heat matrix eigenvalues
 
-Consider a random variable
+Let $$\psi$$ be a probability density function and let $$\{ \boldsymbol{x}^{(i)} \}_{i=1}^{n}$$ be samples from $$\psi$$.
 
 $$ b^2 \psi$$
 
