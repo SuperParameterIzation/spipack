@@ -101,7 +101,7 @@ ax.spines['right'].set_visible(False)
 ax.spines['top'].set_visible(False)
 ax.yaxis.set_ticks_position('left')
 ax.xaxis.set_ticks_position('bottom')
-plt.savefig('figures/Samples.pdf', format='pdf', bbox_inches='tight')
+plt.savefig('figures/LogBandwidth.pdf', format='pdf', bbox_inches='tight')
 plt.close(fig)
 
 fig = MakeFigure(425, 0.9, False)

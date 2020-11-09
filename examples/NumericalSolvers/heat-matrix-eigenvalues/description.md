@@ -19,3 +19,6 @@ $$
   \nabla \psi = 0 \tag{abc}\label{eq:one}
 \end{equation}
 $$
+
+<embed src="figures/LogBandwidth.pdf" width="500" height="375" 
+ type="application/pdf">
