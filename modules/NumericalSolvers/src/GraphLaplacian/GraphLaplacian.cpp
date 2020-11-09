@@ -67,19 +67,62 @@ void GraphLaplacian::BuildKDTrees() {
   samples.BuildKDTrees();
 }
 
-Eigen::VectorXd GraphLaplacian::Bandwidth() const {
+Eigen::VectorXd GraphLaplacian::Bandwidth(std::vector<std::vector<std::pair<std::size_t, double> > >& neighbors) const {
   // the number of samples
   const std::size_t n = NumSamples();
 
   // loop through each sample and compute the squared bandwidth
   Eigen::VectorXd bandwidth(n);
+  neighbors.resize(n);
   for( std::size_t i=0; i<n; ++i ) {
     // find the nearest neighbors for each sample
-    std::vector<std::pair<std::size_t, double> > neighbors;
-    bandwidth(i) = std::sqrt(samples.FindNeighbors(Point(i), numNearestNeighbors, neighbors));
+    bandwidth(i) = std::sqrt(samples.FindNeighbors(Point(i), numNearestNeighbors, neighbors[i]));
   }
 
   return bandwidth;
+}
+
+Eigen::VectorXd GraphLaplacian::Bandwidth() const {
+  std::vector<std::vector<std::pair<std::size_t, double> > > neighbors;
+  return Bandwidth(neighbors);
+}
+
+Eigen::VectorXd GraphLaplacian::KernelMatrix(double const bandwidthPara, Eigen::Ref<Eigen::VectorXd const> const& bandwidth, std::vector<std::vector<std::pair<std::size_t, double> > > const& neighbors, Eigen::SparseMatrix<double>& kernmat) const {
+  assert(kernmat.cols()==bandwidth.size());
+  assert(kernmat.rows()==bandwidth.size());
+
+  // reserve n*log(n) entries (just a guess)
+  std::vector<Eigen::Triplet<double> > entries;
+  entries.reserve(std::size_t(NumSamples()*std::log((double)NumSamples())));
+
+  Eigen::VectorXd rowsum = Eigen::VectorXd::Zero(bandwidth.size());
+
+  for( std::size_t i=0; i<bandwidth.size(); ++i ) {
+    // compute the bandwith parameter for each pair of points
+    Eigen::VectorXd theta = Eigen::VectorXd::Constant(bandwidth.size()-i, bandwidthPara*bandwidth(i));
+    theta = theta.array()*bandwidth.tail(bandwidth.size()-i).array();
+
+    for( const auto& neigh : neighbors[i] ) {
+      if( neigh.first<i ) { continue; }
+
+      const double para = neigh.second/theta(neigh.first-i);
+      if( para>1.0 ) { continue; }
+
+      // evaluate the kernel
+      const double kern = kernel->EvaluateCompactKernel(para);
+
+      // insert into the matrix
+      entries.push_back(Eigen::Triplet<double>(i, neigh.first, kern));
+      rowsum(i) += kern;
+      if( neigh.first!=i ) {
+        entries.push_back(Eigen::Triplet<double>(neigh.first, i, kern));
+        rowsum(i) += kern;
+      }
+    }
+  }
+
+  kernmat.setFromTriplets(entries.begin(), entries.end());
+  return rowsum;
 }
 
 Eigen::VectorXd GraphLaplacian::KernelMatrix(double const bandwidthPara, Eigen::Ref<Eigen::VectorXd const> const& bandwidth, Eigen::SparseMatrix<double>& kernmat) const {

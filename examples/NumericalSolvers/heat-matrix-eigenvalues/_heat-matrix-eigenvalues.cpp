@@ -28,10 +28,10 @@ int main(int argc, char **argv) {
   auto rv = std::make_shared<Gaussian>(dim)->AsVariable();
 
   // options for the nearest neighbor search
-    YAML::Node nnOptions;
-    nnOptions["NumSamples"] = n;
-    nnOptions["Stride"] = n/5;
-
+  YAML::Node nnOptions;
+  nnOptions["NumSamples"] = n;
+  nnOptions["Stride"] = n/5;
+  
   // the options for the graph Laplacian
   YAML::Node options;
   options["NearestNeighbors"] = nnOptions;

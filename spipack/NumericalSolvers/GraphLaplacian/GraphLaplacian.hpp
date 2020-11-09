@@ -123,6 +123,15 @@ public:
   */
   Eigen::VectorXd KernelMatrix(double const bandwidthPara, Eigen::Ref<Eigen::VectorXd const> const& bandwidth, Eigen::SparseMatrix<double>& kernmat) const;
 
+  /**
+  @param[in] bandwidthPara The bandwidth parameter \f$\epsilon\f$
+  @param[in] bandwidth The bandwidth \f$r_i = \max_{j \in [1,k]}{\left( \|\boldsymbol{x}^{(i)} - \boldsymbol{x}^{(I(i,j))} \| \right)}\f$
+  @param[in] neighbors The nearest neighbors to each point---the kernel is truncated after these neighbors
+  @param[out] kernmat The kernel matrix such that \f$K_{ij} = k(\|\boldsymbol{x}^{(i)}-\boldsymbol{x}^{(j)}\|^2/(\epsilon r_i r_j))\f$
+  \return Each entry is the sum of the corresponding row
+  */
+  Eigen::VectorXd KernelMatrix(double const bandwidthPara, Eigen::Ref<Eigen::VectorXd const> const& bandwidth, std::vector<std::vector<std::pair<std::size_t, double> > > const& neighbors, Eigen::SparseMatrix<double>& kernmat) const;
+
   /// Construct the heat matrix \f$\boldsymbol{P}\f$
   /**
   Construct the heat matrix \f$\boldsymbol{P}\f$---this function overwrites any existing information in spi::NumericalSolvers::heatMatrix.
@@ -157,7 +166,17 @@ public:
   void WriteToFile(std::string const& filename, std::string const& dataset = "/") const;
 
   /// The bandwidth of each sample
+  /**
+  \return The bandwidth \f$r_i = \max_{j \in [1,k]}{\left( \|\boldsymbol{x}^{(i)} - \boldsymbol{x}^{(I(i,j))} \| \right)}\f$ (note we do not return the squared bandwidth)
+  */
   Eigen::VectorXd Bandwidth() const;
+
+  /// The bandwidth of each sample
+  /**
+  @param[out] neighbors Each entry is a list of the nearestneighbors for point \f$i\f$. First: the index of the neighbor, Second: the squared distance to the neighbor
+  \return The bandwidth \f$r_i = \max_{j \in [1,k]}{\left( \|\boldsymbol{x}^{(i)} - \boldsymbol{x}^{(I(i,j))} \| \right)}\f$ (note we do not return the squared bandwidth)
+  */
+  Eigen::VectorXd Bandwidth(std::vector<std::vector<std::pair<std::size_t, double> > >& neighbors) const;
 
   /// The bandwidth index parameter
   /**

@@ -89,7 +89,7 @@ protected:
   inline static const unsigned int dim = 4;
 
   /// The number of samples
-  const std::size_t n = 10000;
+  const std::size_t n = 2000;
 
   /// The max leaf size for the kd tree
   const std::size_t maxLeaf = 15;
@@ -148,7 +148,8 @@ TEST_F(GraphLaplacianTests, ConstructKernelMatrix) {
   laplacian->BuildKDTrees();
 
   // compute the bandwidth
-  const Eigen::VectorXd bandwidth = laplacian->Bandwidth();
+  std::vector<std::vector<std::pair<std::size_t, double> > > neighbors;
+  const Eigen::VectorXd bandwidth = laplacian->Bandwidth(neighbors);
 
   // compute the kernel matrix
   Eigen::SparseMatrix<double> kernmat(samples->size(), samples->size());
@@ -156,6 +157,13 @@ TEST_F(GraphLaplacianTests, ConstructKernelMatrix) {
   laplacian->KernelMatrix(eps, bandwidth, kernmat);
   EXPECT_TRUE(kernmat.nonZeros()<samples->size()*samples->size());
   EXPECT_TRUE(kernmat.nonZeros()>=samples->size());
+
+  // compute the approximate kernel matrix
+  Eigen::SparseMatrix<double> kernmatApprox(samples->size(), samples->size());
+  EXPECT_EQ(kernmatApprox.nonZeros(), 0);
+  laplacian->KernelMatrix(eps, bandwidth, neighbors, kernmatApprox);
+  EXPECT_TRUE(kernmatApprox.nonZeros()<samples->size()*samples->size());
+  EXPECT_TRUE(kernmatApprox.nonZeros()>=samples->size());
 
   // compute the expected kernel matrix
   Eigen::MatrixXd kernmatExpected(samples->size(), samples->size());
@@ -175,7 +183,13 @@ TEST_F(GraphLaplacianTests, ConstructKernelMatrix) {
     for( std::size_t j=0; j<samples->size(); ++j ) {
       EXPECT_NEAR(kernmatExpected(i, j), kernmatExpected(j, i), 1.0e-10);
       EXPECT_NEAR(kernmat.coeff(i, j), kernmat.coeff(j, i), 1.0e-10);
+      EXPECT_NEAR(kernmatApprox.coeff(i, j), kernmatApprox.coeff(j, i), 1.0e-10);
       EXPECT_NEAR(kernmatExpected(i, j), kernmat.coeff(i, j), 1.0e-10);
+      if( kernmatApprox.coeff(i, j)>0.0 ) {
+        EXPECT_NEAR(kernmatExpected(i, j), kernmatApprox.coeff(i, j), 1.0e-10);
+      } else {
+        EXPECT_NEAR(0.0, kernmatApprox.coeff(i, j), 1.0e-10);
+      }
     }
   }
 }
