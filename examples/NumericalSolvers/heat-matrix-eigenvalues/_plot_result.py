@@ -74,20 +74,33 @@ def MakeFigure(totalWidthPts, fraction, presentationVersion = False):
 hdf5file = h5py.File('samples.h5', 'r')
 
 samples = hdf5file['/samples'] [()].T
-squaredBandwidth = hdf5file['/squared bandwidth'] [()].T [0]
+logSquaredBandwidth = hdf5file['/log squared bandwidth'] [()].T [0]
+bandwidth = hdf5file['/bandwidth parameter candidate'] [()].T [0]
+sigmaprime = hdf5file['/sigma prime'] [()].T [0]
 #eigenvalues = hdf5file['/heat matrix eigenvalues'] [()].T [0]
 
-print(squaredBandwidth)
+sigmaprimeMaxInd = np.argmax(sigmaprime)
 
 fig = MakeFigure(425, 0.9, False)
 ax = plt.gca()
-scatter = ax.scatter(samples.T[0], samples.T[1], s=3, c=squaredBandwidth, vmin=min(squaredBandwidth), vmax=max(squaredBandwidth))
+scatter = ax.scatter(samples.T[0], samples.T[1], s=3, c=logSquaredBandwidth, vmin=min(logSquaredBandwidth), vmax=max(logSquaredBandwidth))
 plt.colorbar(scatter)
 ax.spines['right'].set_visible(False)
 ax.spines['top'].set_visible(False)
 ax.yaxis.set_ticks_position('left')
 ax.xaxis.set_ticks_position('bottom')
 plt.savefig('figures/Samples.pdf', format='pdf', bbox_inches='tight')
+plt.close(fig)
+
+fig = MakeFigure(425, 0.9, False)
+ax = plt.gca()
+ax.semilogx(bandwidth, sigmaprime)
+ax.plot(bandwidth[sigmaprimeMaxInd], sigmaprime[sigmaprimeMaxInd], 'o', markersize=3, markeredgecolor='#a50f15', markerfacecolor='#a50f15')
+ax.spines['right'].set_visible(False)
+ax.spines['top'].set_visible(False)
+ax.yaxis.set_ticks_position('left')
+ax.xaxis.set_ticks_position('bottom')
+plt.savefig('figures/SigmaPrime.pdf', format='pdf', bbox_inches='tight')
 plt.close(fig)
 
 # fig = MakeFigure(425, 0.9, False)

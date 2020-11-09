@@ -31,7 +31,7 @@ GraphLaplacian::GraphLaplacian(std::shared_ptr<RandomVariable> const& rv, YAML::
   Initialize(options);
 }
 
-GraphLaplacian::GraphLaplacian(std::shared_ptr<muq::SamplingAlgorithms::SampleCollection> const& samples, YAML::Node const& options) :
+GraphLaplacian::GraphLaplacian(std::shared_ptr<SampleCollection> const& samples, YAML::Node const& options) :
   cloud(samples),
   kdtree(cloud.StateDim(), cloud, nanoflann::KDTreeSingleIndexAdaptorParams(options["MaxLeaf"].as<std::size_t>(defaults.maxLeaf))),
   bandwidthRange(std::pair<double, double>(options["BandwidthRange.Min"].as<double>(defaults.bandwidthRange.first),options["BandwidthRange.Max"].as<double>(defaults.bandwidthRange.second))),
@@ -116,79 +116,95 @@ void GraphLaplacian::KernelMatrix(double const bandwidthPara, Eigen::Ref<Eigen::
   assert(kernmat.cols()==bandwidth.size());
   assert(kernmat.rows()==bandwidth.size());
 
+  // reserve n*log(n) entries (just a guess)
+  std::vector<Eigen::Triplet<double> > entries;
+  entries.reserve(std::size_t(NumSamples()*std::log((double)NumSamples())));
+
   for( std::size_t i=0; i<bandwidth.size(); ++i ) {
     // compute the bandwith parameter for each pair of points
     Eigen::VectorXd theta = Eigen::VectorXd::Constant(bandwidth.size()-i, bandwidthPara*bandwidth(i));
     theta = theta.array()*bandwidth.tail(bandwidth.size()-i).array();
-    for( std::size_t j=i; j<bandwidth.size(); ++j ) {
+
+    // the max bandwidth
+    std::vector<std::pair<std::size_t, double> > neighbors;
+    const double maxband = theta.maxCoeff();
+    FindNeighbors(Point(i), maxband, neighbors);
+
+    //std::cout << "neighbors: " << neighbors.size() << std::endl;
+
+    for( const auto& neigh : neighbors ) {
+      if( neigh.first<i ) { continue; }
+
+      const double para = neigh.second/theta(neigh.first-i);
+      if( para>1.0 ) { continue; }
+
+      //std::cout << neigh.first << " " << para << std::endl;
+
+      // evaluate the kernel
+      const double kern = kernel->EvaluateCompactKernel(para);
+
+      // insert into the matrix
+      entries.push_back(Eigen::Triplet<double>(i, neigh.first, kern));
+      if( neigh.first!=i ) { entries.push_back(Eigen::Triplet<double>(neigh.first, i, kern)); }
+    }
+    //std::cout << std::endl;
+
+    /*for( std::size_t j=i; j<bandwidth.size(); ++j ) {
       const Eigen::VectorXd diff = Point(i)-Point(j);
       theta(j-i) = diff.dot(diff)/theta(j-i);
-    }
+    }*/
 
-    // order them from smallest to largest
+    /*// order them from smallest to largest
     const std::vector<std::size_t> sortind = SortVector<Eigen::VectorXd>::Ascending(theta);
 
     for( std::size_t j=0; j<theta.size(); ++j ) {
       // if the distance is greater than one, the compact kernel is zero
       if( theta(sortind[j])>1.0 ) { break; }
 
+      std::cout << sortind[j]+i << " " << theta(sortind[j]) << std::endl;
+
       // evaluate the kernel
       const double kern = kernel->EvaluateCompactKernel(theta(sortind[j]));
 
       // insert into the matrix
-      kernmat.coeffRef(i, sortind[j]+i) = kern;
-      if( j>0 ) { kernmat.coeffRef(sortind[j]+i, i) = kern; }
-    }
+      entries.push_back(Eigen::Triplet<double>(i, sortind[j]+i, kern));
+      if( j>0 ) { entries.push_back(Eigen::Triplet<double>(sortind[j]+i, i, kern)); }
+    }*/
+
+    //std::cout << std::endl << "-----------" << std::endl << std::endl;
   }
+
+  kernmat.setFromTriplets(entries.begin(), entries.end());
 }
 
-void GraphLaplacian::EvaluateKernel(Eigen::Ref<Eigen::VectorXd const> const& bandwidth) const {
+Eigen::Matrix<double, Eigen::Dynamic, 2> GraphLaplacian::EvaluateKernel(Eigen::Ref<Eigen::VectorXd const> const& bandwidth) const {
   // get the candidate bandwidth parameters
   const Eigen::VectorXd bandwidthPara = BandwidthParameterCandidates();
 
-  // sort the bandwidth from smallest to largest
-  const std::vector<std::size_t> sortind = SortVector<Eigen::VectorXd>::Ascending(bandwidth);
+  // the number of samples
+  const std::size_t n = NumSamples();
 
   // loop through the possible bandwith parameters
+  Eigen::Matrix<double, Eigen::Dynamic, 2> sigmaprime(bandwidthPara.size()-1, 2);
+  double logsig, logsigprev;
   for( std::size_t l=0; l<bandwidthPara.size(); ++l ) {
     std::cout << std::endl << std::endl << std::endl;
     std::cout << "eps: " << bandwidthPara(l) << std::endl;
-    for( std::size_t i=0; i<bandwidth.size(); ++i ) {
-      // order the neighbors
-      std::vector<std::size_t> ind(kdtree.m_size);
-      std::vector<double> dist(kdtree.m_size);
-      kdtree.knnSearch(Point(i).data(), kdtree.m_size, ind.data(), dist.data());
+    Eigen::SparseMatrix<double> kernmat(n, n);
+    KernelMatrix(bandwidthPara(l), bandwidth, kernmat);
+    std::cout << "computed kern mat: " << kernmat.nonZeros() << " of " << n*n << std::endl;
 
-      //std::cout << "dist size: " << dist.size() << std::endl;
+    logsigprev = logsig;
+    logsig = std::log(kernmat.sum()/((double)n*n));
 
-      //for( unsigned)
-
-      /*for( std::size_t j=0; j<bandwidth.size(); ++j ) {
-        //const double band = bandwidthPara(l)*bandwidth(ind)*bandwidth(neigh.first);
-        const double band = bandwidthPara(l)*bandwidth(i)*bandwidth(sortind[j]);
-        std::cout << "band: " << band << std::endl;
-
-        const Eigen::VectorXd diff = Point(i)-Point(sortind[j]);
-        const double val = diff.dot(diff)/band;
-
-        //std::cout << "val: " << val << std::endl;
-
-        // if we are outside of the support of the kernel
-        if( val>1.0 ) { continue; }
-
-        //std::cout << "val: " << val << std::endl;
-
-        // find all of the neighbors within this bandwidth
-        //std::vector<std::pair<std::size_t, double> > new_neighbors;
-        //FindNeighbors(x, band, new_neighbors);
-
-        //std::cout << "new neighbors size: " << new_neighbors.size() << std::endl;
-        //std::cout << "bandwidth: " << band << " val: " << neigh.second/band << std::endl;
-        //std::cout << "kernel eval: " << kernel->EvaluateCompactKernel(neigh.second/band) << std::endl;
-        //  std::cout << "ind: " << ind << " neigh ind: " << neigh.first << std::endl;
-      }*/
+    std::cout << "comptued sum" << std::endl;
+    if( l>0 ) {
+      sigmaprime(l-1, 0) = bandwidthPara(l-1);
+      sigmaprime(l-1, 1) = (logsig-logsigprev)/(std::log(bandwidthPara(l))-std::log(bandwidthPara(l-1)));
     }
   }
+
+  return sigmaprime;
 }
 
 double GraphLaplacian::EvaluateKernel(Eigen::Ref<const Eigen::VectorXd> const& x, double const h2, std::vector<std::pair<std::size_t, double> >& neighbors) const {

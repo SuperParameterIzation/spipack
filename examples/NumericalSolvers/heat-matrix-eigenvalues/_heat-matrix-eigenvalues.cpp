@@ -29,9 +29,9 @@ int main(int argc, char **argv) {
   options["NumSamples"] = 5000;
   options["BandwidthIndex"] = 4;
   options["EigensolverTol"] = 1.0e-10;
-  options["BandwidthRange.Min"] = -10.0;
-  options["BandwidthRange.Max"] = 1.0;
-  options["NumBandwidthSteps"] = 10;
+  options["BandwidthRange.Min"] = -20.0;
+  options["BandwidthRange.Max"] = 10.0;
+  options["NumBandwidthSteps"] = 100;
 
   // set the kernel options
   YAML::Node kernelOptions;
@@ -58,7 +58,7 @@ int main(int argc, char **argv) {
     squaredBandwidth(i) = laplacian->FindNeighbors(point, numNeighbors, neighbors[i]);
   }
 
-  laplacian->EvaluateKernel(squaredBandwidth.array().sqrt());
+  const Eigen::Matrix<double, Eigen::Dynamic, 2> sigmaprime = laplacian->EvaluateKernel(squaredBandwidth.array().sqrt());
 
   /*for( std::size_t i=0; i<laplacian->NumSamples(); ++i ) {
     // get a reference to the ith point
@@ -80,5 +80,7 @@ int main(int argc, char **argv) {
   auto hdf5file = std::make_shared<HDF5File>(filename);
   //hdf5file->WriteMatrix("/heat matrix eigenvalues", eigenvalues);
   hdf5file->WriteMatrix("/log squared bandwidth", squaredBandwidth.array().log().matrix().eval());
+  hdf5file->WriteMatrix("/bandwidth parameter candidate", sigmaprime.col(0).eval());
+  hdf5file->WriteMatrix("/sigma prime", sigmaprime.col(1).eval());
   hdf5file->Close();
 }

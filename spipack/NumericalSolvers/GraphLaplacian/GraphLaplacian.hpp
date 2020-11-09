@@ -132,8 +132,9 @@ public:
 
   /**
   @param[in] bandwidth The bandwidth \f$r_i = \max_{j \in [1,k]}{\left( \|\boldsymbol{x}^{(i)} - \boldsymbol{x}^{(I(i,j))} \| \right)}\f$
+  \return The sigma parameter
   */
-  void EvaluateKernel(Eigen::Ref<Eigen::VectorXd const> const& bandwidth) const;
+  Eigen::Matrix<double, Eigen::Dynamic, 2> EvaluateKernel(Eigen::Ref<Eigen::VectorXd const> const& bandwidth) const;
 
   /**
   @param[in] bandwidthPara The bandwidth parameter \f$\epsilon\f$

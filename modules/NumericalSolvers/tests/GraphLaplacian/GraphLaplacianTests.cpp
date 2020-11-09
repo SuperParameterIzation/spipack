@@ -37,6 +37,8 @@ public:
 
   /// Make sure everything is constructed correctly
   virtual void TearDown() override {
+    EXPECT_TRUE(laplacian);
+
     // make sure the graph laplacian has enough samples
     EXPECT_EQ(laplacian->NumSamples(), n);
 
@@ -61,6 +63,7 @@ public:
   }
 
 protected:
+
   /// Create the graph Laplacian from samples
   /**
     \return The sample collection used to create the graph Laplacian

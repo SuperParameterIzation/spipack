@@ -5,6 +5,8 @@ set(SOURCE
   Kernels/ExponentialKernel.cpp
   Kernels/HatKernel.cpp
   Kernels/BumpKernel.cpp
+
+  NearestNeighbors.cpp
 )
 
 message(STATUS ${SPIPACK_EXTERNAL_LIBRARIES})
