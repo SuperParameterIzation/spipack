@@ -7,8 +7,9 @@ var searchData=
   ['bandwidthrange',['bandwidthRange',['../classGraphLaplacianTests.html#aa9c78ef24431279dd6257e6fff7fc3fc',1,'GraphLaplacianTests::bandwidthRange()'],['../classspi_1_1NumericalSolvers_1_1GraphLaplacian.html#ae8e18afc8bb940fc60c2c02b902fbd08',1,'spi::NumericalSolvers::GraphLaplacian::bandwidthRange()'],['../structspi_1_1NumericalSolvers_1_1GraphLaplacian_1_1DefaultParameters.html#ac92e309d6f44b6ec629bffa193cf7d9c',1,'spi::NumericalSolvers::GraphLaplacian::DefaultParameters::bandwidthRange()'],['../classspi_1_1NumericalSolvers_1_1GraphLaplacian.html#a86a1e00907cc2920876d2c62b401ddb9',1,'spi::NumericalSolvers::GraphLaplacian::BandwidthRange()']]],
   ['bbox_5finches',['bbox_inches',['../namespace__plot__result.html#a595c97922318843afa78cf2ca96eee4d',1,'_plot_result']]],
   ['buildkdtree',['BuildKDTree',['../classspi_1_1NumericalSolvers_1_1GraphLaplacian.html#a0351fee22d8dfc9bcd380af3cb097c26',1,'spi::NumericalSolvers::GraphLaplacian']]],
-  ['bumpkernel',['BumpKernel',['../classspi_1_1Tools_1_1BumpKernel.html',1,'spi::Tools']]],
+  ['buildkdtrees',['BuildKDTrees',['../classspi_1_1Tools_1_1NearestNeighbors.html#a08f9fd339445cd90ef6169183c8d8d46',1,'spi::Tools::NearestNeighbors']]],
   ['bumpkernel',['BumpKernel',['../classspi_1_1Tools_1_1BumpKernel.html#a17f93a9b3a0146e3ff9aedaa6f387bb9',1,'spi::Tools::BumpKernel']]],
+  ['bumpkernel',['BumpKernel',['../classspi_1_1Tools_1_1BumpKernel.html',1,'spi::Tools']]],
   ['bumpkernel_2ecpp',['BumpKernel.cpp',['../BumpKernel_8cpp.html',1,'']]],
   ['bumpkernel_2ehpp',['BumpKernel.hpp',['../BumpKernel_8hpp.html',1,'']]],
   ['bumpkerneltests_2ecpp',['BumpKernelTests.cpp',['../BumpKernelTests_8cpp.html',1,'']]]

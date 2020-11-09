@@ -1,9 +1,10 @@
 var searchData=
 [
   ['kdtree',['kdtree',['../classspi_1_1NumericalSolvers_1_1GraphLaplacian.html#a662f08a000e6a9c3e2c6d98e3250cd74',1,'spi::NumericalSolvers::GraphLaplacian']]],
-  ['kdtree_5fget_5fbbox',['kdtree_get_bbox',['../structspi_1_1NumericalSolvers_1_1GraphLaplacian_1_1PointCloud.html#a5d55cc7fc09d76583fe838d514c01da7',1,'spi::NumericalSolvers::GraphLaplacian::PointCloud']]],
-  ['kdtree_5fget_5fpoint_5fcount',['kdtree_get_point_count',['../structspi_1_1NumericalSolvers_1_1GraphLaplacian_1_1PointCloud.html#ac59a158746e9dbe244d6807cb15d0997',1,'spi::NumericalSolvers::GraphLaplacian::PointCloud']]],
-  ['kdtree_5fget_5fpt',['kdtree_get_pt',['../structspi_1_1NumericalSolvers_1_1GraphLaplacian_1_1PointCloud.html#a13dd0fe0f4d6f96eeef465de20109880',1,'spi::NumericalSolvers::GraphLaplacian::PointCloud']]],
+  ['kdtree_5fget_5fbbox',['kdtree_get_bbox',['../structspi_1_1NumericalSolvers_1_1GraphLaplacian_1_1PointCloud.html#a5d55cc7fc09d76583fe838d514c01da7',1,'spi::NumericalSolvers::GraphLaplacian::PointCloud::kdtree_get_bbox()'],['../classspi_1_1Tools_1_1NearestNeighbors_1_1Cloud.html#ab72fe97bb1852e36629393b7de784246',1,'spi::Tools::NearestNeighbors::Cloud::kdtree_get_bbox()']]],
+  ['kdtree_5fget_5fpoint_5fcount',['kdtree_get_point_count',['../structspi_1_1NumericalSolvers_1_1GraphLaplacian_1_1PointCloud.html#ac59a158746e9dbe244d6807cb15d0997',1,'spi::NumericalSolvers::GraphLaplacian::PointCloud::kdtree_get_point_count()'],['../classspi_1_1Tools_1_1NearestNeighbors_1_1Cloud.html#ad01049fd3d87017556155d028122286f',1,'spi::Tools::NearestNeighbors::Cloud::kdtree_get_point_count()']]],
+  ['kdtree_5fget_5fpt',['kdtree_get_pt',['../structspi_1_1NumericalSolvers_1_1GraphLaplacian_1_1PointCloud.html#a13dd0fe0f4d6f96eeef465de20109880',1,'spi::NumericalSolvers::GraphLaplacian::PointCloud::kdtree_get_pt()'],['../classspi_1_1Tools_1_1NearestNeighbors_1_1Cloud.html#a480d971f2e4ae858758fdc7325687a81',1,'spi::Tools::NearestNeighbors::Cloud::kdtree_get_pt()']]],
+  ['kdtrees',['kdtrees',['../classspi_1_1Tools_1_1NearestNeighbors.html#a61a62a0dae5d8d718cf2ca238d99e79e',1,'spi::Tools::NearestNeighbors']]],
   ['kernel',['kernel',['../classspi_1_1NumericalSolvers_1_1GraphLaplacian.html#adfc06d32ef3223612f8f94ba023c3a7c',1,'spi::NumericalSolvers::GraphLaplacian::kernel()'],['../classspi_1_1NumericalSolvers_1_1GraphLaplacian.html#a9620238a03c6b05ad96d6374c5dbc7aa',1,'spi::NumericalSolvers::GraphLaplacian::Kernel() const '],['../classspi_1_1Tools_1_1Kernel.html#abad469b2fb318cc20da3488c6d5ed140',1,'spi::Tools::Kernel::Kernel()']]],
   ['kernel',['Kernel',['../classspi_1_1Tools_1_1Kernel.html',1,'spi::Tools']]],
   ['kernel_2ecpp',['Kernel.cpp',['../Kernel_8cpp.html',1,'']]],
