@@ -1,5 +1,6 @@
 set(SOURCE
   SampleRepresentation/SampleRepresentation.cpp
+  SampleRepresentation/DensityEstimation.cpp
   SampleRepresentation/GraphLaplacian.cpp
 )
 

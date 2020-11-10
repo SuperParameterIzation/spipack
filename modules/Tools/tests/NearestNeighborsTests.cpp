@@ -9,7 +9,7 @@ using namespace muq::SamplingAlgorithms;
 using namespace spi::Tools;
 
 class NearestNeighborsTests : public::testing::Test {
-public:
+protected:
   /// Set up information to test the nearest neighbor construction
   virtual void SetUp() override {
     // create a standard Gaussian random variable
@@ -30,8 +30,6 @@ public:
     EXPECT_EQ(nn->NumSamples(), n);
     EXPECT_EQ(nn->StateDim(), dim);
   }
-
-protected:
 
   /// Create the nearest neighbor searcher from samples
   /**
@@ -67,8 +65,6 @@ protected:
 
   /// The nearest neighbor searcher---use a pointer here so we can initalize it as null
   std::shared_ptr<NearestNeighbors> nn;
-
-private:
 };
 
 TEST_F(NearestNeighborsTests, RandomVariableConstruction) {

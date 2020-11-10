@@ -10,9 +10,9 @@ using namespace spi::Tools;
 using namespace spi::NumericalSolvers;
 
 class SampleRepresentationTests : public::testing::Test {
-public:
+protected:
 
-  /// Set up information to test the graph Laplacian
+  /// Set up information to test the sample representation
   virtual void SetUp() override {
     // create a standard Gaussian random variable
     rv = std::make_shared<Gaussian>(dim)->AsVariable();
@@ -38,8 +38,6 @@ public:
     EXPECT_EQ(representation->NumNearestNeighbors(), nneighs);
     EXPECT_EQ(representation->NumSamples(), n);
   }
-
-protected:
 
   /// Create the graph Laplacian from samples
   /**
@@ -74,8 +72,6 @@ protected:
 
   /// The sample representation---use a pointer here so we can initalize it as null
   std::shared_ptr<SampleRepresentation> representation;
-
-private:
 };
 
 TEST_F(SampleRepresentationTests, RandomVariableConstruction) {
