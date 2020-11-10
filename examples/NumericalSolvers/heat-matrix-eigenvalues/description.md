@@ -12,6 +12,16 @@ $$
 $$
 where $$I(i,j)$$ is the index of $$j^{th}$$ closest sample to $$\boldsymbol{x}^{(i)}$$. In other words, $$r_i$$ is the average distance between $$\boldsymbol{x}^{(i)}$$ and its $$k$$ nearest neighbors.
 
+Also define the kernel
+$$
+\begin{equation}
+  k(\theta) = \begin{cases}
+  1 & \\
+  0 & \mbox{if } \theta>1
+  \end{cases}
+\end{equation}
+$$
+
 $$ b^2 \psi$$
 
 $$
@@ -20,5 +30,5 @@ $$
 \end{equation}
 $$
 
-<embed src="figures/LogBandwidth.pdf" width="500" height="375" 
+<embed src="figures/LogBandwidth.pdf" width="500" height="375"
  type="application/pdf">

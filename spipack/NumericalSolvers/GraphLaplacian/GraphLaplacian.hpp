@@ -1,19 +1,13 @@
 #ifndef GRAPHLAPLACIAN_HPP_
 #define GRAPHLAPLACIAN_HPP_
 
-#include <yaml-cpp/yaml.h>
-
-#include <nanoflann.hpp>
-
 #include <Eigen/Sparse>
-
-#include <MUQ/Modeling/Distributions/RandomVariable.h>
-
-#include <MUQ/SamplingAlgorithms/SampleCollection.h>
 
 #include "spipack/Tools/NearestNeighbors.hpp"
 
 #include "spipack/Tools/Kernels/CompactKernel.hpp"
+
+#include "spipack/NumericalSolvers/GraphLaplacian/SampleRepresentation.hpp"
 
 namespace spi {
 namespace NumericalSolvers {

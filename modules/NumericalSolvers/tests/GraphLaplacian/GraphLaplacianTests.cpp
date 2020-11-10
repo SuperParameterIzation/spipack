@@ -21,7 +21,6 @@ public:
 
     // options for the nearest neighbor search
     YAML::Node nnOptions;
-    nnOptions["MaxLeaf"] = maxLeaf;
     nnOptions["NumSamples"] = n;
     nnOptions["Stride"] = n/5;
 
@@ -82,13 +81,10 @@ protected:
   }
 
   /// The dimension of state spaces
-  inline static const unsigned int dim = 4;
+  const unsigned int dim = 4;
 
   /// The number of samples
   const std::size_t n = 2000;
-
-  /// The max leaf size for the kd tree
-  const std::size_t maxLeaf = 15;
 
   /// The range for the bandwidth parameter \f$2^{l}\f$ (this is the range of \f$l\f$)
   const std::pair<double, double> bandwidthRange = std::pair<double, double>(-20.0, 10.0);
