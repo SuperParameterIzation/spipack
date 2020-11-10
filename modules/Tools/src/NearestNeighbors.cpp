@@ -1,18 +1,22 @@
 #include "spipack/Tools/NearestNeighbors.hpp"
 
+#include <omp.h>
+
 using namespace muq::Modeling;
 using namespace muq::SamplingAlgorithms;
 using namespace spi::Tools;
 
 NearestNeighbors::NearestNeighbors(std::shared_ptr<RandomVariable> const& rv, YAML::Node const& options) :
-samples(SampleRandomVariable(rv, options["NumSamples"].as<std::size_t>()))
+samples(SampleRandomVariable(rv, options["NumSamples"].as<std::size_t>())),
+numThreads(options["NumThreads"].as<std::size_t>(defaults.numThreads))
 {
   assert(samples);
   Initialize(options);
 }
 
 NearestNeighbors::NearestNeighbors(std::shared_ptr<SampleCollection> const& samples, YAML::Node const& options) :
-samples(samples)
+samples(samples),
+numThreads(options["NumThreads"].as<std::size_t>(defaults.numThreads))
 {
   assert(samples);
   Initialize(options);
@@ -56,6 +60,8 @@ std::size_t NearestNeighbors::NumSamples() const {
   return samples->size();
 }
 
+std::size_t NearestNeighbors::NumThreads() const { return numThreads; }
+
 std::size_t NearestNeighbors::StateDim() const {
   assert(samples);
   assert(samples->size()>0);
@@ -68,6 +74,7 @@ std::shared_ptr<const SampleCollection> NearestNeighbors::Samples() const {
 }
 
 void NearestNeighbors::BuildKDTrees() const {
+  #pragma omp parallel for num_threads(numThreads)
   for( const auto& kdtree : kdtrees ) {
     assert(kdtree);
     // (re-)build the kd-tree
@@ -139,9 +146,10 @@ Eigen::VectorXd NearestNeighbors::SquaredBandwidth(std::size_t const k, std::vec
   // need to find k+1 neighbors because one will be itself
   const std::size_t kp1 = k+1;
 
-// loop through each sample and compute the squared bandwidth
+  // loop through each sample and compute the squared bandwidth
   Eigen::VectorXd bandwidth(n);
   neighbors.resize(n);
+  #pragma omp parallel for num_threads(numThreads)
   for( std::size_t i=0; i<n; ++i ) {
     // find the nearest neighbors for each sample
     bandwidth(i) = FindNeighbors(Point(i), kp1, neighbors[i]);

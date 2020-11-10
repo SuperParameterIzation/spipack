@@ -20,7 +20,7 @@ namespace Tools {
   <B>Configuration Parameters:</B>
       Parameter Key | Type | Default Value | Description |
       ------------- | ------------- | ------------- | ------------- |
-      "Magnitude"   | double | <tt>1.0</tt> | The magnitude of the kernel (the parameter \f$a\f$). |
+      "Magnitude"   | <tt>double</tt> | <tt>1.0</tt> | The magnitude of the kernel (the parameter \f$a\f$). |
 */
 class HatKernel : public CompactKernel {
 public:

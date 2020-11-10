@@ -27,7 +27,7 @@ public:
   <B>Configuration Parameters:</B>
       Parameter Key | Type | Default Value | Description |
       ------------- | ------------- | ------------- | ------------- |
-      "Kernel"   | std::string | - | The name of the kernel function   |
+      "Kernel"   | <tt>std::string</tt> | - | The name of the kernel function   |
   */
   Kernel(YAML::Node const& options);
 

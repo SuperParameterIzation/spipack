@@ -20,9 +20,9 @@ namespace Tools {
   <B>Configuration Parameters:</B>
       Parameter Key | Type | Default Value | Description |
       ------------- | ------------- | ------------- | ------------- |
-      "Magnitude"   | double | <tt>1.0</tt> | The magnitude of the kernel (the parameter \f$a_0\f$). |
-      "Scale"   | double | <tt>1.0</tt> | The scale of the kernel (the parameter \f$a_1\f$). |
-      "Exponent"   | double | <tt>1.0</tt> | The exponent of the kernel (the parameter \f$p\f$). |
+      "Magnitude"   | <tt>double</tt> | <tt>1.0</tt> | The magnitude of the kernel (the parameter \f$a_0\f$). |
+      "Scale"   | <tt>double</tt> | <tt>1.0</tt> | The scale of the kernel (the parameter \f$a_1\f$). |
+      "Exponent"   | <tt>double</tt> | <tt>1.0</tt> | The exponent of the kernel (the parameter \f$p\f$). |
 */
 class BumpKernel : public CompactKernel {
 public:

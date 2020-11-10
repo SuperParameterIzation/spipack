@@ -211,3 +211,29 @@ TEST_F(NearestNeighborsTests, SquaredBandwidth) {
     EXPECT_NEAR(squaredBandwidth(i), expected/k, 1.0e-10);
   }
 }
+
+
+TEST_F(NearestNeighborsTests, SquaredBandwidth_Multithreaded) {
+  options["NumThreads"] = omp_get_max_threads();
+  nn = std::make_shared<NearestNeighbors>(rv, options);
+  EXPECT_EQ(nn->NumThreads(), omp_get_max_threads());
+
+  // construct the kd-trees
+  nn->BuildKDTrees();
+
+  // compute the squared bandwidth
+  const std::size_t k = 25; // number of nearest neighbors
+  std::vector<std::vector<std::pair<std::size_t, double> > > neighbors;
+  const Eigen::VectorXd squaredBandwidth = nn->SquaredBandwidth(k, neighbors);
+
+  // loop through all of the points and compare the squared bandwidth to the expected squared bandwidth
+  EXPECT_EQ(neighbors.size(), n);
+  EXPECT_EQ(squaredBandwidth.size(), n);
+  for( std::size_t i=0; i<n; ++i ) {
+    EXPECT_EQ(neighbors[i].size(), k+1);
+
+    double expected = 0.0;
+    for( const auto& neigh : neighbors[i] ) { expected += neigh.second; }
+    EXPECT_NEAR(squaredBandwidth(i), expected/k, 1.0e-10);
+  }
+}

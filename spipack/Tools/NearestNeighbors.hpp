@@ -19,9 +19,10 @@ Given \f$\{\boldsymbol{x}^{(i)}\}_{i=1}^{n}\f$ samples from the distribution \f$
 <B>Configuration Parameters:</B>
 Parameter Key | Type | Default Value | Description |
 ------------- | ------------- | ------------- | ------------- |
-"NumSamples"   | std::size_t | - | In the case where a random variable is passed to the constructor, we draw \f$n\f$ samples from the distribution.   |
-"MaxLeaf"   | std::size_t | <tt>10</tt> | The maximum leaf size for the kd tree (nanoflann parameter). |
-"Stride"   | std::size_t | <tt>NumSamples/100</tt> | Build \f$i \in [0, m]\f$ kd trees that ignore the first \f$i d\f$ samples, where \f$d\f$ is the stride parameter. |
+"NumSamples"   | <tt>std::size_t</tt> | - | In the case where a random variable is passed to the constructor, we draw \f$n\f$ samples from the distribution.   |
+"MaxLeaf"   | <tt>std::size_t</tt> | <tt>10</tt> | The maximum leaf size for the kd tree (nanoflann parameter). |
+"Stride"   | <tt>std::size_t</tt> | <tt>NumSamples/100</tt> | Build \f$i \in [0, m]\f$ kd trees that ignore the first \f$i d\f$ samples, where \f$d\f$ is the stride parameter. |
+"NumThreads"   | <tt>std::size_t</tt> | <tt>1</tt> | The number of <tt>openMP</tt> threads available to this object. |
 */
 class NearestNeighbors {
 public:
@@ -60,6 +61,12 @@ public:
   \return The state dimension
   */
   std::size_t StateDim() const;
+
+  /// The number of <tt>openMP</tt> threads this object can use
+  /**
+  \return The number of <tt>openMP</tt> threads this object can use
+  */
+  std::size_t NumThreads() const;
 
   /// The sample collection
   std::shared_ptr<const muq::SamplingAlgorithms::SampleCollection> Samples() const;
@@ -163,10 +170,16 @@ private:
   /// Samples from the distribution \f$\psi\f$
   std::shared_ptr<const muq::SamplingAlgorithms::SampleCollection> samples;
 
+  /// The number of <tt>openMP</tt> threads available to this object.
+  const std::size_t numThreads;
+
   /// The default values for the spi::Tools::NearestNeighbors class.
   struct DefaultParameters {
     /// The maximum leaf size (nanoflann parameter) defaults to \f$10\f$
     inline static const std::size_t maxLeaf = 10;
+
+    /// The default number of <tt>openMP</tt> threads is \f$1\f$.
+    inline static const std::size_t numThreads = 1;
   };
 
   /// Store the default values

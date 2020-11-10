@@ -38,10 +38,6 @@ eigensolverMaxIt(options["EigensolverMaxIt"].as<std::size_t>(defaults.eigensolve
 }
 
 void GraphLaplacian::Initialize(YAML::Node const& options) {
-  // create the kernel
-  kernel = CompactKernel::Construct(options["KernelOptions"]);
-  assert(kernel);
-
   // initialize the sparse heat matrix
   heatMatrix.resize(NumSamples(), NumSamples());
 }
@@ -466,8 +462,6 @@ solver.factorize(laplace);
 }
 
 double GraphLaplacian::EigensolverTolerance() const { return eigensolverTol; }
-
-std::shared_ptr<const spi::Tools::CompactKernel> GraphLaplacian::Kernel() const { return kernel; }
 
 void GraphLaplacian::WriteToFile(std::string const& filename, std::string const& dataset) const {
   // create an hdf5 file

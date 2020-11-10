@@ -1,11 +1,7 @@
 #ifndef GRAPHLAPLACIAN_HPP_
 #define GRAPHLAPLACIAN_HPP_
 
-#include <Eigen/Sparse>
-
 #include "spipack/Tools/NearestNeighbors.hpp"
-
-#include "spipack/Tools/Kernels/CompactKernel.hpp"
 
 #include "spipack/NumericalSolvers/GraphLaplacian/SampleRepresentation.hpp"
 
@@ -190,12 +186,6 @@ public:
   */
   Eigen::VectorXd BandwidthParameterCandidates() const;
 
-  /// Get the kernel (spi::Tools::CompactKernel)
-  /**
-  \return A pointer to the kernel used to construct the graph Laplacian
-  */
-  std::shared_ptr<const spi::Tools::CompactKernel> Kernel() const;
-
 private:
 
   /// Initialize the graph Laplacian
@@ -238,12 +228,6 @@ private:
 
   /// The heat matrix \f$\boldsymbol{P}\f$
   Eigen::SparseMatrix<double> heatMatrix;
-
-  /// The kernel function
-  /**
-    The kernel function \f$k(\theta) = k(h^{-2} \|\boldsymbol{x}_1-\boldsymbol{x}_2\|^2)\f$.
-  */
-  std::shared_ptr<spi::Tools::CompactKernel> kernel;
 
   /// The number of nearest neighbors used to compute the bandwidth
   const std::size_t numNearestNeighbors;
@@ -293,7 +277,7 @@ private:
     inline static const std::size_t eigensolverMaxIt = 1.0e3;
   };
 
-  /// Store the default values
+  /// Store the default parameter values
   inline static const DefaultParameters defaults;
 };
 
