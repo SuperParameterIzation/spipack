@@ -1,6 +1,6 @@
 set(SOURCE
-  GraphLaplacian/SampleRepresentation.cpp
-  GraphLaplacian/GraphLaplacian.cpp
+  SampleRepresentation/SampleRepresentation.cpp
+  SampleRepresentation/GraphLaplacian.cpp
 )
 
 message(STATUS ${SPIPACK_EXTERNAL_LIBRARIES})

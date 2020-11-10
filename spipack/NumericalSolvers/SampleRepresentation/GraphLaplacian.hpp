@@ -3,7 +3,7 @@
 
 #include "spipack/Tools/NearestNeighbors.hpp"
 
-#include "spipack/NumericalSolvers/GraphLaplacian/SampleRepresentation.hpp"
+#include "spipack/NumericalSolvers/SampleRepresentation/SampleRepresentation.hpp"
 
 namespace spi {
 namespace NumericalSolvers {

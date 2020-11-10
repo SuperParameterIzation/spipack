@@ -48,7 +48,7 @@ public:
 
   /// How many samples are in the collection?
   /**
-    \return The number of samples in the sample collection (GraphLaplacian::samples)
+    \return The number of samples in the sample collection (SampleRepresentation::samples)
   */
   std::size_t NumSamples() const;
 

@@ -5,7 +5,7 @@
 
 #include "spipack/Tools/Kernels/HatKernel.hpp"
 
-#include "spipack/NumericalSolvers/GraphLaplacian/GraphLaplacian.hpp"
+#include "spipack/NumericalSolvers/SampleRepresentation/GraphLaplacian.hpp"
 
 using namespace muq::Modeling;
 using namespace muq::SamplingAlgorithms;

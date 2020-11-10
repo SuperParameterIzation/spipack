@@ -1,4 +1,4 @@
-#include "spipack/NumericalSolvers/GraphLaplacian/GraphLaplacian.hpp"
+#include "spipack/NumericalSolvers/SampleRepresentation/GraphLaplacian.hpp"
 
 #include <Spectra/GenEigsSolver.h>
 #include <Spectra/MatOp/SparseGenMatProd.h>

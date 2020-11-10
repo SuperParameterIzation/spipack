@@ -1,4 +1,4 @@
-#include "spipack/NumericalSolvers/GraphLaplacian/SampleRepresentation.hpp"
+#include "spipack/NumericalSolvers/SampleRepresentation/SampleRepresentation.hpp"
 
 using namespace muq::Modeling;
 using namespace muq::SamplingAlgorithms;
