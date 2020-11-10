@@ -153,6 +153,9 @@ Public Member Functions</h2></td></tr>
 <tr class="memitem:a2dae89c063e39e6fa713c3d152dae491"><td class="memItemLeft" align="right" valign="top">double&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classspi_1_1Tools_1_1NearestNeighbors.html#a2dae89c063e39e6fa713c3d152dae491">FindNeighbors</a> (Eigen::Ref&lt; const Eigen::VectorXd &gt; const &amp;point, std::size_t const k, std::vector&lt; std::pair&lt; std::size_t, double &gt; &gt; &amp;neighbors, std::size_t const &amp;lag=0) const </td></tr>
 <tr class="memdesc:a2dae89c063e39e6fa713c3d152dae491"><td class="mdescLeft">&#160;</td><td class="mdescRight">Find the nearest neighbors.  <a href="#a2dae89c063e39e6fa713c3d152dae491">More...</a><br /></td></tr>
 <tr class="separator:a2dae89c063e39e6fa713c3d152dae491"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:af90e87b76012846f556c29204f65f2cb"><td class="memItemLeft" align="right" valign="top">Eigen::VectorXd&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classspi_1_1Tools_1_1NearestNeighbors.html#af90e87b76012846f556c29204f65f2cb">SquaredBandwidth</a> (std::size_t const k, std::vector&lt; std::vector&lt; std::pair&lt; std::size_t, double &gt; &gt; &gt; &amp;neighbors) const </td></tr>
+<tr class="memdesc:af90e87b76012846f556c29204f65f2cb"><td class="mdescLeft">&#160;</td><td class="mdescRight">Find the squared bandwidth parameter for each sample.  <a href="#af90e87b76012846f556c29204f65f2cb">More...</a><br /></td></tr>
+<tr class="separator:af90e87b76012846f556c29204f65f2cb"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pri-types"></a>
 Private Types</h2></td></tr>
@@ -569,6 +572,42 @@ Static Private Attributes</h2></td></tr>
 </div><div class="memdoc">
 
 <p>The sample collection. </p>
+
+</div>
+</div>
+<a class="anchor" id="af90e87b76012846f556c29204f65f2cb"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">Eigen::VectorXd NearestNeighbors::SquaredBandwidth </td>
+          <td>(</td>
+          <td class="paramtype">std::size_t const&#160;</td>
+          <td class="paramname"><em>k</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">std::vector&lt; std::vector&lt; std::pair&lt; std::size_t, double &gt; &gt; &gt; &amp;&#160;</td>
+          <td class="paramname"><em>neighbors</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td> const</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Find the squared bandwidth parameter for each sample. </p>
+<p>The squared bandwidth is defined as \(r_i^2 = \frac{1}{k} \sum_{j=1}^{k} \| \boldsymbol{x}^{(i)}-\boldsymbol{x}^{(I(i,j))} \|^2\) for each sample, where \(I(i,j)\) is the index of the \(j^{th}\) closest neighbor&mdash;note that \(I(i,0) = i\). </p><dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[in]</td><td class="paramname">k</td><td>The number of nearest neighbors ( \(k\)) </td></tr>
+    <tr><td class="paramdir">[out]</td><td class="paramname">neighbors</td><td>Each entry cooresponds to the vector nearest neighbors of the \(i^{th}\) sample. Each neighbor is stored as a pair. First: the index \(I(i,j)\) of the neighbor; second: the squared distance \(\| \boldsymbol{x}^{(i)}-\boldsymbol{x}^{(I(i,j))} \|^2\) </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>A vector such that the \(i^{th}\) entry is the bandwidth \(r_i\) </dd></dl>
 
 </div>
 </div>
