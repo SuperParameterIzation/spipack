@@ -55,7 +55,7 @@ namespace NumericalSolvers {
       "EigensolverTol"  | double   | <tt>10^{-5}</tt> | The tolerance for the sparse eigensolver.
       "EigensolverMaxIt"  | std::size_t   | <tt>10^{3}</tt> | The maximum number of iterations for the sparse eigensolver.
 */
-class GraphLaplacian {
+class GraphLaplacian : public SampleRepresentation {
 public:
 
   /// Construct the graph laplacian by sampling a random variable from \f$\psi\f$

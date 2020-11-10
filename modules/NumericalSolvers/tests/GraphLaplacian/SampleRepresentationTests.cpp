@@ -38,10 +38,13 @@ protected:
   /// The options for the graph Laplacian
   YAML::Node options;
 
+  /// The sample representation---use a pointer here so we can initalize it as null
+  std::shared_ptr<SampleRepresentation> samples;
+
 private:
 };
 
 TEST_F(SampleRepresentationTests, RandomVariableConstruction) {
   // create the graph laplacian
-  laplacian = std::make_shared<Samp>(rv, options);
+  samples = std::make_shared<SampleRepresentation>(rv, options);
 }

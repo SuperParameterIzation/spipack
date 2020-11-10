@@ -17,7 +17,16 @@ public:
   */
   SampleRepresentation(std::shared_ptr<muq::Modeling::RandomVariable> const& rv, YAML::Node const& options);
 
+  /// Construct the sample representation given samples from the underlying distribution \f$\psi\f$
+  /**
+    @param[in] samples Samples from the underlying distribution \f$\psi\f$
+    @param[in] options Setup options
+  */
+  SampleRepresentation(std::shared_ptr<muq::SamplingAlgorithms::SampleCollection> const& samples, YAML::Node const& options);
+
   virtual ~SampleRepresentation() = default;
+
+protected:
 
 private:
 };

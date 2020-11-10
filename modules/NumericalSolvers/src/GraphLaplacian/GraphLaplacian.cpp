@@ -14,6 +14,7 @@ using namespace spi::Tools;
 using namespace spi::NumericalSolvers;
 
 GraphLaplacian::GraphLaplacian(std::shared_ptr<RandomVariable> const& rv, YAML::Node const& options) :
+SampleRepresentation(rv, options),
 samples(rv, options["NearestNeighbors"]),
 numNearestNeighbors(options["NumNearestNeighbors"].as<std::size_t>(defaults.numNearestNeighbors)),
 bandwidthRange(std::pair<double, double>(options["BandwidthRange.Min"].as<double>(defaults.bandwidthRange.first),options["BandwidthRange.Max"].as<double>(defaults.bandwidthRange.second))),
@@ -26,6 +27,7 @@ eigensolverMaxIt(options["EigensolverMaxIt"].as<std::size_t>(defaults.eigensolve
 }
 
 GraphLaplacian::GraphLaplacian(std::shared_ptr<SampleCollection> const& samples, YAML::Node const& options) :
+SampleRepresentation(samples, options),
 samples(samples, options["NearestNeighbors"]),
 numNearestNeighbors(options["NumNearestNeighbors"].as<std::size_t>(defaults.numNearestNeighbors)),
 bandwidthRange(std::pair<double, double>(options["BandwidthRange.Min"].as<double>(defaults.bandwidthRange.first),options["BandwidthRange.Max"].as<double>(defaults.bandwidthRange.second))),
