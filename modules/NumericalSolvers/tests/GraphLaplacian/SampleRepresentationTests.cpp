@@ -5,6 +5,7 @@
 #include "spipack/NumericalSolvers/GraphLaplacian/SampleRepresentation.hpp"
 
 using namespace muq::Modeling;
+using namespace muq::SamplingAlgorithms;
 using namespace spi::NumericalSolvers;
 
 class SampleRepresentationTests : public::testing::Test {
@@ -26,6 +27,22 @@ public:
 
 protected:
 
+  /// Create the graph Laplacian from samples
+  /**
+    \return The sample collection used to create the graph Laplacian
+  */
+  inline std::shared_ptr<SampleCollection> CreateFromSamples() {
+    // add random samples into a sample collection
+    auto samples = std::make_shared<SampleCollection>();
+    for( std::size_t i=0; i<n; ++i ) { samples->Add(std::make_shared<SamplingState>(rv->Sample())); }
+
+    // create the graph laplacian
+    representation = std::make_shared<SampleRepresentation>(samples, options);
+
+    // return the samples
+    return samples;
+  }
+
   /// The dimension of state spaces
   const unsigned int dim = 4;
 
@@ -39,12 +56,22 @@ protected:
   YAML::Node options;
 
   /// The sample representation---use a pointer here so we can initalize it as null
-  std::shared_ptr<SampleRepresentation> samples;
+  std::shared_ptr<SampleRepresentation> representation;
 
 private:
 };
 
 TEST_F(SampleRepresentationTests, RandomVariableConstruction) {
   // create the graph laplacian
-  samples = std::make_shared<SampleRepresentation>(rv, options);
+  representation = std::make_shared<SampleRepresentation>(rv, options);
+}
+
+TEST_F(SampleRepresentationTests, SampleCollectionConstruction) {
+  // create the graph laplacian from samples
+  auto samples = CreateFromSamples();
+
+  // check to make sure the samples match
+  for( std::size_t i=0; i<n; ++i ) {
+    EXPECT_NEAR((samples->at(i)->state[0]-representation->Point(i)).norm(), 0.0, 1.0e-10);
+  }
 }

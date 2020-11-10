@@ -15,7 +15,6 @@ using namespace spi::NumericalSolvers;
 
 GraphLaplacian::GraphLaplacian(std::shared_ptr<RandomVariable> const& rv, YAML::Node const& options) :
 SampleRepresentation(rv, options),
-samples(rv, options["NearestNeighbors"]),
 numNearestNeighbors(options["NumNearestNeighbors"].as<std::size_t>(defaults.numNearestNeighbors)),
 bandwidthRange(std::pair<double, double>(options["BandwidthRange.Min"].as<double>(defaults.bandwidthRange.first),options["BandwidthRange.Max"].as<double>(defaults.bandwidthRange.second))),
 numBandwidthSteps(options["NumBandwidthSteps"].as<std::size_t>(defaults.numBandwidthSteps)),
@@ -28,7 +27,6 @@ eigensolverMaxIt(options["EigensolverMaxIt"].as<std::size_t>(defaults.eigensolve
 
 GraphLaplacian::GraphLaplacian(std::shared_ptr<SampleCollection> const& samples, YAML::Node const& options) :
 SampleRepresentation(samples, options),
-samples(samples, options["NearestNeighbors"]),
 numNearestNeighbors(options["NumNearestNeighbors"].as<std::size_t>(defaults.numNearestNeighbors)),
 bandwidthRange(std::pair<double, double>(options["BandwidthRange.Min"].as<double>(defaults.bandwidthRange.first),options["BandwidthRange.Max"].as<double>(defaults.bandwidthRange.second))),
 numBandwidthSteps(options["NumBandwidthSteps"].as<std::size_t>(defaults.numBandwidthSteps)),
@@ -46,13 +44,6 @@ void GraphLaplacian::Initialize(YAML::Node const& options) {
 
   // initialize the sparse heat matrix
   heatMatrix.resize(NumSamples(), NumSamples());
-}
-
-std::size_t GraphLaplacian::NumSamples() const { return samples.NumSamples(); }
-
-Eigen::Ref<Eigen::VectorXd const> GraphLaplacian::Point(std::size_t const i) const {
-  assert(i<NumSamples());
-  return samples.Point(i);
 }
 
 bool GraphLaplacian::TuneBandwidthParameter() const { return tuneBandwidthParameter; }

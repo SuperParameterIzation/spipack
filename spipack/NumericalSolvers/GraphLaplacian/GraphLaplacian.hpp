@@ -74,15 +74,6 @@ public:
 
   virtual ~GraphLaplacian() = default;
 
-  /// How many samples are in the collection?
-  /**
-    \return The number of samples in the sample collection (GraphLaplacian::samples)
-  */
-  std::size_t NumSamples() const;
-
-  /// Get the \f$i^{th}\f$ point from the point cloud.
-  Eigen::Ref<Eigen::VectorXd const> Point(std::size_t const i) const;
-
   /// Do we tune the bandwidth parameter?
   bool TuneBandwidthParameter() const;
 
@@ -244,9 +235,6 @@ private:
     @param[in] mat We are computing the eigenvalues of this matrix
   */
   Eigen::VectorXd ComputeSmallestSparseEigenvalues(std::size_t const neig, Eigen::SparseMatrix<double> const& mat) const;
-
-  /// Store the samples from \f$\psi\f$.
-  const spi::Tools::NearestNeighbors samples;
 
   /// The heat matrix \f$\boldsymbol{P}\f$
   Eigen::SparseMatrix<double> heatMatrix;

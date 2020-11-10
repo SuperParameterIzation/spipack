@@ -26,7 +26,23 @@ public:
 
   virtual ~SampleRepresentation() = default;
 
+  /// How many samples are in the collection?
+  /**
+    \return The number of samples in the sample collection (GraphLaplacian::samples)
+  */
+  std::size_t NumSamples() const;
+
+  /// Get the \f$i^{th}\f$ point from the point cloud.
+  /**
+  @param[in] i We want to get this point
+  \return The f$i^{th}\f$ point from the point cloud.
+  */
+  Eigen::Ref<Eigen::VectorXd const> Point(std::size_t const i) const;
+
 protected:
+
+  /// Store the samples from \f$\psi\f$.
+  const spi::Tools::NearestNeighbors samples;
 
 private:
 };

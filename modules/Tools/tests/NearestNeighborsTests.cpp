@@ -37,7 +37,7 @@ protected:
   /**
     \return The sample collection used to create the graph Laplacian
   */
-  std::shared_ptr<SampleCollection> CreateFromSamples() {
+  inline std::shared_ptr<SampleCollection> CreateFromSamples() {
     // add random samples into a sample collection
     auto samples = std::make_shared<SampleCollection>();
     assert(rv);
