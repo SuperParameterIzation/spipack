@@ -91,7 +91,6 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 </div><!-- top -->
 <div class="header">
   <div class="summary">
-<a href="#pub-methods">Public Member Functions</a> &#124;
 <a href="#pro-methods">Protected Member Functions</a> &#124;
 <a href="#pro-attribs">Protected Attributes</a> &#124;
 <a href="classSampleRepresentationTests-members.html">List of all members</a>  </div>
@@ -108,14 +107,14 @@ Inheritance diagram for SampleRepresentationTests:</div>
 </map>
  </div></div>
 <table class="memberdecls">
-<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-methods"></a>
-Public Member Functions</h2></td></tr>
-<tr class="memitem:a81075bd0155779017c54b989a54f657c"><td class="memItemLeft" align="right" valign="top">virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classSampleRepresentationTests.html#a81075bd0155779017c54b989a54f657c">SetUp</a> () override</td></tr>
-<tr class="memdesc:a81075bd0155779017c54b989a54f657c"><td class="mdescLeft">&#160;</td><td class="mdescRight">Set up information to test the graph Laplacian.  <a href="#a81075bd0155779017c54b989a54f657c">More...</a><br /></td></tr>
-<tr class="separator:a81075bd0155779017c54b989a54f657c"><td class="memSeparator" colspan="2">&#160;</td></tr>
-</table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pro-methods"></a>
 Protected Member Functions</h2></td></tr>
+<tr class="memitem:a81075bd0155779017c54b989a54f657c"><td class="memItemLeft" align="right" valign="top">virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classSampleRepresentationTests.html#a81075bd0155779017c54b989a54f657c">SetUp</a> () override</td></tr>
+<tr class="memdesc:a81075bd0155779017c54b989a54f657c"><td class="mdescLeft">&#160;</td><td class="mdescRight">Set up information to test the sample representation.  <a href="#a81075bd0155779017c54b989a54f657c">More...</a><br /></td></tr>
+<tr class="separator:a81075bd0155779017c54b989a54f657c"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a0e0204bcc53ab098cac1f083eb1f9201"><td class="memItemLeft" align="right" valign="top">virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classSampleRepresentationTests.html#a0e0204bcc53ab098cac1f083eb1f9201">TearDown</a> () override</td></tr>
+<tr class="memdesc:a0e0204bcc53ab098cac1f083eb1f9201"><td class="mdescLeft">&#160;</td><td class="mdescRight">Make sure everything is what we expect.  <a href="#a0e0204bcc53ab098cac1f083eb1f9201">More...</a><br /></td></tr>
+<tr class="separator:a0e0204bcc53ab098cac1f083eb1f9201"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a3c609719f797dada27c8d2b974c95931"><td class="memItemLeft" align="right" valign="top">std::shared_ptr&lt; SampleCollection &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classSampleRepresentationTests.html#a3c609719f797dada27c8d2b974c95931">CreateFromSamples</a> ()</td></tr>
 <tr class="memdesc:a3c609719f797dada27c8d2b974c95931"><td class="mdescLeft">&#160;</td><td class="mdescRight">Create the graph Laplacian from samples.  <a href="#a3c609719f797dada27c8d2b974c95931">More...</a><br /></td></tr>
 <tr class="separator:a3c609719f797dada27c8d2b974c95931"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -125,9 +124,12 @@ Protected Attributes</h2></td></tr>
 <tr class="memitem:a9072d9f0949b56162dc29ad4173018c4"><td class="memItemLeft" align="right" valign="top">const unsigned int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classSampleRepresentationTests.html#a9072d9f0949b56162dc29ad4173018c4">dim</a> = 4</td></tr>
 <tr class="memdesc:a9072d9f0949b56162dc29ad4173018c4"><td class="mdescLeft">&#160;</td><td class="mdescRight">The dimension of state spaces.  <a href="#a9072d9f0949b56162dc29ad4173018c4">More...</a><br /></td></tr>
 <tr class="separator:a9072d9f0949b56162dc29ad4173018c4"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a71761505b519c6dad26f07ded95a9eb9"><td class="memItemLeft" align="right" valign="top">const std::size_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classSampleRepresentationTests.html#a71761505b519c6dad26f07ded95a9eb9">n</a> = 2000</td></tr>
-<tr class="memdesc:a71761505b519c6dad26f07ded95a9eb9"><td class="mdescLeft">&#160;</td><td class="mdescRight">The number of samples.  <a href="#a71761505b519c6dad26f07ded95a9eb9">More...</a><br /></td></tr>
-<tr class="separator:a71761505b519c6dad26f07ded95a9eb9"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a2978261afebbe9e4b2d9034fdb3598d1"><td class="memItemLeft" align="right" valign="top">std::size_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classSampleRepresentationTests.html#a2978261afebbe9e4b2d9034fdb3598d1">n</a> = 1000</td></tr>
+<tr class="memdesc:a2978261afebbe9e4b2d9034fdb3598d1"><td class="mdescLeft">&#160;</td><td class="mdescRight">The number of samples.  <a href="#a2978261afebbe9e4b2d9034fdb3598d1">More...</a><br /></td></tr>
+<tr class="separator:a2978261afebbe9e4b2d9034fdb3598d1"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a0a57efdf0752ed710ebf7be4bd6f2b19"><td class="memItemLeft" align="right" valign="top">const std::size_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classSampleRepresentationTests.html#a0a57efdf0752ed710ebf7be4bd6f2b19">nneighs</a> = 15</td></tr>
+<tr class="memdesc:a0a57efdf0752ed710ebf7be4bd6f2b19"><td class="mdescLeft">&#160;</td><td class="mdescRight">The number of nearest neighbors.  <a href="#a0a57efdf0752ed710ebf7be4bd6f2b19">More...</a><br /></td></tr>
+<tr class="separator:a0a57efdf0752ed710ebf7be4bd6f2b19"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a0f8b2f0f4c8be33486cdd12dca5783a5"><td class="memItemLeft" align="right" valign="top">std::shared_ptr&lt; RandomVariable &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classSampleRepresentationTests.html#a0f8b2f0f4c8be33486cdd12dca5783a5">rv</a></td></tr>
 <tr class="memdesc:a0f8b2f0f4c8be33486cdd12dca5783a5"><td class="mdescLeft">&#160;</td><td class="mdescRight">The random variable that lets us sample from the underlying distribution.  <a href="#a0f8b2f0f4c8be33486cdd12dca5783a5">More...</a><br /></td></tr>
 <tr class="separator:a0f8b2f0f4c8be33486cdd12dca5783a5"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -181,12 +183,37 @@ Protected Attributes</h2></td></tr>
       </table>
   </td>
   <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">override</span><span class="mlabel">virtual</span></span>  </td>
+<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">override</span><span class="mlabel">protected</span><span class="mlabel">virtual</span></span>  </td>
   </tr>
 </table>
 </div><div class="memdoc">
 
-<p>Set up information to test the graph Laplacian. </p>
+<p>Set up information to test the sample representation. </p>
+
+</div>
+</div>
+<a class="anchor" id="a0e0204bcc53ab098cac1f083eb1f9201"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">virtual void SampleRepresentationTests::TearDown </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">override</span><span class="mlabel">protected</span><span class="mlabel">virtual</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Make sure everything is what we expect. </p>
 
 </div>
 </div>
@@ -213,7 +240,7 @@ Protected Attributes</h2></td></tr>
 
 </div>
 </div>
-<a class="anchor" id="a71761505b519c6dad26f07ded95a9eb9"></a>
+<a class="anchor" id="a2978261afebbe9e4b2d9034fdb3598d1"></a>
 <div class="memitem">
 <div class="memproto">
 <table class="mlabels">
@@ -221,7 +248,7 @@ Protected Attributes</h2></td></tr>
   <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname">const std::size_t SampleRepresentationTests::n = 2000</td>
+          <td class="memname">std::size_t SampleRepresentationTests::n = 1000</td>
         </tr>
       </table>
   </td>
@@ -232,6 +259,28 @@ Protected Attributes</h2></td></tr>
 </div><div class="memdoc">
 
 <p>The number of samples. </p>
+
+</div>
+</div>
+<a class="anchor" id="a0a57efdf0752ed710ebf7be4bd6f2b19"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">const std::size_t SampleRepresentationTests::nneighs = 15</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">protected</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>The number of nearest neighbors. </p>
 
 </div>
 </div>
@@ -302,7 +351,7 @@ Protected Attributes</h2></td></tr>
 </div>
 </div>
 <hr/>The documentation for this class was generated from the following file:<ul>
-<li>/home/travis/build/SuperParameterIzation/spipack/modules/NumericalSolvers/tests/GraphLaplacian/<a class="el" href="SampleRepresentationTests_8cpp.html">SampleRepresentationTests.cpp</a></li>
+<li>/home/travis/build/SuperParameterIzation/spipack/modules/NumericalSolvers/tests/SampleRepresentation/<a class="el" href="SampleRepresentationTests_8cpp.html">SampleRepresentationTests.cpp</a></li>
 </ul>
 </div><!-- contents -->
 <!-- start footer part -->

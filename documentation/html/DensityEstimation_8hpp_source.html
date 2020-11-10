@@ -4,7 +4,7 @@
 <meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
 <meta http-equiv="X-UA-Compatible" content="IE=9"/>
 <meta name="generator" content="Doxygen 1.8.11"/>
-<title>SPI-PACK: /home/travis/build/SuperParameterIzation/spipack/spipack/NumericalSolvers/SampleRepresentation/SampleRepresentation.hpp File Reference</title>
+<title>SPI-PACK: /home/travis/build/SuperParameterIzation/spipack/spipack/NumericalSolvers/SampleRepresentation/DensityEstimation.hpp Source File</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -92,36 +92,15 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 </div>
 </div><!-- top -->
 <div class="header">
-  <div class="summary">
-<a href="#nested-classes">Classes</a> &#124;
-<a href="#namespaces">Namespaces</a>  </div>
   <div class="headertitle">
-<div class="title">SampleRepresentation.hpp File Reference</div>  </div>
+<div class="title">DensityEstimation.hpp</div>  </div>
 </div><!--header-->
 <div class="contents">
-<div class="textblock"><code>#include &lt;Eigen/Sparse&gt;</code><br />
-<code>#include &quot;<a class="el" href="NearestNeighbors_8hpp_source.html">spipack/Tools/NearestNeighbors.hpp</a>&quot;</code><br />
-<code>#include &quot;<a class="el" href="CompactKernel_8hpp_source.html">spipack/Tools/Kernels/CompactKernel.hpp</a>&quot;</code><br />
-</div>
-<p><a href="SampleRepresentation_8hpp_source.html">Go to the source code of this file.</a></p>
-<table class="memberdecls">
-<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="nested-classes"></a>
-Classes</h2></td></tr>
-<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classspi_1_1NumericalSolvers_1_1SampleRepresentation.html">spi::NumericalSolvers::SampleRepresentation</a></td></tr>
-<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Represent a distribution \(\psi\) using samples.  <a href="classspi_1_1NumericalSolvers_1_1SampleRepresentation.html#details">More...</a><br /></td></tr>
-<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structspi_1_1NumericalSolvers_1_1SampleRepresentation_1_1DefaultParameters.html">spi::NumericalSolvers::SampleRepresentation::DefaultParameters</a></td></tr>
-<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">The default values for the <a class="el" href="classspi_1_1NumericalSolvers_1_1SampleRepresentation.html" title="Represent a distribution  using samples. ">spi::NumericalSolvers::SampleRepresentation</a> class.  <a href="structspi_1_1NumericalSolvers_1_1SampleRepresentation_1_1DefaultParameters.html#details">More...</a><br /></td></tr>
-<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
-</table><table class="memberdecls">
-<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="namespaces"></a>
-Namespaces</h2></td></tr>
-<tr class="memitem:namespacespi"><td class="memItemLeft" align="right" valign="top"> &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacespi.html">spi</a></td></tr>
-<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:namespacespi_1_1NumericalSolvers"><td class="memItemLeft" align="right" valign="top"> &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacespi_1_1NumericalSolvers.html">spi::NumericalSolvers</a></td></tr>
-<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
-</table>
-</div><!-- contents -->
+<a href="DensityEstimation_8hpp.html">Go to the documentation of this file.</a><div class="fragment"><div class="line"><a name="l00001"></a><span class="lineno">    1</span>&#160;<span class="preprocessor">#ifndef DENSITYESTIMATION_HPP_</span></div><div class="line"><a name="l00002"></a><span class="lineno">    2</span>&#160;<span class="preprocessor">#define DENSITYESTIMATION_HPP_</span></div><div class="line"><a name="l00003"></a><span class="lineno">    3</span>&#160;</div><div class="line"><a name="l00004"></a><span class="lineno">    4</span>&#160;<span class="preprocessor">#include &quot;<a class="code" href="SampleRepresentation_8hpp.html">spipack/NumericalSolvers/SampleRepresentation/SampleRepresentation.hpp</a>&quot;</span></div><div class="line"><a name="l00005"></a><span class="lineno">    5</span>&#160;</div><div class="line"><a name="l00006"></a><span class="lineno"><a class="line" href="namespacespi.html">    6</a></span>&#160;<span class="keyword">namespace </span><a class="code" href="namespacespi.html">spi</a> {</div><div class="line"><a name="l00007"></a><span class="lineno"><a class="line" href="namespacespi_1_1NumericalSolvers.html">    7</a></span>&#160;<span class="keyword">namespace </span>NumericalSolvers {</div><div class="line"><a name="l00008"></a><span class="lineno">    8</span>&#160;</div><div class="line"><a name="l00009"></a><span class="lineno"><a class="line" href="classspi_1_1NumericalSolvers_1_1DensityEstimation.html">    9</a></span>&#160;<span class="keyword">class </span><a class="code" href="classspi_1_1NumericalSolvers_1_1DensityEstimation.html">DensityEstimation</a> {</div><div class="line"><a name="l00010"></a><span class="lineno">   10</span>&#160;<span class="keyword">public</span>:</div><div class="line"><a name="l00011"></a><span class="lineno">   11</span>&#160;</div><div class="line"><a name="l00012"></a><span class="lineno">   12</span>&#160;  <span class="keyword">virtual</span> <a class="code" href="classspi_1_1NumericalSolvers_1_1DensityEstimation.html#a3fac35e4c521854c0e31f6a590c08dc9">~DensityEstimation</a>() = <span class="keywordflow">default</span>;</div><div class="line"><a name="l00013"></a><span class="lineno">   13</span>&#160;  </div><div class="line"><a name="l00014"></a><span class="lineno">   14</span>&#160;<span class="keyword">private</span>:</div><div class="line"><a name="l00015"></a><span class="lineno">   15</span>&#160;};</div><div class="line"><a name="l00016"></a><span class="lineno">   16</span>&#160;</div><div class="line"><a name="l00017"></a><span class="lineno">   17</span>&#160;} <span class="comment">// namespace NumericalSolvers</span></div><div class="line"><a name="l00018"></a><span class="lineno">   18</span>&#160;} <span class="comment">// namespace spi</span></div><div class="line"><a name="l00019"></a><span class="lineno">   19</span>&#160;</div><div class="line"><a name="l00020"></a><span class="lineno">   20</span>&#160;<span class="preprocessor">#endif</span></div><div class="ttc" id="classspi_1_1NumericalSolvers_1_1DensityEstimation_html_a3fac35e4c521854c0e31f6a590c08dc9"><div class="ttname"><a href="classspi_1_1NumericalSolvers_1_1DensityEstimation.html#a3fac35e4c521854c0e31f6a590c08dc9">spi::NumericalSolvers::DensityEstimation::~DensityEstimation</a></div><div class="ttdeci">virtual ~DensityEstimation()=default</div></div>
+<div class="ttc" id="namespacespi_html"><div class="ttname"><a href="namespacespi.html">spi</a></div><div class="ttdef"><b>Definition:</b> DensityEstimation.hpp:6</div></div>
+<div class="ttc" id="classspi_1_1NumericalSolvers_1_1DensityEstimation_html"><div class="ttname"><a href="classspi_1_1NumericalSolvers_1_1DensityEstimation.html">spi::NumericalSolvers::DensityEstimation</a></div><div class="ttdef"><b>Definition:</b> DensityEstimation.hpp:9</div></div>
+<div class="ttc" id="SampleRepresentation_8hpp_html"><div class="ttname"><a href="SampleRepresentation_8hpp.html">SampleRepresentation.hpp</a></div></div>
+</div><!-- fragment --></div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
 Generated by &#160;<a href="http://www.doxygen.org/index.html">

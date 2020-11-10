@@ -1,5 +1,5 @@
 var searchData=
 [
   ['kdtrees',['kdtrees',['../classspi_1_1Tools_1_1NearestNeighbors.html#a61a62a0dae5d8d718cf2ca238d99e79e',1,'spi::Tools::NearestNeighbors']]],
-  ['kernel',['kernel',['../classspi_1_1NumericalSolvers_1_1GraphLaplacian.html#adfc06d32ef3223612f8f94ba023c3a7c',1,'spi::NumericalSolvers::GraphLaplacian']]]
+  ['kernel',['kernel',['../classspi_1_1NumericalSolvers_1_1SampleRepresentation.html#a1b02ba85fb4c695ea25feb242bd8739b',1,'spi::NumericalSolvers::SampleRepresentation']]]
 ];

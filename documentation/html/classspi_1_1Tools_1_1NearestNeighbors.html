@@ -141,6 +141,9 @@ Public Member Functions</h2></td></tr>
 <tr class="memitem:aec62874949c4a0515a1d90d5c4ebea33"><td class="memItemLeft" align="right" valign="top">std::size_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classspi_1_1Tools_1_1NearestNeighbors.html#aec62874949c4a0515a1d90d5c4ebea33">StateDim</a> () const </td></tr>
 <tr class="memdesc:aec62874949c4a0515a1d90d5c4ebea33"><td class="mdescLeft">&#160;</td><td class="mdescRight">The state dimension.  <a href="#aec62874949c4a0515a1d90d5c4ebea33">More...</a><br /></td></tr>
 <tr class="separator:aec62874949c4a0515a1d90d5c4ebea33"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a0aa7130dbcaef0681444351f328b7b20"><td class="memItemLeft" align="right" valign="top">std::size_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classspi_1_1Tools_1_1NearestNeighbors.html#a0aa7130dbcaef0681444351f328b7b20">NumThreads</a> () const </td></tr>
+<tr class="memdesc:a0aa7130dbcaef0681444351f328b7b20"><td class="mdescLeft">&#160;</td><td class="mdescRight">The number of <code>openMP</code> threads this object can use.  <a href="#a0aa7130dbcaef0681444351f328b7b20">More...</a><br /></td></tr>
+<tr class="separator:a0aa7130dbcaef0681444351f328b7b20"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a6206fffec8889fd39b8db0361844dd4a"><td class="memItemLeft" align="right" valign="top">std::shared_ptr&lt; const muq::SamplingAlgorithms::SampleCollection &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classspi_1_1Tools_1_1NearestNeighbors.html#a6206fffec8889fd39b8db0361844dd4a">Samples</a> () const </td></tr>
 <tr class="memdesc:a6206fffec8889fd39b8db0361844dd4a"><td class="mdescLeft">&#160;</td><td class="mdescRight">The sample collection.  <a href="#a6206fffec8889fd39b8db0361844dd4a">More...</a><br /></td></tr>
 <tr class="separator:a6206fffec8889fd39b8db0361844dd4a"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -186,6 +189,9 @@ Private Attributes</h2></td></tr>
 <tr class="memitem:a874796f28c5b4e0da528f6cbc14c74ed"><td class="memItemLeft" align="right" valign="top">std::shared_ptr&lt; const muq::SamplingAlgorithms::SampleCollection &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classspi_1_1Tools_1_1NearestNeighbors.html#a874796f28c5b4e0da528f6cbc14c74ed">samples</a></td></tr>
 <tr class="memdesc:a874796f28c5b4e0da528f6cbc14c74ed"><td class="mdescLeft">&#160;</td><td class="mdescRight">Samples from the distribution \(\psi\).  <a href="#a874796f28c5b4e0da528f6cbc14c74ed">More...</a><br /></td></tr>
 <tr class="separator:a874796f28c5b4e0da528f6cbc14c74ed"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a76c5e462d8c590b9373b8dab468a6b3a"><td class="memItemLeft" align="right" valign="top">const std::size_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classspi_1_1Tools_1_1NearestNeighbors.html#a76c5e462d8c590b9373b8dab468a6b3a">numThreads</a></td></tr>
+<tr class="memdesc:a76c5e462d8c590b9373b8dab468a6b3a"><td class="mdescLeft">&#160;</td><td class="mdescRight">The number of <code>openMP</code> threads available to this object.  <a href="#a76c5e462d8c590b9373b8dab468a6b3a">More...</a><br /></td></tr>
+<tr class="separator:a76c5e462d8c590b9373b8dab468a6b3a"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pri-static-attribs"></a>
 Static Private Attributes</h2></td></tr>
@@ -200,11 +206,13 @@ Static Private Attributes</h2></td></tr>
 <tr>
 <th>Parameter Key </th><th>Type </th><th>Default Value </th><th>Description  </th></tr>
 <tr>
-<td>"NumSamples" </td><td>std::size_t </td><td>- </td><td>In the case where a random variable is passed to the constructor, we draw \(n\) samples from the distribution. </td></tr>
+<td>"NumSamples" </td><td><code>std::size_t</code> </td><td>- </td><td>In the case where a random variable is passed to the constructor, we draw \(n\) samples from the distribution. </td></tr>
 <tr>
-<td>"MaxLeaf" </td><td>std::size_t </td><td><code>10</code> </td><td>The maximum leaf size for the kd tree (nanoflann parameter). </td></tr>
+<td>"MaxLeaf" </td><td><code>std::size_t</code> </td><td><code>10</code> </td><td>The maximum leaf size for the kd tree (nanoflann parameter). </td></tr>
 <tr>
-<td>"Stride" </td><td>std::size_t </td><td><code>NumSamples/100</code> </td><td>Build \(i \in [0, m]\) kd trees that ignore the first \(i d\) samples, where \(d\) is the stride parameter. </td></tr>
+<td>"Stride" </td><td><code>std::size_t</code> </td><td><code>NumSamples/100</code> </td><td>Build \(i \in [0, m]\) kd trees that ignore the first \(i d\) samples, where \(d\) is the stride parameter. </td></tr>
+<tr>
+<td>"NumThreads" </td><td><code>std::size_t</code> </td><td><code>1</code> </td><td>The number of <code>openMP</code> threads available to this object. </td></tr>
 </table>
 </div><h2 class="groupheader">Member Typedef Documentation</h2>
 <a class="anchor" id="a49fbdab47f2907b7a6a71a62721dbfd6"></a>
@@ -490,6 +498,24 @@ Static Private Attributes</h2></td></tr>
 
 </div>
 </div>
+<a class="anchor" id="a0aa7130dbcaef0681444351f328b7b20"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">std::size_t NearestNeighbors::NumThreads </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td> const</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>The number of <code>openMP</code> threads this object can use. </p>
+<dl class="section return"><dt>Returns</dt><dd>The number of <code>openMP</code> threads this object can use </dd></dl>
+
+</div>
+</div>
 <a class="anchor" id="af998fb02a8a5665aa88949440746a979"></a>
 <div class="memitem">
 <div class="memproto">
@@ -693,6 +719,28 @@ Static Private Attributes</h2></td></tr>
 </div><div class="memdoc">
 
 <p>The nanoflann kd-trees. </p>
+
+</div>
+</div>
+<a class="anchor" id="a76c5e462d8c590b9373b8dab468a6b3a"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">const std::size_t spi::Tools::NearestNeighbors::numThreads</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">private</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>The number of <code>openMP</code> threads available to this object. </p>
 
 </div>
 </div>
