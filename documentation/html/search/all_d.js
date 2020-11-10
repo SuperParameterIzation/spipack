@@ -1,6 +1,6 @@
 var searchData=
 [
-  ['n',['n',['../classGraphLaplacianTests.html#a2e2fbd8d4c78e5508a7a306abdeff11d',1,'GraphLaplacianTests::n()'],['../classNearestNeighborsTests.html#a8453ef17b972f72fa4fd5b85c9e00f2e',1,'NearestNeighborsTests::n()']]],
+  ['n',['n',['../classGraphLaplacianTests.html#a2e2fbd8d4c78e5508a7a306abdeff11d',1,'GraphLaplacianTests::n()'],['../classSampleRepresentationTests.html#a71761505b519c6dad26f07ded95a9eb9',1,'SampleRepresentationTests::n()'],['../classNearestNeighborsTests.html#a8453ef17b972f72fa4fd5b85c9e00f2e',1,'NearestNeighborsTests::n()']]],
   ['nanoflannkdtree',['NanoflannKDTree',['../classspi_1_1Tools_1_1NearestNeighbors.html#a49fbdab47f2907b7a6a71a62721dbfd6',1,'spi::Tools::NearestNeighbors']]],
   ['nearestneighbors',['NearestNeighbors',['../classspi_1_1Tools_1_1NearestNeighbors.html#a17bb600f56b6f88b01869fd29bc18ee0',1,'spi::Tools::NearestNeighbors::NearestNeighbors(std::shared_ptr&lt; muq::Modeling::RandomVariable &gt; const &amp;rv, YAML::Node const &amp;options)'],['../classspi_1_1Tools_1_1NearestNeighbors.html#a557ff5e569f5da66430ad394e2cda04e',1,'spi::Tools::NearestNeighbors::NearestNeighbors(std::shared_ptr&lt; muq::SamplingAlgorithms::SampleCollection &gt; const &amp;samples, YAML::Node const &amp;options)']]],
   ['nearestneighbors',['NearestNeighbors',['../classspi_1_1Tools_1_1NearestNeighbors.html',1,'spi::Tools']]],

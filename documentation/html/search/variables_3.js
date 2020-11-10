@@ -5,5 +5,5 @@ var searchData=
   ['densityestimationapprox',['densityEstimationApprox',['../namespace__plot__result.html#a9c59e303145012b848992576f05ceca7',1,'_plot_result']]],
   ['densityestimationmax',['densityEstimationMax',['../namespace__plot__result.html#ac65bb563424cfba462aa73b5413385ff',1,'_plot_result']]],
   ['densityestimationmin',['densityEstimationMin',['../namespace__plot__result.html#a8d5b669470f24c0b153da53f10b83007',1,'_plot_result']]],
-  ['dim',['dim',['../classGraphLaplacianTests.html#abe551b8b442a60a6035f5d88ac6d68ab',1,'GraphLaplacianTests::dim()'],['../classNearestNeighborsTests.html#aa16fc1b3af0a381cba6c8e1ac4eaf3f6',1,'NearestNeighborsTests::dim()']]]
+  ['dim',['dim',['../classGraphLaplacianTests.html#abe551b8b442a60a6035f5d88ac6d68ab',1,'GraphLaplacianTests::dim()'],['../classSampleRepresentationTests.html#a9072d9f0949b56162dc29ad4173018c4',1,'SampleRepresentationTests::dim()'],['../classNearestNeighborsTests.html#aa16fc1b3af0a381cba6c8e1ac4eaf3f6',1,'NearestNeighborsTests::dim()']]]
 ];
