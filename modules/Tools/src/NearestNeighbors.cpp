@@ -124,8 +124,30 @@ double NearestNeighbors::FindNeighbors(Eigen::Ref<const Eigen::VectorXd> const& 
   neighbors.erase(it, neighbors.end());
 
   double avg = 0.0;
-  for( const auto& neigh : neighbors ) { avg += neigh.second; }
-  return avg/neighbors.size();
+  int sub = 0 ;
+  for( const auto& neigh : neighbors ) {
+    if( neigh.second<1.0e-12 ) { ++sub; continue; } // don't include itself
+    avg += neigh.second;
+  }
+  return (sub==neighbors.size()? 0.0 : avg/(neighbors.size()-sub));
+}
+
+Eigen::VectorXd NearestNeighbors::SquaredBandwidth(std::size_t const k, std::vector<std::vector<std::pair<std::size_t, double> > >& neighbors) const {
+  // the number of samples
+  const std::size_t n = NumSamples();
+
+  // need to find k+1 neighbors because one will be itself
+  const std::size_t kp1 = k+1;
+
+// loop through each sample and compute the squared bandwidth
+  Eigen::VectorXd bandwidth(n);
+  neighbors.resize(n);
+  for( std::size_t i=0; i<n; ++i ) {
+    // find the nearest neighbors for each sample
+    bandwidth(i) = FindNeighbors(Point(i), kp1, neighbors[i]);
+  }
+
+  return bandwidth;
 }
 
 NearestNeighbors::Cloud::Cloud(std::shared_ptr<const muq::SamplingAlgorithms::SampleCollection> const& samples, std::size_t const lag) :

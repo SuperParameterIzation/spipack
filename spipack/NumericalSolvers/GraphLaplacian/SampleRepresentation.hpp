@@ -6,7 +6,7 @@
 namespace spi {
 namespace NumericalSolvers {
 
-/// Represent a distribution \f$\phi\f$ using samples
+/// Represent a distribution \f$\psi\f$ using samples
 class SampleRepresentation {
 public:
 
