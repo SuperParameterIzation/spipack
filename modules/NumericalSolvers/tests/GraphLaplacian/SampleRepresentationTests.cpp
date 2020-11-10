@@ -42,5 +42,6 @@ private:
 };
 
 TEST_F(SampleRepresentationTests, RandomVariableConstruction) {
-
+  // create the graph laplacian
+  laplacian = std::make_shared<Samp>(rv, options);
 }
