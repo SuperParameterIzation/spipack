@@ -19,7 +19,7 @@
     extensions: ["tex2jax.js"],
     jax: ["input/TeX","output/HTML-CSS"],
 });
-</script><script type="text/javascript" src="http://cdn.mathjax.org/mathjax/latest/MathJax.js"></script>
+</script><script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.4/latest.js?config=TeX-MML-AM_CHTML/MathJax.js"></script>
 <link href="doxygen.css" rel="stylesheet" type="text/css" />
 </head>
 <body>
@@ -92,6 +92,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <div class="header">
   <div class="summary">
 <a href="#pub-methods">Public Member Functions</a> &#124;
+<a href="#pro-methods">Protected Member Functions</a> &#124;
 <a href="#pro-attribs">Protected Attributes</a> &#124;
 <a href="classSampleRepresentationTests-members.html">List of all members</a>  </div>
   <div class="headertitle">
@@ -113,6 +114,12 @@ Public Member Functions</h2></td></tr>
 <tr class="memdesc:a81075bd0155779017c54b989a54f657c"><td class="mdescLeft">&#160;</td><td class="mdescRight">Set up information to test the graph Laplacian.  <a href="#a81075bd0155779017c54b989a54f657c">More...</a><br /></td></tr>
 <tr class="separator:a81075bd0155779017c54b989a54f657c"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pro-methods"></a>
+Protected Member Functions</h2></td></tr>
+<tr class="memitem:a3c609719f797dada27c8d2b974c95931"><td class="memItemLeft" align="right" valign="top">std::shared_ptr&lt; SampleCollection &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classSampleRepresentationTests.html#a3c609719f797dada27c8d2b974c95931">CreateFromSamples</a> ()</td></tr>
+<tr class="memdesc:a3c609719f797dada27c8d2b974c95931"><td class="mdescLeft">&#160;</td><td class="mdescRight">Create the graph Laplacian from samples.  <a href="#a3c609719f797dada27c8d2b974c95931">More...</a><br /></td></tr>
+<tr class="separator:a3c609719f797dada27c8d2b974c95931"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pro-attribs"></a>
 Protected Attributes</h2></td></tr>
 <tr class="memitem:a9072d9f0949b56162dc29ad4173018c4"><td class="memItemLeft" align="right" valign="top">const unsigned int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classSampleRepresentationTests.html#a9072d9f0949b56162dc29ad4173018c4">dim</a> = 4</td></tr>
@@ -127,11 +134,37 @@ Protected Attributes</h2></td></tr>
 <tr class="memitem:aa5d8aa758ec7ac4ac7d79bdacb77d8f9"><td class="memItemLeft" align="right" valign="top">YAML::Node&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classSampleRepresentationTests.html#aa5d8aa758ec7ac4ac7d79bdacb77d8f9">options</a></td></tr>
 <tr class="memdesc:aa5d8aa758ec7ac4ac7d79bdacb77d8f9"><td class="mdescLeft">&#160;</td><td class="mdescRight">The options for the graph Laplacian.  <a href="#aa5d8aa758ec7ac4ac7d79bdacb77d8f9">More...</a><br /></td></tr>
 <tr class="separator:aa5d8aa758ec7ac4ac7d79bdacb77d8f9"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a5be90e30fa0740c300da208fda1b63b4"><td class="memItemLeft" align="right" valign="top">std::shared_ptr&lt; <a class="el" href="classspi_1_1NumericalSolvers_1_1SampleRepresentation.html">SampleRepresentation</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classSampleRepresentationTests.html#a5be90e30fa0740c300da208fda1b63b4">samples</a></td></tr>
-<tr class="memdesc:a5be90e30fa0740c300da208fda1b63b4"><td class="mdescLeft">&#160;</td><td class="mdescRight">The sample representation&mdash;use a pointer here so we can initalize it as null.  <a href="#a5be90e30fa0740c300da208fda1b63b4">More...</a><br /></td></tr>
-<tr class="separator:a5be90e30fa0740c300da208fda1b63b4"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a45ac82ae4a4801a3f9153d76ba65376e"><td class="memItemLeft" align="right" valign="top">std::shared_ptr&lt; <a class="el" href="classspi_1_1NumericalSolvers_1_1SampleRepresentation.html">SampleRepresentation</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classSampleRepresentationTests.html#a45ac82ae4a4801a3f9153d76ba65376e">representation</a></td></tr>
+<tr class="memdesc:a45ac82ae4a4801a3f9153d76ba65376e"><td class="mdescLeft">&#160;</td><td class="mdescRight">The sample representation&mdash;use a pointer here so we can initalize it as null.  <a href="#a45ac82ae4a4801a3f9153d76ba65376e">More...</a><br /></td></tr>
+<tr class="separator:a45ac82ae4a4801a3f9153d76ba65376e"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <h2 class="groupheader">Member Function Documentation</h2>
+<a class="anchor" id="a3c609719f797dada27c8d2b974c95931"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">std::shared_ptr&lt;SampleCollection&gt; SampleRepresentationTests::CreateFromSamples </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">protected</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Create the graph Laplacian from samples. </p>
+<dl class="section return"><dt>Returns</dt><dd>The sample collection used to create the graph Laplacian </dd></dl>
+
+</div>
+</div>
 <a class="anchor" id="a81075bd0155779017c54b989a54f657c"></a>
 <div class="memitem">
 <div class="memproto">
@@ -224,6 +257,28 @@ Protected Attributes</h2></td></tr>
 
 </div>
 </div>
+<a class="anchor" id="a45ac82ae4a4801a3f9153d76ba65376e"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">std::shared_ptr&lt;<a class="el" href="classspi_1_1NumericalSolvers_1_1SampleRepresentation.html">SampleRepresentation</a>&gt; SampleRepresentationTests::representation</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">protected</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>The sample representation&mdash;use a pointer here so we can initalize it as null. </p>
+
+</div>
+</div>
 <a class="anchor" id="a0f8b2f0f4c8be33486cdd12dca5783a5"></a>
 <div class="memitem">
 <div class="memproto">
@@ -243,28 +298,6 @@ Protected Attributes</h2></td></tr>
 </div><div class="memdoc">
 
 <p>The random variable that lets us sample from the underlying distribution. </p>
-
-</div>
-</div>
-<a class="anchor" id="a5be90e30fa0740c300da208fda1b63b4"></a>
-<div class="memitem">
-<div class="memproto">
-<table class="mlabels">
-  <tr>
-  <td class="mlabels-left">
-      <table class="memname">
-        <tr>
-          <td class="memname">std::shared_ptr&lt;<a class="el" href="classspi_1_1NumericalSolvers_1_1SampleRepresentation.html">SampleRepresentation</a>&gt; SampleRepresentationTests::samples</td>
-        </tr>
-      </table>
-  </td>
-  <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">protected</span></span>  </td>
-  </tr>
-</table>
-</div><div class="memdoc">
-
-<p>The sample representation&mdash;use a pointer here so we can initalize it as null. </p>
 
 </div>
 </div>
