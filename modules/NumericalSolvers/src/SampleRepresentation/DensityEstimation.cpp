@@ -19,23 +19,21 @@ manifoldDim(options["ManifoldDimension"].as<double>(defaults.manifoldDim))
 double DensityEstimation::BandwidthParameter() const { return bandwidthPara; }
 
 Eigen::VectorXd DensityEstimation::Estimate() const {
-  // compute the number of samples
-  const std::size_t n = NumSamples();
-
-  // construct the kd-trees
-  samples.BuildKDTrees();
-
   // compute the squared bandwidth
   Eigen::VectorXd squaredBandwidth = samples.SquaredBandwidth(numNearestNeighbors);
 
+  // compute the density
+  return Estimate(squaredBandwidth);
+}
+
+Eigen::VectorXd DensityEstimation::Estimate(Eigen::Ref<const Eigen::VectorXd> const& squaredBandwidth) const {
   // compute the kernel matrix
   Eigen::SparseMatrix<double> kmat;
   KernelMatrix(bandwidthPara, squaredBandwidth.array().sqrt(), kmat);
 
   // compute the volume vector
-  squaredBandwidth = ((n*std::pow(M_PI*bandwidthPara, manifoldDim/2.0))*squaredBandwidth.array().pow(manifoldDim/2.0)).array().inverse();
+  const Eigen::VectorXd vol = ((NumSamples()*std::pow(M_PI*bandwidthPara, manifoldDim/2.0))*squaredBandwidth.array().pow(manifoldDim/2.0)).array().inverse();
 
   // apply the matrix vector product to compute the density estimation
-  squaredBandwidth = kmat*squaredBandwidth;
-  return squaredBandwidth;
+  return kmat*vol;
 }

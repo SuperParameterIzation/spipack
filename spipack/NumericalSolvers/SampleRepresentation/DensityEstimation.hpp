@@ -16,21 +16,24 @@ In addition to the parameters/options below, this class has the same parameters/
 Parameter Key | Type | Default Value | Description |
 ------------- | ------------- | ------------- | ------------- |
 "BandwidthParameter"   | <tt>double</tt> | <tt>1.0</tt> | The parmeter \f$\epsilon\f$ used to compute the kernel |
+"ManifoldDimension"   | <tt>double</tt> | <tt>2.0</tt> | The manifold dimension \f$m\f$. |
 */
 class DensityEstimation : public SampleRepresentation {
 public:
 
   /// Construct the density estimation by sampling a random variable from \f$\psi\f$
   /**
-    @param[in] rv The random variable that we wish to sample
-    @param[in] options Setup options
+  @param[in] rv The random variable that we wish to sample
+  @param[in] options Setup options
   */
   DensityEstimation(std::shared_ptr<muq::Modeling::RandomVariable> const& rv, YAML::Node const& options);
 
   /// Construct the density estimation given samples from the underlying distribution \f$\psi\f$
   /**
-    @param[in] samples Samples from the underlying distribution \f$\psi\f$
-    @param[in] options Setup options
+  This function does NOT compute the kd trees. It assumes that spi::NumericalSolvers::SampleRepresentation::BuildKDTrees has already been called.
+
+  @param[in] samples Samples from the underlying distribution \f$\psi\f$
+  @param[in] options Setup options
   */
   DensityEstimation(std::shared_ptr<muq::SamplingAlgorithms::SampleCollection> const& samples, YAML::Node const& options);
 
@@ -42,8 +45,19 @@ public:
   */
   double BandwidthParameter() const;
 
-  /// Estimate the density at each sample
+  /// Estimate the density at each sample (given bandwidth parameter \f$r_i\f$)
   /**
+  This function should be used if we have already computed the bandwidth parameter \f$r_i = \frac{1}{k} \sum_{j=1}^{k} \| \boldsymbol{x}^{(i)}-\boldsymbol{x}^{(I(i,j))} \|^2\f$.
+
+  @param[in] squaredBandwidth The bandwidth squared parameter \f$r_i = \frac{1}{k} \sum_{j=1}^{k} \| \boldsymbol{x}^{(i)}-\boldsymbol{x}^{(I(i,j))} \|^2\f$
+  \return The density estimation at each sample \f$\psi_i \approx \psi(\boldsymbol{x}^{(i)})\f$
+  */
+  Eigen::VectorXd Estimate(Eigen::Ref<const Eigen::VectorXd> const& squaredBandwidth) const;
+
+  // Estimate the density at each sample
+  /**
+  This function does NOT compute the kd trees. It assumes that spi::NumericalSolvers::SampleRepresentation::BuildKDTrees has already been called.
+
   \return The density estimation at each sample \f$\psi_i \approx \psi(\boldsymbol{x}^{(i)})\f$
   */
   Eigen::VectorXd Estimate() const;

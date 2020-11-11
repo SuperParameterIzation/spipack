@@ -147,13 +147,6 @@ public:
   */
   double EigensolverTolerance() const;
 
-  /// Write the samples to file
-  /**
-    @param[in] filename The name of the file where we are writing the data
-    @param[in] dataset The name of the dataset where the samples are stored inside the file (defaults to <tt>"/"</tt>)
-  */
-  void WriteToFile(std::string const& filename, std::string const& dataset = "/") const;
-
   /// The bandwidth of each sample
   /**
   \return The squared bandwidth \f$r_i^2 = \max_{j \in [1,k]}{\left( \|\boldsymbol{x}^{(i)} - \boldsymbol{x}^{(I(i,j))} \|^2 \right)}\f$

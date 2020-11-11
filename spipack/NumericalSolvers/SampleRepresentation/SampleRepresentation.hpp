@@ -80,7 +80,7 @@ public:
   \f}
   Recall that \f$k(\theta)\f$ is the kernel function.
 
-  This function (re-)builds the kd-tree.
+  This function does NOT compute the kd trees. It assumes that spi::NumericalSolvers::SampleRepresentation::BuildKDTrees has already been called.
 
   Note: children may override this and define the kernel using a different vector of bandwith parameters \f$r_i\f$.
   @param[in] eps The parameter \f$\epsilon>0\f$
@@ -88,11 +88,6 @@ public:
   \return Each entry is the sum of a row in the kernel matrix \f$b_i = \sum_{j=1}^{n} K_{\epsilon}^{(ij)}\f$
   */
   Eigen::VectorXd KernelMatrix(double const eps, Eigen::SparseMatrix<double>& kmat) const;
-
-protected:
-
-  /// Store the samples from \f$\psi\f$.
-  const spi::Tools::NearestNeighbors samples;
 
   /// Construct the kernel matrix \f$\boldsymbol{K}_{\epsilon}\f$
   /**
@@ -107,6 +102,29 @@ protected:
   \return Each entry is the sum of a row in the kernel matrix \f$b_i = \sum_{j=1}^{n} K_{\epsilon}^{(ij)}\f$
   */
   Eigen::VectorXd KernelMatrix(double const eps, Eigen::Ref<const Eigen::VectorXd> const& rvec, Eigen::SparseMatrix<double>& kmat) const;
+
+  /// Build the kd trees for the nearest neighbor computation
+  void BuildKDTrees() const;
+
+  /// Compute the squared bandwidth \f$r_i^2 = \frac{1}{k} \sum_{j=1}^{k} \| \boldsymbol{x}^{(i)}-\boldsymbol{x}^{(I(i,j))} \|^2\f$
+  /**
+  This function does NOT compute the kd trees. It assumes that spi::NumericalSolvers::SampleRepresentation::BuildKDTrees has already been called.
+
+  \return The squared bandwidth \f$r_i^2 = \frac{1}{k} \sum_{j=1}^{k} \| \boldsymbol{x}^{(i)}-\boldsymbol{x}^{(I(i,j))} \|^2\f$
+  */
+  Eigen::VectorXd SquaredBandwidth() const;
+
+  /// Write the samples to file
+  /**
+    @param[in] filename The name of the file where we are writing the data
+    @param[in] dataset The name of the dataset where the samples are stored inside the file (defaults to <tt>"/"</tt>)
+  */
+  void WriteToFile(std::string const& filename, std::string const& dataset = "/") const;
+
+protected:
+
+  /// Store the samples from \f$\psi\f$.
+  const spi::Tools::NearestNeighbors samples;
 
   /// The number of nearest neighbors used to compute the bandwidth
   const std::size_t numNearestNeighbors;

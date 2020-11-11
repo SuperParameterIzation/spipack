@@ -28,5 +28,5 @@ $$
 \end{equation}
 $$
 
-<embed src="figures/LogBandwidth.pdf" width="500" height="375"
+<embed src="figures/SquaredBandwidth.pdf" width="500" height="375"
  type="application/pdf">

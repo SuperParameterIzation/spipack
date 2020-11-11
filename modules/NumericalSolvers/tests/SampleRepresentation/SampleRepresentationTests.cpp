@@ -94,6 +94,9 @@ TEST_F(SampleRepresentationTests, KernelMatrix) {
   auto samples = CreateFromSamples();
   EXPECT_EQ(samples->size(), n);
 
+  // construct the kd-trees
+  representation->BuildKDTrees();
+
   // compute the kernel matrix
   const double eps = 10.0;
   Eigen::SparseMatrix<double> kmat;

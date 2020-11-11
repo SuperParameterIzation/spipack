@@ -105,6 +105,9 @@ TEST_F(DensityEstimationTests, EstimateGaussian) {
   auto samples = CreateFromSamples();
   EXPECT_EQ(samples->size(), n);
 
+  // construct the kd-trees
+  density->BuildKDTrees();
+
   // estimate the density at each sample
   const Eigen::VectorXd densityEstimate = density->Estimate();
 

@@ -1,5 +1,8 @@
 #include "spipack/NumericalSolvers/SampleRepresentation/SampleRepresentation.hpp"
 
+#include <MUQ/Utilities/HDF5/HDF5File.h>
+
+using namespace muq::Utilities;
 using namespace muq::Modeling;
 using namespace muq::SamplingAlgorithms;
 using namespace spi::Tools;
@@ -36,11 +39,12 @@ Eigen::Ref<Eigen::VectorXd const> SampleRepresentation::Point(std::size_t const 
 
 std::shared_ptr<const CompactKernel> SampleRepresentation::Kernel() const { return kernel; }
 
+void SampleRepresentation::BuildKDTrees() const { samples.BuildKDTrees(); }
+
+Eigen::VectorXd SampleRepresentation::SquaredBandwidth() const { return samples.SquaredBandwidth(numNearestNeighbors); }
+
 Eigen::VectorXd SampleRepresentation::KernelMatrix(double const eps, Eigen::SparseMatrix<double>& kmat) const {
   assert(eps>0.0);
-
-  // construct the kd-trees
-  samples.BuildKDTrees();
 
   // compute the squared bandwidth
   const Eigen::VectorXd squaredBandwidth = samples.SquaredBandwidth(numNearestNeighbors);
@@ -108,4 +112,15 @@ Eigen::VectorXd SampleRepresentation::KernelMatrix(double const eps, Eigen::Ref<
 
   kmat.setFromTriplets(entries.begin(), entries.end());
   return rowsum;
+}
+
+void SampleRepresentation::WriteToFile(std::string const& filename, std::string const& dataset) const {
+  // create an hdf5 file
+  auto file = std::make_shared<HDF5File>(filename);
+
+  // output the collection to file
+  const std::string dataset_ = (dataset.at(0)=='/'? dataset : "/"+dataset);
+  samples.Samples()->WriteToFile(filename, dataset_);
+
+  file->Close();
 }

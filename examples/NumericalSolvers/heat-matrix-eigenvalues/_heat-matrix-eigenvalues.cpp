@@ -1,8 +1,9 @@
 #include <iostream>
 
+#include <MUQ/Modeling/Distributions/Density.h>
 #include <MUQ/Modeling/Distributions/Gaussian.h>
 
-#include <spipack/NumericalSolvers/GraphLaplacian/GraphLaplacian.hpp>
+#include <spipack/NumericalSolvers/SampleRepresentation/DensityEstimation.hpp>
 
 using namespace muq::Utilities;
 using namespace muq::Modeling;
@@ -20,13 +21,19 @@ int main(int argc, char **argv) {
   const std::size_t n = 10000;
 
   // numerical parameters
-  const std::size_t numNeighbors = 25.0*std::log(n);
-  //const std::size_t numNeighbors = 10;
+  const std::size_t numNeighbors = 10;
 
-  // create a uniform random variable
-  //std::vector<std::pair<double, double> > bounds(dim, std::pair<double, double>(1.0, 0.0));
-  //auto rv = std::make_shared<UniformBox>(bounds)->AsVariable();
-  auto rv = std::make_shared<Gaussian>(dim)->AsVariable();
+  // the bandwidth parameter
+  const double bandPara = 1.0;
+
+  // create a density/random variable
+  auto gauss = std::make_shared<Gaussian>(dim);
+  auto logDensity = gauss->AsDensity();
+  auto rv = gauss->AsVariable();
+
+  // compute a sample collection
+  auto samples = std::make_shared<SampleCollection>();
+  for( std::size_t i=0; i<n; ++i ) { samples->Add(std::make_shared<SamplingState>(rv->Sample())); }
 
   // options for the nearest neighbor search
   YAML::Node nnOptions;
@@ -34,17 +41,43 @@ int main(int argc, char **argv) {
   nnOptions["Stride"] = n/5;
   nnOptions["NumThreads"] = omp_get_max_threads();
 
-  // the options for the graph Laplacian
-  YAML::Node options;
-  options["NearestNeighbors"] = nnOptions;
-  options["NumNearestNeighbors"] = numNeighbors;
-  options["BandwidthParameter"] = 1.0;
-  options["ManifoldDimension"] = 2.0;
-
   // set the kernel options
   YAML::Node kernelOptions;
   kernelOptions["Kernel"] = "BumpKernel";
+
+  // the options for the graph Laplacian
+  YAML::Node options;
+  options["NearestNeighbors"] = nnOptions;
   options["KernelOptions"] = kernelOptions;
+  options["NumNearestNeighbors"] = numNeighbors;
+  options["BandwidthParameter"] = bandPara;
+  options["ManifoldDimension"] = (double)dim;
+
+  // create the density estimator
+  DensityEstimation density(samples, options);
+
+  // build the kd trees
+  density.BuildKDTrees();
+
+  // compute the squared bandwidth parameter
+  const Eigen::VectorXd squaredBandwidth = density.SquaredBandwidth();
+
+  // estimate the density at each sample
+  const Eigen::VectorXd dens = density.Estimate(squaredBandwidth);
+
+  // compute the true density
+  Eigen::VectorXd logDens(n);
+  for( std::size_t i=0; i<n; ++i ) { logDens(i) = logDensity->LogDensity(samples->at(i)->state[0]); }
+
+  // write the samples to file
+  density.WriteToFile(filename);
+
+  // open the file and write data to file
+  HDF5File hdf5file(filename);
+  hdf5file.WriteMatrix("/squared bandwidth", squaredBandwidth);
+  hdf5file.WriteMatrix("/density estimate", dens);
+  hdf5file.WriteMatrix("/true density", logDens.array().exp().matrix().eval());
+  hdf5file.Close();
 
   /*// create the graph laplacian
   auto laplacian = std::make_shared<GraphLaplacian>(rv, options);
