@@ -64,7 +64,7 @@ protected:
   const unsigned int dim = 1;
 
   /// The number of samples
-  const std::size_t n = 100000;
+  const std::size_t n = 10000;
 
   /// The number of nearest neighbors
   const std::size_t nneighs = 500;
@@ -108,16 +108,20 @@ TEST_F(DensityEstimationTests, EstimateGaussian) {
   // construct the kd-trees
   density->BuildKDTrees();
 
+  // create the tuning data
+  DensityEstimation::TuningData tune;
+  tune.bandwidthExponent = Eigen::VectorXd::LinSpaced(25, -3.0, 3.0);
+
   // estimate the density at each sample
-  const Eigen::VectorXd densityEstimate = density->Estimate();
+  const Eigen::VectorXd densityEstimate = density->Estimate(tune);
 
   // the coefficient of the max. density point
   int coeff;
   double map = densityEstimate.maxCoeff(&coeff);
 
-  std::cout << coeff << std::endl;
+  /*std::cout << coeff << std::endl;
   std::cout << samples->at(coeff)->state[0].transpose() << std::endl;
-  std::cout << map << " " << std::exp(dens->LogDensity(samples->at(coeff)->state[0])) << std::endl;
+  std::cout << map << " " << std::exp(dens->LogDensity(samples->at(coeff)->state[0])) << std::endl;*/
 
   // check the estimate
   EXPECT_EQ(densityEstimate.size(), n);

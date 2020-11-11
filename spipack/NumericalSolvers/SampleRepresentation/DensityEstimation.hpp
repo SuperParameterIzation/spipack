@@ -62,6 +62,17 @@ public:
   */
   Eigen::VectorXd Estimate() const;
 
+  struct TuningData {
+    Eigen::VectorXd bandwidthExponent;
+    Eigen::VectorXd candidateBandwidthParameters;
+    Eigen::VectorXd kernelAvg;
+    Eigen::VectorXd logKernelAvgDerivative;
+  };
+
+  Eigen::VectorXd Estimate(Eigen::Ref<const Eigen::VectorXd> const& squaredBandwidth, TuningData& tune) const;
+
+  Eigen::VectorXd Estimate(TuningData& tune) const;
+
 private:
 
   /// The bandwidth parameter \f$\epsilon\f$

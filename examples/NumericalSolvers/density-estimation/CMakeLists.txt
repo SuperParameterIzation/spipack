@@ -12,13 +12,13 @@ if(CMAKE_SOURCE_DIR STREQUAL CMAKE_CURRENT_SOURCE_DIR) # Only look for SPIPACK w
 endif()
 
 set(SOURCE
-  _heat-matrix-eigenvalues.cpp
+  _density-estimation.cpp
 )
 
 message(STATUS ${SPIPACK_LIBRARIES})
 
-add_executable(run-heat-matrix-eigenvalues ${SOURCE})
-target_link_libraries(run-heat-matrix-eigenvalues ${SPIPACK_EXTERNAL_LIBRARIES} ${SPIPACK_LIBRARIES})
+add_executable(run-density-estimation ${SOURCE})
+target_link_libraries(run-density-estimation ${SPIPACK_EXTERNAL_LIBRARIES} ${SPIPACK_LIBRARIES})
 if(NOT CMAKE_SOURCE_DIR STREQUAL CMAKE_CURRENT_SOURCE_DIR) # add dependencies if this is not a stand alone project
-  add_dependencies(run-heat-matrix-eigenvalues spiNS spiTS)
+  add_dependencies(run-density-estimation spiNS spiTS)
 endif()
