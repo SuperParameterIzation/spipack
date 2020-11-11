@@ -1,6 +1,8 @@
 #ifndef HATKERNEL_HPP_
 #define HATKERNEL_HPP_
 
+#include <cereal/archives/binary.hpp>
+
 #include "spipack/Tools/Kernels/CompactKernel.hpp"
 
 namespace spi {
@@ -33,6 +35,12 @@ public:
 
   virtual ~HatKernel() = default;
 
+  /// Get the kernel's magnitude parameter \f$a\f$
+  /**
+  \return The kernel's magnitude parameter \f$a\f$
+  */
+  double Magnitude() const;
+
 protected:
 
   /// Evaluate the hat kernel function \f$k(\theta)\f$
@@ -43,10 +51,23 @@ protected:
   */
   virtual double EvaluateCompactKernelImpl(double const theta) const override;
 
+  /// Private default constructor for the serialization
+  HatKernel() = default;
+
 private:
 
+  /// Make cereal::access a friend for serialization
+  friend class cereal::access;
+
+  /// Serialize so we can save to archive/buffers
+  /**
+  @param[in] ar The archive/buffer
+  */
+  template<class Archive>
+  inline void serialize(Archive& ar) { ar(cereal::base_class<CompactKernel>(this), mag); }
+
   /// The magnitude of the kernel (the parameter \f$a\f$).
-  const double mag;
+  double mag = 1.0;
 };
 
 } // namespace Tools

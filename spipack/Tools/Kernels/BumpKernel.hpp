@@ -35,6 +35,24 @@ public:
 
   virtual ~BumpKernel() = default;
 
+  /// Get the kernel's magnitude parameter \f$a_0\f$
+  /**
+  \return The kernel's magnitude parameter \f$a_0\f$
+  */
+  double Magnitude() const;
+
+  /// Get the kernel's scale parameter \f$a_1\f$
+  /**
+  \return The kernel's scale parameter \f$a_1\f$
+  */
+  double Scale() const;
+
+  /// Get the kernel's exponent \f$p\f$
+  /**
+  \return The kernel's exponent \f$p\f$
+  */
+  double Exponent() const;
+
 protected:
 
   /// Evaluate the hat kernel function \f$k(\theta)\f$
@@ -44,25 +62,38 @@ protected:
   */
   virtual double EvaluateCompactKernelImpl(double const theta) const override;
 
+  /// Private default constructor for the serialization
+  BumpKernel() = default;
+
 private:
+
+  /// Make cereal::access a friend for serialization
+  friend class cereal::access;
+
+  /// Serialize so we can save to archive/buffers
+  /**
+  @param[in] ar The archive/buffer
+  */
+  template<class Archive>
+  inline void serialize(Archive& ar) { ar(cereal::base_class<IsotropicKernel>(this), mag, scale, expon); }
 
   /// The magnitude of the bump kernel (the parameter \f$a_0\f$)
   /**
   Defaults to \f$1\f$.
   */
-  const double mag;
+  double mag = 1.0;
 
   /// The scale of the bump kernel (the parameter \f$a_1\f$)
   /**
   Defaults to \f$1\f$.
   */
-  const double scale;
+  double scale = 1.0;
 
   /// The exponent of the bump kernel (the parameter \f$p\f$)
   /**
   Defaults to \f$1\f$.
   */
-  const double expon;
+  double expon = 1.0;
 };
 
 } // namespace Tools

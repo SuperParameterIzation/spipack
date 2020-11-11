@@ -12,3 +12,5 @@ HatKernel::HatKernel(YAML::Node const& options) :
 {}
 
 double HatKernel::EvaluateCompactKernelImpl(double const theta) const { return mag; }
+
+double HatKernel::Magnitude() const { return mag; }

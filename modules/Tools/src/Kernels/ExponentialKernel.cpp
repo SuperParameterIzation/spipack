@@ -17,3 +17,9 @@ ExponentialKernel::ExponentialKernel(YAML::Node const& options) :
 }
 
 double ExponentialKernel::EvaluateIsotropicKernel(double const theta) const { return mag*std::exp(-scale*std::pow(std::abs(theta), expon)); }
+
+double ExponentialKernel::Magnitude() const { return mag; }
+
+double ExponentialKernel::Scale() const { return scale; }
+
+double ExponentialKernel::Exponent() const { return expon; }

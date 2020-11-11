@@ -39,16 +39,49 @@ public:
   */
   virtual double EvaluateIsotropicKernel(double const theta) const override;
 
+  /// Get the kernel's magnitude parameter \f$a_0\f$
+  /**
+  \return The kernel's magnitude parameter \f$a_0\f$
+  */
+  double Magnitude() const;
+
+  /// Get the kernel's scale parameter \f$a_1\f$
+  /**
+  \return The kernel's scale parameter \f$a_1\f$
+  */
+  double Scale() const;
+
+  /// Get the kernel's exponent \f$p\f$
+  /**
+  \return The kernel's exponent \f$p\f$
+  */
+  double Exponent() const;
+
+protected:
+
+  /// Private default constructor for the serialization
+  ExponentialKernel() = default;
+
 private:
 
+  /// Make cereal::access a friend for serialization
+  friend class cereal::access;
+
+  /// Serialize so we can save to archive/buffers
+  /**
+  @param[in] ar The archive/buffer
+  */
+  template<class Archive>
+  inline void serialize(Archive& ar) { ar(cereal::base_class<IsotropicKernel>(this), mag, scale, expon); }
+
   /// The magnitude parameter \f$a_0\f$
-  const double mag;
+  double mag = 1.0;
 
   /// The scale parameter \f$a_1\f$
-  const double scale;
+  double scale = 1.0;
 
   /// The exponent \f$p\f$
-  const double expon;
+  double expon = 1.0;
 };
 
 } // namespace Tools

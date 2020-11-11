@@ -63,7 +63,21 @@ public:
   */
   double operator()(double const theta) const;
 
+  /// Private default constructor for the serialization
+  IsotropicKernel() = default;
+
 private:
+
+  /// Make cereal::access a friend for serialization
+  friend class cereal::access;
+
+  /// Serialize so we can save to archive/buffers
+  /**
+  @param[in] ar The archive/buffer
+  */
+  template<class Archive>
+  inline void serialize(Archive& ar) { ar(cereal::base_class<Kernel>(this)); }
+
 };
 
 } // namespace Tools

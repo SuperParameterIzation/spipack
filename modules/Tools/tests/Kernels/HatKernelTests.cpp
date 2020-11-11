@@ -128,3 +128,55 @@ TEST(HatKernelTests, Evaluate) {
     EXPECT_DOUBLE_EQ(kernel(1.1), 0.0);
   }
 }
+
+TEST(HatKernelTests, Serialize) {
+  const unsigned int dim = 5;
+
+  // parameters
+  const double mag = 2.0;
+
+  std::stringstream buffer;
+  {
+    // the options for this kernel
+    YAML::Node options;
+    options["Magnitude"] = mag;
+
+    // create an exponential kernel
+    auto kernel = std::make_shared<HatKernel>(options);
+
+    // load kernel to the buffer
+    cereal::BinaryOutputArchive oarchive(buffer);
+    oarchive(kernel);
+  }
+
+  {
+    // create an input archive
+    cereal::BinaryInputArchive iarchive(buffer);
+
+    // load the kernel from the buffer
+    std::shared_ptr<HatKernel> kern;
+    iarchive(kern);
+
+    // check kernel parameters
+    EXPECT_DOUBLE_EQ(kern->Magnitude(), mag);
+
+    const Eigen::VectorXd x1 = Eigen::VectorXd::Zero(dim, 1);
+    { // check inside the kernel support
+      Eigen::VectorXd x2 = Eigen::VectorXd::Random(dim, 1);
+      x2 = 0.3*x2/x2.norm();
+      EXPECT_DOUBLE_EQ(kern->Evaluate(x1, x2), mag);
+      EXPECT_DOUBLE_EQ(kern->EvaluateCompactKernel(0.1), mag);
+      EXPECT_DOUBLE_EQ(kern->EvaluateIsotropicKernel(0.1), mag);
+      EXPECT_DOUBLE_EQ(kern->operator()(0.1), mag);
+    }
+
+    { // check outside the kernel support
+      Eigen::VectorXd x2 = Eigen::VectorXd::Random(dim, 1);
+      x2 = 1.3*x2/x2.norm();
+      EXPECT_DOUBLE_EQ(kern->Evaluate(x1, x2), 0.0);
+      EXPECT_DOUBLE_EQ(kern->EvaluateIsotropicKernel(1.1), 0.0);
+      EXPECT_DOUBLE_EQ(kern->EvaluateCompactKernel(1.1), 0.0);
+      EXPECT_DOUBLE_EQ(kern->operator()(1.1), 0.0);
+    }
+  }
+}

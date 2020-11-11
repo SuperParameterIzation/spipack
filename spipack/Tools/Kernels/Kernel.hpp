@@ -8,6 +8,8 @@
 
 #include <yaml-cpp/yaml.h>
 
+#include <cereal/types/polymorphic.hpp>
+
 #include <Eigen/Core>
 
 #include <MUQ/Utilities/RegisterClassName.h>
@@ -67,7 +69,22 @@ public:
   */
   double operator()(Eigen::Ref<const Eigen::VectorXd> const& x1, Eigen::Ref<const Eigen::VectorXd> const& x2) const;
 
+protected:
+
+  /// Private default constructor for the serialization
+  Kernel() = default;
+
 private:
+
+  /// Make cereal::access a friend for serialization
+  friend class cereal::access;
+
+  /// Serialize so we can save to archive/buffers
+  /**
+  @param[in] ar The archive/buffer
+  */
+  template<class Archive>
+  inline void serialize(Archive& ar) {}
 };
 
 } // namespace Tools

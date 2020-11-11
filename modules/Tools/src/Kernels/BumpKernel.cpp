@@ -19,3 +19,9 @@ double BumpKernel::EvaluateCompactKernelImpl(double const theta) const {
 
   return mag*std::exp(scale*(1.0-1.0/(1.0-std::pow(theta, expon))));
 }
+
+double BumpKernel::Magnitude() const { return mag; }
+
+double BumpKernel::Scale() const { return scale; }
+
+double BumpKernel::Exponent() const { return expon; }

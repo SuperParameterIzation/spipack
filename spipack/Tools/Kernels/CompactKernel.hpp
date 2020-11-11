@@ -64,7 +64,20 @@ protected:
   */
   virtual double EvaluateCompactKernelImpl(double const theta) const = 0;
 
+  /// Private default constructor for the serialization
+  CompactKernel() = default;
+
 private:
+
+  /// Make cereal::access a friend for serialization
+  friend class cereal::access;
+
+  /// Serialize so we can save to archive/buffers
+  /**
+  @param[in] ar The archive/buffer
+  */
+  template<class Archive>
+  inline void serialize(Archive& ar) { ar(cereal::base_class<IsotropicKernel>(this)); }
 };
 
 #define SPIPACK_REGISTER_COMPACT_KERNEL(NAME) static auto regCompact ##NAME		\
