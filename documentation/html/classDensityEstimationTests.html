@@ -92,6 +92,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <div class="header">
   <div class="summary">
 <a href="#pro-methods">Protected Member Functions</a> &#124;
+<a href="#pro-attribs">Protected Attributes</a> &#124;
 <a href="classDensityEstimationTests-members.html">List of all members</a>  </div>
   <div class="headertitle">
 <div class="title">DensityEstimationTests Class Reference</div>  </div>
@@ -114,8 +115,64 @@ Protected Member Functions</h2></td></tr>
 <tr class="memitem:ae268663a9a9996c701205a8ee5ee84a2"><td class="memItemLeft" align="right" valign="top">virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classDensityEstimationTests.html#ae268663a9a9996c701205a8ee5ee84a2">TearDown</a> () override</td></tr>
 <tr class="memdesc:ae268663a9a9996c701205a8ee5ee84a2"><td class="mdescLeft">&#160;</td><td class="mdescRight">Make sure everything is what we expect.  <a href="#ae268663a9a9996c701205a8ee5ee84a2">More...</a><br /></td></tr>
 <tr class="separator:ae268663a9a9996c701205a8ee5ee84a2"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a3fa80bcc6a1ef755cad86062dd0fd167"><td class="memItemLeft" align="right" valign="top">std::shared_ptr&lt; SampleCollection &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classDensityEstimationTests.html#a3fa80bcc6a1ef755cad86062dd0fd167">CreateFromSamples</a> ()</td></tr>
+<tr class="memdesc:a3fa80bcc6a1ef755cad86062dd0fd167"><td class="mdescLeft">&#160;</td><td class="mdescRight">Create the density estimation from samples.  <a href="#a3fa80bcc6a1ef755cad86062dd0fd167">More...</a><br /></td></tr>
+<tr class="separator:a3fa80bcc6a1ef755cad86062dd0fd167"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pro-attribs"></a>
+Protected Attributes</h2></td></tr>
+<tr class="memitem:a5e2edfde9e13c7b07fae0718261472b3"><td class="memItemLeft" align="right" valign="top">const unsigned int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classDensityEstimationTests.html#a5e2edfde9e13c7b07fae0718261472b3">dim</a> = 1</td></tr>
+<tr class="memdesc:a5e2edfde9e13c7b07fae0718261472b3"><td class="mdescLeft">&#160;</td><td class="mdescRight">The dimension of state spaces.  <a href="#a5e2edfde9e13c7b07fae0718261472b3">More...</a><br /></td></tr>
+<tr class="separator:a5e2edfde9e13c7b07fae0718261472b3"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:adb645b6f56f159cf79d38aefd06af2b5"><td class="memItemLeft" align="right" valign="top">const std::size_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classDensityEstimationTests.html#adb645b6f56f159cf79d38aefd06af2b5">n</a> = 100000</td></tr>
+<tr class="memdesc:adb645b6f56f159cf79d38aefd06af2b5"><td class="mdescLeft">&#160;</td><td class="mdescRight">The number of samples.  <a href="#adb645b6f56f159cf79d38aefd06af2b5">More...</a><br /></td></tr>
+<tr class="separator:adb645b6f56f159cf79d38aefd06af2b5"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a34c455757128518ad506c6fa00356fda"><td class="memItemLeft" align="right" valign="top">const std::size_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classDensityEstimationTests.html#a34c455757128518ad506c6fa00356fda">nneighs</a> = 500</td></tr>
+<tr class="memdesc:a34c455757128518ad506c6fa00356fda"><td class="mdescLeft">&#160;</td><td class="mdescRight">The number of nearest neighbors.  <a href="#a34c455757128518ad506c6fa00356fda">More...</a><br /></td></tr>
+<tr class="separator:a34c455757128518ad506c6fa00356fda"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a4dad0a44ec1ac518e4c9279b7c806fa9"><td class="memItemLeft" align="right" valign="top">const double&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classDensityEstimationTests.html#a4dad0a44ec1ac518e4c9279b7c806fa9">eps</a> = 25.0</td></tr>
+<tr class="memdesc:a4dad0a44ec1ac518e4c9279b7c806fa9"><td class="mdescLeft">&#160;</td><td class="mdescRight">The bandwidth parameter \(\epsilon\).  <a href="#a4dad0a44ec1ac518e4c9279b7c806fa9">More...</a><br /></td></tr>
+<tr class="separator:a4dad0a44ec1ac518e4c9279b7c806fa9"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a8e21b5d085b8250bfa597cccf8a89256"><td class="memItemLeft" align="right" valign="top">std::shared_ptr&lt; RandomVariable &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classDensityEstimationTests.html#a8e21b5d085b8250bfa597cccf8a89256">rv</a></td></tr>
+<tr class="memdesc:a8e21b5d085b8250bfa597cccf8a89256"><td class="mdescLeft">&#160;</td><td class="mdescRight">The random variable that lets us sample from the underlying distribution.  <a href="#a8e21b5d085b8250bfa597cccf8a89256">More...</a><br /></td></tr>
+<tr class="separator:a8e21b5d085b8250bfa597cccf8a89256"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:afcd252f85ce0eb9deedf8b4a0e6f8808"><td class="memItemLeft" align="right" valign="top">std::shared_ptr&lt; Density &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classDensityEstimationTests.html#afcd252f85ce0eb9deedf8b4a0e6f8808">dens</a></td></tr>
+<tr class="memdesc:afcd252f85ce0eb9deedf8b4a0e6f8808"><td class="mdescLeft">&#160;</td><td class="mdescRight">The density associated with the random variable.  <a href="#afcd252f85ce0eb9deedf8b4a0e6f8808">More...</a><br /></td></tr>
+<tr class="separator:afcd252f85ce0eb9deedf8b4a0e6f8808"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ad9a341caad999f1ad3ad833374e499e3"><td class="memItemLeft" align="right" valign="top">YAML::Node&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classDensityEstimationTests.html#ad9a341caad999f1ad3ad833374e499e3">options</a></td></tr>
+<tr class="memdesc:ad9a341caad999f1ad3ad833374e499e3"><td class="mdescLeft">&#160;</td><td class="mdescRight">The options for the graph Laplacian.  <a href="#ad9a341caad999f1ad3ad833374e499e3">More...</a><br /></td></tr>
+<tr class="separator:ad9a341caad999f1ad3ad833374e499e3"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a04fdba86209d61314a06c207118c90f4"><td class="memItemLeft" align="right" valign="top">std::shared_ptr&lt; <a class="el" href="classspi_1_1NumericalSolvers_1_1DensityEstimation.html">DensityEstimation</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classDensityEstimationTests.html#a04fdba86209d61314a06c207118c90f4">density</a></td></tr>
+<tr class="memdesc:a04fdba86209d61314a06c207118c90f4"><td class="mdescLeft">&#160;</td><td class="mdescRight">The sample representation&mdash;use a pointer here so we can initalize it as null.  <a href="#a04fdba86209d61314a06c207118c90f4">More...</a><br /></td></tr>
+<tr class="separator:a04fdba86209d61314a06c207118c90f4"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <h2 class="groupheader">Member Function Documentation</h2>
+<a class="anchor" id="a3fa80bcc6a1ef755cad86062dd0fd167"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">std::shared_ptr&lt;SampleCollection&gt; DensityEstimationTests::CreateFromSamples </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">protected</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Create the density estimation from samples. </p>
+<dl class="section return"><dt>Returns</dt><dd>The sample collection used to create the graph Laplacian </dd></dl>
+
+</div>
+</div>
 <a class="anchor" id="aeaf17148ab5b2642c9836633dd110f05"></a>
 <div class="memitem">
 <div class="memproto">
@@ -163,6 +220,183 @@ Protected Member Functions</h2></td></tr>
 </div><div class="memdoc">
 
 <p>Make sure everything is what we expect. </p>
+
+</div>
+</div>
+<h2 class="groupheader">Member Data Documentation</h2>
+<a class="anchor" id="afcd252f85ce0eb9deedf8b4a0e6f8808"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">std::shared_ptr&lt;Density&gt; DensityEstimationTests::dens</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">protected</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>The density associated with the random variable. </p>
+
+</div>
+</div>
+<a class="anchor" id="a04fdba86209d61314a06c207118c90f4"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">std::shared_ptr&lt;<a class="el" href="classspi_1_1NumericalSolvers_1_1DensityEstimation.html">DensityEstimation</a>&gt; DensityEstimationTests::density</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">protected</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>The sample representation&mdash;use a pointer here so we can initalize it as null. </p>
+
+</div>
+</div>
+<a class="anchor" id="a5e2edfde9e13c7b07fae0718261472b3"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">const unsigned int DensityEstimationTests::dim = 1</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">protected</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>The dimension of state spaces. </p>
+
+</div>
+</div>
+<a class="anchor" id="a4dad0a44ec1ac518e4c9279b7c806fa9"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">const double DensityEstimationTests::eps = 25.0</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">protected</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>The bandwidth parameter \(\epsilon\). </p>
+
+</div>
+</div>
+<a class="anchor" id="adb645b6f56f159cf79d38aefd06af2b5"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">const std::size_t DensityEstimationTests::n = 100000</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">protected</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>The number of samples. </p>
+
+</div>
+</div>
+<a class="anchor" id="a34c455757128518ad506c6fa00356fda"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">const std::size_t DensityEstimationTests::nneighs = 500</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">protected</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>The number of nearest neighbors. </p>
+
+</div>
+</div>
+<a class="anchor" id="ad9a341caad999f1ad3ad833374e499e3"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">YAML::Node DensityEstimationTests::options</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">protected</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>The options for the graph Laplacian. </p>
+
+</div>
+</div>
+<a class="anchor" id="a8e21b5d085b8250bfa597cccf8a89256"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">std::shared_ptr&lt;RandomVariable&gt; DensityEstimationTests::rv</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">protected</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>The random variable that lets us sample from the underlying distribution. </p>
 
 </div>
 </div>

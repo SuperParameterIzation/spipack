@@ -117,7 +117,8 @@ Inheritance diagram for spi::NumericalSolvers::SampleRepresentation:</div>
  <div class="center">
   <img src="classspi_1_1NumericalSolvers_1_1SampleRepresentation.png" usemap="#spi::NumericalSolvers::SampleRepresentation_map" alt=""/>
   <map id="spi::NumericalSolvers::SampleRepresentation_map" name="spi::NumericalSolvers::SampleRepresentation_map">
-<area href="classspi_1_1NumericalSolvers_1_1GraphLaplacian.html" title="Estimate a weighted Laplacian operator using a graph Laplacian. " alt="spi::NumericalSolvers::GraphLaplacian" shape="rect" coords="0,56,265,80"/>
+<area href="classspi_1_1NumericalSolvers_1_1DensityEstimation.html" title="Estimate the density of a probability distribution  given samples  such that . " alt="spi::NumericalSolvers::DensityEstimation" shape="rect" coords="0,56,265,80"/>
+<area href="classspi_1_1NumericalSolvers_1_1GraphLaplacian.html" title="Estimate a weighted Laplacian operator using a graph Laplacian. " alt="spi::NumericalSolvers::GraphLaplacian" shape="rect" coords="275,56,540,80"/>
 </map>
  </div></div>
 <table class="memberdecls">
@@ -164,15 +165,15 @@ Protected Attributes</h2></td></tr>
 <tr class="memitem:abb6fe8270e9772e4519188327323cf19"><td class="memItemLeft" align="right" valign="top">const <a class="el" href="classspi_1_1Tools_1_1NearestNeighbors.html">spi::Tools::NearestNeighbors</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classspi_1_1NumericalSolvers_1_1SampleRepresentation.html#abb6fe8270e9772e4519188327323cf19">samples</a></td></tr>
 <tr class="memdesc:abb6fe8270e9772e4519188327323cf19"><td class="mdescLeft">&#160;</td><td class="mdescRight">Store the samples from \(\psi\).  <a href="#abb6fe8270e9772e4519188327323cf19">More...</a><br /></td></tr>
 <tr class="separator:abb6fe8270e9772e4519188327323cf19"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ae2c7d66d4bcf30604b01ba4a28b6634a"><td class="memItemLeft" align="right" valign="top">const std::size_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classspi_1_1NumericalSolvers_1_1SampleRepresentation.html#ae2c7d66d4bcf30604b01ba4a28b6634a">numNearestNeighbors</a></td></tr>
+<tr class="memdesc:ae2c7d66d4bcf30604b01ba4a28b6634a"><td class="mdescLeft">&#160;</td><td class="mdescRight">The number of nearest neighbors used to compute the bandwidth.  <a href="#ae2c7d66d4bcf30604b01ba4a28b6634a">More...</a><br /></td></tr>
+<tr class="separator:ae2c7d66d4bcf30604b01ba4a28b6634a"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a1b02ba85fb4c695ea25feb242bd8739b"><td class="memItemLeft" align="right" valign="top">std::shared_ptr&lt; <a class="el" href="classspi_1_1Tools_1_1CompactKernel.html">spi::Tools::CompactKernel</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classspi_1_1NumericalSolvers_1_1SampleRepresentation.html#a1b02ba85fb4c695ea25feb242bd8739b">kernel</a></td></tr>
 <tr class="memdesc:a1b02ba85fb4c695ea25feb242bd8739b"><td class="mdescLeft">&#160;</td><td class="mdescRight">The kernel function.  <a href="#a1b02ba85fb4c695ea25feb242bd8739b">More...</a><br /></td></tr>
 <tr class="separator:a1b02ba85fb4c695ea25feb242bd8739b"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pri-attribs"></a>
 Private Attributes</h2></td></tr>
-<tr class="memitem:ae2c7d66d4bcf30604b01ba4a28b6634a"><td class="memItemLeft" align="right" valign="top">const std::size_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classspi_1_1NumericalSolvers_1_1SampleRepresentation.html#ae2c7d66d4bcf30604b01ba4a28b6634a">numNearestNeighbors</a></td></tr>
-<tr class="memdesc:ae2c7d66d4bcf30604b01ba4a28b6634a"><td class="mdescLeft">&#160;</td><td class="mdescRight">The number of nearest neighbors used to compute the bandwidth.  <a href="#ae2c7d66d4bcf30604b01ba4a28b6634a">More...</a><br /></td></tr>
-<tr class="separator:ae2c7d66d4bcf30604b01ba4a28b6634a"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ab18b24f7a0699e16acc2f9e33e46ba9b"><td class="memItemLeft" align="right" valign="top">const std::size_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classspi_1_1NumericalSolvers_1_1SampleRepresentation.html#ab18b24f7a0699e16acc2f9e33e46ba9b">numThreads</a></td></tr>
 <tr class="memdesc:ab18b24f7a0699e16acc2f9e33e46ba9b"><td class="mdescLeft">&#160;</td><td class="mdescRight">The number of <code>openMP</code> threads available to this object.  <a href="#ab18b24f7a0699e16acc2f9e33e46ba9b">More...</a><br /></td></tr>
 <tr class="separator:ab18b24f7a0699e16acc2f9e33e46ba9b"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -189,7 +190,8 @@ Static Private Attributes</h2></td></tr>
 <p>Let \(r_i\) be a bandwidth parmeter associated with each sample. Define a compact kernel function \(k: \mathbb{R}^{+} \mapsto \mathbb{R}^{+}\) such that \(k(\theta)\) is decreasing and \(k(\theta) = 0\) if \(\theta &gt; 1\) (i.e., the support of the kernel is \([0,1]\)). Let </p><p class="formulaDsp">
 \begin{equation*} k_{\epsilon}(\boldsymbol{x}^{(i)}, \boldsymbol{x}^{(j)}) = k\left( \frac{\| \boldsymbol{x}^{(i)} - \boldsymbol{x}^{(j)} \|^2}{\epsilon r_i r_j} \right). \end{equation*}
 </p>
-<p> Define the kernel matrix \(\boldsymbol{K}_{\epsilon}\) such that the \((i,j)\) component is \(K_{\epsilon}^{(ij)} = k_{\epsilon}(\boldsymbol{x}^{(i)}, \boldsymbol{x}^{(j)})\). <b>Configuration Parameters:</b> </p><table class="doxtable">
+<p> Define the kernel matrix \(\boldsymbol{K}_{\epsilon}\) such that the \((i,j)\) component is \(K_{\epsilon}^{(ij)} = k_{\epsilon}(\boldsymbol{x}^{(i)}, \boldsymbol{x}^{(j)})\).</p>
+<p><b>Configuration Parameters:</b> </p><table class="doxtable">
 <tr>
 <th>Parameter Key </th><th>Type </th><th>Default Value </th><th>Description  </th></tr>
 <tr>
@@ -532,7 +534,7 @@ Static Private Attributes</h2></td></tr>
       </table>
   </td>
   <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">private</span></span>  </td>
+<span class="mlabels"><span class="mlabel">protected</span></span>  </td>
   </tr>
 </table>
 </div><div class="memdoc">
