@@ -4,7 +4,7 @@ var searchData=
   ['kdtree_5fget_5fpoint_5fcount',['kdtree_get_point_count',['../classspi_1_1Tools_1_1NearestNeighbors_1_1Cloud.html#ad01049fd3d87017556155d028122286f',1,'spi::Tools::NearestNeighbors::Cloud']]],
   ['kdtree_5fget_5fpt',['kdtree_get_pt',['../classspi_1_1Tools_1_1NearestNeighbors_1_1Cloud.html#a480d971f2e4ae858758fdc7325687a81',1,'spi::Tools::NearestNeighbors::Cloud']]],
   ['kdtrees',['kdtrees',['../classspi_1_1Tools_1_1NearestNeighbors.html#a61a62a0dae5d8d718cf2ca238d99e79e',1,'spi::Tools::NearestNeighbors']]],
-  ['kernel',['kernel',['../classspi_1_1NumericalSolvers_1_1SampleRepresentation.html#a1b02ba85fb4c695ea25feb242bd8739b',1,'spi::NumericalSolvers::SampleRepresentation::kernel()'],['../classspi_1_1NumericalSolvers_1_1SampleRepresentation.html#ae6833e7cff95e157e7f66109e28d0583',1,'spi::NumericalSolvers::SampleRepresentation::Kernel() const '],['../classspi_1_1Tools_1_1Kernel.html#abad469b2fb318cc20da3488c6d5ed140',1,'spi::Tools::Kernel::Kernel()']]],
+  ['kernel',['Kernel',['../classspi_1_1NumericalSolvers_1_1SampleRepresentation.html#ae6833e7cff95e157e7f66109e28d0583',1,'spi::NumericalSolvers::SampleRepresentation::Kernel()'],['../classspi_1_1Tools_1_1Kernel.html#abad469b2fb318cc20da3488c6d5ed140',1,'spi::Tools::Kernel::Kernel()'],['../classspi_1_1NumericalSolvers_1_1SampleRepresentation.html#a1b02ba85fb4c695ea25feb242bd8739b',1,'spi::NumericalSolvers::SampleRepresentation::kernel()']]],
   ['kernel',['Kernel',['../classspi_1_1Tools_1_1Kernel.html',1,'spi::Tools']]],
   ['kernel_2ecpp',['Kernel.cpp',['../Kernel_8cpp.html',1,'']]],
   ['kernel_2ehpp',['Kernel.hpp',['../Kernel_8hpp.html',1,'']]],
