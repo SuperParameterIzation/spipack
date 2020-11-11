@@ -78,6 +78,10 @@ squaredBandwidth = hdf5file['/squared bandwidth'] [()].T [0]
 trueDensity = hdf5file['/true density'] [()].T [0]
 densityEstimate = hdf5file['/density estimate'] [()].T [0]
 
+#densityEstimate = np.sqrt(2)*densityEstimate
+
+print(densityEstimate-trueDensity)
+
 bandwidthPara = hdf5file['/tune/candidate bandwidth parameters'] [()].T [0]
 logKernelAvgDerivative = hdf5file['/tune/log kernel average derivative'] [()].T [0]
 
@@ -95,7 +99,7 @@ ax.yaxis.set_ticks_position('left')
 ax.xaxis.set_ticks_position('bottom')
 ax.set_xlabel(r'$x_0$')
 ax.set_ylabel(r'$x_1$')
-plt.savefig('figures/SquaredBandwidth.pdf', format='pdf', bbox_inches='tight')
+plt.savefig('figures/SquaredBandwidth.png', format='png', bbox_inches='tight')
 plt.close(fig)
 
 fig = MakeFigure(425, 0.9, False)
@@ -118,6 +122,28 @@ ax.spines['top'].set_visible(False)
 ax.yaxis.set_ticks_position('left')
 ax.xaxis.set_ticks_position('bottom')
 plt.savefig('figures/TrueDensity.pdf', format='pdf', bbox_inches='tight')
+plt.close(fig)
+
+fig = MakeFigure(425, 0.9, False)
+ax = plt.gca()
+scatter = ax.scatter(samples.T[0], samples.T[1], s=3, c=trueDensity-densityEstimate)
+plt.colorbar(scatter)
+ax.spines['right'].set_visible(False)
+ax.spines['top'].set_visible(False)
+ax.yaxis.set_ticks_position('left')
+ax.xaxis.set_ticks_position('bottom')
+plt.savefig('figures/DensityDifference.pdf', format='pdf', bbox_inches='tight')
+plt.close(fig)
+
+fig = MakeFigure(425, 0.9, False)
+ax = plt.gca()
+scatter = ax.scatter(samples.T[0], samples.T[1], s=3, c=np.divide(trueDensity, densityEstimate))
+plt.colorbar(scatter)
+ax.spines['right'].set_visible(False)
+ax.spines['top'].set_visible(False)
+ax.yaxis.set_ticks_position('left')
+ax.xaxis.set_ticks_position('bottom')
+plt.savefig('figures/DensityRatio.pdf', format='pdf', bbox_inches='tight')
 plt.close(fig)
 
 fig = MakeFigure(425, 0.9, False)

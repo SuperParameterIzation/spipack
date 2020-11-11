@@ -14,7 +14,7 @@ numNearestNeighbors(options["NumNearestNeighbors"].as<std::size_t>(defaults.numN
 numThreads(options["NumThreads"].as<std::size_t>(samples.NumThreads()))
 {
   // create the kernel
-  kernel = CompactKernel::Construct(options["KernelOptions"]);
+  kernel = IsotropicKernel::Construct(options["KernelOptions"]);
   assert(kernel);
 }
 
@@ -24,7 +24,7 @@ numNearestNeighbors(options["NumNearestNeighbors"].as<std::size_t>(defaults.numN
 numThreads(options["NumThreads"].as<std::size_t>(this->samples.NumThreads()))
 {
   // create the kernel
-  kernel = CompactKernel::Construct(options["KernelOptions"]);
+  kernel = IsotropicKernel::Construct(options["KernelOptions"]);
   assert(kernel);
 }
 
@@ -37,7 +37,7 @@ Eigen::Ref<Eigen::VectorXd const> SampleRepresentation::Point(std::size_t const 
   return samples.Point(i);
 }
 
-std::shared_ptr<const CompactKernel> SampleRepresentation::Kernel() const { return kernel; }
+std::shared_ptr<const IsotropicKernel> SampleRepresentation::Kernel() const { return kernel; }
 
 void SampleRepresentation::BuildKDTrees() const { samples.BuildKDTrees(); }
 
@@ -80,7 +80,8 @@ Eigen::VectorXd SampleRepresentation::KernelMatrix(double const eps, Eigen::Ref<
       // find the neighbors within the max bandwidth (ignoring the first i samples)
       std::vector<std::pair<std::size_t, double> > neighbors;
       const double maxband = theta.maxCoeff();
-      samples.FindNeighbors(Point(i), maxband, neighbors, i);
+      //samples.FindNeighbors(Point(i), maxband, neighbors, i);
+      samples.FindNeighbors(Point(i), n-i, neighbors, i);
 
       // loop through the neighbors
       for( const auto& neigh : neighbors ) {
@@ -92,7 +93,7 @@ Eigen::VectorXd SampleRepresentation::KernelMatrix(double const eps, Eigen::Ref<
         if( para>1.0 ) { continue; }
 
         // evaluate the kernel
-        const double kern = kernel->EvaluateCompactKernel(para);
+        const double kern = kernel->EvaluateIsotropicKernel(para);
 
         // insert into the matrix and increment the rowsum
         entries_private.push_back(Eigen::Triplet<double>(i, neigh.first, kern));

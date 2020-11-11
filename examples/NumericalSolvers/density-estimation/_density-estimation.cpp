@@ -44,7 +44,7 @@ int main(int argc, char **argv) {
 
   // set the kernel options
   YAML::Node kernelOptions;
-  kernelOptions["Kernel"] = "BumpKernel";
+  kernelOptions["Kernel"] = "ExponentialKernel";
 
   // the options for the graph Laplacian
   YAML::Node options;
@@ -68,10 +68,10 @@ int main(int argc, char **argv) {
   tune.bandwidthExponent = Eigen::VectorXd::LinSpaced(25, -10.0, 10.0);
 
   // estimate the density at each sample
-  const Eigen::VectorXd dens = density.Estimate(squaredBandwidth, tune);
+  //const Eigen::VectorXd dens = density.Estimate(squaredBandwidth, tune);
 
   // estimate the density at each sample
-  //const Eigen::VectorXd dens = density.Estimate(squaredBandwidth);
+  const Eigen::VectorXd dens = density.Estimate(squaredBandwidth);
 
   // compute the true density
   Eigen::VectorXd logDens(n);
@@ -86,9 +86,9 @@ int main(int argc, char **argv) {
   hdf5file.WriteMatrix("/density estimate", dens);
   hdf5file.WriteMatrix("/true density", logDens.array().exp().matrix().eval());
 
-  hdf5file.WriteMatrix("/tune/candidate bandwidth parameters", tune.candidateBandwidthParameters);
+  /*hdf5file.WriteMatrix("/tune/candidate bandwidth parameters", tune.candidateBandwidthParameters);
   hdf5file.WriteMatrix("/tune/kernel average", tune.kernelAvg);
-  hdf5file.WriteMatrix("/tune/log kernel average derivative", tune.logKernelAvgDerivative);
+  hdf5file.WriteMatrix("/tune/log kernel average derivative", tune.logKernelAvgDerivative);*/
   hdf5file.Close();
 
   /*// create the graph laplacian

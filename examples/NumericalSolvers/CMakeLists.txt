@@ -1,1 +1,1 @@
-add_subdirectory(heat-matrix-eigenvalues)
+add_subdirectory(density-estimation)

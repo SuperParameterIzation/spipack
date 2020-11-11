@@ -89,7 +89,7 @@ Eigen::VectorXd GraphLaplacian::KernelMatrix(double const bandwidthPara, Eigen::
       if( para>1.0 ) { continue; }
 
       // evaluate the kernel
-      const double kern = kernel->EvaluateCompactKernel(para);
+      const double kern = kernel->EvaluateIsotropicKernel(para);
 
       // insert into the matrix
       entries.push_back(Eigen::Triplet<double>(i, neigh.first, kern));
@@ -132,7 +132,7 @@ Eigen::VectorXd GraphLaplacian::KernelMatrix(double const bandwidthPara, Eigen::
       if( para>1.0 ) { continue; }
 
       // evaluate the kernel
-      const double kern = kernel->EvaluateCompactKernel(para);
+      const double kern = kernel->EvaluateIsotropicKernel(para);
 
       // insert into the matrix
       entries.push_back(Eigen::Triplet<double>(i, neigh.first, kern));
@@ -257,7 +257,7 @@ double GraphLaplacian::EvaluateKernel(Eigen::Ref<const Eigen::VectorXd> const& x
   double sum = 0.0;
   for( auto& neigh : neighbors ) {
     // compute the kernel between the given point and its neighbor
-    neigh.second = kernel->EvaluateCompactKernel(neigh.second/h2);
+    neigh.second = kernel->EvaluateIsotropicKernel(neigh.second/h2);
     sum += neigh.second;
   }
 

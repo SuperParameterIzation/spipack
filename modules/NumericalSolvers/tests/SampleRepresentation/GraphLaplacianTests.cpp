@@ -162,7 +162,7 @@ TEST_F(GraphLaplacianTests, ConstructKernelMatrix) {
       for( std::size_t j=i; j<samples->size(); ++j ) {
         const Eigen::VectorXd diff = samples->at(i)->state[0]-samples->at(j)->state[0];
 
-        kernmatExpected(i, j) = kern->EvaluateCompactKernel(diff.dot(diff)/(eps*std::sqrt(squaredBandwidth(i)*squaredBandwidth(j))));
+        kernmatExpected(i, j) = kern->EvaluateIsotropicKernel(diff.dot(diff)/(eps*std::sqrt(squaredBandwidth(i)*squaredBandwidth(j))));
         kernmatExpected(j, i) = kernmatExpected(i, j);
       }
     }

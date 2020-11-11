@@ -5,7 +5,7 @@
 
 #include "spipack/Tools/NearestNeighbors.hpp"
 
-#include "spipack/Tools/Kernels/CompactKernel.hpp"
+#include "spipack/Tools/Kernels/IsotropicKernel.hpp"
 
 namespace spi {
 namespace NumericalSolvers {
@@ -59,11 +59,11 @@ public:
   */
   std::size_t NumNearestNeighbors() const;
 
-  /// Get the kernel \f$k(\theta)\f$ function (spi::Tools::CompactKernel)
+  /// Get the kernel \f$k(\theta)\f$ function (spi::Tools::IsotropicKernel)
   /**
   \return A pointer to the kernel \f$k(\theta)\f$ function
   */
-  std::shared_ptr<const spi::Tools::CompactKernel> Kernel() const;
+  std::shared_ptr<const spi::Tools::IsotropicKernel> Kernel() const;
 
   /// Get the \f$i^{th}\f$ point \f$\boldsymbol{x}^{(i)}\f$ from the point cloud.
   /**
@@ -137,7 +137,7 @@ protected:
   \f}
   where \f$\epsilon\f$ and \f$\boldsymbol{r}\f$ are given parameters.
   */
-  std::shared_ptr<spi::Tools::CompactKernel> kernel;
+  std::shared_ptr<spi::Tools::IsotropicKernel> kernel;
 
 private:
 
