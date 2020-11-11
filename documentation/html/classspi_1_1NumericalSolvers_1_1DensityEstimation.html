@@ -138,8 +138,10 @@ Public Member Functions</h2></td></tr>
 <tr class="memitem:adc5dc897c2607a0a62085bb612c5c484"><td class="memItemLeft" align="right" valign="top">double&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classspi_1_1NumericalSolvers_1_1DensityEstimation.html#adc5dc897c2607a0a62085bb612c5c484">BandwidthParameter</a> () const </td></tr>
 <tr class="memdesc:adc5dc897c2607a0a62085bb612c5c484"><td class="mdescLeft">&#160;</td><td class="mdescRight">Get the bandwith parameter \(\epsilon\).  <a href="#adc5dc897c2607a0a62085bb612c5c484">More...</a><br /></td></tr>
 <tr class="separator:adc5dc897c2607a0a62085bb612c5c484"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ab1cd3debcb1a0163e40b0861942f6bc1"><td class="memItemLeft" align="right" valign="top">Eigen::VectorXd&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classspi_1_1NumericalSolvers_1_1DensityEstimation.html#ab1cd3debcb1a0163e40b0861942f6bc1">Estimate</a> (Eigen::Ref&lt; const Eigen::VectorXd &gt; const &amp;squaredBandwidth) const </td></tr>
+<tr class="memdesc:ab1cd3debcb1a0163e40b0861942f6bc1"><td class="mdescLeft">&#160;</td><td class="mdescRight">Estimate the density at each sample (given bandwidth parameter \(r_i\))  <a href="#ab1cd3debcb1a0163e40b0861942f6bc1">More...</a><br /></td></tr>
+<tr class="separator:ab1cd3debcb1a0163e40b0861942f6bc1"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ae7082910db48d74d122bbe85c06d2f75"><td class="memItemLeft" align="right" valign="top">Eigen::VectorXd&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classspi_1_1NumericalSolvers_1_1DensityEstimation.html#ae7082910db48d74d122bbe85c06d2f75">Estimate</a> () const </td></tr>
-<tr class="memdesc:ae7082910db48d74d122bbe85c06d2f75"><td class="mdescLeft">&#160;</td><td class="mdescRight">Estimate the density at each sample.  <a href="#ae7082910db48d74d122bbe85c06d2f75">More...</a><br /></td></tr>
 <tr class="separator:ae7082910db48d74d122bbe85c06d2f75"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="inherit_header pub_methods_classspi_1_1NumericalSolvers_1_1SampleRepresentation"><td colspan="2" onclick="javascript:toggleInherit('pub_methods_classspi_1_1NumericalSolvers_1_1SampleRepresentation')"><img src="closed.png" alt="-"/>&#160;Public Member Functions inherited from <a class="el" href="classspi_1_1NumericalSolvers_1_1SampleRepresentation.html">spi::NumericalSolvers::SampleRepresentation</a></td></tr>
 <tr class="memitem:a10425f4a35ee78bfe75d9eaf9c9e3aff inherit pub_methods_classspi_1_1NumericalSolvers_1_1SampleRepresentation"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classspi_1_1NumericalSolvers_1_1SampleRepresentation.html#a10425f4a35ee78bfe75d9eaf9c9e3aff">SampleRepresentation</a> (std::shared_ptr&lt; muq::Modeling::RandomVariable &gt; const &amp;rv, YAML::Node const &amp;options)</td></tr>
@@ -165,6 +167,18 @@ Public Member Functions</h2></td></tr>
 <tr class="memitem:a904dd2de33870913f353d0c41ec3fb6b inherit pub_methods_classspi_1_1NumericalSolvers_1_1SampleRepresentation"><td class="memItemLeft" align="right" valign="top">Eigen::VectorXd&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classspi_1_1NumericalSolvers_1_1SampleRepresentation.html#a904dd2de33870913f353d0c41ec3fb6b">KernelMatrix</a> (double const eps, Eigen::SparseMatrix&lt; double &gt; &amp;kmat) const </td></tr>
 <tr class="memdesc:a904dd2de33870913f353d0c41ec3fb6b inherit pub_methods_classspi_1_1NumericalSolvers_1_1SampleRepresentation"><td class="mdescLeft">&#160;</td><td class="mdescRight">Construct the kernel matrix \(\boldsymbol{K}_{\epsilon}\).  <a href="#a904dd2de33870913f353d0c41ec3fb6b">More...</a><br /></td></tr>
 <tr class="separator:a904dd2de33870913f353d0c41ec3fb6b inherit pub_methods_classspi_1_1NumericalSolvers_1_1SampleRepresentation"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ac32acbab45fa8691ff8791ac324cfb3a inherit pub_methods_classspi_1_1NumericalSolvers_1_1SampleRepresentation"><td class="memItemLeft" align="right" valign="top">Eigen::VectorXd&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classspi_1_1NumericalSolvers_1_1SampleRepresentation.html#ac32acbab45fa8691ff8791ac324cfb3a">KernelMatrix</a> (double const eps, Eigen::Ref&lt; const Eigen::VectorXd &gt; const &amp;rvec, Eigen::SparseMatrix&lt; double &gt; &amp;kmat) const </td></tr>
+<tr class="memdesc:ac32acbab45fa8691ff8791ac324cfb3a inherit pub_methods_classspi_1_1NumericalSolvers_1_1SampleRepresentation"><td class="mdescLeft">&#160;</td><td class="mdescRight">Construct the kernel matrix \(\boldsymbol{K}_{\epsilon}\).  <a href="#ac32acbab45fa8691ff8791ac324cfb3a">More...</a><br /></td></tr>
+<tr class="separator:ac32acbab45fa8691ff8791ac324cfb3a inherit pub_methods_classspi_1_1NumericalSolvers_1_1SampleRepresentation"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a5ae60ef9b8bb97a45448a6823ee3187c inherit pub_methods_classspi_1_1NumericalSolvers_1_1SampleRepresentation"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classspi_1_1NumericalSolvers_1_1SampleRepresentation.html#a5ae60ef9b8bb97a45448a6823ee3187c">BuildKDTrees</a> () const </td></tr>
+<tr class="memdesc:a5ae60ef9b8bb97a45448a6823ee3187c inherit pub_methods_classspi_1_1NumericalSolvers_1_1SampleRepresentation"><td class="mdescLeft">&#160;</td><td class="mdescRight">Build the kd trees for the nearest neighbor computation.  <a href="#a5ae60ef9b8bb97a45448a6823ee3187c">More...</a><br /></td></tr>
+<tr class="separator:a5ae60ef9b8bb97a45448a6823ee3187c inherit pub_methods_classspi_1_1NumericalSolvers_1_1SampleRepresentation"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ab86f869ebf77fc478803ae010b521ee8 inherit pub_methods_classspi_1_1NumericalSolvers_1_1SampleRepresentation"><td class="memItemLeft" align="right" valign="top">Eigen::VectorXd&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classspi_1_1NumericalSolvers_1_1SampleRepresentation.html#ab86f869ebf77fc478803ae010b521ee8">SquaredBandwidth</a> () const </td></tr>
+<tr class="memdesc:ab86f869ebf77fc478803ae010b521ee8 inherit pub_methods_classspi_1_1NumericalSolvers_1_1SampleRepresentation"><td class="mdescLeft">&#160;</td><td class="mdescRight">Compute the squared bandwidth \(r_i^2 = \frac{1}{k} \sum_{j=1}^{k} \| \boldsymbol{x}^{(i)}-\boldsymbol{x}^{(I(i,j))} \|^2\).  <a href="#ab86f869ebf77fc478803ae010b521ee8">More...</a><br /></td></tr>
+<tr class="separator:ab86f869ebf77fc478803ae010b521ee8 inherit pub_methods_classspi_1_1NumericalSolvers_1_1SampleRepresentation"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a34f7a6dd29975239daa33945aa7f7247 inherit pub_methods_classspi_1_1NumericalSolvers_1_1SampleRepresentation"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classspi_1_1NumericalSolvers_1_1SampleRepresentation.html#a34f7a6dd29975239daa33945aa7f7247">WriteToFile</a> (std::string const &amp;filename, std::string const &amp;dataset=&quot;/&quot;) const </td></tr>
+<tr class="memdesc:a34f7a6dd29975239daa33945aa7f7247 inherit pub_methods_classspi_1_1NumericalSolvers_1_1SampleRepresentation"><td class="mdescLeft">&#160;</td><td class="mdescRight">Write the samples to file.  <a href="#a34f7a6dd29975239daa33945aa7f7247">More...</a><br /></td></tr>
+<tr class="separator:a34f7a6dd29975239daa33945aa7f7247 inherit pub_methods_classspi_1_1NumericalSolvers_1_1SampleRepresentation"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pri-attribs"></a>
 Private Attributes</h2></td></tr>
@@ -183,10 +197,6 @@ Static Private Attributes</h2></td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="inherited"></a>
 Additional Inherited Members</h2></td></tr>
-<tr class="inherit_header pro_methods_classspi_1_1NumericalSolvers_1_1SampleRepresentation"><td colspan="2" onclick="javascript:toggleInherit('pro_methods_classspi_1_1NumericalSolvers_1_1SampleRepresentation')"><img src="closed.png" alt="-"/>&#160;Protected Member Functions inherited from <a class="el" href="classspi_1_1NumericalSolvers_1_1SampleRepresentation.html">spi::NumericalSolvers::SampleRepresentation</a></td></tr>
-<tr class="memitem:ac32acbab45fa8691ff8791ac324cfb3a inherit pro_methods_classspi_1_1NumericalSolvers_1_1SampleRepresentation"><td class="memItemLeft" align="right" valign="top">Eigen::VectorXd&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classspi_1_1NumericalSolvers_1_1SampleRepresentation.html#ac32acbab45fa8691ff8791ac324cfb3a">KernelMatrix</a> (double const eps, Eigen::Ref&lt; const Eigen::VectorXd &gt; const &amp;rvec, Eigen::SparseMatrix&lt; double &gt; &amp;kmat) const </td></tr>
-<tr class="memdesc:ac32acbab45fa8691ff8791ac324cfb3a inherit pro_methods_classspi_1_1NumericalSolvers_1_1SampleRepresentation"><td class="mdescLeft">&#160;</td><td class="mdescRight">Construct the kernel matrix \(\boldsymbol{K}_{\epsilon}\).  <a href="#ac32acbab45fa8691ff8791ac324cfb3a">More...</a><br /></td></tr>
-<tr class="separator:ac32acbab45fa8691ff8791ac324cfb3a inherit pro_methods_classspi_1_1NumericalSolvers_1_1SampleRepresentation"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="inherit_header pro_attribs_classspi_1_1NumericalSolvers_1_1SampleRepresentation"><td colspan="2" onclick="javascript:toggleInherit('pro_attribs_classspi_1_1NumericalSolvers_1_1SampleRepresentation')"><img src="closed.png" alt="-"/>&#160;Protected Attributes inherited from <a class="el" href="classspi_1_1NumericalSolvers_1_1SampleRepresentation.html">spi::NumericalSolvers::SampleRepresentation</a></td></tr>
 <tr class="memitem:abb6fe8270e9772e4519188327323cf19 inherit pro_attribs_classspi_1_1NumericalSolvers_1_1SampleRepresentation"><td class="memItemLeft" align="right" valign="top">const <a class="el" href="classspi_1_1Tools_1_1NearestNeighbors.html">spi::Tools::NearestNeighbors</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classspi_1_1NumericalSolvers_1_1SampleRepresentation.html#abb6fe8270e9772e4519188327323cf19">samples</a></td></tr>
 <tr class="memdesc:abb6fe8270e9772e4519188327323cf19 inherit pro_attribs_classspi_1_1NumericalSolvers_1_1SampleRepresentation"><td class="mdescLeft">&#160;</td><td class="mdescRight">Store the samples from \(\psi\).  <a href="#abb6fe8270e9772e4519188327323cf19">More...</a><br /></td></tr>
@@ -207,6 +217,8 @@ Additional Inherited Members</h2></td></tr>
 <th>Parameter Key </th><th>Type </th><th>Default Value </th><th>Description  </th></tr>
 <tr>
 <td>"BandwidthParameter" </td><td><code>double</code> </td><td><code>1.0</code> </td><td>The parmeter \(\epsilon\) used to compute the kernel </td></tr>
+<tr>
+<td>"ManifoldDimension" </td><td><code>double</code> </td><td><code>2.0</code> </td><td>The manifold dimension \(m\). </td></tr>
 </table>
 </div><h2 class="groupheader">Constructor &amp; Destructor Documentation</h2>
 <a class="anchor" id="ab1d4fb4d5bed3557e6bf355dbdbb2406"></a>
@@ -269,6 +281,7 @@ Additional Inherited Members</h2></td></tr>
 </div><div class="memdoc">
 
 <p>Construct the density estimation given samples from the underlying distribution \(\psi\). </p>
+<p>This function does NOT compute the kd trees. It assumes that <a class="el" href="classspi_1_1NumericalSolvers_1_1SampleRepresentation.html#a5ae60ef9b8bb97a45448a6823ee3187c" title="Build the kd trees for the nearest neighbor computation. ">spi::NumericalSolvers::SampleRepresentation::BuildKDTrees</a> has already been called.</p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramdir">[in]</td><td class="paramname">samples</td><td>Samples from the underlying distribution \(\psi\) </td></tr>
@@ -321,6 +334,32 @@ Additional Inherited Members</h2></td></tr>
 
 </div>
 </div>
+<a class="anchor" id="ab1cd3debcb1a0163e40b0861942f6bc1"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">Eigen::VectorXd DensityEstimation::Estimate </td>
+          <td>(</td>
+          <td class="paramtype">Eigen::Ref&lt; const Eigen::VectorXd &gt; const &amp;&#160;</td>
+          <td class="paramname"><em>squaredBandwidth</em></td><td>)</td>
+          <td> const</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Estimate the density at each sample (given bandwidth parameter \(r_i\)) </p>
+<p>This function should be used if we have already computed the bandwidth parameter \(r_i = \frac{1}{k} \sum_{j=1}^{k} \| \boldsymbol{x}^{(i)}-\boldsymbol{x}^{(I(i,j))} \|^2\).</p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[in]</td><td class="paramname">squaredBandwidth</td><td>The bandwidth squared parameter \(r_i = \frac{1}{k} \sum_{j=1}^{k} \| \boldsymbol{x}^{(i)}-\boldsymbol{x}^{(I(i,j))} \|^2\) </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>The density estimation at each sample \(\psi_i \approx \psi(\boldsymbol{x}^{(i)})\) </dd></dl>
+
+</div>
+</div>
 <a class="anchor" id="ae7082910db48d74d122bbe85c06d2f75"></a>
 <div class="memitem">
 <div class="memproto">
@@ -333,8 +372,7 @@ Additional Inherited Members</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
-
-<p>Estimate the density at each sample. </p>
+<p>This function does NOT compute the kd trees. It assumes that <a class="el" href="classspi_1_1NumericalSolvers_1_1SampleRepresentation.html#a5ae60ef9b8bb97a45448a6823ee3187c" title="Build the kd trees for the nearest neighbor computation. ">spi::NumericalSolvers::SampleRepresentation::BuildKDTrees</a> has already been called.</p>
 <dl class="section return"><dt>Returns</dt><dd>The density estimation at each sample \(\psi_i \approx \psi(\boldsymbol{x}^{(i)})\) </dd></dl>
 
 </div>

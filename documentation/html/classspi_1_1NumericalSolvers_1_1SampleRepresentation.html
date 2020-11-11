@@ -97,7 +97,6 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
   <div class="summary">
 <a href="#nested-classes">Classes</a> &#124;
 <a href="#pub-methods">Public Member Functions</a> &#124;
-<a href="#pro-methods">Protected Member Functions</a> &#124;
 <a href="#pro-attribs">Protected Attributes</a> &#124;
 <a href="#pri-attribs">Private Attributes</a> &#124;
 <a href="#pri-static-attribs">Static Private Attributes</a> &#124;
@@ -153,12 +152,18 @@ Public Member Functions</h2></td></tr>
 <tr class="memitem:a904dd2de33870913f353d0c41ec3fb6b"><td class="memItemLeft" align="right" valign="top">Eigen::VectorXd&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classspi_1_1NumericalSolvers_1_1SampleRepresentation.html#a904dd2de33870913f353d0c41ec3fb6b">KernelMatrix</a> (double const eps, Eigen::SparseMatrix&lt; double &gt; &amp;kmat) const </td></tr>
 <tr class="memdesc:a904dd2de33870913f353d0c41ec3fb6b"><td class="mdescLeft">&#160;</td><td class="mdescRight">Construct the kernel matrix \(\boldsymbol{K}_{\epsilon}\).  <a href="#a904dd2de33870913f353d0c41ec3fb6b">More...</a><br /></td></tr>
 <tr class="separator:a904dd2de33870913f353d0c41ec3fb6b"><td class="memSeparator" colspan="2">&#160;</td></tr>
-</table><table class="memberdecls">
-<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pro-methods"></a>
-Protected Member Functions</h2></td></tr>
 <tr class="memitem:ac32acbab45fa8691ff8791ac324cfb3a"><td class="memItemLeft" align="right" valign="top">Eigen::VectorXd&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classspi_1_1NumericalSolvers_1_1SampleRepresentation.html#ac32acbab45fa8691ff8791ac324cfb3a">KernelMatrix</a> (double const eps, Eigen::Ref&lt; const Eigen::VectorXd &gt; const &amp;rvec, Eigen::SparseMatrix&lt; double &gt; &amp;kmat) const </td></tr>
 <tr class="memdesc:ac32acbab45fa8691ff8791ac324cfb3a"><td class="mdescLeft">&#160;</td><td class="mdescRight">Construct the kernel matrix \(\boldsymbol{K}_{\epsilon}\).  <a href="#ac32acbab45fa8691ff8791ac324cfb3a">More...</a><br /></td></tr>
 <tr class="separator:ac32acbab45fa8691ff8791ac324cfb3a"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a5ae60ef9b8bb97a45448a6823ee3187c"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classspi_1_1NumericalSolvers_1_1SampleRepresentation.html#a5ae60ef9b8bb97a45448a6823ee3187c">BuildKDTrees</a> () const </td></tr>
+<tr class="memdesc:a5ae60ef9b8bb97a45448a6823ee3187c"><td class="mdescLeft">&#160;</td><td class="mdescRight">Build the kd trees for the nearest neighbor computation.  <a href="#a5ae60ef9b8bb97a45448a6823ee3187c">More...</a><br /></td></tr>
+<tr class="separator:a5ae60ef9b8bb97a45448a6823ee3187c"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ab86f869ebf77fc478803ae010b521ee8"><td class="memItemLeft" align="right" valign="top">Eigen::VectorXd&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classspi_1_1NumericalSolvers_1_1SampleRepresentation.html#ab86f869ebf77fc478803ae010b521ee8">SquaredBandwidth</a> () const </td></tr>
+<tr class="memdesc:ab86f869ebf77fc478803ae010b521ee8"><td class="mdescLeft">&#160;</td><td class="mdescRight">Compute the squared bandwidth \(r_i^2 = \frac{1}{k} \sum_{j=1}^{k} \| \boldsymbol{x}^{(i)}-\boldsymbol{x}^{(I(i,j))} \|^2\).  <a href="#ab86f869ebf77fc478803ae010b521ee8">More...</a><br /></td></tr>
+<tr class="separator:ab86f869ebf77fc478803ae010b521ee8"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a34f7a6dd29975239daa33945aa7f7247"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classspi_1_1NumericalSolvers_1_1SampleRepresentation.html#a34f7a6dd29975239daa33945aa7f7247">WriteToFile</a> (std::string const &amp;filename, std::string const &amp;dataset=&quot;/&quot;) const </td></tr>
+<tr class="memdesc:a34f7a6dd29975239daa33945aa7f7247"><td class="mdescLeft">&#160;</td><td class="mdescRight">Write the samples to file.  <a href="#a34f7a6dd29975239daa33945aa7f7247">More...</a><br /></td></tr>
+<tr class="separator:a34f7a6dd29975239daa33945aa7f7247"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pro-attribs"></a>
 Protected Attributes</h2></td></tr>
@@ -298,6 +303,23 @@ Static Private Attributes</h2></td></tr>
 </div>
 </div>
 <h2 class="groupheader">Member Function Documentation</h2>
+<a class="anchor" id="a5ae60ef9b8bb97a45448a6823ee3187c"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void SampleRepresentation::BuildKDTrees </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td> const</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Build the kd trees for the nearest neighbor computation. </p>
+
+</div>
+</div>
 <a class="anchor" id="ae6833e7cff95e157e7f66109e28d0583"></a>
 <div class="memitem">
 <div class="memproto">
@@ -345,7 +367,7 @@ Static Private Attributes</h2></td></tr>
 \begin{equation*} K_{\epsilon}^{(ij)} = k_{\epsilon}(\boldsymbol{x}^{(i)}, \boldsymbol{x}^{(j)}) = k\left( \frac{\| \boldsymbol{x}^{(i)} - \boldsymbol{x}^{(j)} \|^2}{\epsilon r_i r_j} \right). \end{equation*}
 </p>
 <p> Recall that \(k(\theta)\) is the kernel function.</p>
-<p>This function (re-)builds the kd-tree.</p>
+<p>This function does NOT compute the kd trees. It assumes that <a class="el" href="classspi_1_1NumericalSolvers_1_1SampleRepresentation.html#a5ae60ef9b8bb97a45448a6823ee3187c" title="Build the kd trees for the nearest neighbor computation. ">spi::NumericalSolvers::SampleRepresentation::BuildKDTrees</a> has already been called.</p>
 <p>Note: children may override this and define the kernel using a different vector of bandwith parameters \(r_i\). </p><dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramdir">[in]</td><td class="paramname">eps</td><td>The parameter \(\epsilon&gt;0\) </td></tr>
@@ -360,9 +382,6 @@ Static Private Attributes</h2></td></tr>
 <a class="anchor" id="ac32acbab45fa8691ff8791ac324cfb3a"></a>
 <div class="memitem">
 <div class="memproto">
-<table class="mlabels">
-  <tr>
-  <td class="mlabels-left">
       <table class="memname">
         <tr>
           <td class="memname">Eigen::VectorXd SampleRepresentation::KernelMatrix </td>
@@ -388,11 +407,6 @@ Static Private Attributes</h2></td></tr>
           <td></td><td> const</td>
         </tr>
       </table>
-  </td>
-  <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">protected</span></span>  </td>
-  </tr>
-</table>
 </div><div class="memdoc">
 
 <p>Construct the kernel matrix \(\boldsymbol{K}_{\epsilon}\). </p>
@@ -469,6 +483,60 @@ Static Private Attributes</h2></td></tr>
   </dd>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>The \(i^{th}\) point from the point cloud. </dd></dl>
+
+</div>
+</div>
+<a class="anchor" id="ab86f869ebf77fc478803ae010b521ee8"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">Eigen::VectorXd SampleRepresentation::SquaredBandwidth </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td> const</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Compute the squared bandwidth \(r_i^2 = \frac{1}{k} \sum_{j=1}^{k} \| \boldsymbol{x}^{(i)}-\boldsymbol{x}^{(I(i,j))} \|^2\). </p>
+<p>This function does NOT compute the kd trees. It assumes that <a class="el" href="classspi_1_1NumericalSolvers_1_1SampleRepresentation.html#a5ae60ef9b8bb97a45448a6823ee3187c" title="Build the kd trees for the nearest neighbor computation. ">spi::NumericalSolvers::SampleRepresentation::BuildKDTrees</a> has already been called.</p>
+<dl class="section return"><dt>Returns</dt><dd>The squared bandwidth \(r_i^2 = \frac{1}{k} \sum_{j=1}^{k} \| \boldsymbol{x}^{(i)}-\boldsymbol{x}^{(I(i,j))} \|^2\) </dd></dl>
+
+</div>
+</div>
+<a class="anchor" id="a34f7a6dd29975239daa33945aa7f7247"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void SampleRepresentation::WriteToFile </td>
+          <td>(</td>
+          <td class="paramtype">std::string const &amp;&#160;</td>
+          <td class="paramname"><em>filename</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">std::string const &amp;&#160;</td>
+          <td class="paramname"><em>dataset</em> = <code>&quot;/&quot;</code>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td> const</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Write the samples to file. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[in]</td><td class="paramname">filename</td><td>The name of the file where we are writing the data </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">dataset</td><td>The name of the dataset where the samples are stored inside the file (defaults to <code>"/"</code>) </td></tr>
+  </table>
+  </dd>
+</dl>
 
 </div>
 </div>
