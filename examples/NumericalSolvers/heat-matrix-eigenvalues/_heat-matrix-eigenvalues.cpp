@@ -38,7 +38,7 @@ int main(int argc, char **argv) {
   YAML::Node options;
   options["NearestNeighbors"] = nnOptions;
   options["NumNearestNeighbors"] = numNeighbors;
-  options["BandwidthParameter"] = eps;
+  options["BandwidthParameter"] = 1.0;
   options["ManifoldDimension"] = 2.0;
 
   // set the kernel options
