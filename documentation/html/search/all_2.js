@@ -8,7 +8,7 @@ var searchData=
   ['bbox_5finches',['bbox_inches',['../namespace__plot__result.html#a595c97922318843afa78cf2ca96eee4d',1,'_plot_result']]],
   ['buildkdtrees',['BuildKDTrees',['../classspi_1_1NumericalSolvers_1_1GraphLaplacian.html#a9b0646cf58c4fc1cf345f1dd1114b0d2',1,'spi::NumericalSolvers::GraphLaplacian::BuildKDTrees()'],['../classspi_1_1NumericalSolvers_1_1SampleRepresentation.html#a5ae60ef9b8bb97a45448a6823ee3187c',1,'spi::NumericalSolvers::SampleRepresentation::BuildKDTrees()'],['../classspi_1_1Tools_1_1NearestNeighbors.html#a08f9fd339445cd90ef6169183c8d8d46',1,'spi::Tools::NearestNeighbors::BuildKDTrees()']]],
   ['bumpkernel',['BumpKernel',['../classspi_1_1Tools_1_1BumpKernel.html',1,'spi::Tools']]],
-  ['bumpkernel',['BumpKernel',['../classspi_1_1Tools_1_1BumpKernel.html#a17f93a9b3a0146e3ff9aedaa6f387bb9',1,'spi::Tools::BumpKernel']]],
+  ['bumpkernel',['BumpKernel',['../classspi_1_1Tools_1_1BumpKernel.html#a17f93a9b3a0146e3ff9aedaa6f387bb9',1,'spi::Tools::BumpKernel::BumpKernel(YAML::Node const &amp;options)'],['../classspi_1_1Tools_1_1BumpKernel.html#a4f8ff2e8d15eb8ae280d8d6796d47fe3',1,'spi::Tools::BumpKernel::BumpKernel()=default']]],
   ['bumpkernel_2ecpp',['BumpKernel.cpp',['../BumpKernel_8cpp.html',1,'']]],
   ['bumpkernel_2ehpp',['BumpKernel.hpp',['../BumpKernel_8hpp.html',1,'']]],
   ['bumpkerneltests_2ecpp',['BumpKernelTests.cpp',['../BumpKernelTests_8cpp.html',1,'']]]

@@ -96,7 +96,10 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <div class="header">
   <div class="summary">
 <a href="#pub-methods">Public Member Functions</a> &#124;
+<a href="#pro-methods">Protected Member Functions</a> &#124;
+<a href="#pri-methods">Private Member Functions</a> &#124;
 <a href="#pri-attribs">Private Attributes</a> &#124;
+<a href="#friends">Friends</a> &#124;
 <a href="classspi_1_1Tools_1_1ExponentialKernel-members.html">List of all members</a>  </div>
   <div class="headertitle">
 <div class="title">spi::Tools::ExponentialKernel Class Reference</div>  </div>
@@ -128,6 +131,15 @@ Public Member Functions</h2></td></tr>
 <tr class="memitem:a093c1015f2ee2119ce559d9c5ce3a675"><td class="memItemLeft" align="right" valign="top">virtual double&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classspi_1_1Tools_1_1ExponentialKernel.html#a093c1015f2ee2119ce559d9c5ce3a675">EvaluateIsotropicKernel</a> (double const theta) const override</td></tr>
 <tr class="memdesc:a093c1015f2ee2119ce559d9c5ce3a675"><td class="mdescLeft">&#160;</td><td class="mdescRight">Evaluate the hat kernel function \(k(\theta)\).  <a href="#a093c1015f2ee2119ce559d9c5ce3a675">More...</a><br /></td></tr>
 <tr class="separator:a093c1015f2ee2119ce559d9c5ce3a675"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:abc12789aa125778186a8e9681db1bcaa"><td class="memItemLeft" align="right" valign="top">double&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classspi_1_1Tools_1_1ExponentialKernel.html#abc12789aa125778186a8e9681db1bcaa">Magnitude</a> () const </td></tr>
+<tr class="memdesc:abc12789aa125778186a8e9681db1bcaa"><td class="mdescLeft">&#160;</td><td class="mdescRight">Get the kernel's magnitude parameter \(a_0\).  <a href="#abc12789aa125778186a8e9681db1bcaa">More...</a><br /></td></tr>
+<tr class="separator:abc12789aa125778186a8e9681db1bcaa"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a68a40ef862b5e1b636210029da4f8e1a"><td class="memItemLeft" align="right" valign="top">double&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classspi_1_1Tools_1_1ExponentialKernel.html#a68a40ef862b5e1b636210029da4f8e1a">Scale</a> () const </td></tr>
+<tr class="memdesc:a68a40ef862b5e1b636210029da4f8e1a"><td class="mdescLeft">&#160;</td><td class="mdescRight">Get the kernel's scale parameter \(a_1\).  <a href="#a68a40ef862b5e1b636210029da4f8e1a">More...</a><br /></td></tr>
+<tr class="separator:a68a40ef862b5e1b636210029da4f8e1a"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a751e95e5294f6028660ea18780131256"><td class="memItemLeft" align="right" valign="top">double&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classspi_1_1Tools_1_1ExponentialKernel.html#a751e95e5294f6028660ea18780131256">Exponent</a> () const </td></tr>
+<tr class="memdesc:a751e95e5294f6028660ea18780131256"><td class="mdescLeft">&#160;</td><td class="mdescRight">Get the kernel's exponent \(p\).  <a href="#a751e95e5294f6028660ea18780131256">More...</a><br /></td></tr>
+<tr class="separator:a751e95e5294f6028660ea18780131256"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="inherit_header pub_methods_classspi_1_1Tools_1_1IsotropicKernel"><td colspan="2" onclick="javascript:toggleInherit('pub_methods_classspi_1_1Tools_1_1IsotropicKernel')"><img src="closed.png" alt="-"/>&#160;Public Member Functions inherited from <a class="el" href="classspi_1_1Tools_1_1IsotropicKernel.html">spi::Tools::IsotropicKernel</a></td></tr>
 <tr class="memitem:a24902d357b0dd93dfcdcdfc3f5ea13a6 inherit pub_methods_classspi_1_1Tools_1_1IsotropicKernel"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classspi_1_1Tools_1_1IsotropicKernel.html#a24902d357b0dd93dfcdcdfc3f5ea13a6">IsotropicKernel</a> (YAML::Node const &amp;options)</td></tr>
 <tr class="memdesc:a24902d357b0dd93dfcdcdfc3f5ea13a6 inherit pub_methods_classspi_1_1Tools_1_1IsotropicKernel"><td class="mdescLeft">&#160;</td><td class="mdescRight">Construct an isotropic kernel.  <a href="#a24902d357b0dd93dfcdcdfc3f5ea13a6">More...</a><br /></td></tr>
@@ -140,6 +152,9 @@ Public Member Functions</h2></td></tr>
 <tr class="memitem:ae653b33470dab6d4a04d94ef59e8791e inherit pub_methods_classspi_1_1Tools_1_1IsotropicKernel"><td class="memItemLeft" align="right" valign="top">double&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classspi_1_1Tools_1_1IsotropicKernel.html#ae653b33470dab6d4a04d94ef59e8791e">operator()</a> (double const theta) const </td></tr>
 <tr class="memdesc:ae653b33470dab6d4a04d94ef59e8791e inherit pub_methods_classspi_1_1Tools_1_1IsotropicKernel"><td class="mdescLeft">&#160;</td><td class="mdescRight">Evaluate the kernel function \(k(\theta)\).  <a href="#ae653b33470dab6d4a04d94ef59e8791e">More...</a><br /></td></tr>
 <tr class="separator:ae653b33470dab6d4a04d94ef59e8791e inherit pub_methods_classspi_1_1Tools_1_1IsotropicKernel"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a27e953dc3f8c938ae2bf84a64ae423f2 inherit pub_methods_classspi_1_1Tools_1_1IsotropicKernel"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classspi_1_1Tools_1_1IsotropicKernel.html#a27e953dc3f8c938ae2bf84a64ae423f2">IsotropicKernel</a> ()=default</td></tr>
+<tr class="memdesc:a27e953dc3f8c938ae2bf84a64ae423f2 inherit pub_methods_classspi_1_1Tools_1_1IsotropicKernel"><td class="mdescLeft">&#160;</td><td class="mdescRight">Private default constructor for the serialization.  <a href="#a27e953dc3f8c938ae2bf84a64ae423f2">More...</a><br /></td></tr>
+<tr class="separator:a27e953dc3f8c938ae2bf84a64ae423f2 inherit pub_methods_classspi_1_1Tools_1_1IsotropicKernel"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="inherit_header pub_methods_classspi_1_1Tools_1_1Kernel"><td colspan="2" onclick="javascript:toggleInherit('pub_methods_classspi_1_1Tools_1_1Kernel')"><img src="closed.png" alt="-"/>&#160;Public Member Functions inherited from <a class="el" href="classspi_1_1Tools_1_1Kernel.html">spi::Tools::Kernel</a></td></tr>
 <tr class="memitem:abad469b2fb318cc20da3488c6d5ed140 inherit pub_methods_classspi_1_1Tools_1_1Kernel"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classspi_1_1Tools_1_1Kernel.html#abad469b2fb318cc20da3488c6d5ed140">Kernel</a> (YAML::Node const &amp;options)</td></tr>
 <tr class="memdesc:abad469b2fb318cc20da3488c6d5ed140 inherit pub_methods_classspi_1_1Tools_1_1Kernel"><td class="mdescLeft">&#160;</td><td class="mdescRight">Construct the kernel function.  <a href="#abad469b2fb318cc20da3488c6d5ed140">More...</a><br /></td></tr>
@@ -150,17 +165,40 @@ Public Member Functions</h2></td></tr>
 <tr class="memdesc:a5db50d7b2306da5e41070d9a8ca7b700 inherit pub_methods_classspi_1_1Tools_1_1Kernel"><td class="mdescLeft">&#160;</td><td class="mdescRight">Evaluate the kernel function \(k(\boldsymbol{x}_1, \boldsymbol{x}_2)\).  <a href="#a5db50d7b2306da5e41070d9a8ca7b700">More...</a><br /></td></tr>
 <tr class="separator:a5db50d7b2306da5e41070d9a8ca7b700 inherit pub_methods_classspi_1_1Tools_1_1Kernel"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pro-methods"></a>
+Protected Member Functions</h2></td></tr>
+<tr class="memitem:aeb3c021b23fecafef8298e110d768681"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classspi_1_1Tools_1_1ExponentialKernel.html#aeb3c021b23fecafef8298e110d768681">ExponentialKernel</a> ()=default</td></tr>
+<tr class="memdesc:aeb3c021b23fecafef8298e110d768681"><td class="mdescLeft">&#160;</td><td class="mdescRight">Private default constructor for the serialization.  <a href="#aeb3c021b23fecafef8298e110d768681">More...</a><br /></td></tr>
+<tr class="separator:aeb3c021b23fecafef8298e110d768681"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="inherit_header pro_methods_classspi_1_1Tools_1_1Kernel"><td colspan="2" onclick="javascript:toggleInherit('pro_methods_classspi_1_1Tools_1_1Kernel')"><img src="closed.png" alt="-"/>&#160;Protected Member Functions inherited from <a class="el" href="classspi_1_1Tools_1_1Kernel.html">spi::Tools::Kernel</a></td></tr>
+<tr class="memitem:ae9e9fcd2fb6b170d06c12f2b2c2c9d87 inherit pro_methods_classspi_1_1Tools_1_1Kernel"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classspi_1_1Tools_1_1Kernel.html#ae9e9fcd2fb6b170d06c12f2b2c2c9d87">Kernel</a> ()=default</td></tr>
+<tr class="memdesc:ae9e9fcd2fb6b170d06c12f2b2c2c9d87 inherit pro_methods_classspi_1_1Tools_1_1Kernel"><td class="mdescLeft">&#160;</td><td class="mdescRight">Private default constructor for the serialization.  <a href="#ae9e9fcd2fb6b170d06c12f2b2c2c9d87">More...</a><br /></td></tr>
+<tr class="separator:ae9e9fcd2fb6b170d06c12f2b2c2c9d87 inherit pro_methods_classspi_1_1Tools_1_1Kernel"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pri-methods"></a>
+Private Member Functions</h2></td></tr>
+<tr class="memitem:a4b1cbba176eaf061ca6ae4c9c4640f08"><td class="memTemplParams" colspan="2">template&lt;class Archive &gt; </td></tr>
+<tr class="memitem:a4b1cbba176eaf061ca6ae4c9c4640f08"><td class="memTemplItemLeft" align="right" valign="top">void&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="classspi_1_1Tools_1_1ExponentialKernel.html#a4b1cbba176eaf061ca6ae4c9c4640f08">serialize</a> (Archive &amp;ar)</td></tr>
+<tr class="memdesc:a4b1cbba176eaf061ca6ae4c9c4640f08"><td class="mdescLeft">&#160;</td><td class="mdescRight">Serialize so we can save to archive/buffers.  <a href="#a4b1cbba176eaf061ca6ae4c9c4640f08">More...</a><br /></td></tr>
+<tr class="separator:a4b1cbba176eaf061ca6ae4c9c4640f08"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pri-attribs"></a>
 Private Attributes</h2></td></tr>
-<tr class="memitem:adf0fa12db0ce549b1b60db24f3a12e27"><td class="memItemLeft" align="right" valign="top">const double&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classspi_1_1Tools_1_1ExponentialKernel.html#adf0fa12db0ce549b1b60db24f3a12e27">mag</a></td></tr>
-<tr class="memdesc:adf0fa12db0ce549b1b60db24f3a12e27"><td class="mdescLeft">&#160;</td><td class="mdescRight">The magnitude parameter \(a_0\).  <a href="#adf0fa12db0ce549b1b60db24f3a12e27">More...</a><br /></td></tr>
-<tr class="separator:adf0fa12db0ce549b1b60db24f3a12e27"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a5e42acc4b5ab6f06bb1049589a303d03"><td class="memItemLeft" align="right" valign="top">const double&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classspi_1_1Tools_1_1ExponentialKernel.html#a5e42acc4b5ab6f06bb1049589a303d03">scale</a></td></tr>
-<tr class="memdesc:a5e42acc4b5ab6f06bb1049589a303d03"><td class="mdescLeft">&#160;</td><td class="mdescRight">The scale parameter \(a_1\).  <a href="#a5e42acc4b5ab6f06bb1049589a303d03">More...</a><br /></td></tr>
-<tr class="separator:a5e42acc4b5ab6f06bb1049589a303d03"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a8fd2c6ec559908669468d36217e4458a"><td class="memItemLeft" align="right" valign="top">const double&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classspi_1_1Tools_1_1ExponentialKernel.html#a8fd2c6ec559908669468d36217e4458a">expon</a></td></tr>
-<tr class="memdesc:a8fd2c6ec559908669468d36217e4458a"><td class="mdescLeft">&#160;</td><td class="mdescRight">The exponent \(p\).  <a href="#a8fd2c6ec559908669468d36217e4458a">More...</a><br /></td></tr>
-<tr class="separator:a8fd2c6ec559908669468d36217e4458a"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a2f09eb3860514af8c09d34c60f9ee542"><td class="memItemLeft" align="right" valign="top">double&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classspi_1_1Tools_1_1ExponentialKernel.html#a2f09eb3860514af8c09d34c60f9ee542">mag</a> = 1.0</td></tr>
+<tr class="memdesc:a2f09eb3860514af8c09d34c60f9ee542"><td class="mdescLeft">&#160;</td><td class="mdescRight">The magnitude parameter \(a_0\).  <a href="#a2f09eb3860514af8c09d34c60f9ee542">More...</a><br /></td></tr>
+<tr class="separator:a2f09eb3860514af8c09d34c60f9ee542"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ada30e31e99b619cbfad689424988d262"><td class="memItemLeft" align="right" valign="top">double&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classspi_1_1Tools_1_1ExponentialKernel.html#ada30e31e99b619cbfad689424988d262">scale</a> = 1.0</td></tr>
+<tr class="memdesc:ada30e31e99b619cbfad689424988d262"><td class="mdescLeft">&#160;</td><td class="mdescRight">The scale parameter \(a_1\).  <a href="#ada30e31e99b619cbfad689424988d262">More...</a><br /></td></tr>
+<tr class="separator:ada30e31e99b619cbfad689424988d262"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aba088c82e3893165c6f63417faa56f69"><td class="memItemLeft" align="right" valign="top">double&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classspi_1_1Tools_1_1ExponentialKernel.html#aba088c82e3893165c6f63417faa56f69">expon</a> = 1.0</td></tr>
+<tr class="memdesc:aba088c82e3893165c6f63417faa56f69"><td class="mdescLeft">&#160;</td><td class="mdescRight">The exponent \(p\).  <a href="#aba088c82e3893165c6f63417faa56f69">More...</a><br /></td></tr>
+<tr class="separator:aba088c82e3893165c6f63417faa56f69"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="friends"></a>
+Friends</h2></td></tr>
+<tr class="memitem:ab2f44cbb59a08132f4c843e5225bba0e"><td class="memItemLeft" align="right" valign="top">class&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classspi_1_1Tools_1_1ExponentialKernel.html#ab2f44cbb59a08132f4c843e5225bba0e">cereal::access</a></td></tr>
+<tr class="memdesc:ab2f44cbb59a08132f4c843e5225bba0e"><td class="mdescLeft">&#160;</td><td class="mdescRight">Make cereal::access a friend for serialization.  <a href="#ab2f44cbb59a08132f4c843e5225bba0e">More...</a><br /></td></tr>
+<tr class="separator:ab2f44cbb59a08132f4c843e5225bba0e"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="inherited"></a>
 Additional Inherited Members</h2></td></tr>
@@ -257,6 +295,31 @@ Additional Inherited Members</h2></td></tr>
 
 </div>
 </div>
+<a class="anchor" id="aeb3c021b23fecafef8298e110d768681"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">spi::Tools::ExponentialKernel::ExponentialKernel </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">protected</span><span class="mlabel">default</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Private default constructor for the serialization. </p>
+
+</div>
+</div>
 <h2 class="groupheader">Member Function Documentation</h2>
 <a class="anchor" id="a093c1015f2ee2119ce559d9c5ce3a675"></a>
 <div class="memitem">
@@ -293,8 +356,96 @@ Additional Inherited Members</h2></td></tr>
 
 </div>
 </div>
-<h2 class="groupheader">Member Data Documentation</h2>
-<a class="anchor" id="a8fd2c6ec559908669468d36217e4458a"></a>
+<a class="anchor" id="a751e95e5294f6028660ea18780131256"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">double ExponentialKernel::Exponent </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td> const</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Get the kernel's exponent \(p\). </p>
+<dl class="section return"><dt>Returns</dt><dd>The kernel's exponent \(p\) </dd></dl>
+
+</div>
+</div>
+<a class="anchor" id="abc12789aa125778186a8e9681db1bcaa"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">double ExponentialKernel::Magnitude </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td> const</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Get the kernel's magnitude parameter \(a_0\). </p>
+<dl class="section return"><dt>Returns</dt><dd>The kernel's magnitude parameter \(a_0\) </dd></dl>
+
+</div>
+</div>
+<a class="anchor" id="a68a40ef862b5e1b636210029da4f8e1a"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">double ExponentialKernel::Scale </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td> const</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Get the kernel's scale parameter \(a_1\). </p>
+<dl class="section return"><dt>Returns</dt><dd>The kernel's scale parameter \(a_1\) </dd></dl>
+
+</div>
+</div>
+<a class="anchor" id="a4b1cbba176eaf061ca6ae4c9c4640f08"></a>
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;class Archive &gt; </div>
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">void spi::Tools::ExponentialKernel::serialize </td>
+          <td>(</td>
+          <td class="paramtype">Archive &amp;&#160;</td>
+          <td class="paramname"><em>ar</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">private</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Serialize so we can save to archive/buffers. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[in]</td><td class="paramname">ar</td><td>The archive/buffer </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<h2 class="groupheader">Friends And Related Function Documentation</h2>
+<a class="anchor" id="ab2f44cbb59a08132f4c843e5225bba0e"></a>
 <div class="memitem">
 <div class="memproto">
 <table class="mlabels">
@@ -302,7 +453,30 @@ Additional Inherited Members</h2></td></tr>
   <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname">const double spi::Tools::ExponentialKernel::expon</td>
+          <td class="memname">friend class cereal::access</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">friend</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Make cereal::access a friend for serialization. </p>
+
+</div>
+</div>
+<h2 class="groupheader">Member Data Documentation</h2>
+<a class="anchor" id="aba088c82e3893165c6f63417faa56f69"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">double spi::Tools::ExponentialKernel::expon = 1.0</td>
         </tr>
       </table>
   </td>
@@ -316,7 +490,7 @@ Additional Inherited Members</h2></td></tr>
 
 </div>
 </div>
-<a class="anchor" id="adf0fa12db0ce549b1b60db24f3a12e27"></a>
+<a class="anchor" id="a2f09eb3860514af8c09d34c60f9ee542"></a>
 <div class="memitem">
 <div class="memproto">
 <table class="mlabels">
@@ -324,7 +498,7 @@ Additional Inherited Members</h2></td></tr>
   <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname">const double spi::Tools::ExponentialKernel::mag</td>
+          <td class="memname">double spi::Tools::ExponentialKernel::mag = 1.0</td>
         </tr>
       </table>
   </td>
@@ -338,7 +512,7 @@ Additional Inherited Members</h2></td></tr>
 
 </div>
 </div>
-<a class="anchor" id="a5e42acc4b5ab6f06bb1049589a303d03"></a>
+<a class="anchor" id="ada30e31e99b619cbfad689424988d262"></a>
 <div class="memitem">
 <div class="memproto">
 <table class="mlabels">
@@ -346,7 +520,7 @@ Additional Inherited Members</h2></td></tr>
   <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname">const double spi::Tools::ExponentialKernel::scale</td>
+          <td class="memname">double spi::Tools::ExponentialKernel::scale = 1.0</td>
         </tr>
       </table>
   </td>

@@ -98,6 +98,9 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <a href="#pub-types">Public Types</a> &#124;
 <a href="#pub-methods">Public Member Functions</a> &#124;
 <a href="#pub-static-methods">Static Public Member Functions</a> &#124;
+<a href="#pro-methods">Protected Member Functions</a> &#124;
+<a href="#pri-methods">Private Member Functions</a> &#124;
+<a href="#friends">Friends</a> &#124;
 <a href="classspi_1_1Tools_1_1Kernel-members.html">List of all members</a>  </div>
   <div class="headertitle">
 <div class="title">spi::Tools::Kernel Class Reference<span class="mlabels"><span class="mlabel">abstract</span></span></div>  </div>
@@ -153,6 +156,25 @@ Static Public Member Functions</h2></td></tr>
 <tr class="memitem:a4fb3d323bbcab8f5ba3e9edf1edcf689"><td class="memItemLeft" align="right" valign="top">static std::shared_ptr&lt; <a class="el" href="classspi_1_1Tools_1_1Kernel.html#a23c18d4b05191c0313e0c17648f22158">ConstructKernelMap</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classspi_1_1Tools_1_1Kernel.html#a4fb3d323bbcab8f5ba3e9edf1edcf689">KernelMap</a> ()</td></tr>
 <tr class="memdesc:a4fb3d323bbcab8f5ba3e9edf1edcf689"><td class="mdescLeft">&#160;</td><td class="mdescRight">Get the map from kernel name to its constructor.  <a href="#a4fb3d323bbcab8f5ba3e9edf1edcf689">More...</a><br /></td></tr>
 <tr class="separator:a4fb3d323bbcab8f5ba3e9edf1edcf689"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pro-methods"></a>
+Protected Member Functions</h2></td></tr>
+<tr class="memitem:ae9e9fcd2fb6b170d06c12f2b2c2c9d87"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classspi_1_1Tools_1_1Kernel.html#ae9e9fcd2fb6b170d06c12f2b2c2c9d87">Kernel</a> ()=default</td></tr>
+<tr class="memdesc:ae9e9fcd2fb6b170d06c12f2b2c2c9d87"><td class="mdescLeft">&#160;</td><td class="mdescRight">Private default constructor for the serialization.  <a href="#ae9e9fcd2fb6b170d06c12f2b2c2c9d87">More...</a><br /></td></tr>
+<tr class="separator:ae9e9fcd2fb6b170d06c12f2b2c2c9d87"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pri-methods"></a>
+Private Member Functions</h2></td></tr>
+<tr class="memitem:a24a31cc8a26f8c64c3ef4076b3cf3451"><td class="memTemplParams" colspan="2">template&lt;class Archive &gt; </td></tr>
+<tr class="memitem:a24a31cc8a26f8c64c3ef4076b3cf3451"><td class="memTemplItemLeft" align="right" valign="top">void&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="classspi_1_1Tools_1_1Kernel.html#a24a31cc8a26f8c64c3ef4076b3cf3451">serialize</a> (Archive &amp;ar)</td></tr>
+<tr class="memdesc:a24a31cc8a26f8c64c3ef4076b3cf3451"><td class="mdescLeft">&#160;</td><td class="mdescRight">Serialize so we can save to archive/buffers.  <a href="#a24a31cc8a26f8c64c3ef4076b3cf3451">More...</a><br /></td></tr>
+<tr class="separator:a24a31cc8a26f8c64c3ef4076b3cf3451"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="friends"></a>
+Friends</h2></td></tr>
+<tr class="memitem:ab2f44cbb59a08132f4c843e5225bba0e"><td class="memItemLeft" align="right" valign="top">class&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classspi_1_1Tools_1_1Kernel.html#ab2f44cbb59a08132f4c843e5225bba0e">cereal::access</a></td></tr>
+<tr class="memdesc:ab2f44cbb59a08132f4c843e5225bba0e"><td class="mdescLeft">&#160;</td><td class="mdescRight">Make cereal::access a friend for serialization.  <a href="#ab2f44cbb59a08132f4c843e5225bba0e">More...</a><br /></td></tr>
+<tr class="separator:ab2f44cbb59a08132f4c843e5225bba0e"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><p>The kernel function implementation. </p>
@@ -231,6 +253,31 @@ Static Public Member Functions</h2></td></tr>
   </tr>
 </table>
 </div><div class="memdoc">
+
+</div>
+</div>
+<a class="anchor" id="ae9e9fcd2fb6b170d06c12f2b2c2c9d87"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">spi::Tools::Kernel::Kernel </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">protected</span><span class="mlabel">default</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Private default constructor for the serialization. </p>
 
 </div>
 </div>
@@ -372,6 +419,63 @@ Static Public Member Functions</h2></td></tr>
   </dd>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>The kernel evaluation \(k(\boldsymbol{x}_1, \boldsymbol{x}_2)\) </dd></dl>
+
+</div>
+</div>
+<a class="anchor" id="a24a31cc8a26f8c64c3ef4076b3cf3451"></a>
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;class Archive &gt; </div>
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">void spi::Tools::Kernel::serialize </td>
+          <td>(</td>
+          <td class="paramtype">Archive &amp;&#160;</td>
+          <td class="paramname"><em>ar</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">private</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Serialize so we can save to archive/buffers. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[in]</td><td class="paramname">ar</td><td>The archive/buffer </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<h2 class="groupheader">Friends And Related Function Documentation</h2>
+<a class="anchor" id="ab2f44cbb59a08132f4c843e5225bba0e"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">friend class cereal::access</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">friend</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Make cereal::access a friend for serialization. </p>
 
 </div>
 </div>
