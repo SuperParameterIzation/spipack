@@ -39,7 +39,7 @@ protected:
     EXPECT_EQ(representation->NumSamples(), n);
   }
 
-  /// Create the graph Laplacian from samples
+  /// Create the sample representation from samples
   /**
     \return The sample collection used to create the graph Laplacian
   */

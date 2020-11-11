@@ -139,6 +139,11 @@ double NearestNeighbors::FindNeighbors(Eigen::Ref<const Eigen::VectorXd> const& 
   return (sub==neighbors.size()? 0.0 : avg/(neighbors.size()-sub));
 }
 
+Eigen::VectorXd NearestNeighbors::SquaredBandwidth(std::size_t const k) const {
+  std::vector<std::vector<std::pair<std::size_t, double> > > neighbors;
+  return SquaredBandwidth(k, neighbors);
+}
+
 Eigen::VectorXd NearestNeighbors::SquaredBandwidth(std::size_t const k, std::vector<std::vector<std::pair<std::size_t, double> > >& neighbors) const {
   // the number of samples
   const std::size_t n = NumSamples();

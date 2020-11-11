@@ -19,6 +19,7 @@ Let \f$r_i\f$ be a bandwidth  parmeter associated with each sample. Define a com
     k_{\epsilon}(\boldsymbol{x}^{(i)}, \boldsymbol{x}^{(j)}) = k\left( \frac{\| \boldsymbol{x}^{(i)} - \boldsymbol{x}^{(j)} \|^2}{\epsilon r_i r_j} \right).
 \f}
 Define the kernel matrix \f$\boldsymbol{K}_{\epsilon}\f$ such that the \f$(i,j)\f$ component is \f$K_{\epsilon}^{(ij)} = k_{\epsilon}(\boldsymbol{x}^{(i)}, \boldsymbol{x}^{(j)})\f$.
+
 <B>Configuration Parameters:</B>
 Parameter Key | Type | Default Value | Description |
 ------------- | ------------- | ------------- | ------------- |
@@ -107,6 +108,9 @@ protected:
   */
   Eigen::VectorXd KernelMatrix(double const eps, Eigen::Ref<const Eigen::VectorXd> const& rvec, Eigen::SparseMatrix<double>& kmat) const;
 
+  /// The number of nearest neighbors used to compute the bandwidth
+  const std::size_t numNearestNeighbors;
+
   /// The kernel function \f$k(\theta)\F$
   /**
     The kernel is defined by a function \f$k: \mathbb{R}^{+} \mapsto \mathbb{R}^{+}\f$ such that \f$k(\theta) = 0\f$ if \f$\theta>1\f$ and
@@ -118,9 +122,6 @@ protected:
   std::shared_ptr<spi::Tools::CompactKernel> kernel;
 
 private:
-
-  /// The number of nearest neighbors used to compute the bandwidth
-  const std::size_t numNearestNeighbors;
 
   /// The number of <tt>openMP</tt> threads available to this object.
   const std::size_t numThreads;

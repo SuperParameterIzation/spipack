@@ -43,8 +43,7 @@ Eigen::VectorXd SampleRepresentation::KernelMatrix(double const eps, Eigen::Spar
   samples.BuildKDTrees();
 
   // compute the squared bandwidth
-  std::vector<std::vector<std::pair<std::size_t, double> > > neighbors;
-  const Eigen::VectorXd squaredBandwidth = samples.SquaredBandwidth(numNearestNeighbors, neighbors);
+  const Eigen::VectorXd squaredBandwidth = samples.SquaredBandwidth(numNearestNeighbors);
 
   // compute the kernel matrix using the bandwidth
   return KernelMatrix(eps, squaredBandwidth.array().sqrt(), kmat);

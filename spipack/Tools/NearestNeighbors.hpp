@@ -102,6 +102,14 @@ public:
   */
   Eigen::VectorXd SquaredBandwidth(std::size_t const k, std::vector<std::vector<std::pair<std::size_t, double> > >& neighbors) const;
 
+  /// Find the squared bandwidth parameter for each sample
+  /**
+  The squared bandwidth is defined as \f$r_i^2 = \frac{1}{k} \sum_{j=1}^{k} \| \boldsymbol{x}^{(i)}-\boldsymbol{x}^{(I(i,j))} \|^2\f$ for each sample, where \f$I(i,j)\f$ is the index of the \f$j^{th}\f$ closest neighbor---note that \f$I(i,0) = i\f$.
+  @param[in] k The number of nearest neighbors (\f$k\f$)
+  \return A vector such that the \f$i^{th}\f$ entry is the bandwidth \f$r_i\f$
+  */
+  Eigen::VectorXd SquaredBandwidth(std::size_t const k) const;
+
 private:
 
   /// Create a sample collection by sampling a random variable

@@ -32,23 +32,21 @@ int main(int argc, char **argv) {
   YAML::Node nnOptions;
   nnOptions["NumSamples"] = n;
   nnOptions["Stride"] = n/5;
+  nnOptions["NumThreads"] = omp_get_max_threads();
 
   // the options for the graph Laplacian
   YAML::Node options;
   options["NearestNeighbors"] = nnOptions;
   options["NumNearestNeighbors"] = numNeighbors;
-  options["BandwidthIndex"] = 4;
-  options["EigensolverTol"] = 1.0e-10;
-  options["BandwidthRange.Min"] = -20.0;
-  options["BandwidthRange.Max"] = 3.0;
-  options["NumBandwidthSteps"] = 100;
+  options["BandwidthParameter"] = eps;
+  options["ManifoldDimension"] = 2.0;
 
   // set the kernel options
   YAML::Node kernelOptions;
   kernelOptions["Kernel"] = "BumpKernel";
   options["KernelOptions"] = kernelOptions;
 
-  // create the graph laplacian
+  /*// create the graph laplacian
   auto laplacian = std::make_shared<GraphLaplacian>(rv, options);
 
   // write the samples to file
@@ -72,22 +70,6 @@ int main(int argc, char **argv) {
 
   const Eigen::VectorXd densityEstimation = (1.0/(optimal.first*M_PI*n))*optimal.second*squaredBandwidth.array().inverse().matrix();
 
-  /*for( std::size_t i=0; i<laplacian->NumSamples(); ++i ) {
-    // get a reference to the ith point
-    Eigen::Ref<Eigen::VectorXd const> point = laplacian->Point(i);
-
-    // evaluate the kernel at this point
-    Eigen::MatrixXd kernelEval(numNeighbors+1, laplacian->NumBandwidthSteps()+1);
-    laplacian->EvaluateKernel(i, point, neighbors[i], squaredBandwidth.array().sqrt(), kernelEval);
-  }*/
-
-  /*// construct the heat matrix
-  laplacian->ConstructHeatMatrix();
-
-  // the largest eigenvalue is 1
-  const std::size_t neig = 100;
-  const Eigen::VectorXd eigenvalues = laplacian->HeatMatrixEigenvalues(neig);*/
-
   // open the file
   auto hdf5file = std::make_shared<HDF5File>(filename);
   //hdf5file->WriteMatrix("/heat matrix eigenvalues", eigenvalues);
@@ -98,5 +80,5 @@ int main(int argc, char **argv) {
   hdf5file->WriteMatrix("/approx/bandwidth parameter candidate", sigmaprimeApprox.col(0).eval());
   hdf5file->WriteMatrix("/approx/sigma prime", sigmaprimeApprox.col(1).eval());
   hdf5file->WriteMatrix("/approx/density estimation", densityEstimationApprox);
-  hdf5file->Close();
+  hdf5file->Close();*/
 }
