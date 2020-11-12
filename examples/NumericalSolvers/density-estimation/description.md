@@ -12,10 +12,10 @@ $$
 $$
 where $$I(i,j)$$ is the index of $$j^{th}$$ closest sample to $$\boldsymbol{x}^{(i)}$$. In other words, $$r_i$$ is the average distance between $$\boldsymbol{x}^{(i)}$$ and its $$k$$ nearest neighbors.
 
-For the purpose of this example, assume that $$\psi = \mathcal{N}(\boldsymbol{0}, \boldsymbol{I})$$ is a 2-dimensional standard normal distribution.
+For the purpose of this example, assume that $$\psi = \mathcal{N}(\boldsymbol{0}, \boldsymbol{I})$$ is a 2-dimensional standard normal distribution. Here we show the squared bandwidth given $$k=25$$ with $$n=10^5$$ samples.
 
  <figure>
-  <figcaption>The squared bandwidth $$r_i^2 = \frac{1}{k} \sum_{j=1}^{k} \| \boldsymbol{x}^{(i)}-\boldsymbol{x}^{(I(i,j))} \|^2$$ at all $$n=10^4$$ samples with $$k=25$$ nearest neighbors.</figcaption>
+  <figcaption>The squared bandwidth $r_i^2 = \frac{1}{k} \sum_{j=1}^{k} \| \boldsymbol{x}^{(i)}-\boldsymbol{x}^{(I(i,j))} \|^2$ at all $$n=10^4$$ samples with $$k=25$$ nearest neighbors.</figcaption>
   <embed src="figures/SquaredBandwidth.pdf" width="500" height="375"
  type="application/pdf">
 </figure>
