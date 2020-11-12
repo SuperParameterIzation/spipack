@@ -50,7 +50,7 @@ Let
 
 $$
 \begin{equation}
-\widetilde{\Sigma}_l^{\prime}=\max_{l}{}(\Sigma_l^{\prime})
+\widetilde{\Sigma}_l^{\prime}=\max_{l}{(\Sigma_l^{\prime})}
 \end{equation}
 $$
 
