@@ -46,7 +46,9 @@ $$
 \end{equation}.
 $$
 
-Let $\widetilde{\Sigma}_l^{\prime} = max_{l}(\Sigma_l^{\prime})$
+Let $\widetilde{\Sigma}_l^{\prime}$
+
+$ = max_{l}(\Sigma_l^{\prime})$
 
 (with corresponding index $\tilde{l}$ and optimal bandwidth parameter $\tilde{\epsilon}$).
 
