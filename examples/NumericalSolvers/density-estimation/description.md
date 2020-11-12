@@ -33,3 +33,5 @@ type="application/pdf">
 <embed src="figures/TrueDensity.pdf" width="500" height="375"
 type="application/pdf">
 </figure>
+
+<embed src="_density-estimation.cpp">
