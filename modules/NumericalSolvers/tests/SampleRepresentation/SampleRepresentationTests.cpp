@@ -25,7 +25,7 @@ protected:
 
     // set the kernel options
     YAML::Node kernelOptions;
-    kernelOptions["Kernel"] = "HatKernel";
+    kernelOptions["Kernel"] = "ExponentialKernel";
 
     // set the options for the graph laplacian
     options["NearestNeighbors"] = nnOptions;
@@ -89,7 +89,174 @@ TEST_F(SampleRepresentationTests, SampleCollectionConstruction) {
   }
 }
 
-TEST_F(SampleRepresentationTests, KernelMatrix) {
+TEST_F(SampleRepresentationTests, UntruncatedKernelMatrix_Dense) {
+  options["TruncateKernelMatrix"] = false;
+
+  // create the graph laplacian from samples
+  auto samples = CreateFromSamples();
+  EXPECT_EQ(samples->size(), n);
+
+  // construct the kd-trees
+  representation->BuildKDTrees();
+
+  // compute the kernel matrix
+  const double eps = 10.0;
+  Eigen::MatrixXd kmat(n, n);
+  const Eigen::VectorXd rowsum = representation->KernelMatrix(eps, kmat);
+  EXPECT_EQ(rowsum.size(), n);
+  EXPECT_EQ(kmat.rows(), n);
+  EXPECT_EQ(kmat.cols(), n);
+
+  // compute the expected kernel matrix
+  Eigen::MatrixXd kernmatExpected(n, n);
+  {
+    // create a nearest neighbors object
+    NearestNeighbors nn(samples, options["NearestNeighbors"]);
+    std::vector<std::vector<std::pair<std::size_t, double> > > neighbors;
+    nn.BuildKDTrees();
+    const Eigen::VectorXd squaredBandwidth = nn.SquaredBandwidth(nneighs, neighbors);
+
+    auto kern = representation->Kernel();
+    #pragma omp parallel num_threads(omp_get_max_threads())
+    for( std::size_t i=0; i<n; ++i ) {
+      for( std::size_t j=i; j<n; ++j ) {
+        const Eigen::VectorXd diff = samples->at(i)->state[0]-samples->at(j)->state[0];
+
+        kernmatExpected(i, j) = kern->EvaluateIsotropicKernel(diff.dot(diff)/(eps*std::sqrt(squaredBandwidth(i)*squaredBandwidth(j))));
+        kernmatExpected(j, i) = kernmatExpected(i, j);
+      }
+    }
+  }
+  const Eigen::VectorXd rowsumExpected = kernmatExpected.rowwise().sum();
+
+  #pragma omp parallel num_threads(omp_get_max_threads())
+  for( std::size_t i=0; i<n; ++i ) {
+    EXPECT_NEAR(rowsum(i), rowsumExpected(i), 1.0e-10);
+
+    double sum = 0.0;
+    for( std::size_t j=0; j<n; ++j ) {
+      sum += kmat(i, j);
+      EXPECT_NEAR(kmat(i, j), kernmatExpected(i, j), 1.0e-10);
+    }
+    EXPECT_NEAR(sum, rowsumExpected(i), 1.0e-10);
+  }
+}
+
+TEST_F(SampleRepresentationTests, UntruncatedKernelMatrix_Sparse) {
+  options["TruncateKernelMatrix"] = false;
+
+  // create the graph laplacian from samples
+  auto samples = CreateFromSamples();
+  EXPECT_EQ(samples->size(), n);
+
+  // construct the kd-trees
+  representation->BuildKDTrees();
+
+  // compute the kernel matrix
+  const double eps = 10.0;
+  Eigen::SparseMatrix<double> kmat;
+  const Eigen::VectorXd rowsum = representation->KernelMatrix(eps, kmat);
+  EXPECT_EQ(rowsum.size(), n);
+  EXPECT_EQ(kmat.rows(), n);
+  EXPECT_EQ(kmat.cols(), n);
+  EXPECT_TRUE(kmat.nonZeros()==n*n); // this matrix is dense
+
+  // compute the expected kernel matrix
+  Eigen::MatrixXd kernmatExpected(n, n);
+  {
+    // create a nearest neighbors object
+    NearestNeighbors nn(samples, options["NearestNeighbors"]);
+    std::vector<std::vector<std::pair<std::size_t, double> > > neighbors;
+    nn.BuildKDTrees();
+    const Eigen::VectorXd squaredBandwidth = nn.SquaredBandwidth(nneighs, neighbors);
+
+    auto kern = representation->Kernel();
+    #pragma omp parallel num_threads(omp_get_max_threads())
+    for( std::size_t i=0; i<n; ++i ) {
+      for( std::size_t j=i; j<n; ++j ) {
+        const Eigen::VectorXd diff = samples->at(i)->state[0]-samples->at(j)->state[0];
+
+        kernmatExpected(i, j) = kern->EvaluateIsotropicKernel(diff.dot(diff)/(eps*std::sqrt(squaredBandwidth(i)*squaredBandwidth(j))));
+        kernmatExpected(j, i) = kernmatExpected(i, j);
+      }
+    }
+  }
+  const Eigen::VectorXd rowsumExpected = kernmatExpected.rowwise().sum();
+
+  #pragma omp parallel num_threads(omp_get_max_threads())
+  for( std::size_t i=0; i<n; ++i ) {
+    EXPECT_NEAR(rowsum(i), rowsumExpected(i), 1.0e-10);
+
+    double sum = 0.0;
+    for( std::size_t j=0; j<n; ++j ) {
+      sum += kmat.coeff(i, j);
+      EXPECT_NEAR(kmat.coeff(i, j), kernmatExpected(i, j), 1.0e-10);
+    }
+    EXPECT_NEAR(sum, rowsumExpected(i), 1.0e-10);
+  }
+}
+
+TEST_F(SampleRepresentationTests, TruncatedKernelMatrix_Dense) {
+  const double tol = 5.0e-2;
+  options["TruncationTolerance"] = -std::log(tol);
+
+  // create the graph laplacian from samples
+  auto samples = CreateFromSamples();
+  EXPECT_EQ(samples->size(), n);
+
+  // construct the kd-trees
+  representation->BuildKDTrees();
+
+  // compute the kernel matrix
+  const double eps = 10.0;
+  Eigen::MatrixXd kmat(n, n);
+  const Eigen::VectorXd rowsum = representation->KernelMatrix(eps, kmat);
+  EXPECT_EQ(rowsum.size(), n);
+  EXPECT_EQ(kmat.rows(), n);
+  EXPECT_EQ(kmat.cols(), n);
+
+  // compute the expected kernel matrix
+  Eigen::MatrixXd kernmatExpected(n, n);
+  {
+    // create a nearest neighbors object
+    NearestNeighbors nn(samples, options["NearestNeighbors"]);
+    std::vector<std::vector<std::pair<std::size_t, double> > > neighbors;
+    nn.BuildKDTrees();
+    const Eigen::VectorXd squaredBandwidth = nn.SquaredBandwidth(nneighs, neighbors);
+
+    auto kern = representation->Kernel();
+    #pragma omp parallel num_threads(omp_get_max_threads())
+    for( std::size_t i=0; i<n; ++i ) {
+      for( std::size_t j=i; j<n; ++j ) {
+        const Eigen::VectorXd diff = samples->at(i)->state[0]-samples->at(j)->state[0];
+
+        const double eval = kern->EvaluateIsotropicKernel(diff.dot(diff)/(eps*std::sqrt(squaredBandwidth(i)*squaredBandwidth(j))));
+
+        kernmatExpected(i, j) = eval<tol? 0.0 : eval;
+        kernmatExpected(j, i) = eval<tol? 0.0 : kernmatExpected(i, j);
+      }
+    }
+  }
+  const Eigen::VectorXd rowsumExpected = kernmatExpected.rowwise().sum();
+
+  #pragma omp parallel num_threads(omp_get_max_threads())
+  for( std::size_t i=0; i<n; ++i ) {
+    EXPECT_NEAR(rowsum(i), rowsumExpected(i), 1.0e-10);
+
+    double sum = 0.0;
+    for( std::size_t j=0; j<n; ++j ) {
+      sum += kmat.coeff(i, j);
+      EXPECT_NEAR(kmat(i, j), kernmatExpected(i, j), 1.0e-10);
+    }
+    EXPECT_NEAR(sum, rowsumExpected(i), 1.0e-10);
+  }
+}
+
+
+TEST_F(SampleRepresentationTests, TruncatedKernelMatrix_Sparse) {
+  const double tol = 5.0e-2;
+  options["TruncationTolerance"] = -std::log(tol);
+
   // create the graph laplacian from samples
   auto samples = CreateFromSamples();
   EXPECT_EQ(samples->size(), n);
@@ -122,12 +289,14 @@ TEST_F(SampleRepresentationTests, KernelMatrix) {
       for( std::size_t j=i; j<n; ++j ) {
         const Eigen::VectorXd diff = samples->at(i)->state[0]-samples->at(j)->state[0];
 
-        kernmatExpected(i, j) = kern->EvaluateIsotropicKernel(diff.dot(diff)/(eps*std::sqrt(squaredBandwidth(i)*squaredBandwidth(j))));
-        kernmatExpected(j, i) = kernmatExpected(i, j);
+        const double eval = kern->EvaluateIsotropicKernel(diff.dot(diff)/(eps*std::sqrt(squaredBandwidth(i)*squaredBandwidth(j))));
+
+        kernmatExpected(i, j) = eval<tol? 0.0 : eval;
+        kernmatExpected(j, i) = eval<tol? 0.0 : kernmatExpected(i, j);
       }
     }
   }
-  const Eigen::VectorXd rowsumExpected = kernmatExpected.colwise().sum();
+  const Eigen::VectorXd rowsumExpected = kernmatExpected.rowwise().sum();
 
   #pragma omp parallel num_threads(omp_get_max_threads())
   for( std::size_t i=0; i<n; ++i ) {
@@ -141,22 +310,3 @@ TEST_F(SampleRepresentationTests, KernelMatrix) {
     EXPECT_NEAR(sum, rowsumExpected(i), 1.0e-10);
   }
 }
-
-/*TEST_F(SampleRepresentationTests, DensityEstimation) {
-  // reset the number of samples
-  n = 10000;
-
-  // create the graph laplacian from samples
-  auto samples = CreateFromSamples();
-  EXPECT_EQ(samples->size(), n);
-
-  // compute the kernel matrix
-  const double eps = 10.0;
-  Eigen::SparseMatrix<double> kmat;
-  const Eigen::VectorXd rowsum = representation->KernelMatrix(eps, kmat);
-  EXPECT_EQ(rowsum.size(), n);
-  EXPECT_EQ(kmat.rows(), n);
-  EXPECT_EQ(kmat.cols(), n);
-  EXPECT_TRUE(kmat.nonZeros()>=n);
-  EXPECT_TRUE(kmat.nonZeros()<n*n);
-}*/

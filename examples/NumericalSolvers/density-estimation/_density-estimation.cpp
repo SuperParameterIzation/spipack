@@ -21,11 +21,10 @@ int main(int argc, char **argv) {
   const std::size_t n = 10000;
 
   // numerical parameters
-  const std::size_t numNeighbors = 8;
+  const std::size_t numNeighbors = 25;
 
   // the bandwidth parameter
-  //const double bandPara = 4.5; // [4.0, 5]
-  const double bandPara = 64.0;
+  const double bandPara = 14.0;
 
   // create a density/random variable
   auto gauss = std::make_shared<Gaussian>(dim);
@@ -51,6 +50,7 @@ int main(int argc, char **argv) {
   options["NearestNeighbors"] = nnOptions;
   options["KernelOptions"] = kernelOptions;
   options["NumNearestNeighbors"] = numNeighbors;
+  options["TruncationTolerance"] = -std::log(1.0e-1);
   options["BandwidthParameter"] = bandPara;
   options["ManifoldDimension"] = (double)dim;
 
@@ -65,13 +65,13 @@ int main(int argc, char **argv) {
 
   // create the tuning data
   DensityEstimation::TuningData tune;
-  tune.bandwidthExponent = Eigen::VectorXd::LinSpaced(25, -10.0, 10.0);
+  tune.bandwidthExponent = Eigen::VectorXd::LinSpaced(50, -10.0, 10.0);
 
   // estimate the density at each sample
-  //const Eigen::VectorXd dens = density.Estimate(squaredBandwidth, tune);
+  const Eigen::VectorXd dens = density.Estimate(squaredBandwidth, tune);
 
   // estimate the density at each sample
-  const Eigen::VectorXd dens = density.Estimate(squaredBandwidth);
+  //const Eigen::VectorXd dens = density.Estimate(squaredBandwidth);
 
   // compute the true density
   Eigen::VectorXd logDens(n);
@@ -86,9 +86,9 @@ int main(int argc, char **argv) {
   hdf5file.WriteMatrix("/density estimate", dens);
   hdf5file.WriteMatrix("/true density", logDens.array().exp().matrix().eval());
 
-  /*hdf5file.WriteMatrix("/tune/candidate bandwidth parameters", tune.candidateBandwidthParameters);
+  hdf5file.WriteMatrix("/tune/candidate bandwidth parameters", tune.candidateBandwidthParameters);
   hdf5file.WriteMatrix("/tune/kernel average", tune.kernelAvg);
-  hdf5file.WriteMatrix("/tune/log kernel average derivative", tune.logKernelAvgDerivative);*/
+  hdf5file.WriteMatrix("/tune/log kernel average derivative", tune.logKernelAvgDerivative);
   hdf5file.Close();
 
   /*// create the graph laplacian

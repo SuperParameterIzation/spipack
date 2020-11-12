@@ -18,7 +18,7 @@ namespace Tools {
       Parameter Key | Type | Default Value | Description |
       ------------- | ------------- | ------------- | ------------- |
       "Magnitude"   | <tt>double</tt> | <tt>1.0</tt> | The magnitude of the kernel (the parameter \f$a_0\f$). |
-      "Scale"   | <tt>double</tt> | <tt>1.0</tt> | The parameter \f$a_1\f$. |
+      "Scale"   | <tt>double</tt> | <tt>0.5</tt> | The parameter \f$a_1\f$. |
       "Exponent"   | <tt>double</tt> | <tt>1.0</tt> | The value of the exponent (the parameter \f$p\f$). |
 */
 class ExponentialKernel : public IsotropicKernel {
@@ -78,7 +78,7 @@ private:
   double mag = 1.0;
 
   /// The scale parameter \f$a_1\f$
-  double scale = 1.0;
+  double scale = 0.5;
 
   /// The exponent \f$p\f$
   double expon = 1.0;

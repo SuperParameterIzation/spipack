@@ -26,6 +26,8 @@ Parameter Key | Type | Default Value | Description |
 "NearestNeighbors"   | <tt>YAML::Node</tt> | - | Options for the spi::Tools::NearestNeighbors object.   |
 "NumNearestNeighbors"   | <tt>std::size_t</tt> | <tt>10</tt> | The number of nearest neighbors used to compute the bandwidth. |
 "KernelOptions"   | <tt>YAML::Node</tt> | - | The options for the spi::Tools::CompactKernel object |
+"TruncationTolerance"   | <tt>double</tt> | If the kernel is a compact kernel (spi::Tools::CompactKernel), the default is \f$\alpha = 1\f$. Otherwise the default is \f$\alpha = -\log{(5 \times 10^{-2})}\f$ | The parameter \f$\alpha\f$ for if we want to truncate the kernel matrix. If the kernel is compact, then this will <em>always</em> be set to one. |
+"TruncateKernelMatrix" | <tt>bool</tt> | <tt>true</tt> | <tt>true</tt>: When computing the kernel matrix \f$K_{\epsilon}^{(ij)} = k_{\epsilon}\left( \frac{\| \boldsymbol{x}^{(i)} - \boldsymbol{x}^{(j)} \|^2}{\epsilon r_i r_j} \right)\f$ only fill the matrix when \f$\frac{\| \boldsymbol{x}^{(i)} - \boldsymbol{x}^{(j)} \|^2}{\epsilon r_i r_j} < \alpha\f$; <tt>false</tt>: compute and fill every entry in the the kernel matrix (it will be a dense matrix) |
 "NumThreads"   | <tt>std::size_t</tt> | <tt>options["NearestNeighbors.NumThreads"]</tt> | The number of <tt>openMP</tt> threads available to this object. |
 */
 class SampleRepresentation {
@@ -72,6 +74,36 @@ public:
   */
   Eigen::Ref<Eigen::VectorXd const> Point(std::size_t const i) const;
 
+  /// Construct the (dense) kernel matrix \f$\boldsymbol{K}_{\epsilon}\f$
+  /**
+  Let \f$r_i^2 = \frac{1}{k} \sum_{j=1}^{k} \| \boldsymbol{x}^{(i)}-\boldsymbol{x}^{(I(i,j))} \|^2\f$ be the squared bandwidth associated with each sample such that \f$I(i,j)\f$ is the index of the \f$j^{th}\f$ furthest index from the point \f$\boldsymbol{x}^{(i)}\f$. By default, this function defines the kernel matrix \f$\boldsymbol{K}_{\epsilon}\f$ such that the \f$(i,j)\f$ component is
+  \f{equation*}{
+    K_{\epsilon}^{(ij)} = k_{\epsilon}(\boldsymbol{x}^{(i)}, \boldsymbol{x}^{(j)}) = k\left( \frac{\| \boldsymbol{x}^{(i)} - \boldsymbol{x}^{(j)} \|^2}{\epsilon r_i r_j} \right).
+  \f}
+  Recall that \f$k(\theta)\f$ is the kernel function.
+
+  This function does NOT compute the kd trees. It assumes that spi::NumericalSolvers::SampleRepresentation::BuildKDTrees has already been called.
+
+  @param[in] eps The parameter \f$\epsilon>0\f$
+  @param[out] kmat The kernel matrix \f$\boldsymbol{K}_{\epsilon}\f$
+  \return Each entry is the sum of a row in the kernel matrix \f$b_i = \sum_{j=1}^{n} K_{\epsilon}^{(ij)}\f$
+  */
+  Eigen::VectorXd KernelMatrix(double const eps, Eigen::Ref<Eigen::MatrixXd> kmat) const;
+
+  /// Construct the (dense) kernel matrix \f$\boldsymbol{K}_{\epsilon}\f$
+  /**
+  This function computes the kernel matrix \f$\boldsymbol{K}_{\epsilon}\f$ such that the \f$(i,j)\f$ component is
+  \f{equation*}{
+    K_{\epsilon}^{(ij)} = k_{\epsilon}(\boldsymbol{x}^{(i)}, \boldsymbol{x}^{(j)}) = k\left( \frac{\| \boldsymbol{x}^{(i)} - \boldsymbol{x}^{(j)} \|^2}{\epsilon r_i r_j} \right).
+  \f}
+  Recall that \f$k(\theta)\f$ is the kernel function.
+  @param[in] eps The parameter \f$\epsilon>0\f$
+  @param[in] rvec The vector of parameters \f$r_i\f$.
+  @param[out] kmat The kernel matrix \f$\boldsymbol{K}_{\epsilon}\f$
+  \return Each entry is the sum of a row in the kernel matrix \f$b_i = \sum_{j=1}^{n} K_{\epsilon}^{(ij)}\f$
+  */
+  Eigen::VectorXd KernelMatrix(double const eps, Eigen::Ref<const Eigen::VectorXd> const& rvec, Eigen::Ref<Eigen::MatrixXd> kmat) const;
+
   /// Construct the kernel matrix \f$\boldsymbol{K}_{\epsilon}\f$
   /**
   Let \f$r_i^2 = \frac{1}{k} \sum_{j=1}^{k} \| \boldsymbol{x}^{(i)}-\boldsymbol{x}^{(I(i,j))} \|^2\f$ be the squared bandwidth associated with each sample such that \f$I(i,j)\f$ is the index of the \f$j^{th}\f$ furthest index from the point \f$\boldsymbol{x}^{(i)}\f$. By default, this function defines the kernel matrix \f$\boldsymbol{K}_{\epsilon}\f$ such that the \f$(i,j)\f$ component is
@@ -82,7 +114,6 @@ public:
 
   This function does NOT compute the kd trees. It assumes that spi::NumericalSolvers::SampleRepresentation::BuildKDTrees has already been called.
 
-  Note: children may override this and define the kernel using a different vector of bandwith parameters \f$r_i\f$.
   @param[in] eps The parameter \f$\epsilon>0\f$
   @param[out] kmat The kernel matrix \f$\boldsymbol{K}_{\epsilon}\f$
   \return Each entry is the sum of a row in the kernel matrix \f$b_i = \sum_{j=1}^{n} K_{\epsilon}^{(ij)}\f$
@@ -141,13 +172,59 @@ protected:
 
 private:
 
+  /// Initialize the sample representation
+  /**
+  @param[in] options Setup options
+  */
+  void Initialize(YAML::Node const& options);
+
+  /// Is the kernel a compact kernel?
+  bool compactKernel = false;
+
+  /// Do we want to truncate the kernel matrix to enforce sparsity
+  /**
+  <tt>true</tt>: When computing the kernel matrix \f$K_{\epsilon}^{(ij)} = k_{\epsilon}\left( \frac{\| \boldsymbol{x}^{(i)} - \boldsymbol{x}^{(j)} \|^2}{\epsilon r_i r_j} \right)\f$ only fill the matrix when \f$\frac{\| \boldsymbol{x}^{(i)} - \boldsymbol{x}^{(j)} \|^2}{\epsilon r_i r_j} < \alpha\f$; <tt>false</tt>: compute and fill every entry in the the kernel matrix (it will be a dense matrix)
+  */
+  const bool truncateKernelMatrix;
+
+  /// At what tolerance should we truncate the kernel matrix?
+  /**
+  Only used if truncateKernelMatrix is <tt>true</tt>.
+
+  When computing the kernel matrix \f$K_{\epsilon}^{(ij)} = k_{\epsilon}\left( \frac{\| \boldsymbol{x}^{(i)} - \boldsymbol{x}^{(j)} \|^2}{\epsilon r_i r_j} \right)\f$ only fill the matrix when \f$\frac{\| \boldsymbol{x}^{(i)} - \boldsymbol{x}^{(j)} \|^2}{\epsilon r_i r_j} < \alpha\f$. This is the parameter \f$\alpha\f$.
+
+  If the kernel is a compact kernel (spi::Tools::CompactKernel), the default is \f$\alpha = 1\f$. Otherwise the default is \f$\alpha = -\log{(5 \times 10^{-2})}\f$.
+
+  This choice corresponds to truncting the exponential kernel when
+  \f{equation*}{
+  \exp{\left(-\frac{\|\boldsymbol{x}^{(i)}-\boldsymbol{x^{(j)}}\|^2}{\epsilon r_i r_j}\right)} \leq 5 \times 10^{-2}
+  \f}
+  */
+  double truncationTol;
+
   /// The number of <tt>openMP</tt> threads available to this object.
   const std::size_t numThreads;
 
   /// The default values for the spi::NumericalSolvers::SampleRepresentation class.
   struct DefaultParameters {
+    /// The truncation tolerance for the kernel matrix
+    /**
+    If the kernel is a compact kernel (spi::Tools::CompactKernel), return \f$1\f$. Otherwise return \f$-\log{(5 \times 10^{-2})}\f$.
+
+    This choice corresponds to truncting the exponential kernel when
+    \f{equation*}{
+    \exp{\left(-\frac{\|\boldsymbol{x}-\boldsymbol{x^{\prime}}\|^2}{\theta}\right)} \leq 5 \times 10^{-2}
+    \f}
+    @param[in] compact <tt>true</tt>: This is a compact kernel; <tt>false</tt>: This is not a compact kernel
+    \return The default truncation tolerance parameter
+    */
+    static double TruncationTolerance(bool const kerne);
+
     /// The default number of nearest neighbors for the bandwidth computation is \f$10\f$
     inline static const std::size_t numNearestNeighbors = 10;
+
+    /// Default to truncating the kernel matrix
+    inline static const bool truncateKernelMatrix = true;
   };
 
   /// Store the default parameter values

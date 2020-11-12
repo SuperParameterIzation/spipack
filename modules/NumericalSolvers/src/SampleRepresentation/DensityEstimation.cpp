@@ -31,10 +31,9 @@ Eigen::VectorXd DensityEstimation::Estimate(Eigen::Ref<const Eigen::VectorXd> co
   Eigen::SparseMatrix<double> kmat;
   const Eigen::VectorXd rowsum = KernelMatrix(bandwidthPara, squaredBandwidth.array().sqrt(), kmat);
 
-  std::cout << "test: " << std::sqrt(squaredBandwidth.array().sqrt().sum()/NumSamples()) << std::endl;
-
   // compute the volume vector
   const Eigen::VectorXd vol = ((NumSamples()*std::pow(M_PI*bandwidthPara, manifoldDim/2.0))*squaredBandwidth.array().pow(manifoldDim/2.0)).array().inverse();
+  //const Eigen::VectorXd vol = squaredBandwidth/NumSamples();
   //const double dum = std::pow(2*M_PI, -manifoldDim/2.0)/NumSamples();
   //const Eigen::VectorXd vol = dum*squaredBandwidth.array().pow(-manifoldDim/2.0);
 

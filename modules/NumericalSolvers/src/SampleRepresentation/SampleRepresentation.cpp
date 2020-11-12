@@ -2,6 +2,8 @@
 
 #include <MUQ/Utilities/HDF5/HDF5File.h>
 
+#include "spipack/Tools/Kernels/CompactKernel.hpp"
+
 using namespace muq::Utilities;
 using namespace muq::Modeling;
 using namespace muq::SamplingAlgorithms;
@@ -11,21 +13,29 @@ using namespace spi::NumericalSolvers;
 SampleRepresentation::SampleRepresentation(std::shared_ptr<RandomVariable> const& rv, YAML::Node const& options) :
 samples(rv, options["NearestNeighbors"]),
 numNearestNeighbors(options["NumNearestNeighbors"].as<std::size_t>(defaults.numNearestNeighbors)),
+truncateKernelMatrix(options["TruncateKernelMatrix"].as<bool>(defaults.truncateKernelMatrix)),
 numThreads(options["NumThreads"].as<std::size_t>(samples.NumThreads()))
 {
-  // create the kernel
-  kernel = IsotropicKernel::Construct(options["KernelOptions"]);
-  assert(kernel);
+  Initialize(options);
 }
 
 SampleRepresentation::SampleRepresentation(std::shared_ptr<SampleCollection> const& samples, YAML::Node const& options) :
 samples(samples, options["NearestNeighbors"]),
 numNearestNeighbors(options["NumNearestNeighbors"].as<std::size_t>(defaults.numNearestNeighbors)),
+truncateKernelMatrix(options["TruncateKernelMatrix"].as<bool>(defaults.truncateKernelMatrix)),
 numThreads(options["NumThreads"].as<std::size_t>(this->samples.NumThreads()))
 {
+  Initialize(options);
+}
+
+void SampleRepresentation::Initialize(YAML::Node const& options) {
   // create the kernel
   kernel = IsotropicKernel::Construct(options["KernelOptions"]);
   assert(kernel);
+  auto compactKernelPtr = std::dynamic_pointer_cast<CompactKernel>(kernel);
+  compactKernel = (compactKernelPtr!=nullptr);
+  truncationTol = (compactKernel? 1.0 : options["TruncationTolerance"].as<double>(defaults.TruncationTolerance(compactKernel)));
+  assert(truncationTol>0.0);
 }
 
 std::size_t SampleRepresentation::NumSamples() const { return samples.NumSamples(); }
@@ -43,6 +53,52 @@ void SampleRepresentation::BuildKDTrees() const { samples.BuildKDTrees(); }
 
 Eigen::VectorXd SampleRepresentation::SquaredBandwidth() const { return samples.SquaredBandwidth(numNearestNeighbors); }
 
+Eigen::VectorXd SampleRepresentation::KernelMatrix(double const eps, Eigen::Ref<Eigen::MatrixXd> kmat) const {
+  assert(eps>0.0);
+
+  // compute the squared bandwidth
+  const Eigen::VectorXd squaredBandwidth = samples.SquaredBandwidth(numNearestNeighbors);
+
+  // if we are truncating but for some reason want a dense matrix
+  if( truncateKernelMatrix ) {
+    Eigen::SparseMatrix<double> kmatSparse;
+    const Eigen::VectorXd rowsum = KernelMatrix(eps, squaredBandwidth.array().sqrt(), kmatSparse);
+    kmat = Eigen::MatrixXd(kmatSparse);
+    return rowsum;
+  }
+
+  // compute the kernel matrix using the bandwidth
+  return KernelMatrix(eps, squaredBandwidth.array().sqrt(), kmat);
+}
+
+Eigen::VectorXd SampleRepresentation::KernelMatrix(double const eps, Eigen::Ref<const Eigen::VectorXd> const& rvec, Eigen::Ref<Eigen::MatrixXd> kmat) const {
+  // the number of samples
+  const std::size_t n = NumSamples();
+  assert(rvec.size()==n);
+
+  // check the matrix size
+  assert(kmat.rows()==n); assert(kmat.cols()==n);
+
+  // loop through the rows of the kernel matrix
+  #pragma omp parallel for num_threads(numThreads)
+  for( std::size_t i=0; i<n; ++i ) {
+    // compute the bandwith parameter for each pair of points
+    Eigen::VectorXd theta = Eigen::VectorXd::Constant(n-i, eps*rvec(i));
+    theta = theta.array()*rvec.tail(n-i).array();
+
+    // loop through the columns of the kernel matrix
+    for( std::size_t j=i; j<n; ++j ) {
+      // evaluate the kernel and insert into the matrix
+      const Eigen::VectorXd diff = Point(i)-Point(j);
+      kmat(i, j) = kernel->EvaluateIsotropicKernel(diff.dot(diff)/theta(j-i));
+      if( j!=i ) { kmat(j, i) = kmat(i, j); }
+    }
+  }
+
+  // the sum of each row in the kernel matrix
+  return kmat.rowwise().sum();
+}
+
 Eigen::VectorXd SampleRepresentation::KernelMatrix(double const eps, Eigen::SparseMatrix<double>& kmat) const {
   assert(eps>0.0);
 
@@ -50,7 +106,15 @@ Eigen::VectorXd SampleRepresentation::KernelMatrix(double const eps, Eigen::Spar
   const Eigen::VectorXd squaredBandwidth = samples.SquaredBandwidth(numNearestNeighbors);
 
   // compute the kernel matrix using the bandwidth
-  return KernelMatrix(eps, squaredBandwidth.array().sqrt(), kmat);
+  if( truncateKernelMatrix ) { return KernelMatrix(eps, squaredBandwidth.array().sqrt(), kmat); }
+
+  // compute a dense  kernel matrix using the bandwidth
+  Eigen::MatrixXd kmatDense(NumSamples(), NumSamples());
+  const Eigen::VectorXd rowsum = KernelMatrix(eps, squaredBandwidth.array().sqrt(), kmatDense);
+
+  // convert to sparse form
+  kmat = kmatDense.sparseView();
+  return rowsum;
 }
 
 Eigen::VectorXd SampleRepresentation::KernelMatrix(double const eps, Eigen::Ref<const Eigen::VectorXd> const& rvec, Eigen::SparseMatrix<double>& kmat) const {
@@ -79,9 +143,8 @@ Eigen::VectorXd SampleRepresentation::KernelMatrix(double const eps, Eigen::Ref<
 
       // find the neighbors within the max bandwidth (ignoring the first i samples)
       std::vector<std::pair<std::size_t, double> > neighbors;
-      const double maxband = theta.maxCoeff();
-      //samples.FindNeighbors(Point(i), maxband, neighbors, i);
-      samples.FindNeighbors(Point(i), n-i, neighbors, i);
+      const double maxband = truncationTol*theta.maxCoeff();
+      samples.FindNeighbors(Point(i), maxband, neighbors, i);
 
       // loop through the neighbors
       for( const auto& neigh : neighbors ) {
@@ -90,7 +153,7 @@ Eigen::VectorXd SampleRepresentation::KernelMatrix(double const eps, Eigen::Ref<
 
         // skip if we are outside of the kernel's support
         const double para = neigh.second/theta(neigh.first-i);
-        if( para>1.0 ) { continue; }
+        if( para>truncationTol ) { continue; }
 
         // evaluate the kernel
         const double kern = kernel->EvaluateIsotropicKernel(para);
@@ -125,3 +188,5 @@ void SampleRepresentation::WriteToFile(std::string const& filename, std::string 
 
   file->Close();
 }
+
+double SampleRepresentation::DefaultParameters::TruncationTolerance(bool const compact) { return (compact? 1.0 : -std::log(5.0e-2)); }
