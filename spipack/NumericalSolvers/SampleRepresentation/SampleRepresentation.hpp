@@ -218,7 +218,7 @@ private:
     @param[in] compact <tt>true</tt>: This is a compact kernel; <tt>false</tt>: This is not a compact kernel
     \return The default truncation tolerance parameter
     */
-    static double TruncationTolerance(bool const kerne);
+    static double TruncationTolerance(bool const compact);
 
     /// The default number of nearest neighbors for the bandwidth computation is \f$10\f$
     inline static const std::size_t numNearestNeighbors = 10;
