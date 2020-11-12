@@ -8,7 +8,7 @@ Let $\psi$ be a probability density function and let $\{ \boldsymbol{x}^{(i)} \}
 
 $$
 \begin{equation}
-  r_i^2 = \frac{1}{k} \sum_{j=1}^{k} \| \boldsymbol{x}^{(i)}-\boldsymbol{x}^{(I(i,j))} \|^2 \tag{Bandwidth}\label{eq:bandwidth}
+  r_i^2 = \frac{1}{k} \sum_{j=1}^{k} \| \boldsymbol{x}^{(i)}-\boldsymbol{x}^{(I(i,j))} \|^2 \tag{Bandwidth}\label{eq:bandwidth},
 \end{equation}
 $$
 
@@ -22,7 +22,21 @@ For the purpose of this example, assume that $\psi = \mathcal{N}(\boldsymbol{0},
 type="application/pdf">
 </figure>
 
-Let $k(\theta) = \exp{\left( - \vert \theta \vert \right)}\f$ and define the kernel $k_{\epsilon}(\boldsymbol{x}^{(i)}, \boldsymbol{x}^{(j)}) = k\left( \frac{ \| \boldsymbol{x}^{(i)} - \boldsymbol{x}^{(j)} \|^2 }{ \epsilon r_i r_j } \right)$
+Let $k(\theta) = \exp{\left( - \vert \theta \vert \right)}$ and define the kernel
+
+$$
+\begin{equation}
+k_{\epsilon}(\boldsymbol{x}^{(i)}, \boldsymbol{x}^{(j)}) = k\left( \frac{ \| \boldsymbol{x}^{(i)} - \boldsymbol{x}^{(j)} \|^2 }{ \epsilon r_i r_j } \right).
+\end{equation}
+$$
+
+Let $\epsilon_l \in [\exp{(h l_{min})}, \exp{(h l_{max})}]$ ($h$ is a stepsize parameter) be candidate bandwidth parameters. Define the parameter
+
+$$
+\begin{equation}
+\Sigma_l = \sum_{i,j=1}^{N} k\left( \frac{ \| \boldsymbol{x}^{(i)} - \boldsymbol{x}^{(j)} \|^2 }{ \epsilon r_i r_j } \right).
+\end{equation}
+$$
 
 <figure>
 <figcaption>The estimated density $\psi^{(i)}$ at all $n=10^4$.</figcaption>
