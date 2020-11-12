@@ -46,7 +46,7 @@ $$
 \end{equation}.
 $$
 
-Let
+Let $$\widetilde{\Sigma}_l^{\prime}=\max_{l}{(\Sigma_l^{\prime})}$$
 
 $$
 \begin{equation}
