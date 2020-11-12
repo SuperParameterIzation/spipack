@@ -18,7 +18,7 @@ For the purpose of this example, assume that $$\psi = \mathcal{N}(\boldsymbol{0}
  type="application/pdf">
 
  <figure>
-  <figcaption>Dog</figcaption>
+  <figcaption>test</figcaption>
   <embed src="figures/SquaredBandwidth.pdf" width="500" height="375"
  type="application/pdf">
 </figure>
@@ -34,6 +34,12 @@ $$
   1 & \\
   0 & \mbox{if } \theta>1
   \end{cases}
+\end{equation}
+$$
+
+$$
+\begin{equation}
+  \xi \label{eq:xi}
 \end{equation}
 $$
 
