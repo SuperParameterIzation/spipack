@@ -8,7 +8,7 @@ Let $\psi$ be a probability density function and let $\{ \boldsymbol{x}^{(i)} \}
 
 $$
 \begin{equation}
-  r_i^2 = \frac{1}{k} \sum_{j=1}^{k} \| \boldsymbol{x}^{(i)}-\boldsymbol{x}^{(I(i,j))} \|^2 \tag{Bandwidth}\label{eq:bandwidth},
+  r_i^2 = \frac{1}{k} \sum_{j=1}^{k} \| \boldsymbol{x}^{(i)}-\boldsymbol{x}^{(I(i,j))} \|^2,
 \end{equation}
 $$
 
