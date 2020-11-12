@@ -30,7 +30,7 @@ k_{\epsilon}(\boldsymbol{x}^{(i)}, \boldsymbol{x}^{(j)}) = k\left( \frac{ \| \bo
 \end{equation}
 $$
 
-Let $\epsilon_l \in [\exp{(h l_{min})}, \exp{(h l_{max})}]$ ($h$ is a stepsize parameter) be candidate bandwidth parameters. Define the parameter
+Let $\epsilon \in [\exp{(h l_{min})}, \exp{(h l_{max})}]$ ($h$ is a stepsize parameter) be candidate bandwidth parameters. Define the parameter
 
 $$
 \begin{equation}
@@ -46,7 +46,23 @@ $$
 \end{equation}.
 $$
 
-Let $\widetilde{\Sigma}_l^{\prime} = \text{max}_{l}({\Sigma_l^{\prime}})$ (with corresponding index $\tilde{l}$). The estimated manifold dimension is $m = 2 \widetilde{\Sigma}_l$; in this case we know that $m = 2$ so we expect $\widetilde{\Sigma}_l = 1$.
+Let $\widetilde{\Sigma}_l^{\prime} = \text{max}_{l}({\Sigma_l^{\prime}})$ (with corresponding index $\tilde{l}$ and optimal bandwidth parameter $\tilde{\epsilon}$). The estimated manifold dimension is $m = 2 \widetilde{\Sigma}_l$; in this case we know that $m = 2$ so we expect $\widetilde{\Sigma}_l = 1$.
+
+<figure>
+<figcaption>The value of $\Sigma_l^{\prime}$ for candidate bandwidth parameters $\epsilon$; the optimal bandwidth parameter is $\epsilon \approx 9.4$.</figcaption>
+<embed src="figures/LogKernelAvgDerivative.pdf" width="500" height="375"
+type="application/pdf">
+</figure>
+
+Given the optimal bandwidth parameter $\tilde{\epsilon}$, the estimated density for the $i^{th}$ sample is
+
+$$
+\begin{equation}
+\psi^{(i)} = \sum_{j=1}^{n} \frac{k_{\epsilon}(\boldsymbol{x}^{(i)}, \boldsymbol{x}^{(j)})}{n (\pi \tilde{\epsilon} r_i^2)^{m/2} }
+\end{equation}
+$$
+
+(recall that $m=2$ in this case).
 
 <figure>
 <figcaption>The estimated density $\psi^{(i)}$ at all $n=10^4$.</figcaption>
