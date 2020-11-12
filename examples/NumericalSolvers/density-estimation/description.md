@@ -22,6 +22,8 @@ For the purpose of this example, assume that $\psi = \mathcal{N}(\boldsymbol{0},
 type="application/pdf">
 </figure>
 
+Let $k(\theta) = \exp{\left( - \vert \theta \vert \right)}\f$ and define the kernel $k_{\epsilon}(\boldsymbol{x}^{(i)}, \boldsymbol{x}^{(j)}) = k\left( \frac{ \| \boldsymbol{x}^{(i)} - \boldsymbol{x}^{(j)} \|^2 }{ \epsilon r_i r_j } \right)$
+
 <figure>
 <figcaption>The estimated density $\psi^{(i)}$ at all $n=10^4$.</figcaption>
 <embed src="figures/DensityEstimation.pdf" width="500" height="375"
