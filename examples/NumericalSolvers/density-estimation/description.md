@@ -29,7 +29,7 @@ type="application/pdf">
 </figure>
 
 <figure>
-<figcaption>The density evaluation $\psi = \mathcal{N}(\boldsymbol{x}^{(i)}; \boldsymbol{0}, \boldsymbol{I})$ at all $n=10^4$.</figcaption>
+<figcaption>The true density evaluation $\mathcal{N}(\boldsymbol{x}^{(i)}; \boldsymbol{0}, \boldsymbol{I})$ at all $n=10^4$.</figcaption>
 <embed src="figures/TrueDensity.pdf" width="500" height="375"
 type="application/pdf">
 </figure>
