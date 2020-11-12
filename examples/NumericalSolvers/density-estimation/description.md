@@ -46,7 +46,7 @@ $$
 \end{equation}.
 $$
 
-Let $\widetilde{\Sigma}_l^{\prime} = \max_{l}({\Sigma_l^{\prime}})$ (with corresponding index $\tilde{l}$). The estimated manifold dimension is $m = 2 \widetilde{\Sigma}_l$
+Let $\widetilde{\Sigma}_l^{\prime} = \text{max}_{l}({\Sigma_l^{\prime}})$ (with corresponding index $\tilde{l}$). The estimated manifold dimension is $m = 2 \widetilde{\Sigma}_l$; in this case we know that $m = 2$ so we expect $\widetilde{\Sigma}_l = 1$.
 
 <figure>
 <figcaption>The estimated density $\psi^{(i)}$ at all $n=10^4$.</figcaption>
