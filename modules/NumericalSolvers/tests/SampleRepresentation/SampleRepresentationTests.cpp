@@ -27,7 +27,7 @@ protected:
     YAML::Node kernelOptions;
     kernelOptions["Kernel"] = "ExponentialKernel";
 
-    // set the options for the graph laplacian
+    // set the options for the sample representation
     options["NearestNeighbors"] = nnOptions;
     options["NumNearestNeighbors"] = nneighs;
     options["KernelOptions"] = kernelOptions;
@@ -41,14 +41,14 @@ protected:
 
   /// Create the sample representation from samples
   /**
-    \return The sample collection used to create the graph Laplacian
+    \return The sample collection used to create the sample representation
   */
   inline std::shared_ptr<SampleCollection> CreateFromSamples() {
     // add random samples into a sample collection
     auto samples = std::make_shared<SampleCollection>();
     for( std::size_t i=0; i<n; ++i ) { samples->Add(std::make_shared<SamplingState>(rv->Sample())); }
 
-    // create the graph laplacian
+    // create the sample representation
     representation = std::make_shared<SampleRepresentation>(samples, options);
 
     // return the samples
@@ -75,12 +75,12 @@ protected:
 };
 
 TEST_F(SampleRepresentationTests, RandomVariableConstruction) {
-  // create the graph laplacian
+  // create the sample representation
   representation = std::make_shared<SampleRepresentation>(rv, options);
 }
 
 TEST_F(SampleRepresentationTests, SampleCollectionConstruction) {
-  // create the graph laplacian from samples
+  // create the sample representation from samples
   auto samples = CreateFromSamples();
 
   // check to make sure the samples match

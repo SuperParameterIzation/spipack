@@ -41,7 +41,7 @@ protected:
   virtual void TearDown() override {
     EXPECT_EQ(density->NumNearestNeighbors(), nneighs);
     EXPECT_EQ(density->NumSamples(), n);
-    EXPECT_DOUBLE_EQ(density->BandwidthParameter(), eps);
+    EXPECT_NEAR(density->BandwidthParameter(), eps, 1.0e-10);
   }
 
   /// Create the density estimation from samples
@@ -64,13 +64,13 @@ protected:
   const unsigned int dim = 1;
 
   /// The number of samples
-  const std::size_t n = 10000;
+  const std::size_t n = 3000;
 
   /// The number of nearest neighbors
-  const std::size_t nneighs = 500;
+  const std::size_t nneighs = 15;
 
   /// The bandwidth parameter \f$\epsilon\f$
-  const double eps = 25.0;
+  double eps = 25.0;
 
   /// The random variable that lets us sample from the underlying distribution
   std::shared_ptr<RandomVariable> rv;
@@ -100,7 +100,6 @@ TEST_F(DensityEstimationTests, SampleCollectionConstruction) {
   }
 }
 
-/*
 TEST_F(DensityEstimationTests, EstimateGaussian) {
   // create the graph laplacian from samples
   auto samples = CreateFromSamples();
@@ -111,20 +110,22 @@ TEST_F(DensityEstimationTests, EstimateGaussian) {
 
   // create the tuning data
   DensityEstimation::TuningData tune;
-  tune.bandwidthExponent = Eigen::VectorXd::LinSpaced(25, -3.0, 3.0);
+  tune.bandwidthExponent = Eigen::VectorXd::LinSpaced(15, -5.0, 5.0);
 
   // estimate the density at each sample
   const Eigen::VectorXd densityEstimate = density->Estimate(tune);
+  EXPECT_EQ(densityEstimate.size(), n);
 
   // the coefficient of the max. density point
   int coeff;
-  double map = densityEstimate.maxCoeff(&coeff);
+  double map = densityEstimate.maxCoeff(&coeff);;
 
-  //std::cout << coeff << std::endl;
-  //std::cout << samples->at(coeff)->state[0].transpose() << std::endl;
-  //std::cout << map << " " << std::exp(dens->LogDensity(samples->at(coeff)->state[0])) << std::endl;
+  int maxL;
+  tune.logKernelAvgDerivative.maxCoeff(&maxL);
 
-  // check the estimate
-  EXPECT_EQ(densityEstimate.size(), n);
+  // the manifold dimension is dim
+  EXPECT_NEAR(2.0*tune.logKernelAvgDerivative(maxL), dim, 0.1);
+
+  // we have reset the bandwidth parameter
+  eps = tune.candidateBandwidthParameters(maxL);
 }
-*/
