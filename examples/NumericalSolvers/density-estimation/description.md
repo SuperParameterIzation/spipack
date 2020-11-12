@@ -17,6 +17,11 @@ For the purpose of this example, assume that $$\psi = \mathcal{N}(\boldsymbol{0}
 <embed src="figures/SquaredBandwidth.pdf" width="500" height="375"
  type="application/pdf">
 
+ <figure>
+  <figcaption>Dog</figcaption>
+  <img src="figures/SquaredBandwidth.pdf" width="300" height="300">
+</figure>
+
  ![This is the caption\label{mylabel}](figures/SquaredBandwidth.pdf)
 See figure \ref{mylabel}.
 
