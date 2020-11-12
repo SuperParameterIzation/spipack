@@ -46,7 +46,7 @@ $$
 \end{equation}.
 $$
 
-Let $\widetilde{\Sigma}_l^{\prime} = \text{max}_{l}({\Sigma_l^{\prime}})$ (with corresponding index $\tilde{l}$ and optimal bandwidth parameter $\tilde{\epsilon}$). The estimated manifold dimension is $m = 2 \widetilde{\Sigma}_l$; in this case we know that $m = 2$ so we expect $\widetilde{\Sigma}_l = 1$.
+Let $\widetilde{\Sigma}_l^{\prime} = {max}_{l}({\Sigma_l^{\prime}})$ (with corresponding index $\tilde{l}$ and optimal bandwidth parameter $\tilde{\epsilon}$). The estimated manifold dimension is $m = 2 \widetilde{\Sigma}_l$; in this case we know that $m = 2$ so we expect $\widetilde{\Sigma}_l = 1$.
 
 <figure>
 <figcaption>The value of $\Sigma_l^{\prime}$ for candidate bandwidth parameters $\epsilon$; the optimal bandwidth parameter is $\epsilon \approx 9.4$.</figcaption>
