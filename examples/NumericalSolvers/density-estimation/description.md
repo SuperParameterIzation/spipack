@@ -2,7 +2,7 @@
 layout: default
 ---
 
-## Heat matrix eigenvalues
+## Density estimation
 
 Let $\psi$ be a probability density function and let $\{ \boldsymbol{x}^{(i)} \}_{i=1}^{n}$ be samples from $\psi$. Define the sample bandwidth
 
@@ -22,28 +22,8 @@ For the purpose of this example, assume that $\psi = \mathcal{N}(\boldsymbol{0},
  type="application/pdf">
 </figure>
 
- ![This is the caption\label{mylabel}](figures/SquaredBandwidth.pdf)
-See figure \ref{mylabel}.
-
-
-Also define the kernel
-$$
-\begin{equation}
-  k(\theta) = \begin{cases}
-  1 & \\
-  0 & \mbox{if } \theta>1
-  \end{cases}
-\end{equation}
-$$
-
-$$
-\begin{equation}
-  \xi \label{eq:xi}
-\end{equation}
-$$
-
-$$
-\begin{equation}
-  \nabla \psi = 0 \tag{abc}\label{eq:one}
-\end{equation}
-$$
+ <figure>
+  <figcaption>The density evaluation $\psi = \mathcal{N}(\boldsymbol{x}^{(i)}; \boldsymbol{0}, \boldsymbol{I})$ at all $n=10^4$.</figcaption>
+  <embed src="figures/TrueDensity.pdf" width="500" height="375"
+ type="application/pdf">
+</figure>
