@@ -34,9 +34,19 @@ Let $\epsilon_l \in [\exp{(h l_{min})}, \exp{(h l_{max})}]$ ($h$ is a stepsize p
 
 $$
 \begin{equation}
-\Sigma_l = \sum_{i,j=1}^{N} k\left( \frac{ \| \boldsymbol{x}^{(i)} - \boldsymbol{x}^{(j)} \|^2 }{ \epsilon r_i r_j } \right).
+\Sigma_l = \sum_{i,j=1}^{N} k_{\epsilon}(\boldsymbol{x}^{(i)}, \boldsymbol{x}^{(j)}).
 \end{equation}
 $$
+
+and an approximation of how it changes with respect to $\epsilon_l$
+
+$$
+\begin{equation}
+\Sigma_l^{\prime} = \frac{\log{(\Sigma_{l+1})} - \log{(\Sigma_{l+1})}}{\log{(\epsilon_{l+1})} - \log{(\epsilon_{l+1})}}
+\end{equation}.
+$$
+
+Let $\widetilde{\Sigma}_l^{\prime} = \max_{l}{\Sigma_l^{\prime}} (with corresponding index $\tilde{l}$). The estimated manifold dimension is $m = 2 \widetilde{\Sigma}_l$
 
 <figure>
 <figcaption>The estimated density $\psi^{(i)}$ at all $n=10^4$.</figcaption>
