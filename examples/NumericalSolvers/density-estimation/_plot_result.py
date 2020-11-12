@@ -71,22 +71,18 @@ def MakeFigure(totalWidthPts, fraction, presentationVersion = False):
     return fig
 
 # load the data file
-hdf5file = h5py.File('samples.h5', 'r')
+hdf5file = h5py.File('outputData.h5', 'r')
 
 samples = hdf5file['/samples'] [()].T
 squaredBandwidth = hdf5file['/squared bandwidth'] [()].T [0]
 trueDensity = hdf5file['/true density'] [()].T [0]
 densityEstimate = hdf5file['/density estimate'] [()].T [0]
 
-#densityEstimate = np.sqrt(2)*densityEstimate
-
-print(densityEstimate-trueDensity)
-
 bandwidthPara = hdf5file['/tune/candidate bandwidth parameters'] [()].T [0]
 logKernelAvgDerivative = hdf5file['/tune/log kernel average derivative'] [()].T [0]
 
 optInd = np.argmax(logKernelAvgDerivative)
-print('key bandwidth', bandwidthPara[optInd])
+print('Optimal bandwidth parameter:', bandwidthPara[optInd])
 
 fig = MakeFigure(425, 0.9, False)
 ax = plt.gca()
@@ -105,15 +101,16 @@ plt.close(fig)
 fig = MakeFigure(425, 0.9, False)
 ax = plt.gca()
 scatter = ax.scatter(samples.T[0], samples.T[1], s=3, c=densityEstimate, vmin=0.0, vmax=0.16)
-plt.colorbar(scatter)
+cbar = plt.colorbar(scatter)
 ax.spines['right'].set_visible(False)
 ax.spines['top'].set_visible(False)
 ax.yaxis.set_ticks_position('left')
 ax.xaxis.set_ticks_position('bottom')
+cbar.ax.set_ylabel(r'Density estimtaion $\psi^{(i)}$')
+ax.set_xlabel(r'$x_0$')
+ax.set_ylabel(r'$x_1$')
 plt.savefig('figures/DensityEstimation.pdf', format='pdf', bbox_inches='tight')
 plt.close(fig)
-
-#(\boldsymbol{x}^{(i)}; \boldsymbol{0}, \boldsymbol{I})
 
 fig = MakeFigure(425, 0.9, False)
 ax = plt.gca()

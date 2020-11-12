@@ -17,6 +17,7 @@ Parameter Key | Type | Default Value | Description |
 ------------- | ------------- | ------------- | ------------- |
 "BandwidthParameter"   | <tt>double</tt> | <tt>1.0</tt> | The parmeter \f$\epsilon\f$ used to compute the kernel |
 "ManifoldDimension"   | <tt>double</tt> | <tt>2.0</tt> | The manifold dimension \f$m\f$. |
+"TuneManifoldDimension"   | <tt>bool</tt> | <tt>false</tt> | Tune the manifold dimension \f$m\f$; if we know the exact manifold dimension then we do not need to tune it. |
 */
 class DensityEstimation : public SampleRepresentation {
 public:
@@ -69,17 +70,20 @@ public:
     Eigen::VectorXd logKernelAvgDerivative;
   };
 
-  Eigen::VectorXd Estimate(Eigen::Ref<const Eigen::VectorXd> const& squaredBandwidth, TuningData& tune) const;
+  Eigen::VectorXd Estimate(Eigen::Ref<const Eigen::VectorXd> const& squaredBandwidth, TuningData& tune);
 
-  Eigen::VectorXd Estimate(TuningData& tune) const;
+  Eigen::VectorXd Estimate(TuningData& tune);
 
 private:
 
   /// The bandwidth parameter \f$\epsilon\f$
-  const double bandwidthPara;
+  double bandwidthPara;
 
   /// The dimension of the manifold \f$m\f$
-  const double manifoldDim;
+  double manifoldDim;
+
+  /// Tune the manifold dimension \f$m\f$?
+  const bool tuneManifoldDimension;
 
   /// The default values for the spi::NumericalSolvers::DensityEstimation class.
   struct DefaultParameters {
@@ -88,6 +92,9 @@ private:
 
     /// The default manifold dimension is \f$2\f$
     inline static const double manifoldDim = 2.0;
+
+    /// By default, do not tune the manifold dimension
+    inline static const bool tuneManifoldDimension = false;
   };
 
   /// Store the default parameter values

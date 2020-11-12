@@ -15,16 +15,13 @@ int main(int argc, char **argv) {
   const std::size_t dim = 2;
 
   // the output filename
-  const std::string filename = "samples.h5";
+  const std::string filename = "outputData.h5";
 
   // the number of samples
   const std::size_t n = 10000;
 
   // numerical parameters
   const std::size_t numNeighbors = 25;
-
-  // the bandwidth parameter
-  const double bandPara = 14.0;
 
   // create a density/random variable
   auto gauss = std::make_shared<Gaussian>(dim);
@@ -51,7 +48,6 @@ int main(int argc, char **argv) {
   options["KernelOptions"] = kernelOptions;
   options["NumNearestNeighbors"] = numNeighbors;
   options["TruncationTolerance"] = -std::log(1.0e-1);
-  options["BandwidthParameter"] = bandPara;
   options["ManifoldDimension"] = (double)dim;
 
   // create the density estimator
