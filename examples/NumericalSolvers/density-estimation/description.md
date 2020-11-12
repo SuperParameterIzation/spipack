@@ -62,7 +62,7 @@ $$
 \end{equation}
 $$
 
-(recall that $m=2$ in this case).
+(recall that $m=2$ in this case). The resulting estimate and exact density are both shown below.
 
 <figure>
 <figcaption>The estimated density $\psi^{(i)}$ at all $n=10^4$.</figcaption>
