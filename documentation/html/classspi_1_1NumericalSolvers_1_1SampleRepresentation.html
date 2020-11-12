@@ -98,6 +98,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <a href="#nested-classes">Classes</a> &#124;
 <a href="#pub-methods">Public Member Functions</a> &#124;
 <a href="#pro-attribs">Protected Attributes</a> &#124;
+<a href="#pri-methods">Private Member Functions</a> &#124;
 <a href="#pri-attribs">Private Attributes</a> &#124;
 <a href="#pri-static-attribs">Static Private Attributes</a> &#124;
 <a href="classspi_1_1NumericalSolvers_1_1SampleRepresentation-members.html">List of all members</a>  </div>
@@ -143,12 +144,18 @@ Public Member Functions</h2></td></tr>
 <tr class="memitem:a588fc60295c34daa44fb3e9cfc0c3a6e"><td class="memItemLeft" align="right" valign="top">std::size_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classspi_1_1NumericalSolvers_1_1SampleRepresentation.html#a588fc60295c34daa44fb3e9cfc0c3a6e">NumNearestNeighbors</a> () const </td></tr>
 <tr class="memdesc:a588fc60295c34daa44fb3e9cfc0c3a6e"><td class="mdescLeft">&#160;</td><td class="mdescRight">Get the number of nearest neighbors used to compute the bandwidth parameter.  <a href="#a588fc60295c34daa44fb3e9cfc0c3a6e">More...</a><br /></td></tr>
 <tr class="separator:a588fc60295c34daa44fb3e9cfc0c3a6e"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ae6833e7cff95e157e7f66109e28d0583"><td class="memItemLeft" align="right" valign="top">std::shared_ptr&lt; const <a class="el" href="classspi_1_1Tools_1_1CompactKernel.html">spi::Tools::CompactKernel</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classspi_1_1NumericalSolvers_1_1SampleRepresentation.html#ae6833e7cff95e157e7f66109e28d0583">Kernel</a> () const </td></tr>
-<tr class="memdesc:ae6833e7cff95e157e7f66109e28d0583"><td class="mdescLeft">&#160;</td><td class="mdescRight">Get the kernel \(k(\theta)\) function (<a class="el" href="classspi_1_1Tools_1_1CompactKernel.html" title="An implementation of a compact kernel. ">spi::Tools::CompactKernel</a>)  <a href="#ae6833e7cff95e157e7f66109e28d0583">More...</a><br /></td></tr>
-<tr class="separator:ae6833e7cff95e157e7f66109e28d0583"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ab72ed50e427aff3f1aace082d6bedd80"><td class="memItemLeft" align="right" valign="top">std::shared_ptr&lt; const <a class="el" href="classspi_1_1Tools_1_1IsotropicKernel.html">spi::Tools::IsotropicKernel</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classspi_1_1NumericalSolvers_1_1SampleRepresentation.html#ab72ed50e427aff3f1aace082d6bedd80">Kernel</a> () const </td></tr>
+<tr class="memdesc:ab72ed50e427aff3f1aace082d6bedd80"><td class="mdescLeft">&#160;</td><td class="mdescRight">Get the kernel \(k(\theta)\) function (<a class="el" href="classspi_1_1Tools_1_1IsotropicKernel.html" title="An implementation of an isotropic kernel. ">spi::Tools::IsotropicKernel</a>)  <a href="#ab72ed50e427aff3f1aace082d6bedd80">More...</a><br /></td></tr>
+<tr class="separator:ab72ed50e427aff3f1aace082d6bedd80"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a4b5c66dc379ab9910d43e691d93747f9"><td class="memItemLeft" align="right" valign="top">Eigen::Ref&lt; Eigen::VectorXd const  &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classspi_1_1NumericalSolvers_1_1SampleRepresentation.html#a4b5c66dc379ab9910d43e691d93747f9">Point</a> (std::size_t const i) const </td></tr>
 <tr class="memdesc:a4b5c66dc379ab9910d43e691d93747f9"><td class="mdescLeft">&#160;</td><td class="mdescRight">Get the \(i^{th}\) point \(\boldsymbol{x}^{(i)}\) from the point cloud.  <a href="#a4b5c66dc379ab9910d43e691d93747f9">More...</a><br /></td></tr>
 <tr class="separator:a4b5c66dc379ab9910d43e691d93747f9"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a0d72af26e01d0ebccd206d36ba13c86f"><td class="memItemLeft" align="right" valign="top">Eigen::VectorXd&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classspi_1_1NumericalSolvers_1_1SampleRepresentation.html#a0d72af26e01d0ebccd206d36ba13c86f">KernelMatrix</a> (double const eps, Eigen::Ref&lt; Eigen::MatrixXd &gt; kmat) const </td></tr>
+<tr class="memdesc:a0d72af26e01d0ebccd206d36ba13c86f"><td class="mdescLeft">&#160;</td><td class="mdescRight">Construct the (dense) kernel matrix \(\boldsymbol{K}_{\epsilon}\).  <a href="#a0d72af26e01d0ebccd206d36ba13c86f">More...</a><br /></td></tr>
+<tr class="separator:a0d72af26e01d0ebccd206d36ba13c86f"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a54fb52fdabb40237387a0df1bd41dbae"><td class="memItemLeft" align="right" valign="top">Eigen::VectorXd&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classspi_1_1NumericalSolvers_1_1SampleRepresentation.html#a54fb52fdabb40237387a0df1bd41dbae">KernelMatrix</a> (double const eps, Eigen::Ref&lt; const Eigen::VectorXd &gt; const &amp;rvec, Eigen::Ref&lt; Eigen::MatrixXd &gt; kmat) const </td></tr>
+<tr class="memdesc:a54fb52fdabb40237387a0df1bd41dbae"><td class="mdescLeft">&#160;</td><td class="mdescRight">Construct the (dense) kernel matrix \(\boldsymbol{K}_{\epsilon}\).  <a href="#a54fb52fdabb40237387a0df1bd41dbae">More...</a><br /></td></tr>
+<tr class="separator:a54fb52fdabb40237387a0df1bd41dbae"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a904dd2de33870913f353d0c41ec3fb6b"><td class="memItemLeft" align="right" valign="top">Eigen::VectorXd&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classspi_1_1NumericalSolvers_1_1SampleRepresentation.html#a904dd2de33870913f353d0c41ec3fb6b">KernelMatrix</a> (double const eps, Eigen::SparseMatrix&lt; double &gt; &amp;kmat) const </td></tr>
 <tr class="memdesc:a904dd2de33870913f353d0c41ec3fb6b"><td class="mdescLeft">&#160;</td><td class="mdescRight">Construct the kernel matrix \(\boldsymbol{K}_{\epsilon}\).  <a href="#a904dd2de33870913f353d0c41ec3fb6b">More...</a><br /></td></tr>
 <tr class="separator:a904dd2de33870913f353d0c41ec3fb6b"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -173,12 +180,27 @@ Protected Attributes</h2></td></tr>
 <tr class="memitem:ae2c7d66d4bcf30604b01ba4a28b6634a"><td class="memItemLeft" align="right" valign="top">const std::size_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classspi_1_1NumericalSolvers_1_1SampleRepresentation.html#ae2c7d66d4bcf30604b01ba4a28b6634a">numNearestNeighbors</a></td></tr>
 <tr class="memdesc:ae2c7d66d4bcf30604b01ba4a28b6634a"><td class="mdescLeft">&#160;</td><td class="mdescRight">The number of nearest neighbors used to compute the bandwidth.  <a href="#ae2c7d66d4bcf30604b01ba4a28b6634a">More...</a><br /></td></tr>
 <tr class="separator:ae2c7d66d4bcf30604b01ba4a28b6634a"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a1b02ba85fb4c695ea25feb242bd8739b"><td class="memItemLeft" align="right" valign="top">std::shared_ptr&lt; <a class="el" href="classspi_1_1Tools_1_1CompactKernel.html">spi::Tools::CompactKernel</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classspi_1_1NumericalSolvers_1_1SampleRepresentation.html#a1b02ba85fb4c695ea25feb242bd8739b">kernel</a></td></tr>
-<tr class="memdesc:a1b02ba85fb4c695ea25feb242bd8739b"><td class="mdescLeft">&#160;</td><td class="mdescRight">The kernel function.  <a href="#a1b02ba85fb4c695ea25feb242bd8739b">More...</a><br /></td></tr>
-<tr class="separator:a1b02ba85fb4c695ea25feb242bd8739b"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aca7d72a839a22c0ad7419397dfcc227d"><td class="memItemLeft" align="right" valign="top">std::shared_ptr&lt; <a class="el" href="classspi_1_1Tools_1_1IsotropicKernel.html">spi::Tools::IsotropicKernel</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classspi_1_1NumericalSolvers_1_1SampleRepresentation.html#aca7d72a839a22c0ad7419397dfcc227d">kernel</a></td></tr>
+<tr class="memdesc:aca7d72a839a22c0ad7419397dfcc227d"><td class="mdescLeft">&#160;</td><td class="mdescRight">The kernel function.  <a href="#aca7d72a839a22c0ad7419397dfcc227d">More...</a><br /></td></tr>
+<tr class="separator:aca7d72a839a22c0ad7419397dfcc227d"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pri-methods"></a>
+Private Member Functions</h2></td></tr>
+<tr class="memitem:a6c3c01796549840014f5e1c5dc36d99a"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classspi_1_1NumericalSolvers_1_1SampleRepresentation.html#a6c3c01796549840014f5e1c5dc36d99a">Initialize</a> (YAML::Node const &amp;options)</td></tr>
+<tr class="memdesc:a6c3c01796549840014f5e1c5dc36d99a"><td class="mdescLeft">&#160;</td><td class="mdescRight">Initialize the sample representation.  <a href="#a6c3c01796549840014f5e1c5dc36d99a">More...</a><br /></td></tr>
+<tr class="separator:a6c3c01796549840014f5e1c5dc36d99a"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pri-attribs"></a>
 Private Attributes</h2></td></tr>
+<tr class="memitem:a9b4b7f77c7a9898114a89bd4aaae67a8"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classspi_1_1NumericalSolvers_1_1SampleRepresentation.html#a9b4b7f77c7a9898114a89bd4aaae67a8">compactKernel</a> = false</td></tr>
+<tr class="memdesc:a9b4b7f77c7a9898114a89bd4aaae67a8"><td class="mdescLeft">&#160;</td><td class="mdescRight">Is the kernel a compact kernel?  <a href="#a9b4b7f77c7a9898114a89bd4aaae67a8">More...</a><br /></td></tr>
+<tr class="separator:a9b4b7f77c7a9898114a89bd4aaae67a8"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a209f5fe069adbc1811eaa7b2c6420ae9"><td class="memItemLeft" align="right" valign="top">const bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classspi_1_1NumericalSolvers_1_1SampleRepresentation.html#a209f5fe069adbc1811eaa7b2c6420ae9">truncateKernelMatrix</a></td></tr>
+<tr class="memdesc:a209f5fe069adbc1811eaa7b2c6420ae9"><td class="mdescLeft">&#160;</td><td class="mdescRight">Do we want to truncate the kernel matrix to enforce sparsity.  <a href="#a209f5fe069adbc1811eaa7b2c6420ae9">More...</a><br /></td></tr>
+<tr class="separator:a209f5fe069adbc1811eaa7b2c6420ae9"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a80e495227a30d0365d2b2b83ce0b94ba"><td class="memItemLeft" align="right" valign="top">double&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classspi_1_1NumericalSolvers_1_1SampleRepresentation.html#a80e495227a30d0365d2b2b83ce0b94ba">truncationTol</a></td></tr>
+<tr class="memdesc:a80e495227a30d0365d2b2b83ce0b94ba"><td class="mdescLeft">&#160;</td><td class="mdescRight">At what tolerance should we truncate the kernel matrix?  <a href="#a80e495227a30d0365d2b2b83ce0b94ba">More...</a><br /></td></tr>
+<tr class="separator:a80e495227a30d0365d2b2b83ce0b94ba"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ab18b24f7a0699e16acc2f9e33e46ba9b"><td class="memItemLeft" align="right" valign="top">const std::size_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classspi_1_1NumericalSolvers_1_1SampleRepresentation.html#ab18b24f7a0699e16acc2f9e33e46ba9b">numThreads</a></td></tr>
 <tr class="memdesc:ab18b24f7a0699e16acc2f9e33e46ba9b"><td class="mdescLeft">&#160;</td><td class="mdescRight">The number of <code>openMP</code> threads available to this object.  <a href="#ab18b24f7a0699e16acc2f9e33e46ba9b">More...</a><br /></td></tr>
 <tr class="separator:ab18b24f7a0699e16acc2f9e33e46ba9b"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -205,6 +227,10 @@ Static Private Attributes</h2></td></tr>
 <td>"NumNearestNeighbors" </td><td><code>std::size_t</code> </td><td><code>10</code> </td><td>The number of nearest neighbors used to compute the bandwidth. </td></tr>
 <tr>
 <td>"KernelOptions" </td><td><code>YAML::Node</code> </td><td>- </td><td>The options for the <a class="el" href="classspi_1_1Tools_1_1CompactKernel.html" title="An implementation of a compact kernel. ">spi::Tools::CompactKernel</a> object </td></tr>
+<tr>
+<td>"TruncationTolerance" </td><td><code>double</code> </td><td>If the kernel is a compact kernel (<a class="el" href="classspi_1_1Tools_1_1CompactKernel.html" title="An implementation of a compact kernel. ">spi::Tools::CompactKernel</a>), the default is \(\alpha = 1\). Otherwise the default is \(\alpha = -\log{(5 \times 10^{-2})}\) </td><td>The parameter \(\alpha\) for if we want to truncate the kernel matrix. If the kernel is compact, then this will <em>always</em> be set to one. </td></tr>
+<tr>
+<td>"TruncateKernelMatrix" </td><td><code>bool</code> </td><td><code>true</code> </td><td><code>true</code>: When computing the kernel matrix \(K_{\epsilon}^{(ij)} = k_{\epsilon}\left( \frac{\| \boldsymbol{x}^{(i)} - \boldsymbol{x}^{(j)} \|^2}{\epsilon r_i r_j} \right)\) only fill the matrix when \(\frac{\| \boldsymbol{x}^{(i)} - \boldsymbol{x}^{(j)} \|^2}{\epsilon r_i r_j} &lt; \alpha\); <code>false</code>: compute and fill every entry in the the kernel matrix (it will be a dense matrix) </td></tr>
 <tr>
 <td>"NumThreads" </td><td><code>std::size_t</code> </td><td><code>options["NearestNeighbors.NumThreads"]</code> </td><td>The number of <code>openMP</code> threads available to this object. </td></tr>
 </table>
@@ -320,12 +346,44 @@ Static Private Attributes</h2></td></tr>
 
 </div>
 </div>
-<a class="anchor" id="ae6833e7cff95e157e7f66109e28d0583"></a>
+<a class="anchor" id="a6c3c01796549840014f5e1c5dc36d99a"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">void SampleRepresentation::Initialize </td>
+          <td>(</td>
+          <td class="paramtype">YAML::Node const &amp;&#160;</td>
+          <td class="paramname"><em>options</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">private</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Initialize the sample representation. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[in]</td><td class="paramname">options</td><td>Setup options </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a class="anchor" id="ab72ed50e427aff3f1aace082d6bedd80"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">std::shared_ptr&lt; const <a class="el" href="classspi_1_1Tools_1_1CompactKernel.html">CompactKernel</a> &gt; SampleRepresentation::Kernel </td>
+          <td class="memname">std::shared_ptr&lt; const <a class="el" href="classspi_1_1Tools_1_1IsotropicKernel.html">IsotropicKernel</a> &gt; SampleRepresentation::Kernel </td>
           <td>(</td>
           <td class="paramname"></td><td>)</td>
           <td> const</td>
@@ -333,8 +391,95 @@ Static Private Attributes</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p>Get the kernel \(k(\theta)\) function (<a class="el" href="classspi_1_1Tools_1_1CompactKernel.html" title="An implementation of a compact kernel. ">spi::Tools::CompactKernel</a>) </p>
+<p>Get the kernel \(k(\theta)\) function (<a class="el" href="classspi_1_1Tools_1_1IsotropicKernel.html" title="An implementation of an isotropic kernel. ">spi::Tools::IsotropicKernel</a>) </p>
 <dl class="section return"><dt>Returns</dt><dd>A pointer to the kernel \(k(\theta)\) function </dd></dl>
+
+</div>
+</div>
+<a class="anchor" id="a0d72af26e01d0ebccd206d36ba13c86f"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">Eigen::VectorXd SampleRepresentation::KernelMatrix </td>
+          <td>(</td>
+          <td class="paramtype">double const&#160;</td>
+          <td class="paramname"><em>eps</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">Eigen::Ref&lt; Eigen::MatrixXd &gt;&#160;</td>
+          <td class="paramname"><em>kmat</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td> const</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Construct the (dense) kernel matrix \(\boldsymbol{K}_{\epsilon}\). </p>
+<p>Let \(r_i^2 = \frac{1}{k} \sum_{j=1}^{k} \| \boldsymbol{x}^{(i)}-\boldsymbol{x}^{(I(i,j))} \|^2\) be the squared bandwidth associated with each sample such that \(I(i,j)\) is the index of the \(j^{th}\) furthest index from the point \(\boldsymbol{x}^{(i)}\). By default, this function defines the kernel matrix \(\boldsymbol{K}_{\epsilon}\) such that the \((i,j)\) component is </p><p class="formulaDsp">
+\begin{equation*} K_{\epsilon}^{(ij)} = k_{\epsilon}(\boldsymbol{x}^{(i)}, \boldsymbol{x}^{(j)}) = k\left( \frac{\| \boldsymbol{x}^{(i)} - \boldsymbol{x}^{(j)} \|^2}{\epsilon r_i r_j} \right). \end{equation*}
+</p>
+<p> Recall that \(k(\theta)\) is the kernel function.</p>
+<p>This function does NOT compute the kd trees. It assumes that <a class="el" href="classspi_1_1NumericalSolvers_1_1SampleRepresentation.html#a5ae60ef9b8bb97a45448a6823ee3187c" title="Build the kd trees for the nearest neighbor computation. ">spi::NumericalSolvers::SampleRepresentation::BuildKDTrees</a> has already been called.</p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[in]</td><td class="paramname">eps</td><td>The parameter \(\epsilon&gt;0\) </td></tr>
+    <tr><td class="paramdir">[out]</td><td class="paramname">kmat</td><td>The kernel matrix \(\boldsymbol{K}_{\epsilon}\) </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>Each entry is the sum of a row in the kernel matrix \(b_i = \sum_{j=1}^{n} K_{\epsilon}^{(ij)}\) </dd></dl>
+
+</div>
+</div>
+<a class="anchor" id="a54fb52fdabb40237387a0df1bd41dbae"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">Eigen::VectorXd SampleRepresentation::KernelMatrix </td>
+          <td>(</td>
+          <td class="paramtype">double const&#160;</td>
+          <td class="paramname"><em>eps</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">Eigen::Ref&lt; const Eigen::VectorXd &gt; const &amp;&#160;</td>
+          <td class="paramname"><em>rvec</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">Eigen::Ref&lt; Eigen::MatrixXd &gt;&#160;</td>
+          <td class="paramname"><em>kmat</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td> const</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Construct the (dense) kernel matrix \(\boldsymbol{K}_{\epsilon}\). </p>
+<p>This function computes the kernel matrix \(\boldsymbol{K}_{\epsilon}\) such that the \((i,j)\) component is </p><p class="formulaDsp">
+\begin{equation*} K_{\epsilon}^{(ij)} = k_{\epsilon}(\boldsymbol{x}^{(i)}, \boldsymbol{x}^{(j)}) = k\left( \frac{\| \boldsymbol{x}^{(i)} - \boldsymbol{x}^{(j)} \|^2}{\epsilon r_i r_j} \right). \end{equation*}
+</p>
+<p> Recall that \(k(\theta)\) is the kernel function. </p><dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[in]</td><td class="paramname">eps</td><td>The parameter \(\epsilon&gt;0\) </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">rvec</td><td>The vector of parameters \(r_i\). </td></tr>
+    <tr><td class="paramdir">[out]</td><td class="paramname">kmat</td><td>The kernel matrix \(\boldsymbol{K}_{\epsilon}\) </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>Each entry is the sum of a row in the kernel matrix \(b_i = \sum_{j=1}^{n} K_{\epsilon}^{(ij)}\) </dd></dl>
 
 </div>
 </div>
@@ -368,7 +513,7 @@ Static Private Attributes</h2></td></tr>
 </p>
 <p> Recall that \(k(\theta)\) is the kernel function.</p>
 <p>This function does NOT compute the kd trees. It assumes that <a class="el" href="classspi_1_1NumericalSolvers_1_1SampleRepresentation.html#a5ae60ef9b8bb97a45448a6823ee3187c" title="Build the kd trees for the nearest neighbor computation. ">spi::NumericalSolvers::SampleRepresentation::BuildKDTrees</a> has already been called.</p>
-<p>Note: children may override this and define the kernel using a different vector of bandwith parameters \(r_i\). </p><dl class="params"><dt>Parameters</dt><dd>
+<dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramdir">[in]</td><td class="paramname">eps</td><td>The parameter \(\epsilon&gt;0\) </td></tr>
     <tr><td class="paramdir">[out]</td><td class="paramname">kmat</td><td>The kernel matrix \(\boldsymbol{K}_{\epsilon}\) </td></tr>
@@ -541,6 +686,28 @@ Static Private Attributes</h2></td></tr>
 </div>
 </div>
 <h2 class="groupheader">Member Data Documentation</h2>
+<a class="anchor" id="a9b4b7f77c7a9898114a89bd4aaae67a8"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">bool spi::NumericalSolvers::SampleRepresentation::compactKernel = false</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">private</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Is the kernel a compact kernel? </p>
+
+</div>
+</div>
 <a class="anchor" id="a6f549b3d5ec85b5f7021eebd0e9e2c25"></a>
 <div class="memitem">
 <div class="memproto">
@@ -563,7 +730,7 @@ Static Private Attributes</h2></td></tr>
 
 </div>
 </div>
-<a class="anchor" id="a1b02ba85fb4c695ea25feb242bd8739b"></a>
+<a class="anchor" id="aca7d72a839a22c0ad7419397dfcc227d"></a>
 <div class="memitem">
 <div class="memproto">
 <table class="mlabels">
@@ -571,7 +738,7 @@ Static Private Attributes</h2></td></tr>
   <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname">std::shared_ptr&lt;<a class="el" href="classspi_1_1Tools_1_1CompactKernel.html">spi::Tools::CompactKernel</a>&gt; spi::NumericalSolvers::SampleRepresentation::kernel</td>
+          <td class="memname">std::shared_ptr&lt;<a class="el" href="classspi_1_1Tools_1_1IsotropicKernel.html">spi::Tools::IsotropicKernel</a>&gt; spi::NumericalSolvers::SampleRepresentation::kernel</td>
         </tr>
       </table>
   </td>
@@ -653,6 +820,57 @@ Static Private Attributes</h2></td></tr>
 
 <p>Store the samples from \(\psi\). </p>
 
+</div>
+</div>
+<a class="anchor" id="a209f5fe069adbc1811eaa7b2c6420ae9"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">const bool spi::NumericalSolvers::SampleRepresentation::truncateKernelMatrix</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">private</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Do we want to truncate the kernel matrix to enforce sparsity. </p>
+<p><code>true</code>: When computing the kernel matrix \(K_{\epsilon}^{(ij)} = k_{\epsilon}\left( \frac{\| \boldsymbol{x}^{(i)} - \boldsymbol{x}^{(j)} \|^2}{\epsilon r_i r_j} \right)\) only fill the matrix when \(\frac{\| \boldsymbol{x}^{(i)} - \boldsymbol{x}^{(j)} \|^2}{\epsilon r_i r_j} &lt; \alpha\); <code>false</code>: compute and fill every entry in the the kernel matrix (it will be a dense matrix) </p>
+
+</div>
+</div>
+<a class="anchor" id="a80e495227a30d0365d2b2b83ce0b94ba"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">double spi::NumericalSolvers::SampleRepresentation::truncationTol</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">private</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>At what tolerance should we truncate the kernel matrix? </p>
+<p>Only used if truncateKernelMatrix is <code>true</code>.</p>
+<p>When computing the kernel matrix \(K_{\epsilon}^{(ij)} = k_{\epsilon}\left( \frac{\| \boldsymbol{x}^{(i)} - \boldsymbol{x}^{(j)} \|^2}{\epsilon r_i r_j} \right)\) only fill the matrix when \(\frac{\| \boldsymbol{x}^{(i)} - \boldsymbol{x}^{(j)} \|^2}{\epsilon r_i r_j} &lt; \alpha\). This is the parameter \(\alpha\).</p>
+<p>If the kernel is a compact kernel (<a class="el" href="classspi_1_1Tools_1_1CompactKernel.html" title="An implementation of a compact kernel. ">spi::Tools::CompactKernel</a>), the default is \(\alpha = 1\). Otherwise the default is \(\alpha = -\log{(5 \times 10^{-2})}\).</p>
+<p>This choice corresponds to truncting the exponential kernel when </p><p class="formulaDsp">
+\begin{equation*} \exp{\left(-\frac{\|\boldsymbol{x}^{(i)}-\boldsymbol{x^{(j)}}\|^2}{\epsilon r_i r_j}\right)} \leq 5 \times 10^{-2} \end{equation*}
+</p>
+ 
 </div>
 </div>
 <hr/>The documentation for this class was generated from the following files:<ul>
