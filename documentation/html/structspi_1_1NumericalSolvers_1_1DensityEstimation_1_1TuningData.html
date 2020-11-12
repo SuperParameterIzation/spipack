@@ -102,20 +102,31 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 </div><!--header-->
 <div class="contents">
 
+<p>Input/output data used to tune the parameters to the density estimation.  
+ <a href="structspi_1_1NumericalSolvers_1_1DensityEstimation_1_1TuningData.html#details">More...</a></p>
+
 <p><code>#include &lt;<a class="el" href="DensityEstimation_8hpp_source.html">DensityEstimation.hpp</a>&gt;</code></p>
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-attribs"></a>
 Public Attributes</h2></td></tr>
 <tr class="memitem:a9b51b8a75a62264653f9f301e9857578"><td class="memItemLeft" align="right" valign="top">Eigen::VectorXd&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structspi_1_1NumericalSolvers_1_1DensityEstimation_1_1TuningData.html#a9b51b8a75a62264653f9f301e9857578">bandwidthExponent</a></td></tr>
+<tr class="memdesc:a9b51b8a75a62264653f9f301e9857578"><td class="mdescLeft">&#160;</td><td class="mdescRight">The input bandwidth exponents (candidate values \(l \in [l_{min}, l_{max}]\))  <a href="#a9b51b8a75a62264653f9f301e9857578">More...</a><br /></td></tr>
 <tr class="separator:a9b51b8a75a62264653f9f301e9857578"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a0ee254c90ddee02c3e09d8d627f95b03"><td class="memItemLeft" align="right" valign="top">Eigen::VectorXd&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structspi_1_1NumericalSolvers_1_1DensityEstimation_1_1TuningData.html#a0ee254c90ddee02c3e09d8d627f95b03">candidateBandwidthParameters</a></td></tr>
+<tr class="memdesc:a0ee254c90ddee02c3e09d8d627f95b03"><td class="mdescLeft">&#160;</td><td class="mdescRight">The computed candidate bandwidth parameters \(\epsilon = \exp{(l)}\).  <a href="#a0ee254c90ddee02c3e09d8d627f95b03">More...</a><br /></td></tr>
 <tr class="separator:a0ee254c90ddee02c3e09d8d627f95b03"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a3aed308248fb06f90931640c011442e3"><td class="memItemLeft" align="right" valign="top">Eigen::VectorXd&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structspi_1_1NumericalSolvers_1_1DensityEstimation_1_1TuningData.html#a3aed308248fb06f90931640c011442e3">kernelAvg</a></td></tr>
+<tr class="memdesc:a3aed308248fb06f90931640c011442e3"><td class="mdescLeft">&#160;</td><td class="mdescRight">The kernel average value \(\Sigma_{\epsilon}\).  <a href="#a3aed308248fb06f90931640c011442e3">More...</a><br /></td></tr>
 <tr class="separator:a3aed308248fb06f90931640c011442e3"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a9ee36021b6faa79af85aa0c54a32ac8c"><td class="memItemLeft" align="right" valign="top">Eigen::VectorXd&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structspi_1_1NumericalSolvers_1_1DensityEstimation_1_1TuningData.html#a9ee36021b6faa79af85aa0c54a32ac8c">logKernelAvgDerivative</a></td></tr>
+<tr class="memdesc:a9ee36021b6faa79af85aa0c54a32ac8c"><td class="mdescLeft">&#160;</td><td class="mdescRight">The response with respect to \(\epsilon\)&mdash;the parameter \(\Sigma_{\epsilon}^{\prime}\).  <a href="#a9ee36021b6faa79af85aa0c54a32ac8c">More...</a><br /></td></tr>
 <tr class="separator:a9ee36021b6faa79af85aa0c54a32ac8c"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
-<h2 class="groupheader">Member Data Documentation</h2>
+<a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
+<div class="textblock"><p>Input/output data used to tune the parameters to the density estimation. </p>
+<p>We must choose the optimal \(\epsilon\) for the density estimation. Given the bandwidth exponent \(l \in [l_{min}, l_{max}]\), we choose \(\epsilon \in [\exp{(l_{min})}, \exp{(l_{max})}]\). We do this by defining the parameters \(\Sigma_{\epsilon} = \frac{1}{n^2} \sum_{i,j=1}^{n} K_{\epsilon}^{(ij)}\) and \(\Sigma_{\epsilon}^{\prime} = (\log{(\Sigma_{\epsilon+h})}-\log{(\Sigma_{\epsilon})})/(\log{(\epsilon+h)}-\log{(\epsilon)})\)</p>
+<p>The optimal \(\epsilon\) maximizes \(\Sigma_{\epsilon}^{\prime}\) and the corresponding manifold dimension estimate is \(m = 2 \max{(\Sigma_{\epsilon}^{\prime})}\). </p>
+</div><h2 class="groupheader">Member Data Documentation</h2>
 <a class="anchor" id="a9b51b8a75a62264653f9f301e9857578"></a>
 <div class="memitem">
 <div class="memproto">
@@ -125,6 +136,9 @@ Public Attributes</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
+
+<p>The input bandwidth exponents (candidate values \(l \in [l_{min}, l_{max}]\)) </p>
+<p>If this is empty, then we just use the previously stored parameters. </p>
 
 </div>
 </div>
@@ -138,6 +152,8 @@ Public Attributes</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
+<p>The computed candidate bandwidth parameters \(\epsilon = \exp{(l)}\). </p>
+
 </div>
 </div>
 <a class="anchor" id="a3aed308248fb06f90931640c011442e3"></a>
@@ -150,6 +166,8 @@ Public Attributes</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
+<p>The kernel average value \(\Sigma_{\epsilon}\). </p>
+
 </div>
 </div>
 <a class="anchor" id="a9ee36021b6faa79af85aa0c54a32ac8c"></a>
@@ -161,6 +179,8 @@ Public Attributes</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
+
+<p>The response with respect to \(\epsilon\)&mdash;the parameter \(\Sigma_{\epsilon}^{\prime}\). </p>
 
 </div>
 </div>
