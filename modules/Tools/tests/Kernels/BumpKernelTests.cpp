@@ -88,6 +88,10 @@ TEST(BumpKernelTests, EvaluateDefault) {
     EXPECT_NEAR(kernel.EvaluateCompactKernel(0.1), std::exp(1.0-1.0/0.9), 1.0e-10);
     EXPECT_NEAR(kernel(0.1), std::exp(1.0-1.0/0.9), 1.0e-10);
     EXPECT_DOUBLE_EQ(kernel(1.0), 0.0);
+    EXPECT_NEAR(kernel.IsotropicKernelDerivativeFD(0.1), -kernel(0.1)/(0.9*0.9), 1.0e-5);
+    EXPECT_DOUBLE_EQ(kernel.IsotropicKernelDerivative(0.1), -kernel(0.1)/(0.9*0.9));
+    EXPECT_NEAR(kernel.IsotropicKernelDerivativeFD(0.1), kernel.IsotropicKernelDerivative(0.1), 1.0e-5);
+    EXPECT_NEAR(kernel.IsotropicKernelSecondDerivativeFD(0.1), kernel.IsotropicKernelSecondDerivative(0.1), 1.0e-5);
   }
 
   { // check outside the kernel support
@@ -97,6 +101,12 @@ TEST(BumpKernelTests, EvaluateDefault) {
     EXPECT_DOUBLE_EQ(kernel.EvaluateIsotropicKernel(1.1), 0.0);
     EXPECT_DOUBLE_EQ(kernel.EvaluateCompactKernel(1.1), 0.0);
     EXPECT_DOUBLE_EQ(kernel(1.1), 0.0);
+    EXPECT_NEAR(kernel.IsotropicKernelDerivativeFD(1.1), 0.0, 1.0e-5);
+    EXPECT_DOUBLE_EQ(kernel.IsotropicKernelDerivative(1.1), 0.0);
+    EXPECT_NEAR(kernel.IsotropicKernelDerivativeFD(1.1), kernel.IsotropicKernelDerivative(1.1), 1.0e-5);
+    EXPECT_NEAR(kernel.IsotropicKernelSecondDerivativeFD(1.1), 0.0, 1.0e-5);
+    EXPECT_DOUBLE_EQ(kernel.IsotropicKernelSecondDerivative(1.1), 0.0);
+    EXPECT_NEAR(kernel.IsotropicKernelSecondDerivativeFD(1.1), kernel.IsotropicKernelSecondDerivative(1.1), 1.0e-5);
   }
 }
 
@@ -125,6 +135,10 @@ TEST(BumpKernelTests, Evaluate) {
     EXPECT_NEAR(kernel.EvaluateIsotropicKernel(0.1), mag*std::exp(scale*(1.0-1.0/(1.0-std::pow(0.1, expon)))), 1.0e-10);
     EXPECT_NEAR(kernel.EvaluateCompactKernel(0.1), mag*std::exp(scale*(1.0-1.0/(1.0-std::pow(0.1, expon)))), 1.0e-10);
     EXPECT_NEAR(kernel(0.1), mag*std::exp(scale*(1.0-1.0/(1.0-std::pow(0.1, expon)))), 1.0e-10);
+    EXPECT_NEAR(kernel.IsotropicKernelDerivativeFD(0.1), -scale*expon*pow(0.1, expon-1.0)/((1.0-std::pow(0.1, expon))*(1.0-std::pow(0.1, expon)))*kernel.EvaluateCompactKernel(0.1), 1.0e-5);
+    EXPECT_DOUBLE_EQ(kernel.IsotropicKernelDerivative(0.1), -scale*expon*pow(0.1, expon-1.0)/((1.0-std::pow(0.1, expon))*(1.0-std::pow(0.1, expon)))*kernel.EvaluateCompactKernel(0.1));
+    EXPECT_NEAR(kernel.IsotropicKernelDerivativeFD(0.1), kernel.IsotropicKernelDerivative(0.1), 1.0e-5);
+    EXPECT_NEAR(kernel.IsotropicKernelSecondDerivativeFD(1.1), kernel.IsotropicKernelSecondDerivative(1.1), 1.0e-5);
   }
 
   { // check outside the kernel support
@@ -134,6 +148,12 @@ TEST(BumpKernelTests, Evaluate) {
     EXPECT_DOUBLE_EQ(kernel.EvaluateIsotropicKernel(1.1), 0.0);
     EXPECT_DOUBLE_EQ(kernel.EvaluateCompactKernel(1.1), 0.0);
     EXPECT_DOUBLE_EQ(kernel(1.1), 0.0);
+    EXPECT_NEAR(kernel.IsotropicKernelDerivativeFD(1.1), 0.0, 1.0e-5);
+    EXPECT_DOUBLE_EQ(kernel.IsotropicKernelDerivative(1.1), 0.0);
+    EXPECT_NEAR(kernel.IsotropicKernelDerivativeFD(1.1), kernel.IsotropicKernelDerivative(1.1), 1.0e-5);
+    EXPECT_NEAR(kernel.IsotropicKernelSecondDerivativeFD(1.1), 0.0, 1.0e-5);
+    EXPECT_DOUBLE_EQ(kernel.IsotropicKernelSecondDerivative(1.1), 0.0);
+    EXPECT_NEAR(kernel.IsotropicKernelSecondDerivativeFD(1.1), kernel.IsotropicKernelSecondDerivative(1.1), 1.0e-5);
   }
 }
 

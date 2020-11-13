@@ -56,6 +56,34 @@ public:
   */
   virtual double EvaluateIsotropicKernel(double const theta) const = 0;
 
+  /// Evaluate the derivative of the kernel function \f$\frac{d k}{d \theta}\f$
+  /**
+    @param[in] theta The value of \f$\theta = \|\boldsymbol{x}_1-\boldsymbol{x}_2\|^2\f$
+    \return The kernel derivative \f$\frac{d k}{d \theta}\f$
+  */
+  virtual double IsotropicKernelDerivative(double const theta) const;
+
+  /// Evaluate the derivative of the kernel function \f$\frac{d k}{d \theta}\f$
+  /**
+    @param[in] theta The value of \f$\theta = \|\boldsymbol{x}_1-\boldsymbol{x}_2\|^2\f$
+    \return The kernel derivative \f$\frac{d k}{d \theta}\f$
+  */
+  virtual double IsotropicKernelSecondDerivative(double const theta) const;
+
+  /// Evaluate the derivative of the kernel function \f$\frac{d k}{d \theta}\f$ using finite difference
+  /**
+    @param[in] theta The value of \f$\theta = \|\boldsymbol{x}_1-\boldsymbol{x}_2\|^2\f$
+    \return The kernel derivative \f$\frac{d k}{d \theta}\f$ (estimated with finite difference)
+  */
+  double IsotropicKernelDerivativeFD(double const theta) const;
+
+  /// Evaluate the derivative of the kernel function \f$\frac{d k}{d \theta}\f$ using finite difference
+  /**
+    @param[in] theta The value of \f$\theta = \|\boldsymbol{x}_1-\boldsymbol{x}_2\|^2\f$
+    \return The kernel derivative \f$\frac{d k}{d \theta}\f$ (estimated with finite difference)
+  */
+  double IsotropicKernelSecondDerivativeFD(double const theta) const;
+
   /// Evaluate the kernel function \f$k(\theta)\f$
   /**
     @param[in] theta The value of \f$\theta = \|\boldsymbol{x}_1-\boldsymbol{x}_2\|^2\f$
@@ -68,6 +96,9 @@ public:
 
 private:
 
+  /// The step size for finite difference derivative approximations
+  double delta = 1.0e-6;
+
   /// Make cereal::access a friend for serialization
   friend class cereal::access;
 
@@ -76,7 +107,7 @@ private:
   @param[in] ar The archive/buffer
   */
   template<class Archive>
-  inline void serialize(Archive& ar) { ar(cereal::base_class<Kernel>(this)); }
+  inline void serialize(Archive& ar) { ar(cereal::base_class<Kernel>(this), delta); }
 
 };
 

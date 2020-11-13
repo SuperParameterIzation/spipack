@@ -53,6 +53,20 @@ public:
   */
   double Exponent() const;
 
+  /// Evaluate the derivative of the kernel function \f$\frac{d k}{d \theta}\f$
+  /**
+    @param[in] theta The value of \f$\theta = \|\boldsymbol{x}_1-\boldsymbol{x}_2\|^2\f$
+    \return The kernel derivative \f$\frac{d k}{d \theta}\f$
+  */
+  virtual double IsotropicKernelDerivative(double const theta) const override;
+
+  /// Evaluate the derivative of the kernel function \f$\frac{d k}{d \theta}\f$
+  /**
+    @param[in] theta The value of \f$\theta = \|\boldsymbol{x}_1-\boldsymbol{x}_2\|^2\f$
+    \return The kernel derivative \f$\frac{d k}{d \theta}\f$
+  */
+  virtual double IsotropicKernelSecondDerivative(double const theta) const override;
+
 protected:
 
   /// Evaluate the hat kernel function \f$k(\theta)\f$

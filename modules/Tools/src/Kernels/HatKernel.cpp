@@ -13,4 +13,8 @@ HatKernel::HatKernel(YAML::Node const& options) :
 
 double HatKernel::EvaluateCompactKernelImpl(double const theta) const { return mag; }
 
+double HatKernel::IsotropicKernelDerivative(double const theta) const { return 0.0; }
+
+double HatKernel::IsotropicKernelSecondDerivative(double const theta) const { return 0.0; }
+
 double HatKernel::Magnitude() const { return mag; }

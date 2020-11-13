@@ -84,6 +84,12 @@ TEST(HatKernelTests, EvaluateDefault) {
     EXPECT_DOUBLE_EQ(kernel.EvaluateIsotropicKernel(0.1), 1.0);
     EXPECT_DOUBLE_EQ(kernel.EvaluateCompactKernel(0.1), 1.0);
     EXPECT_DOUBLE_EQ(kernel(0.1), 1.0);
+    EXPECT_NEAR(kernel.IsotropicKernelDerivativeFD(0.1),  0.0, 1.0e-5);
+    EXPECT_DOUBLE_EQ(kernel.IsotropicKernelDerivative(0.1), 0.0);
+    EXPECT_NEAR(kernel.IsotropicKernelDerivativeFD(0.1), kernel.IsotropicKernelDerivative(0.1), 1.0e-5);
+    EXPECT_NEAR(kernel.IsotropicKernelSecondDerivativeFD(0.1),  0.0, 1.0e-5);
+    EXPECT_DOUBLE_EQ(kernel.IsotropicKernelSecondDerivative(0.1), 0.0);
+    EXPECT_NEAR(kernel.IsotropicKernelSecondDerivativeFD(0.1), kernel.IsotropicKernelSecondDerivative(0.1), 1.0e-5);
   }
 
   { // check outside the kernel support
@@ -93,6 +99,12 @@ TEST(HatKernelTests, EvaluateDefault) {
     EXPECT_DOUBLE_EQ(kernel.EvaluateIsotropicKernel(1.1), 0.0);
     EXPECT_DOUBLE_EQ(kernel.EvaluateCompactKernel(1.1), 0.0);
     EXPECT_DOUBLE_EQ(kernel(1.1), 0.0);
+    EXPECT_NEAR(kernel.IsotropicKernelDerivativeFD(0.1),  0.0, 1.0e-5);
+    EXPECT_DOUBLE_EQ(kernel.IsotropicKernelDerivative(0.1), 0.0);
+    EXPECT_NEAR(kernel.IsotropicKernelDerivativeFD(0.1), kernel.IsotropicKernelDerivative(0.1), 1.0e-5);
+    EXPECT_NEAR(kernel.IsotropicKernelSecondDerivativeFD(0.1),  0.0, 1.0e-5);
+    EXPECT_DOUBLE_EQ(kernel.IsotropicKernelSecondDerivative(0.1), 0.0);
+    EXPECT_NEAR(kernel.IsotropicKernelSecondDerivativeFD(0.1), kernel.IsotropicKernelSecondDerivative(0.1), 1.0e-5);
   }
 }
 
@@ -117,6 +129,12 @@ TEST(HatKernelTests, Evaluate) {
     EXPECT_DOUBLE_EQ(kernel.EvaluateCompactKernel(0.1), mag);
     EXPECT_DOUBLE_EQ(kernel.EvaluateIsotropicKernel(0.1), mag);
     EXPECT_DOUBLE_EQ(kernel(0.1), mag);
+    EXPECT_NEAR(kernel.IsotropicKernelDerivativeFD(0.1),  0.0, 1.0e-5);
+    EXPECT_DOUBLE_EQ(kernel.IsotropicKernelDerivative(0.1), 0.0);
+    EXPECT_NEAR(kernel.IsotropicKernelDerivativeFD(0.1), kernel.IsotropicKernelDerivative(0.1), 1.0e-5);
+    EXPECT_NEAR(kernel.IsotropicKernelSecondDerivativeFD(0.1),  0.0, 1.0e-5);
+    EXPECT_DOUBLE_EQ(kernel.IsotropicKernelSecondDerivative(0.1), 0.0);
+    EXPECT_NEAR(kernel.IsotropicKernelSecondDerivativeFD(0.1), kernel.IsotropicKernelSecondDerivative(0.1), 1.0e-5);
   }
 
   { // check outside the kernel support
@@ -126,6 +144,12 @@ TEST(HatKernelTests, Evaluate) {
     EXPECT_DOUBLE_EQ(kernel.EvaluateIsotropicKernel(1.1), 0.0);
     EXPECT_DOUBLE_EQ(kernel.EvaluateCompactKernel(1.1), 0.0);
     EXPECT_DOUBLE_EQ(kernel(1.1), 0.0);
+    EXPECT_NEAR(kernel.IsotropicKernelDerivativeFD(0.1),  0.0, 1.0e-5);
+    EXPECT_DOUBLE_EQ(kernel.IsotropicKernelDerivative(0.1), 0.0);
+    EXPECT_NEAR(kernel.IsotropicKernelDerivativeFD(0.1), kernel.IsotropicKernelDerivative(0.1), 1.0e-5);
+    EXPECT_NEAR(kernel.IsotropicKernelSecondDerivativeFD(0.1),  0.0, 1.0e-5);
+    EXPECT_DOUBLE_EQ(kernel.IsotropicKernelSecondDerivative(0.1), 0.0);
+    EXPECT_NEAR(kernel.IsotropicKernelSecondDerivativeFD(0.1), kernel.IsotropicKernelSecondDerivative(0.1), 1.0e-5);
   }
 }
 

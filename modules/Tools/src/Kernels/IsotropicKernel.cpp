@@ -46,3 +46,13 @@ double IsotropicKernel::Evaluate(Eigen::Ref<const Eigen::VectorXd> const& x1, Ei
 }
 
 double IsotropicKernel::operator()(double const theta) const { return EvaluateIsotropicKernel(theta); }
+
+double IsotropicKernel::IsotropicKernelDerivative(double const theta) const { return IsotropicKernelDerivativeFD(theta); }
+
+double IsotropicKernel::IsotropicKernelSecondDerivative(double const theta) const { return IsotropicKernelSecondDerivativeFD(theta); }
+
+double IsotropicKernel::IsotropicKernelDerivativeFD(double const theta) const { return (EvaluateIsotropicKernel(theta+delta)-EvaluateIsotropicKernel(theta))/delta; }
+
+double IsotropicKernel::IsotropicKernelSecondDerivativeFD(double const theta) const {
+  return (IsotropicKernelDerivative(theta+delta)-IsotropicKernelDerivative(theta))/delta; 
+}

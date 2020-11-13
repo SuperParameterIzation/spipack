@@ -61,6 +61,12 @@ TEST(ExponentialKernelTests, EvaluateDefault) {
   EXPECT_DOUBLE_EQ(kernel.Evaluate(x1, x2), std::exp(-x2.dot(x2)));
   EXPECT_DOUBLE_EQ(kernel.EvaluateIsotropicKernel(0.1), std::exp(-0.1));
   EXPECT_DOUBLE_EQ(kernel(0.1), std::exp(-0.1));
+  EXPECT_NEAR(kernel.IsotropicKernelDerivativeFD(0.1), -std::exp(-0.1), 1.0e-5);
+  EXPECT_DOUBLE_EQ(kernel.IsotropicKernelDerivative(0.1), -std::exp(-0.1));
+  EXPECT_NEAR(kernel.IsotropicKernelDerivativeFD(0.1), kernel.IsotropicKernelDerivative(0.1), 1.0e-5);
+  EXPECT_NEAR(kernel.IsotropicKernelSecondDerivativeFD(0.1), std::exp(-0.1), 1.0e-5);
+  EXPECT_DOUBLE_EQ(kernel.IsotropicKernelSecondDerivative(0.1), std::exp(-0.1));
+  EXPECT_NEAR(kernel.IsotropicKernelSecondDerivativeFD(0.1), kernel.IsotropicKernelSecondDerivative(0.1), 1.0e-5);
 }
 
 TEST(ExponentialKernelTests, Evaluate) {
@@ -86,6 +92,13 @@ TEST(ExponentialKernelTests, Evaluate) {
   EXPECT_DOUBLE_EQ(kernel.Evaluate(x1, x2), mag*std::exp(-scale*std::pow(x2.dot(x2), expon)));
   EXPECT_DOUBLE_EQ(kernel.EvaluateIsotropicKernel(0.1), mag*std::exp(-scale*std::pow(0.1, expon)));
   EXPECT_DOUBLE_EQ(kernel(0.1), mag*std::exp(-scale*std::pow(0.1, expon)));
+  EXPECT_NEAR(kernel.IsotropicKernelDerivativeFD(0.1),  -mag*scale*expon*std::pow(0.1, expon-1)*std::exp(-scale*std::pow(0.1, expon)), 1.0e-5);
+  EXPECT_DOUBLE_EQ(kernel.IsotropicKernelDerivative(0.1), -mag*scale*expon*std::pow(0.1, expon-1)*std::exp(-scale*std::pow(0.1, expon)));
+  EXPECT_NEAR(kernel.IsotropicKernelDerivativeFD(0.1), kernel.IsotropicKernelDerivative(0.1), 1.0e-5);
+
+  EXPECT_NEAR(kernel.IsotropicKernelSecondDerivativeFD(0.1),  mag*scale*expon*std::pow(0.1, expon-1.0)*scale*expon*std::pow(0.1, expon-1.0)*std::exp(-scale*std::pow(0.1, expon)) - mag*scale*expon*(expon-1.0)*std::pow(0.1, expon-2.0)*std::exp(-scale*std::pow(0.1, expon)), 1.0e-4);
+  EXPECT_DOUBLE_EQ(kernel.IsotropicKernelSecondDerivative(0.1), mag*scale*expon*std::pow(0.1, expon-1.0)*scale*expon*std::pow(0.1, expon-1.0)*std::exp(-scale*std::pow(0.1, expon)) - mag*scale*expon*(expon-1.0)*std::pow(0.1, expon-2.0)*std::exp(-scale*std::pow(0.1, expon)));
+  EXPECT_NEAR(kernel.IsotropicKernelSecondDerivativeFD(0.1), kernel.IsotropicKernelSecondDerivative(0.1), 1.0e-4);
 }
 
 TEST(ExponentialKernelTests, Serialize) {

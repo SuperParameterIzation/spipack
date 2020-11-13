@@ -23,3 +23,16 @@ double ExponentialKernel::Magnitude() const { return mag; }
 double ExponentialKernel::Scale() const { return scale; }
 
 double ExponentialKernel::Exponent() const { return expon; }
+
+double ExponentialKernel::IsotropicKernelDerivative(double const theta) const {
+  const double powtheta = std::pow(std::abs(theta), expon);
+
+  return -mag*scale*expon*powtheta/theta*std::exp(-scale*powtheta);
+}
+
+double ExponentialKernel::IsotropicKernelSecondDerivative(double const theta) const {
+  const double powtheta = std::pow(std::abs(theta), expon);
+  const double dum = scale*expon*powtheta;
+
+  return mag*dum*(dum-expon+1.0)*std::exp(-scale*powtheta)/(theta*theta);
+}
