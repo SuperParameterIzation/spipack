@@ -9,6 +9,7 @@ var searchData=
   ['_7ehatkernel',['~HatKernel',['../classspi_1_1Tools_1_1HatKernel.html#aa57771dd8a0c498fa54a47b9b73f0903',1,'spi::Tools::HatKernel']]],
   ['_7eisotropickernel',['~IsotropicKernel',['../classspi_1_1Tools_1_1IsotropicKernel.html#a651bb4e82d526ccde698f58296d7b337',1,'spi::Tools::IsotropicKernel']]],
   ['_7ekernel',['~Kernel',['../classspi_1_1Tools_1_1Kernel.html#a94625d2efab4da6a9d387e160e829150',1,'spi::Tools::Kernel']]],
+  ['_7ekolmogorovoperator',['~KolmogorovOperator',['../classspi_1_1NumericalSolvers_1_1KolmogorovOperator.html#aa07dbcb5313de8fe4ad963569b2691cb',1,'spi::NumericalSolvers::KolmogorovOperator']]],
   ['_7enearestneighbors',['~NearestNeighbors',['../classspi_1_1Tools_1_1NearestNeighbors.html#acbdae007bf12aba90965e7d1b17a9496',1,'spi::Tools::NearestNeighbors']]],
   ['_7esamplerepresentation',['~SampleRepresentation',['../classspi_1_1NumericalSolvers_1_1SampleRepresentation.html#ad9226df4bc3bde9e3c01d7220cc328d0',1,'spi::NumericalSolvers::SampleRepresentation']]]
 ];
