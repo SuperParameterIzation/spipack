@@ -99,6 +99,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <a href="#pub-methods">Public Member Functions</a> &#124;
 <a href="#pub-static-methods">Static Public Member Functions</a> &#124;
 <a href="#pri-methods">Private Member Functions</a> &#124;
+<a href="#pri-attribs">Private Attributes</a> &#124;
 <a href="#friends">Friends</a> &#124;
 <a href="classspi_1_1Tools_1_1IsotropicKernel-members.html">List of all members</a>  </div>
   <div class="headertitle">
@@ -153,6 +154,18 @@ Public Member Functions</h2></td></tr>
 <tr class="memitem:aaf582b589010940b66ccb5834dcdf53e"><td class="memItemLeft" align="right" valign="top">virtual double&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classspi_1_1Tools_1_1IsotropicKernel.html#aaf582b589010940b66ccb5834dcdf53e">EvaluateIsotropicKernel</a> (double const theta) const =0</td></tr>
 <tr class="memdesc:aaf582b589010940b66ccb5834dcdf53e"><td class="mdescLeft">&#160;</td><td class="mdescRight">Evaluate the kernel function \(k(\theta)\).  <a href="#aaf582b589010940b66ccb5834dcdf53e">More...</a><br /></td></tr>
 <tr class="separator:aaf582b589010940b66ccb5834dcdf53e"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:af73da6ee7a7286ef4dd1ed9dcac0d791"><td class="memItemLeft" align="right" valign="top">virtual double&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classspi_1_1Tools_1_1IsotropicKernel.html#af73da6ee7a7286ef4dd1ed9dcac0d791">IsotropicKernelDerivative</a> (double const theta) const </td></tr>
+<tr class="memdesc:af73da6ee7a7286ef4dd1ed9dcac0d791"><td class="mdescLeft">&#160;</td><td class="mdescRight">Evaluate the derivative of the kernel function \(\frac{d k}{d \theta}\).  <a href="#af73da6ee7a7286ef4dd1ed9dcac0d791">More...</a><br /></td></tr>
+<tr class="separator:af73da6ee7a7286ef4dd1ed9dcac0d791"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a17581b216ba6bb465084dc1df692f63b"><td class="memItemLeft" align="right" valign="top">virtual double&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classspi_1_1Tools_1_1IsotropicKernel.html#a17581b216ba6bb465084dc1df692f63b">IsotropicKernelSecondDerivative</a> (double const theta) const </td></tr>
+<tr class="memdesc:a17581b216ba6bb465084dc1df692f63b"><td class="mdescLeft">&#160;</td><td class="mdescRight">Evaluate the derivative of the kernel function \(\frac{d k}{d \theta}\).  <a href="#a17581b216ba6bb465084dc1df692f63b">More...</a><br /></td></tr>
+<tr class="separator:a17581b216ba6bb465084dc1df692f63b"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a7ef547cfee7342cb962d4abe84443d63"><td class="memItemLeft" align="right" valign="top">double&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classspi_1_1Tools_1_1IsotropicKernel.html#a7ef547cfee7342cb962d4abe84443d63">IsotropicKernelDerivativeFD</a> (double const theta) const </td></tr>
+<tr class="memdesc:a7ef547cfee7342cb962d4abe84443d63"><td class="mdescLeft">&#160;</td><td class="mdescRight">Evaluate the derivative of the kernel function \(\frac{d k}{d \theta}\) using finite difference.  <a href="#a7ef547cfee7342cb962d4abe84443d63">More...</a><br /></td></tr>
+<tr class="separator:a7ef547cfee7342cb962d4abe84443d63"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a795a7c592d39ec5f9f72a5fe753150cc"><td class="memItemLeft" align="right" valign="top">double&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classspi_1_1Tools_1_1IsotropicKernel.html#a795a7c592d39ec5f9f72a5fe753150cc">IsotropicKernelSecondDerivativeFD</a> (double const theta) const </td></tr>
+<tr class="memdesc:a795a7c592d39ec5f9f72a5fe753150cc"><td class="mdescLeft">&#160;</td><td class="mdescRight">Evaluate the derivative of the kernel function \(\frac{d k}{d \theta}\) using finite difference.  <a href="#a795a7c592d39ec5f9f72a5fe753150cc">More...</a><br /></td></tr>
+<tr class="separator:a795a7c592d39ec5f9f72a5fe753150cc"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ae653b33470dab6d4a04d94ef59e8791e"><td class="memItemLeft" align="right" valign="top">double&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classspi_1_1Tools_1_1IsotropicKernel.html#ae653b33470dab6d4a04d94ef59e8791e">operator()</a> (double const theta) const </td></tr>
 <tr class="memdesc:ae653b33470dab6d4a04d94ef59e8791e"><td class="mdescLeft">&#160;</td><td class="mdescRight">Evaluate the kernel function \(k(\theta)\).  <a href="#ae653b33470dab6d4a04d94ef59e8791e">More...</a><br /></td></tr>
 <tr class="separator:ae653b33470dab6d4a04d94ef59e8791e"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -191,6 +204,12 @@ Private Member Functions</h2></td></tr>
 <tr class="memitem:a47d47e8dcd90f92f64fbd39fd9907315"><td class="memTemplItemLeft" align="right" valign="top">void&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="classspi_1_1Tools_1_1IsotropicKernel.html#a47d47e8dcd90f92f64fbd39fd9907315">serialize</a> (Archive &amp;ar)</td></tr>
 <tr class="memdesc:a47d47e8dcd90f92f64fbd39fd9907315"><td class="mdescLeft">&#160;</td><td class="mdescRight">Serialize so we can save to archive/buffers.  <a href="#a47d47e8dcd90f92f64fbd39fd9907315">More...</a><br /></td></tr>
 <tr class="separator:a47d47e8dcd90f92f64fbd39fd9907315"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pri-attribs"></a>
+Private Attributes</h2></td></tr>
+<tr class="memitem:a37d088c4e7d1737a762ddf841463f9b5"><td class="memItemLeft" align="right" valign="top">double&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classspi_1_1Tools_1_1IsotropicKernel.html#a37d088c4e7d1737a762ddf841463f9b5">delta</a> = 1.0e-6</td></tr>
+<tr class="memdesc:a37d088c4e7d1737a762ddf841463f9b5"><td class="mdescLeft">&#160;</td><td class="mdescRight">The step size for finite difference derivative approximations.  <a href="#a37d088c4e7d1737a762ddf841463f9b5">More...</a><br /></td></tr>
+<tr class="separator:a37d088c4e7d1737a762ddf841463f9b5"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="friends"></a>
 Friends</h2></td></tr>
@@ -425,6 +444,126 @@ Additional Inherited Members</h2></td></tr>
 
 </div>
 </div>
+<a class="anchor" id="af73da6ee7a7286ef4dd1ed9dcac0d791"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">double IsotropicKernel::IsotropicKernelDerivative </td>
+          <td>(</td>
+          <td class="paramtype">double const&#160;</td>
+          <td class="paramname"><em>theta</em></td><td>)</td>
+          <td> const</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">virtual</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Evaluate the derivative of the kernel function \(\frac{d k}{d \theta}\). </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[in]</td><td class="paramname">theta</td><td>The value of \(\theta = \|\boldsymbol{x}_1-\boldsymbol{x}_2\|^2\) </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>The kernel derivative \(\frac{d k}{d \theta}\) </dd></dl>
+
+<p>Reimplemented in <a class="el" href="classspi_1_1Tools_1_1BumpKernel.html#afd5e647fe95556ae0d42352cfe87187d">spi::Tools::BumpKernel</a>, <a class="el" href="classspi_1_1Tools_1_1ExponentialKernel.html#ac597195318ef39cb10d04a24da795ef6">spi::Tools::ExponentialKernel</a>, and <a class="el" href="classspi_1_1Tools_1_1HatKernel.html#a8191cd1e2782bd7cdaa4bd2ea5c0bcbe">spi::Tools::HatKernel</a>.</p>
+
+</div>
+</div>
+<a class="anchor" id="a7ef547cfee7342cb962d4abe84443d63"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">double IsotropicKernel::IsotropicKernelDerivativeFD </td>
+          <td>(</td>
+          <td class="paramtype">double const&#160;</td>
+          <td class="paramname"><em>theta</em></td><td>)</td>
+          <td> const</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Evaluate the derivative of the kernel function \(\frac{d k}{d \theta}\) using finite difference. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[in]</td><td class="paramname">theta</td><td>The value of \(\theta = \|\boldsymbol{x}_1-\boldsymbol{x}_2\|^2\) </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>The kernel derivative \(\frac{d k}{d \theta}\) (estimated with finite difference) </dd></dl>
+
+</div>
+</div>
+<a class="anchor" id="a17581b216ba6bb465084dc1df692f63b"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">double IsotropicKernel::IsotropicKernelSecondDerivative </td>
+          <td>(</td>
+          <td class="paramtype">double const&#160;</td>
+          <td class="paramname"><em>theta</em></td><td>)</td>
+          <td> const</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">virtual</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Evaluate the derivative of the kernel function \(\frac{d k}{d \theta}\). </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[in]</td><td class="paramname">theta</td><td>The value of \(\theta = \|\boldsymbol{x}_1-\boldsymbol{x}_2\|^2\) </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>The kernel derivative \(\frac{d k}{d \theta}\) </dd></dl>
+
+<p>Reimplemented in <a class="el" href="classspi_1_1Tools_1_1BumpKernel.html#a7dbfa00ed6a91e7457dc86ae6d00a672">spi::Tools::BumpKernel</a>, <a class="el" href="classspi_1_1Tools_1_1ExponentialKernel.html#a16f97d046b6cd2eced44c0354a004c09">spi::Tools::ExponentialKernel</a>, and <a class="el" href="classspi_1_1Tools_1_1HatKernel.html#adbde89775571cf602da6cdd6267ce143">spi::Tools::HatKernel</a>.</p>
+
+</div>
+</div>
+<a class="anchor" id="a795a7c592d39ec5f9f72a5fe753150cc"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">double IsotropicKernel::IsotropicKernelSecondDerivativeFD </td>
+          <td>(</td>
+          <td class="paramtype">double const&#160;</td>
+          <td class="paramname"><em>theta</em></td><td>)</td>
+          <td> const</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Evaluate the derivative of the kernel function \(\frac{d k}{d \theta}\) using finite difference. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[in]</td><td class="paramname">theta</td><td>The value of \(\theta = \|\boldsymbol{x}_1-\boldsymbol{x}_2\|^2\) </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>The kernel derivative \(\frac{d k}{d \theta}\) (estimated with finite difference) </dd></dl>
+
+</div>
+</div>
 <a class="anchor" id="ad36495584c41f51a1c6df420f98f8830"></a>
 <div class="memitem">
 <div class="memproto">
@@ -530,6 +669,29 @@ template&lt;class Archive &gt; </div>
 </div><div class="memdoc">
 
 <p>Make cereal::access a friend for serialization. </p>
+
+</div>
+</div>
+<h2 class="groupheader">Member Data Documentation</h2>
+<a class="anchor" id="a37d088c4e7d1737a762ddf841463f9b5"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">double spi::Tools::IsotropicKernel::delta = 1.0e-6</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">private</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>The step size for finite difference derivative approximations. </p>
 
 </div>
 </div>

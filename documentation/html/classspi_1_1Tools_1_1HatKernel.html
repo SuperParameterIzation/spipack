@@ -129,6 +129,12 @@ Public Member Functions</h2></td></tr>
 <tr class="separator:a132f20e40774fa349c4b6bd3803c3b7a"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:aa57771dd8a0c498fa54a47b9b73f0903"><td class="memItemLeft" align="right" valign="top">virtual&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classspi_1_1Tools_1_1HatKernel.html#aa57771dd8a0c498fa54a47b9b73f0903">~HatKernel</a> ()=default</td></tr>
 <tr class="separator:aa57771dd8a0c498fa54a47b9b73f0903"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a8191cd1e2782bd7cdaa4bd2ea5c0bcbe"><td class="memItemLeft" align="right" valign="top">virtual double&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classspi_1_1Tools_1_1HatKernel.html#a8191cd1e2782bd7cdaa4bd2ea5c0bcbe">IsotropicKernelDerivative</a> (double const theta) const override</td></tr>
+<tr class="memdesc:a8191cd1e2782bd7cdaa4bd2ea5c0bcbe"><td class="mdescLeft">&#160;</td><td class="mdescRight">Evaluate the derivative of the kernel function \(\frac{d k}{d \theta}\).  <a href="#a8191cd1e2782bd7cdaa4bd2ea5c0bcbe">More...</a><br /></td></tr>
+<tr class="separator:a8191cd1e2782bd7cdaa4bd2ea5c0bcbe"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:adbde89775571cf602da6cdd6267ce143"><td class="memItemLeft" align="right" valign="top">virtual double&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classspi_1_1Tools_1_1HatKernel.html#adbde89775571cf602da6cdd6267ce143">IsotropicKernelSecondDerivative</a> (double const theta) const override</td></tr>
+<tr class="memdesc:adbde89775571cf602da6cdd6267ce143"><td class="mdescLeft">&#160;</td><td class="mdescRight">Evaluate the derivative of the kernel function \(\frac{d k}{d \theta}\).  <a href="#adbde89775571cf602da6cdd6267ce143">More...</a><br /></td></tr>
+<tr class="separator:adbde89775571cf602da6cdd6267ce143"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ae5c2f8a6536d371365603c0dc92f1712"><td class="memItemLeft" align="right" valign="top">double&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classspi_1_1Tools_1_1HatKernel.html#ae5c2f8a6536d371365603c0dc92f1712">Magnitude</a> () const </td></tr>
 <tr class="memdesc:ae5c2f8a6536d371365603c0dc92f1712"><td class="mdescLeft">&#160;</td><td class="mdescRight">Get the kernel's magnitude parameter \(a\).  <a href="#ae5c2f8a6536d371365603c0dc92f1712">More...</a><br /></td></tr>
 <tr class="separator:ae5c2f8a6536d371365603c0dc92f1712"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -153,6 +159,12 @@ Public Member Functions</h2></td></tr>
 <tr class="memitem:a87eb39741f4e58e4fdd9e53547305a32 inherit pub_methods_classspi_1_1Tools_1_1IsotropicKernel"><td class="memItemLeft" align="right" valign="top">virtual double&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classspi_1_1Tools_1_1IsotropicKernel.html#a87eb39741f4e58e4fdd9e53547305a32">Evaluate</a> (Eigen::Ref&lt; const Eigen::VectorXd &gt; const &amp;x1, Eigen::Ref&lt; const Eigen::VectorXd &gt; const &amp;x2) const override</td></tr>
 <tr class="memdesc:a87eb39741f4e58e4fdd9e53547305a32 inherit pub_methods_classspi_1_1Tools_1_1IsotropicKernel"><td class="mdescLeft">&#160;</td><td class="mdescRight">Evaluate the kernel function \(k(\boldsymbol{x}_1, \boldsymbol{x}_2)\).  <a href="#a87eb39741f4e58e4fdd9e53547305a32">More...</a><br /></td></tr>
 <tr class="separator:a87eb39741f4e58e4fdd9e53547305a32 inherit pub_methods_classspi_1_1Tools_1_1IsotropicKernel"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a7ef547cfee7342cb962d4abe84443d63 inherit pub_methods_classspi_1_1Tools_1_1IsotropicKernel"><td class="memItemLeft" align="right" valign="top">double&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classspi_1_1Tools_1_1IsotropicKernel.html#a7ef547cfee7342cb962d4abe84443d63">IsotropicKernelDerivativeFD</a> (double const theta) const </td></tr>
+<tr class="memdesc:a7ef547cfee7342cb962d4abe84443d63 inherit pub_methods_classspi_1_1Tools_1_1IsotropicKernel"><td class="mdescLeft">&#160;</td><td class="mdescRight">Evaluate the derivative of the kernel function \(\frac{d k}{d \theta}\) using finite difference.  <a href="#a7ef547cfee7342cb962d4abe84443d63">More...</a><br /></td></tr>
+<tr class="separator:a7ef547cfee7342cb962d4abe84443d63 inherit pub_methods_classspi_1_1Tools_1_1IsotropicKernel"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a795a7c592d39ec5f9f72a5fe753150cc inherit pub_methods_classspi_1_1Tools_1_1IsotropicKernel"><td class="memItemLeft" align="right" valign="top">double&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classspi_1_1Tools_1_1IsotropicKernel.html#a795a7c592d39ec5f9f72a5fe753150cc">IsotropicKernelSecondDerivativeFD</a> (double const theta) const </td></tr>
+<tr class="memdesc:a795a7c592d39ec5f9f72a5fe753150cc inherit pub_methods_classspi_1_1Tools_1_1IsotropicKernel"><td class="mdescLeft">&#160;</td><td class="mdescRight">Evaluate the derivative of the kernel function \(\frac{d k}{d \theta}\) using finite difference.  <a href="#a795a7c592d39ec5f9f72a5fe753150cc">More...</a><br /></td></tr>
+<tr class="separator:a795a7c592d39ec5f9f72a5fe753150cc inherit pub_methods_classspi_1_1Tools_1_1IsotropicKernel"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ae653b33470dab6d4a04d94ef59e8791e inherit pub_methods_classspi_1_1Tools_1_1IsotropicKernel"><td class="memItemLeft" align="right" valign="top">double&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classspi_1_1Tools_1_1IsotropicKernel.html#ae653b33470dab6d4a04d94ef59e8791e">operator()</a> (double const theta) const </td></tr>
 <tr class="memdesc:ae653b33470dab6d4a04d94ef59e8791e inherit pub_methods_classspi_1_1Tools_1_1IsotropicKernel"><td class="mdescLeft">&#160;</td><td class="mdescRight">Evaluate the kernel function \(k(\theta)\).  <a href="#ae653b33470dab6d4a04d94ef59e8791e">More...</a><br /></td></tr>
 <tr class="separator:ae653b33470dab6d4a04d94ef59e8791e inherit pub_methods_classspi_1_1Tools_1_1IsotropicKernel"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -367,6 +379,76 @@ Additional Inherited Members</h2></td></tr>
 <dl class="section return"><dt>Returns</dt><dd>The kernel evaluation \(k(\theta)\) </dd></dl>
 
 <p>Implements <a class="el" href="classspi_1_1Tools_1_1CompactKernel.html#a5af922ced045b18c03ccc3514445d437">spi::Tools::CompactKernel</a>.</p>
+
+</div>
+</div>
+<a class="anchor" id="a8191cd1e2782bd7cdaa4bd2ea5c0bcbe"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">double HatKernel::IsotropicKernelDerivative </td>
+          <td>(</td>
+          <td class="paramtype">double const&#160;</td>
+          <td class="paramname"><em>theta</em></td><td>)</td>
+          <td> const</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">override</span><span class="mlabel">virtual</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Evaluate the derivative of the kernel function \(\frac{d k}{d \theta}\). </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[in]</td><td class="paramname">theta</td><td>The value of \(\theta = \|\boldsymbol{x}_1-\boldsymbol{x}_2\|^2\) </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>The kernel derivative \(\frac{d k}{d \theta}\) </dd></dl>
+
+<p>Reimplemented from <a class="el" href="classspi_1_1Tools_1_1IsotropicKernel.html#af73da6ee7a7286ef4dd1ed9dcac0d791">spi::Tools::IsotropicKernel</a>.</p>
+
+</div>
+</div>
+<a class="anchor" id="adbde89775571cf602da6cdd6267ce143"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">double HatKernel::IsotropicKernelSecondDerivative </td>
+          <td>(</td>
+          <td class="paramtype">double const&#160;</td>
+          <td class="paramname"><em>theta</em></td><td>)</td>
+          <td> const</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">override</span><span class="mlabel">virtual</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Evaluate the derivative of the kernel function \(\frac{d k}{d \theta}\). </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[in]</td><td class="paramname">theta</td><td>The value of \(\theta = \|\boldsymbol{x}_1-\boldsymbol{x}_2\|^2\) </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>The kernel derivative \(\frac{d k}{d \theta}\) </dd></dl>
+
+<p>Reimplemented from <a class="el" href="classspi_1_1Tools_1_1IsotropicKernel.html#a17581b216ba6bb465084dc1df692f63b">spi::Tools::IsotropicKernel</a>.</p>
 
 </div>
 </div>

@@ -1,6 +1,7 @@
 var searchData=
 [
   ['defaults',['defaults',['../classspi_1_1NumericalSolvers_1_1DensityEstimation.html#ab72de5af8585f1c1e07e6699bd0dbeb7',1,'spi::NumericalSolvers::DensityEstimation::defaults()'],['../classspi_1_1NumericalSolvers_1_1GraphLaplacian.html#aa50a8ef0657760fade62148bd055d647',1,'spi::NumericalSolvers::GraphLaplacian::defaults()'],['../classspi_1_1NumericalSolvers_1_1SampleRepresentation.html#a6f549b3d5ec85b5f7021eebd0e9e2c25',1,'spi::NumericalSolvers::SampleRepresentation::defaults()'],['../classspi_1_1Tools_1_1NearestNeighbors.html#a663e83d2c5e279f7c5506baf2867fbd9',1,'spi::Tools::NearestNeighbors::defaults()']]],
+  ['delta',['delta',['../classspi_1_1Tools_1_1IsotropicKernel.html#a37d088c4e7d1737a762ddf841463f9b5',1,'spi::Tools::IsotropicKernel']]],
   ['dens',['dens',['../classDensityEstimationTests.html#afcd252f85ce0eb9deedf8b4a0e6f8808',1,'DensityEstimationTests']]],
   ['density',['density',['../classDensityEstimationTests.html#a04fdba86209d61314a06c207118c90f4',1,'DensityEstimationTests::density()'],['../classspi_1_1NumericalSolvers_1_1KolmogorovOperator.html#a0ed19ba78af8a7c956fe19862284bbbd',1,'spi::NumericalSolvers::KolmogorovOperator::density()']]],
   ['densityestimate',['densityEstimate',['../namespace__plot__result.html#ab38249ee60261f9d6d32611915b369b1',1,'_plot_result']]],
