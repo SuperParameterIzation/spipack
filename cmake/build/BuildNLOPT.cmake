@@ -17,10 +17,10 @@ ExternalProject_Add(
     -DCMAKE_CXX_FLAGS=${CMAKE_CXX_FLAGS}
 )
 
-list(APPEND NLOPT_INCLUDE_DIRS
+list(APPEND NLOPT_INCLUDE_DIR
   "${CMAKE_BINARY_DIR}/external/nlopt/include"
 )
 
-list(APPEND NLOPT_LIBRARIES
+list(APPEND NLOPT_LIBRARY
   "${CMAKE_BINARY_DIR}/external/nlopt/lib/${library_prefix}nlopt${shared_library_suffix}"
 )
