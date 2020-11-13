@@ -11,19 +11,28 @@ using namespace spi::Tools;
 using namespace spi::NumericalSolvers;
 
 SampleRepresentation::SampleRepresentation(std::shared_ptr<RandomVariable> const& rv, YAML::Node const& options) :
-samples(rv, options["NearestNeighbors"]),
+samples(std::make_shared<NearestNeighbors>(rv, options["NearestNeighbors"])),
 numNearestNeighbors(options["NumNearestNeighbors"].as<std::size_t>(defaults.numNearestNeighbors)),
 truncateKernelMatrix(options["TruncateKernelMatrix"].as<bool>(defaults.truncateKernelMatrix)),
-numThreads(options["NumThreads"].as<std::size_t>(samples.NumThreads()))
+numThreads(options["NumThreads"].as<std::size_t>(samples->NumThreads()))
 {
   Initialize(options);
 }
 
 SampleRepresentation::SampleRepresentation(std::shared_ptr<SampleCollection> const& samples, YAML::Node const& options) :
-samples(samples, options["NearestNeighbors"]),
+samples(std::make_shared<NearestNeighbors>(samples, options["NearestNeighbors"])),
 numNearestNeighbors(options["NumNearestNeighbors"].as<std::size_t>(defaults.numNearestNeighbors)),
 truncateKernelMatrix(options["TruncateKernelMatrix"].as<bool>(defaults.truncateKernelMatrix)),
-numThreads(options["NumThreads"].as<std::size_t>(this->samples.NumThreads()))
+numThreads(options["NumThreads"].as<std::size_t>(this->samples->NumThreads()))
+{
+  Initialize(options);
+}
+
+SampleRepresentation::SampleRepresentation(std::shared_ptr<const NearestNeighbors> const& samples, YAML::Node const& options) :
+samples(samples),
+numNearestNeighbors(options["NumNearestNeighbors"].as<std::size_t>(defaults.numNearestNeighbors)),
+truncateKernelMatrix(options["TruncateKernelMatrix"].as<bool>(defaults.truncateKernelMatrix)),
+numThreads(options["NumThreads"].as<std::size_t>(this->samples->NumThreads()))
 {
   Initialize(options);
 }
@@ -38,26 +47,26 @@ void SampleRepresentation::Initialize(YAML::Node const& options) {
   assert(truncationTol>0.0);
 }
 
-std::size_t SampleRepresentation::NumSamples() const { return samples.NumSamples(); }
+std::size_t SampleRepresentation::NumSamples() const { return samples->NumSamples(); }
 
 std::size_t SampleRepresentation::NumNearestNeighbors() const { return numNearestNeighbors; }
 
 Eigen::Ref<Eigen::VectorXd const> SampleRepresentation::Point(std::size_t const i) const {
   assert(i<NumSamples());
-  return samples.Point(i);
+  return samples->Point(i);
 }
 
 std::shared_ptr<const IsotropicKernel> SampleRepresentation::Kernel() const { return kernel; }
 
-void SampleRepresentation::BuildKDTrees() const { samples.BuildKDTrees(); }
+void SampleRepresentation::BuildKDTrees() const { samples->BuildKDTrees(); }
 
-Eigen::VectorXd SampleRepresentation::SquaredBandwidth() const { return samples.SquaredBandwidth(numNearestNeighbors); }
+Eigen::VectorXd SampleRepresentation::SquaredBandwidth() const { return samples->SquaredBandwidth(numNearestNeighbors); }
 
 Eigen::VectorXd SampleRepresentation::KernelMatrix(double const eps, Eigen::Ref<Eigen::MatrixXd> kmat) const {
   assert(eps>0.0);
 
   // compute the squared bandwidth
-  const Eigen::VectorXd squaredBandwidth = samples.SquaredBandwidth(numNearestNeighbors);
+  const Eigen::VectorXd squaredBandwidth = samples->SquaredBandwidth(numNearestNeighbors);
 
   // if we are truncating but for some reason want a dense matrix
   if( truncateKernelMatrix ) {
@@ -103,7 +112,7 @@ Eigen::VectorXd SampleRepresentation::KernelMatrix(double const eps, Eigen::Spar
   assert(eps>0.0);
 
   // compute the squared bandwidth
-  const Eigen::VectorXd squaredBandwidth = samples.SquaredBandwidth(numNearestNeighbors);
+  const Eigen::VectorXd squaredBandwidth = samples->SquaredBandwidth(numNearestNeighbors);
 
   // compute the kernel matrix using the bandwidth
   if( truncateKernelMatrix ) { return KernelMatrix(eps, squaredBandwidth.array().sqrt(), kmat); }
@@ -144,7 +153,7 @@ Eigen::VectorXd SampleRepresentation::KernelMatrix(double const eps, Eigen::Ref<
       // find the neighbors within the max bandwidth (ignoring the first i samples)
       std::vector<std::pair<std::size_t, double> > neighbors;
       const double maxband = truncationTol*theta.maxCoeff();
-      samples.FindNeighbors(Point(i), maxband, neighbors, i);
+      samples->FindNeighbors(Point(i), maxband, neighbors, i);
 
       // loop through the neighbors
       for( const auto& neigh : neighbors ) {
@@ -184,7 +193,7 @@ void SampleRepresentation::WriteToFile(std::string const& filename, std::string 
 
   // output the collection to file
   const std::string dataset_ = (dataset.at(0)=='/'? dataset : "/"+dataset);
-  samples.Samples()->WriteToFile(filename, dataset_);
+  samples->Samples()->WriteToFile(filename, dataset_);
 
   file->Close();
 }

@@ -22,6 +22,10 @@ Parameter Key | Type | Default Value | Description |
 "BandwidthParameter"   | <tt>double</tt> | <tt>1.0</tt> | The parmeter \f$\epsilon\f$ used to compute the kernel |
 "ManifoldDimension"   | <tt>double</tt> | <tt>2.0</tt> | The manifold dimension \f$m\f$. |
 "TuneManifoldDimension"   | <tt>bool</tt> | <tt>false</tt> | Tune the manifold dimension \f$m\f$; if we know the exact manifold dimension then we do not need to tune it. |
+
+References:
+- <a href="https://www.sciencedirect.com/science/article/pii/S1063520315000020">"Variable bandwidth diffusion kernels" by T. Berry & J. Harlim</a>
+- <a href="https://www.sciencedirect.com/science/article/pii/S1063520317300982">"Data-driven spectral decomposition and forecasting of ergodic dynamical systems" by D. Giannakis</a>
 */
 class DensityEstimation : public SampleRepresentation {
 public:
@@ -39,6 +43,13 @@ public:
   @param[in] options Setup options
   */
   DensityEstimation(std::shared_ptr<muq::SamplingAlgorithms::SampleCollection> const& samples, YAML::Node const& options);
+
+  /// Construct the density estimation given samples from the underlying distribution \f$\psi\f$
+  /**
+  @param[in] samples Samples from the underlying distribution \f$\psi\f$
+  @param[in] options Setup options
+  */
+  DensityEstimation(std::shared_ptr<const spi::Tools::NearestNeighbors> const& samples, YAML::Node const& options);
 
   virtual ~DensityEstimation() = default;
 

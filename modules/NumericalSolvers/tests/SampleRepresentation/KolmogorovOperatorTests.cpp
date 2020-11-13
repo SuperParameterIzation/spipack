@@ -6,6 +6,7 @@
 
 using namespace muq::Modeling;
 using namespace muq::SamplingAlgorithms;
+using namespace spi::Tools;
 using namespace spi::NumericalSolvers;
 
 class KolmogorovOperatorTests : public::testing::Test {
@@ -26,10 +27,19 @@ protected:
     YAML::Node kernelOptions;
     kernelOptions["Kernel"] = "ExponentialKernel";
 
+    // set the options for the density estimation
+    YAML::Node densityOptions;
+    densityOptions["NearestNeighbors"] = nnOptions;
+    densityOptions["NumNearestNeighbors"] = nneighs;
+    densityOptions["KernelOptions"] = kernelOptions;
+    densityOptions["BandwidthParameter"] = eps;
+    densityOptions["ManifoldDimension"] = (double)dim;
+
     // set the options for the Kolmogorov operator
     options["NearestNeighbors"] = nnOptions;
     options["NumNearestNeighbors"] = nneighs;
     options["KernelOptions"] = kernelOptions;
+    options["DensityOptions"] = densityOptions;
   }
 
   /// Make sure everything is what we expect
@@ -63,6 +73,9 @@ protected:
   /// The number of nearest neighbors
   const std::size_t nneighs = 15;
 
+  /// The bandwidth parameter \f$\epsilon\f$
+  double eps = 25.0;
+
   /// The random variable that lets us sample from the underlying distribution
   std::shared_ptr<RandomVariable> rv;
 
@@ -86,4 +99,31 @@ TEST_F(KolmogorovOperatorTests, SampleCollectionConstruction) {
   for( std::size_t i=0; i<n; ++i ) {
     EXPECT_NEAR((samples->at(i)->state[0]-kolOperator->Point(i)).norm(), 0.0, 1.0e-10);
   }
+}
+
+TEST_F(KolmogorovOperatorTests, NearestNeighborsConstruction) {
+  // add random samples into a sample collection
+  auto samples = std::make_shared<SampleCollection>();
+  for( std::size_t i=0; i<n; ++i ) { samples->Add(std::make_shared<SamplingState>(rv->Sample())); }
+
+  auto neighbors = std::make_shared<NearestNeighbors>(samples, options["NearestNeighbors"]);
+
+  // create the sample representation
+  kolOperator = std::make_shared<KolmogorovOperator>(neighbors, options);
+
+  // check to make sure the samples match
+  for( std::size_t i=0; i<n; ++i ) {
+    EXPECT_NEAR((samples->at(i)->state[0]-kolOperator->Point(i)).norm(), 0.0, 1.0e-10);
+  }
+}
+
+TEST_F(KolmogorovOperatorTests, UntruncatedKernelMatrix_Dense) {
+  // create the Kolmogorov operator from samples
+  auto samples = CreateFromSamples();
+
+  // construct the kd-trees
+  kolOperator->BuildKDTrees();
+
+  // tune the density estimation
+  kolOperator->TuneDensityEstimation();
 }

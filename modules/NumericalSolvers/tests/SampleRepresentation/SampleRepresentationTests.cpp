@@ -89,6 +89,22 @@ TEST_F(SampleRepresentationTests, SampleCollectionConstruction) {
   }
 }
 
+TEST_F(SampleRepresentationTests, NearestNeighborsConstruction) {
+  // add random samples into a sample collection
+  auto samples = std::make_shared<SampleCollection>();
+  for( std::size_t i=0; i<n; ++i ) { samples->Add(std::make_shared<SamplingState>(rv->Sample())); }
+
+  auto neighbors = std::make_shared<NearestNeighbors>(samples, options["NearestNeighbors"]);
+
+  // create the sample representation
+  representation = std::make_shared<SampleRepresentation>(neighbors, options);
+
+  // check to make sure the samples match
+  for( std::size_t i=0; i<n; ++i ) {
+    EXPECT_NEAR((samples->at(i)->state[0]-representation->Point(i)).norm(), 0.0, 1.0e-10);
+  }
+}
+
 TEST_F(SampleRepresentationTests, UntruncatedKernelMatrix_Dense) {
   options["TruncateKernelMatrix"] = false;
 

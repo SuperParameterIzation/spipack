@@ -7,6 +7,7 @@
 
 using namespace muq::Modeling;
 using namespace muq::SamplingAlgorithms;
+using namespace spi::Tools;
 using namespace spi::NumericalSolvers;
 
 class DensityEstimationTests : public::testing::Test {
@@ -93,6 +94,22 @@ TEST_F(DensityEstimationTests, RandomVariableConstruction) {
 TEST_F(DensityEstimationTests, SampleCollectionConstruction) {
   // create the graph laplacian from samples
   auto samples = CreateFromSamples();
+
+  // check to make sure the samples match
+  for( std::size_t i=0; i<n; ++i ) {
+    EXPECT_NEAR((samples->at(i)->state[0]-density->Point(i)).norm(), 0.0, 1.0e-10);
+  }
+}
+
+TEST_F(DensityEstimationTests, NearestNeighborsConstruction) {
+  // add random samples into a sample collection
+  auto samples = std::make_shared<SampleCollection>();
+  for( std::size_t i=0; i<n; ++i ) { samples->Add(std::make_shared<SamplingState>(rv->Sample())); }
+
+  auto neighbors = std::make_shared<NearestNeighbors>(samples, options["NearestNeighbors"]);
+
+  // create the sample representation
+  density = std::make_shared<DensityEstimation>(neighbors, options);
 
   // check to make sure the samples match
   for( std::size_t i=0; i<n; ++i ) {

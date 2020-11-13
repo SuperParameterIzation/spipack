@@ -44,7 +44,7 @@ bool GraphLaplacian::TuneBandwidthParameter() const { return tuneBandwidthParame
 
 void GraphLaplacian::BuildKDTrees() {
   // (re-)build the kd-tree
-  samples.BuildKDTrees();
+  samples->BuildKDTrees();
 }
 
 Eigen::VectorXd GraphLaplacian::SquaredBandwidth(std::vector<std::vector<std::pair<std::size_t, double> > >& neighbors) const {
@@ -56,7 +56,7 @@ Eigen::VectorXd GraphLaplacian::SquaredBandwidth(std::vector<std::vector<std::pa
   neighbors.resize(n);
   for( std::size_t i=0; i<n; ++i ) {
     // find the nearest neighbors for each sample
-    bandwidth(i) = samples.FindNeighbors(Point(i), numNearestNeighbors, neighbors[i]);
+    bandwidth(i) = samples->FindNeighbors(Point(i), numNearestNeighbors, neighbors[i]);
   }
 
   return bandwidth;
@@ -123,7 +123,7 @@ Eigen::VectorXd GraphLaplacian::KernelMatrix(double const bandwidthPara, Eigen::
     // the max bandwidth
     std::vector<std::pair<std::size_t, double> > neighbors;
     const double maxband = theta.maxCoeff();
-    samples.FindNeighbors(Point(i), maxband, neighbors, i);
+    samples->FindNeighbors(Point(i), maxband, neighbors, i);
 
     for( const auto& neigh : neighbors ) {
       assert(neigh.first>=i);

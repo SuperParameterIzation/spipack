@@ -66,9 +66,6 @@ int main(int argc, char **argv) {
   // estimate the density at each sample
   const Eigen::VectorXd dens = density.Estimate(squaredBandwidth, tune);
 
-  // estimate the density at each sample
-  //const Eigen::VectorXd dens = density.Estimate(squaredBandwidth);
-
   // compute the true density
   Eigen::VectorXd logDens(n);
   for( std::size_t i=0; i<n; ++i ) { logDens(i) = logDensity->LogDensity(samples->at(i)->state[0]); }
@@ -86,40 +83,4 @@ int main(int argc, char **argv) {
   hdf5file.WriteMatrix("/tune/kernel average", tune.kernelAvg);
   hdf5file.WriteMatrix("/tune/log kernel average derivative", tune.logKernelAvgDerivative);
   hdf5file.Close();
-
-  /*// create the graph laplacian
-  auto laplacian = std::make_shared<GraphLaplacian>(rv, options);
-
-  // write the samples to file
-  laplacian->WriteToFile(filename);
-
-  // build the kd tree
-  laplacian->BuildKDTrees();
-
-  // compute the bandwidth
-  std::vector<std::vector<std::pair<std::size_t, double> > > neighbors;
-  const Eigen::VectorXd squaredBandwidth = laplacian->SquaredBandwidth(neighbors);
-
-  // compute sigma prime
-  std::pair<double, Eigen::SparseMatrix<double> > optimalApprox;
-  const Eigen::Matrix<double, Eigen::Dynamic, 2> sigmaprimeApprox = laplacian->TuneKernelBandwidth(squaredBandwidth.array().sqrt(), neighbors, optimalApprox);
-
-  const Eigen::VectorXd densityEstimationApprox = (1.0/(optimalApprox.first*M_PI*n))*optimalApprox.second*squaredBandwidth.array().inverse().matrix();
-
-  std::pair<double, Eigen::SparseMatrix<double> > optimal;
-  const Eigen::Matrix<double, Eigen::Dynamic, 2> sigmaprime = laplacian->TuneKernelBandwidth(squaredBandwidth.array().sqrt(), optimal);
-
-  const Eigen::VectorXd densityEstimation = (1.0/(optimal.first*M_PI*n))*optimal.second*squaredBandwidth.array().inverse().matrix();
-
-  // open the file
-  auto hdf5file = std::make_shared<HDF5File>(filename);
-  //hdf5file->WriteMatrix("/heat matrix eigenvalues", eigenvalues);
-  hdf5file->WriteMatrix("/log bandwidth", squaredBandwidth.array().sqrt().log().matrix().eval());
-  hdf5file->WriteMatrix("/exact/bandwidth parameter candidate", sigmaprime.col(0).eval());
-  hdf5file->WriteMatrix("/exact/sigma prime", sigmaprime.col(1).eval());
-  hdf5file->WriteMatrix("/exact/density estimation", densityEstimation);
-  hdf5file->WriteMatrix("/approx/bandwidth parameter candidate", sigmaprimeApprox.col(0).eval());
-  hdf5file->WriteMatrix("/approx/sigma prime", sigmaprimeApprox.col(1).eval());
-  hdf5file->WriteMatrix("/approx/density estimation", densityEstimationApprox);
-  hdf5file->Close();*/
 }

@@ -47,6 +47,13 @@ public:
   */
   SampleRepresentation(std::shared_ptr<muq::SamplingAlgorithms::SampleCollection> const& samples, YAML::Node const& options);
 
+  /// Construct the sample representation given the samples from the underlying distribution \f$\psi\f$
+  /**
+    @param[in] samples Samples from the underlying distribution \f$\psi\f$
+    @param[in] options Setup options
+  */
+  SampleRepresentation(std::shared_ptr<const spi::Tools::NearestNeighbors> const& samples, YAML::Node const& options);
+
   virtual ~SampleRepresentation() = default;
 
   /// How many samples are in the collection?
@@ -88,7 +95,7 @@ public:
   @param[out] kmat The kernel matrix \f$\boldsymbol{K}_{\epsilon}\f$
   \return Each entry is the sum of a row in the kernel matrix \f$b_i = \sum_{j=1}^{n} K_{\epsilon}^{(ij)}\f$
   */
-  Eigen::VectorXd KernelMatrix(double const eps, Eigen::Ref<Eigen::MatrixXd> kmat) const;
+  virtual Eigen::VectorXd KernelMatrix(double const eps, Eigen::Ref<Eigen::MatrixXd> kmat) const;
 
   /// Construct the (dense) kernel matrix \f$\boldsymbol{K}_{\epsilon}\f$
   /**
@@ -118,7 +125,7 @@ public:
   @param[out] kmat The kernel matrix \f$\boldsymbol{K}_{\epsilon}\f$
   \return Each entry is the sum of a row in the kernel matrix \f$b_i = \sum_{j=1}^{n} K_{\epsilon}^{(ij)}\f$
   */
-  Eigen::VectorXd KernelMatrix(double const eps, Eigen::SparseMatrix<double>& kmat) const;
+  virtual Eigen::VectorXd KernelMatrix(double const eps, Eigen::SparseMatrix<double>& kmat) const;
 
   /// Construct the kernel matrix \f$\boldsymbol{K}_{\epsilon}\f$
   /**
@@ -155,7 +162,7 @@ public:
 protected:
 
   /// Store the samples from \f$\psi\f$.
-  const spi::Tools::NearestNeighbors samples;
+  const std::shared_ptr<const spi::Tools::NearestNeighbors> samples;
 
   /// The number of nearest neighbors used to compute the bandwidth
   const std::size_t numNearestNeighbors;
