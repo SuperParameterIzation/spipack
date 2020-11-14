@@ -197,7 +197,7 @@ double SampleRepresentation::KernelDerivativeAverage(double const eps, Eigen::Ve
   return sm;
 }
 
-double SampleRepresentation::RecursiveKernelDerivativeAverage(std::size_t const row, std::size_t const coli, std::size_t const colj, double const eps, Eigen::VectorXd const& theta) const {
+double SampleRepresentation::RecursiveKernelDerivativeRowAverage(std::size_t const row, std::size_t const coli, std::size_t const colj, double const eps, Eigen::VectorXd const& theta) const {
   const std::size_t cols = colj-coli;
   const bool includesRow = (coli<=row)&&(row<=colj);
 
@@ -219,8 +219,8 @@ double SampleRepresentation::RecursiveKernelDerivativeAverage(std::size_t const 
   const std::size_t w1 = 2*(half-coli)-rowInLeft;
   const std::size_t w2 = 2*(colj-half)-(!rowInLeft&&includesRow);
 
-  const double x = RecursiveKernelDerivativeAverage(row, coli, half, eps, theta);
-  const double y = RecursiveKernelDerivativeAverage(row, half, colj, eps, theta);
+  const double x = RecursiveKernelDerivativeRowAverage(row, coli, half, eps, theta);
+  const double y = RecursiveKernelDerivativeRowAverage(row, half, colj, eps, theta);
   return (w1*x + w2*y)/(w1+w2);
 }
 
@@ -257,7 +257,7 @@ double SampleRepresentation::KernelDerivativeAverage(std::size_t const rowi, std
       sm += sminner/totWeight;
     } else {
       const double weight = (2*(n-i)-1)/(double)totWeight;
-      sm += weight*RecursiveKernelDerivativeAverage(i, i, NumSamples(), eps, theta);
+      sm += weight*RecursiveKernelDerivativeRowAverage(i, i, NumSamples(), eps, theta);
     }
   }
 
