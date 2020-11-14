@@ -1,10 +1,10 @@
 set(SOURCE
-  SampleRepresentation/BandwidthCost.cpp
-
   SampleRepresentation/SampleRepresentation.cpp
   SampleRepresentation/DensityEstimation.cpp
   SampleRepresentation/KolmogorovOperator.cpp
   SampleRepresentation/GraphLaplacian.cpp
+
+  SampleRepresentation/BandwidthCost.cpp
 )
 
 message(STATUS ${SPIPACK_EXTERNAL_LIBRARIES})
