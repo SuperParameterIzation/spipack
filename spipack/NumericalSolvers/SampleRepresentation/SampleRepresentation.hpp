@@ -164,6 +164,18 @@ public:
   */
   double KernelDerivativeAverage(double const eps, Eigen::VectorXd const& rvec) const;
 
+  /// Compute the average of the pair-wise kernel second derivative evaluations \f$\bar{k}^{\prime} = \frac{d^2}{d \epsilon^2} \left[ n^{-2} \sum_{i,j=0}^{n} k\left( \frac{\|\boldsymbol{x}^{(i)}-\boldsymbol{x}^{(j)}\|^2}{\epsilon r_i r_j} \right) \right] \f$
+  /**
+  We (recursively) compute the average
+  \f{equation*}{
+  \bar{k}^{\prime} = \frac{d^2}{d \epsilon^2} \left[ n^{-2} \sum_{i,j=0}^{n} k\left( \frac{\|\boldsymbol{x}^{(i)}-\boldsymbol{x}^{(j)}\|^2}{\epsilon r_i r_j} \right) \right] = -n^{-2} \sum_{i,j=0}^{n} \left. \frac{d^2 k}{d \theta^2} \right|_{\theta = \frac{\|\boldsymbol{x}^{(i)}-\boldsymbol{x}^{(j)}\|^2}{\epsilon r_i r_j}} \frac{\|\boldsymbol{x}^{(i)}-\boldsymbol{x}^{(j)}\|^2}{\epsilon^2 r_i r_j}
+  \f}
+  @param[in] eps The bandwidth parameter \f$\epsilon\f$
+  @param[in] rvec The vector \f$\boldsymbol{r}\f$
+  \return The kernel derivative average \f$\bar{k}^{\prime}\f$.
+  */
+  double KernelSecondDerivativeAverage(double const eps, Eigen::VectorXd const& rvec) const;
+
   /// Write the samples to file
   /**
     @param[in] filename The name of the file where we are writing the data
@@ -191,34 +203,22 @@ protected:
 
 private:
 
-  // Compute the average of the pair-wise kernel derivative evaluations \f$\bar{k}_i^{\prime} = \frac{d}{d \epsilon} \left[ n^{-2} \sum_{j=k}^{m} k\left( \frac{\|\boldsymbol{x}^{(i)}-\boldsymbol{x}^{(j)}\|^2}{\epsilon r_i r_j} \right) \right] \f$ in the \f$i^{th}\f$ row
-  /*
-  We compute the average
-  \f{equation*}{
-  \bar{k}_i^{\prime} = \frac{d}{d \epsilon} \left[ n^{-2} \sum_{j=k}^{m} k\left( \frac{\|\boldsymbol{x}^{(i)}-\boldsymbol{x}^{(j)}\|^2}{\epsilon r_i r_j} \right) \right] = -n^{-2} \sum_{j=k}^{m} \left. \frac{d k}{d \theta} \right|_{\theta = \frac{\|\boldsymbol{x}^{(i)}-\boldsymbol{x}^{(j)}\|^2}{\epsilon r_i r_j}} \frac{\|\boldsymbol{x}^{(i)}-\boldsymbol{x}^{(j)}\|^2}{\epsilon^2 r_i r_j}
-  \f}
-  @param[in] row The \f$i^{th}\f$ row
-  @param[in] coli
-  @param[in] eps The bandwidth parameter \f$\epsilon\f$
-  @param[in] rvec The vector \f$\boldsymbol{r}\f$
-  \return The kernel derivative average \f$\bar{k}^{\prime}\f$.
-  */
-
-
   /// Compute the average of the pair-wise kernel derivative evaluations in a given row
   /**
   We compute the average
   \f{equation*}{
   \bar{k}_i^{\prime} = \frac{d}{d \epsilon} \left[ (2(m-k)-(i\in [m,k]))^{-1} \sum_{j=k}^{m} (2.0 - (j==i)) k\left( \frac{\|\boldsymbol{x}^{(i)}-\boldsymbol{x}^{(j)}\|^2}{\epsilon r_i r_j} \right) \right] = -(2(m-k)-(i\in [m,k]))^{-1} \sum_{j=k}^{m} (2.0 - (j==i)) \left. \frac{d k}{d \theta} \right|_{\theta = \frac{\|\boldsymbol{x}^{(i)}-\boldsymbol{x}^{(j)}\|^2}{\epsilon r_i r_j}} \frac{\|\boldsymbol{x}^{(i)}-\boldsymbol{x}^{(j)}\|^2}{\epsilon^2 r_i r_j}
   \f}
+  (note we can also compute the average second dervative---the formula is obtained by differentiating with respect to \f$\epsilon\f$.)
   @param[in] row The \f$i^{th}\f$ row
   @param[in] coli The column \f$k\f$
   @param[in] colj The column \f$m\f$
   @param[in] eps The bandwidth parameter \f$\epsilon\f$
   @param[in] theta The vector \f$\theta_j = \frac{1}{\epsilon r_i r_j}\f$
+  @param[in] first <tt>true</tt>: compute the first derivative; <tt>false</tt>: compute the second derivative
   \return The kernel derivative average \f$\bar{k}^{\prime}_i\f$.
   */
-  double RecursiveKernelDerivativeRowAverage(std::size_t const row, std::size_t const coli, std::size_t const colj, double const eps, Eigen::VectorXd const& theta) const;
+  double RecursiveKernelDerivativeRowAverage(std::size_t const row, std::size_t const coli, std::size_t const colj, double const eps, Eigen::VectorXd const& theta, bool const first) const;
 
   /// Recursively compute the average of the kernel derivative over a given range of rows
   /**
@@ -231,8 +231,10 @@ private:
   @param[in] rowj The row \f$j\f$
   @param[in] eps The bandwidth parameter
   @para[in] rvec The variable bandwidth parameters \f$\boldsymbol{r}\f$
+  @param[in] first <tt>true</tt>: compute the first derivative; <tt>false</tt>: compute the second derivative
+  \return The average kernel derivative
   */
-  double KernelDerivativeAverage(std::size_t const rowi, std::size_t const rowj, double const eps, Eigen::VectorXd const& rvec) const;
+  double KernelDerivativeAverage(std::size_t const rowi, std::size_t const rowj, double const eps, Eigen::VectorXd const& rvec, bool const first) const;
 
   /// Compute the average of the kernel derivative over a given range of rows
   /**
@@ -245,8 +247,10 @@ private:
   @param[in] rowj The row \f$j\f$
   @param[in] eps The bandwidth parameter
   @para[in] rvec The variable bandwidth parameters \f$\boldsymbol{r}\f$
+  @param[in] first <tt>true</tt>: compute the first derivative; <tt>false</tt>: compute the second derivative
+  \return The average kernel derivative
   */
-  double RecursiveKernelDerivativeAverage(std::size_t const rowi, std::size_t const rowj, double const eps, Eigen::VectorXd const& rvec) const;
+  double RecursiveKernelDerivativeAverage(std::size_t const rowi, std::size_t const rowj, double const eps, Eigen::VectorXd const& rvec, bool const first) const;
 
   /// Initialize the sample representation
   /**

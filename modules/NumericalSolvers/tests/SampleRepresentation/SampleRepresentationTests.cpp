@@ -438,7 +438,7 @@ TEST_F(SampleRepresentationTests, KernelSecondDerivativeAverage_Untruncated) {
 
   // compute the kernel matrix
   const double eps = 10.0;
-  const double avg = representation->KernelDerivativeAverage(eps, bandwidth);
+  const double avg = representation->KernelSecondDerivativeAverage(eps, bandwidth);
 
   // compute the expected kernel derivative average
   double expectedAvg = 0.0;
@@ -449,9 +449,55 @@ TEST_F(SampleRepresentationTests, KernelSecondDerivativeAverage_Untruncated) {
       for( std::size_t j=i; j<n; ++j ) {
         const Eigen::VectorXd diff = samples->at(i)->state[0]-samples->at(j)->state[0];
         const double theta = diff.dot(diff)/(eps*bandwidth(i)*bandwidth(j));
-        const double deriv = -kern->IsotropicKernelSecondDerivative(theta)*theta/eps;
+        const double deriv = 2.0*kern->IsotropicKernelDerivative(theta)*theta/eps/eps + kern->IsotropicKernelSecondDerivative(theta)*theta*theta/eps/eps ;
 
         expectedAvg += (i==j? 1.0 : 2.0)*deriv;
+        assert(!std::isnan(expectedAvg));
+      }
+    }
+    expectedAvg /= n*n;
+  }
+
+  EXPECT_NEAR(expectedAvg, avg, 1.0e-10);
+}
+
+TEST_F(SampleRepresentationTests, KernelSecondDerivativeAverage_Truncated) {
+  const double tol = 5.0e-2;
+  options["TruncationTolerance"] = -std::log(tol);
+
+  // create the graph laplacian from samples
+  auto samples = CreateFromSamples();
+  EXPECT_EQ(samples->size(), n);
+
+  // construct the kd-trees
+  representation->BuildKDTrees();
+
+  // compute the bandwidth
+  Eigen::VectorXd bandwidth;
+  {
+    NearestNeighbors nn(samples, options["NearestNeighbors"]);
+    std::vector<std::vector<std::pair<std::size_t, double> > > neighbors;
+    nn.BuildKDTrees();
+    bandwidth = (nn.SquaredBandwidth(nneighs, neighbors)).array().sqrt();
+  }
+
+  // compute the kernel matrix
+  const double eps = 10.0;
+  const double avg = representation->KernelSecondDerivativeAverage(eps, bandwidth);
+
+  // compute the expected kernel derivative average
+  double expectedAvg = 0.0;
+  {
+    auto kern = representation->Kernel();
+    //#pragma omp parallel num_threads(omp_get_max_threads())
+    for( std::size_t i=0; i<n; ++i ) {
+      for( std::size_t j=i; j<n; ++j ) {
+        const Eigen::VectorXd diff = samples->at(i)->state[0]-samples->at(j)->state[0];
+        const double theta = diff.dot(diff)/(eps*bandwidth(i)*bandwidth(j));
+        const double eval = kern->EvaluateIsotropicKernel(theta);
+        const double deriv = 2.0*kern->IsotropicKernelDerivative(theta)*theta/eps/eps + kern->IsotropicKernelSecondDerivative(theta)*theta*theta/eps/eps;
+
+        expectedAvg += (eval<tol? 0.0 : (i==j? 1.0 : 2.0)*deriv);
         assert(!std::isnan(expectedAvg));
       }
     }

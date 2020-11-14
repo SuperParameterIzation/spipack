@@ -192,12 +192,22 @@ double SampleRepresentation::KernelDerivativeAverage(double const eps, Eigen::Ve
 
   #pragma omp parallel num_threads(numThreads)
   #pragma omp single nowait
-  sm = RecursiveKernelDerivativeAverage(0, NumSamples(), eps, rvec);
+  sm = RecursiveKernelDerivativeAverage(0, NumSamples(), eps, rvec, true);
 
   return sm;
 }
 
-double SampleRepresentation::RecursiveKernelDerivativeRowAverage(std::size_t const row, std::size_t const coli, std::size_t const colj, double const eps, Eigen::VectorXd const& theta) const {
+double SampleRepresentation::KernelSecondDerivativeAverage(double const eps, Eigen::VectorXd const& rvec) const {
+  double sm;
+
+  #pragma omp parallel num_threads(numThreads)
+  #pragma omp single nowait
+  sm = RecursiveKernelDerivativeAverage(0, NumSamples(), eps, rvec, false);
+
+  return sm;
+}
+
+double SampleRepresentation::RecursiveKernelDerivativeRowAverage(std::size_t const row, std::size_t const coli, std::size_t const colj, double const eps, Eigen::VectorXd const& theta, bool const first) const {
   const std::size_t cols = colj-coli;
   const bool includesRow = (coli<=row)&&(row<=colj);
 
@@ -206,7 +216,7 @@ double SampleRepresentation::RecursiveKernelDerivativeRowAverage(std::size_t con
     for( std::size_t i=coli; i<colj; ++i ) {
       const Eigen::VectorXd diff = Point(row)-Point(i);
       const double para = diff.dot(diff)/theta(i-row);
-      sm -= (i==row? 1.0 : 2.0)*kernel->IsotropicKernelDerivative(para)*para/eps;
+      sm -= (i==row? 1.0 : 2.0)*( first? kernel->IsotropicKernelDerivative(para) : -(kernel->IsotropicKernelSecondDerivative(para)*para + 2.0*kernel->IsotropicKernelDerivative(para))/eps )*para/eps;
     }
 
     return sm/(2*cols-includesRow);
@@ -219,12 +229,12 @@ double SampleRepresentation::RecursiveKernelDerivativeRowAverage(std::size_t con
   const std::size_t w1 = 2*(half-coli)-rowInLeft;
   const std::size_t w2 = 2*(colj-half)-(!rowInLeft&&includesRow);
 
-  const double x = RecursiveKernelDerivativeRowAverage(row, coli, half, eps, theta);
-  const double y = RecursiveKernelDerivativeRowAverage(row, half, colj, eps, theta);
+  const double x = RecursiveKernelDerivativeRowAverage(row, coli, half, eps, theta, first);
+  const double y = RecursiveKernelDerivativeRowAverage(row, half, colj, eps, theta, first);
   return (w1*x + w2*y)/(w1+w2);
 }
 
-double SampleRepresentation::KernelDerivativeAverage(std::size_t const rowi, std::size_t const rowj, double const eps, Eigen::VectorXd const& rvec) const {
+double SampleRepresentation::KernelDerivativeAverage(std::size_t const rowi, std::size_t const rowj, double const eps, Eigen::VectorXd const& rvec, bool const first) const {
   const std::size_t n = NumSamples();
 
   // loop through each row
@@ -251,24 +261,24 @@ double SampleRepresentation::KernelDerivativeAverage(std::size_t const rowi, std
         const double para = neigh.second/theta(neigh.first-i);
         if( para>truncationTol ) { continue; }
 
-        sminner -= (neigh.first==i? 1.0 : 2.0)*kernel->IsotropicKernelDerivative(para)*para/eps;
+        sminner -= (i==neigh.first? 1.0 : 2.0)*( first? kernel->IsotropicKernelDerivative(para) : -(kernel->IsotropicKernelSecondDerivative(para)*para + 2.0*kernel->IsotropicKernelDerivative(para))/eps )*para/eps;
       }
 
       sm += sminner/totWeight;
     } else {
       const double weight = (2*(n-i)-1)/(double)totWeight;
-      sm += weight*RecursiveKernelDerivativeRowAverage(i, i, NumSamples(), eps, theta);
+      sm += weight*RecursiveKernelDerivativeRowAverage(i, i, NumSamples(), eps, theta, first);
     }
   }
 
   return sm;
 }
 
-double SampleRepresentation::RecursiveKernelDerivativeAverage(std::size_t const rowi, std::size_t const rowj, double const eps, Eigen::VectorXd const& rvec) const {
+double SampleRepresentation::RecursiveKernelDerivativeAverage(std::size_t const rowi, std::size_t const rowj, double const eps, Eigen::VectorXd const& rvec, bool const first) const {
   assert(rowj>rowi);
   const std::size_t diff = rowj-rowi;
   // if we have to sum over at most 5 rows, use a serial outer loop
-  if( diff<5 ) { return KernelDerivativeAverage(rowi, rowj, eps, rvec); }
+  if( diff<5 ) { return KernelDerivativeAverage(rowi, rowj, eps, rvec, first); }
 
   double x, y;
   const std::size_t tot = rowi+rowj;
@@ -279,9 +289,9 @@ double SampleRepresentation::RecursiveKernelDerivativeAverage(std::size_t const 
   const std::size_t w2 = (rowj-half)*(2*n-rowj-half);
 
   #pragma omp task shared(x)
-  x = RecursiveKernelDerivativeAverage(rowi, half, eps, rvec);
+  x = RecursiveKernelDerivativeAverage(rowi, half, eps, rvec, first);
   #pragma omp task shared(y)
-  y = RecursiveKernelDerivativeAverage(half, rowj, eps, rvec);
+  y = RecursiveKernelDerivativeAverage(half, rowj, eps, rvec, first);
   #pragma omp taskwait
   x = (w1*x+w2*y)/(w1+w2);
 
