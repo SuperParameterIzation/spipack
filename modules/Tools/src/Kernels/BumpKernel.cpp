@@ -27,6 +27,9 @@ double BumpKernel::Scale() const { return scale; }
 double BumpKernel::Exponent() const { return expon; }
 
 double BumpKernel::IsotropicKernelDerivative(double const theta) const {
+  // if theta is near 1, return zero to avoid nan
+  if( std::abs(theta)<1.0e-10 ) { return 0.0; }
+
   // if theta is near 1, return zero to avoid a seg fault
   static const double thresh = 1.0-1.0e-10;
   if( theta>thresh ) { return 0.0; }
@@ -38,6 +41,9 @@ double BumpKernel::IsotropicKernelDerivative(double const theta) const {
 }
 
 double BumpKernel::IsotropicKernelSecondDerivative(double const theta) const {
+  // if theta is near 1, return zero to avoid nan
+  if( std::abs(theta)<1.0e-10 ) { return 0.0; }
+  
   // if theta is near 1, return zero to avoid a seg fault
   static const double thresh = 1.0-1.0e-10;
   if( theta>thresh ) { return 0.0; }

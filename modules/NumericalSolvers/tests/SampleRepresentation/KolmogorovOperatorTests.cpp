@@ -117,6 +117,7 @@ TEST_F(KolmogorovOperatorTests, NearestNeighborsConstruction) {
   }
 }
 
+/*
 TEST_F(KolmogorovOperatorTests, UntruncatedKernelMatrix_Dense) {
   // create the Kolmogorov operator from samples
   auto samples = CreateFromSamples();
@@ -127,3 +128,4 @@ TEST_F(KolmogorovOperatorTests, UntruncatedKernelMatrix_Dense) {
   // tune the density estimation
   kolOperator->TuneDensityEstimation();
 }
+*/

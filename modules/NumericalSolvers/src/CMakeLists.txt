@@ -1,4 +1,6 @@
 set(SOURCE
+  SampleRepresentation/BandwidthCost.cpp
+
   SampleRepresentation/SampleRepresentation.cpp
   SampleRepresentation/DensityEstimation.cpp
   SampleRepresentation/KolmogorovOperator.cpp

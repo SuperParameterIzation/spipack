@@ -187,6 +187,107 @@ Eigen::VectorXd SampleRepresentation::KernelMatrix(double const eps, Eigen::Ref<
   return rowsum;
 }
 
+double SampleRepresentation::KernelDerivativeAverage(double const eps, Eigen::VectorXd const& rvec) const {
+  double sm;
+
+  #pragma omp parallel num_threads(numThreads)
+  #pragma omp single nowait
+  sm = RecursiveKernelDerivativeAverage(0, NumSamples(), eps, rvec);
+
+  return sm;
+}
+
+double SampleRepresentation::RecursiveKernelDerivativeAverage(std::size_t const row, std::size_t const coli, std::size_t const colj, double const eps, Eigen::VectorXd const& theta) const {
+  const std::size_t cols = colj-coli;
+  const bool includesRow = (coli<=row)&&(row<=colj);
+
+  if( cols<25 ) {
+    double sm = 0.0;
+    for( std::size_t i=coli; i<colj; ++i ) {
+      const Eigen::VectorXd diff = Point(row)-Point(i);
+      const double para = diff.dot(diff)/theta(i-row);
+      sm -= (i==row? 1.0 : 2.0)*kernel->IsotropicKernelDerivative(para)*para/eps;
+    }
+
+    return sm/(2*cols-includesRow);
+  }
+
+  const std::size_t n = coli+colj;
+  const std::size_t half = n/2;
+  const bool rowInLeft = includesRow&&(row<half);
+
+  const std::size_t w1 = 2*(half-coli)-rowInLeft;
+  const std::size_t w2 = 2*(colj-half)-(!rowInLeft&&includesRow);
+
+  const double x = RecursiveKernelDerivativeAverage(row, coli, half, eps, theta);
+  const double y = RecursiveKernelDerivativeAverage(row, half, colj, eps, theta);
+  return (w1*x + w2*y)/(w1+w2);
+}
+
+double SampleRepresentation::KernelDerivativeAverage(std::size_t const rowi, std::size_t const rowj, double const eps, Eigen::VectorXd const& rvec) const {
+  const std::size_t n = NumSamples();
+
+  // loop through each row
+  double sm = 0.0;
+  const std::size_t totWeight = (rowj-rowi)*(2*n-rowj-rowi);
+  for( std::size_t i=rowi; i<rowj; ++i ) {
+    // compute the bandwith parameter for each pair of points
+    Eigen::VectorXd theta = Eigen::VectorXd::Constant(n-i, eps*rvec(i));
+    theta = theta.array()*rvec.tail(n-i).array();
+
+    if( truncateKernelMatrix ) {
+      // find the neighbors within the max bandwidth (ignoring the first i samples)
+      std::vector<std::pair<std::size_t, double> > neighbors;
+      const double maxband = truncationTol*theta.maxCoeff();
+      samples->FindNeighbors(Point(i), maxband, neighbors, i);
+
+      // loop through the neighbors
+      double sminner = 0.0;
+      for( const auto& neigh : neighbors ) {
+        // we have ignored the first i
+        assert(neigh.first>=i);
+
+        // skip if we are outside of the kernel's support
+        const double para = neigh.second/theta(neigh.first-i);
+        if( para>truncationTol ) { continue; }
+
+        sminner -= (neigh.first==i? 1.0 : 2.0)*kernel->IsotropicKernelDerivative(para)*para/eps;
+      }
+
+      sm += sminner/totWeight;
+    } else {
+      const double weight = (2*(n-i)-1)/(double)totWeight;
+      sm += weight*RecursiveKernelDerivativeAverage(i, i, NumSamples(), eps, theta);
+    }
+  }
+
+  return sm;
+}
+
+double SampleRepresentation::RecursiveKernelDerivativeAverage(std::size_t const rowi, std::size_t const rowj, double const eps, Eigen::VectorXd const& rvec) const {
+  assert(rowj>rowi);
+  const std::size_t diff = rowj-rowi;
+  // if we have to sum over at most 5 rows, use a serial outer loop
+  if( diff<5 ) { return KernelDerivativeAverage(rowi, rowj, eps, rvec); }
+
+  double x, y;
+  const std::size_t tot = rowi+rowj;
+  const std::size_t half = tot/2;
+  const std::size_t n = NumSamples();
+
+  const std::size_t w1 = (half-rowi)*(2*n-half-rowi);
+  const std::size_t w2 = (rowj-half)*(2*n-rowj-half);
+
+  #pragma omp task shared(x)
+  x = RecursiveKernelDerivativeAverage(rowi, half, eps, rvec);
+  #pragma omp task shared(y)
+  y = RecursiveKernelDerivativeAverage(half, rowj, eps, rvec);
+  #pragma omp taskwait
+  x = (w1*x+w2*y)/(w1+w2);
+
+  return x;
+}
+
 void SampleRepresentation::WriteToFile(std::string const& filename, std::string const& dataset) const {
   // create an hdf5 file
   auto file = std::make_shared<HDF5File>(filename);

@@ -25,12 +25,18 @@ double ExponentialKernel::Scale() const { return scale; }
 double ExponentialKernel::Exponent() const { return expon; }
 
 double ExponentialKernel::IsotropicKernelDerivative(double const theta) const {
+  // if theta is near 1, return zero to avoid nan
+  if( std::abs(theta)<1.0e-10 ) { return 0.0; }
+
   const double powtheta = std::pow(std::abs(theta), expon);
 
   return -mag*scale*expon*powtheta/theta*std::exp(-scale*powtheta);
 }
 
 double ExponentialKernel::IsotropicKernelSecondDerivative(double const theta) const {
+  // if theta is near 1, return zero to avoid nan
+  if( std::abs(theta)<1.0e-10 ) { return 0.0; }
+  
   const double powtheta = std::pow(std::abs(theta), expon);
   const double dum = scale*expon*powtheta;
 

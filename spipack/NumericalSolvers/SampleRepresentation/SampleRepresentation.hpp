@@ -152,6 +152,18 @@ public:
   */
   Eigen::VectorXd SquaredBandwidth() const;
 
+  /// Compute the average of the pair-wise kernel derivative evaluations \f$\bar{k}^{\prime} = \frac{d}{d \epsilon} \left[ n^{-2} \sum_{i,j=0}^{n} k\left( \frac{\|\boldsymbol{x}^{(i)}-\boldsymbol{x}^{(j)}\|^2}{\epsilon r_i r_j} \right) \right] \f$
+  /**
+  We (recursively) compute the average
+  \f{equation*}{
+  \bar{k}^{\prime} = \frac{d}{d \epsilon} \left[ n^{-2} \sum_{i,j=0}^{n} k\left( \frac{\|\boldsymbol{x}^{(i)}-\boldsymbol{x}^{(j)}\|^2}{\epsilon r_i r_j} \right) \right] = -n^{-2} \sum_{i,j=0}^{n} \left. \frac{d k}{d \theta} \right|_{\theta = \frac{\|\boldsymbol{x}^{(i)}-\boldsymbol{x}^{(j)}\|^2}{\epsilon r_i r_j}} \frac{\|\boldsymbol{x}^{(i)}-\boldsymbol{x}^{(j)}\|^2}{\epsilon^2 r_i r_j}
+  \f}
+  @param[in] eps The bandwidth parameter \f$\epsilon\f$
+  @param[in] rvec The vector \f$\boldsymbol{r}\f$
+  \return The kernel derivative average \f$\bar{k}^{\prime}\f$.
+  */
+  double KernelDerivativeAverage(double const eps, Eigen::VectorXd const& rvec) const;
+
   /// Write the samples to file
   /**
     @param[in] filename The name of the file where we are writing the data
@@ -169,15 +181,21 @@ protected:
 
   /// The kernel function \f$k(\theta)\F$
   /**
-    The kernel is defined by a function \f$k: \mathbb{R}^{+} \mapsto \mathbb{R}^{+}\f$ such that \f$k(\theta) = 0\f$ if \f$\theta>1\f$ and
-    \f{equation*}{
-    k_{\epsilon}(\boldsymbol{x}^{(i)}, \boldsymbol{x}^{(j)}) = k\left( \frac{\| \boldsymbol{x}^{(i)} - \boldsymbol{x}^{(j)} \|^2}{\epsilon r_i r_j} \right),
+  The kernel is defined by a function \f$k: \mathbb{R}^{+} \mapsto \mathbb{R}^{+}\f$ such that \f$k(\theta) = 0\f$ if \f$\theta>1\f$ and
+  \f{equation*}{
+  k_{\epsilon}(\boldsymbol{x}^{(i)}, \boldsymbol{x}^{(j)}) = k\left( \frac{\| \boldsymbol{x}^{(i)} - \boldsymbol{x}^{(j)} \|^2}{\epsilon r_i r_j} \right),
   \f}
   where \f$\epsilon\f$ and \f$\boldsymbol{r}\f$ are given parameters.
   */
   std::shared_ptr<spi::Tools::IsotropicKernel> kernel;
 
 private:
+
+  double KernelDerivativeAverage(std::size_t const row, std::size_t const rowj, double const eps, Eigen::VectorXd const& rvec) const;
+
+  double RecursiveKernelDerivativeAverage(std::size_t const row, std::size_t const coli, std::size_t const colj, double const eps, Eigen::VectorXd const& theta) const;
+
+  double RecursiveKernelDerivativeAverage(std::size_t const rowi, std::size_t const rowj, double const eps, Eigen::VectorXd const& rvec) const;
 
   /// Initialize the sample representation
   /**
