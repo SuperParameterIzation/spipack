@@ -1,5 +1,10 @@
 var searchData=
 [
+  ['bandwidthcost',['BandwidthCost',['../classspi_1_1NumericalSolvers_1_1BandwidthCost.html',1,'spi::NumericalSolvers']]],
+  ['bandwidthcost',['BandwidthCost',['../classspi_1_1NumericalSolvers_1_1BandwidthCost.html#a4fa004335fa12529dab6f2ecab444202',1,'spi::NumericalSolvers::BandwidthCost']]],
+  ['bandwidthcost_2ecpp',['BandwidthCost.cpp',['../BandwidthCost_8cpp.html',1,'']]],
+  ['bandwidthcost_2ehpp',['BandwidthCost.hpp',['../BandwidthCost_8hpp.html',1,'']]],
+  ['bandwidthcosttests_2ecpp',['BandwidthCostTests.cpp',['../BandwidthCostTests_8cpp.html',1,'']]],
   ['bandwidthexponent',['bandwidthExponent',['../structspi_1_1NumericalSolvers_1_1DensityEstimation_1_1TuningData.html#a9b51b8a75a62264653f9f301e9857578',1,'spi::NumericalSolvers::DensityEstimation::TuningData']]],
   ['bandwidthindex',['bandwidthIndex',['../classGraphLaplacianTests.html#af1a36af73af080b9cef5742e7e27779f',1,'GraphLaplacianTests']]],
   ['bandwidthpara',['bandwidthPara',['../classspi_1_1NumericalSolvers_1_1DensityEstimation.html#aefd4c093b324a9514cf8c70307353d56',1,'spi::NumericalSolvers::DensityEstimation::bandwidthPara()'],['../structspi_1_1NumericalSolvers_1_1DensityEstimation_1_1DefaultParameters.html#af3ce0494267597505410f0676fa00d40',1,'spi::NumericalSolvers::DensityEstimation::DefaultParameters::bandwidthPara()'],['../namespace__plot__result.html#aaa521a950d50df10d805e026095bbee1',1,'_plot_result.bandwidthPara()']]],
