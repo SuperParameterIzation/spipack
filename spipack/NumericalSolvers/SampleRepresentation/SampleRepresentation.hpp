@@ -168,7 +168,7 @@ public:
   /**
   We (recursively) compute the average
   \f{equation*}{
-  \bar{k}^{\prime} = \frac{d^2}{d \epsilon^2} \left[ n^{-2} \sum_{i,j=0}^{n} k\left( \frac{\|\boldsymbol{x}^{(i)}-\boldsymbol{x}^{(j)}\|^2}{\epsilon r_i r_j} \right) \right] = -n^{-2} \sum_{i,j=0}^{n} \left. \frac{d^2 k}{d \theta^2} \right|_{\theta = \frac{\|\boldsymbol{x}^{(i)}-\boldsymbol{x}^{(j)}\|^2}{\epsilon r_i r_j}} \frac{\|\boldsymbol{x}^{(i)}-\boldsymbol{x}^{(j)}\|^2}{\epsilon^2 r_i r_j}
+  \bar{k}^{\prime} = \frac{d^2}{d \epsilon^2} \left[ n^{-2} \sum_{i,j=0}^{n} k\left( \frac{\|\boldsymbol{x}^{(i)}-\boldsymbol{x}^{(j)}\|^2}{\epsilon r_i r_j} \right) \right] = -n^{-2} \sum_{i,j=0}^{n} \left( -2 \left. \frac{d k}{d \theta} \right|_{\theta = \frac{\|\boldsymbol{x}^{(i)}-\boldsymbol{x}^{(j)}\|^2}{\epsilon r_i r_j}} \frac{\|\boldsymbol{x}^{(i)}-\boldsymbol{x}^{(j)}\|^2}{\epsilon^3 r_i r_j} - \left. \frac{d^2 k}{d \theta^2} \right|_{\theta = \frac{\|\boldsymbol{x}^{(i)}-\boldsymbol{x}^{(j)}\|^2}{\epsilon r_i r_j}} \left( \frac{\|\boldsymbol{x}^{(i)}-\boldsymbol{x}^{(j)}\|^2}{\epsilon^2 r_i r_j} \right)^2 \right)
   \f}
   @param[in] eps The bandwidth parameter \f$\epsilon\f$
   @param[in] rvec The vector \f$\boldsymbol{r}\f$
