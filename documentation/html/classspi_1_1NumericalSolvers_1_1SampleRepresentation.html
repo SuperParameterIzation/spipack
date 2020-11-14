@@ -193,11 +193,14 @@ Protected Attributes</h2></td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pri-methods"></a>
 Private Member Functions</h2></td></tr>
-<tr class="memitem:ab18a250ef848d0b2ab304fcfe6931025"><td class="memItemLeft" align="right" valign="top">double&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classspi_1_1NumericalSolvers_1_1SampleRepresentation.html#ab18a250ef848d0b2ab304fcfe6931025">KernelDerivativeAverage</a> (std::size_t const row, std::size_t const rowj, double const eps, Eigen::VectorXd const &amp;rvec) const </td></tr>
-<tr class="separator:ab18a250ef848d0b2ab304fcfe6931025"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a4f54bcfb197a863eae831cdffc567989"><td class="memItemLeft" align="right" valign="top">double&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classspi_1_1NumericalSolvers_1_1SampleRepresentation.html#a4f54bcfb197a863eae831cdffc567989">RecursiveKernelDerivativeAverage</a> (std::size_t const row, std::size_t const coli, std::size_t const colj, double const eps, Eigen::VectorXd const &amp;theta) const </td></tr>
-<tr class="separator:a4f54bcfb197a863eae831cdffc567989"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a80bce07db76f96629985a26a2e4384aa"><td class="memItemLeft" align="right" valign="top">double&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classspi_1_1NumericalSolvers_1_1SampleRepresentation.html#a80bce07db76f96629985a26a2e4384aa">RecursiveKernelDerivativeRowAverage</a> (std::size_t const row, std::size_t const coli, std::size_t const colj, double const eps, Eigen::VectorXd const &amp;theta) const </td></tr>
+<tr class="memdesc:a80bce07db76f96629985a26a2e4384aa"><td class="mdescLeft">&#160;</td><td class="mdescRight">Compute the average of the pair-wise kernel derivative evaluations in a given row.  <a href="#a80bce07db76f96629985a26a2e4384aa">More...</a><br /></td></tr>
+<tr class="separator:a80bce07db76f96629985a26a2e4384aa"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ab50d8aca2d983bccf9f94487067c6c60"><td class="memItemLeft" align="right" valign="top">double&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classspi_1_1NumericalSolvers_1_1SampleRepresentation.html#ab50d8aca2d983bccf9f94487067c6c60">KernelDerivativeAverage</a> (std::size_t const rowi, std::size_t const rowj, double const eps, Eigen::VectorXd const &amp;rvec) const </td></tr>
+<tr class="memdesc:ab50d8aca2d983bccf9f94487067c6c60"><td class="mdescLeft">&#160;</td><td class="mdescRight">Recursively compute the average of the kernel derivative over a given range of rows.  <a href="#ab50d8aca2d983bccf9f94487067c6c60">More...</a><br /></td></tr>
+<tr class="separator:ab50d8aca2d983bccf9f94487067c6c60"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a14312cf441d3f45e80df7c29c5b8bbeb"><td class="memItemLeft" align="right" valign="top">double&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classspi_1_1NumericalSolvers_1_1SampleRepresentation.html#a14312cf441d3f45e80df7c29c5b8bbeb">RecursiveKernelDerivativeAverage</a> (std::size_t const rowi, std::size_t const rowj, double const eps, Eigen::VectorXd const &amp;rvec) const </td></tr>
+<tr class="memdesc:a14312cf441d3f45e80df7c29c5b8bbeb"><td class="mdescLeft">&#160;</td><td class="mdescRight">Compute the average of the kernel derivative over a given range of rows.  <a href="#a14312cf441d3f45e80df7c29c5b8bbeb">More...</a><br /></td></tr>
 <tr class="separator:a14312cf441d3f45e80df7c29c5b8bbeb"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a6c3c01796549840014f5e1c5dc36d99a"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classspi_1_1NumericalSolvers_1_1SampleRepresentation.html#a6c3c01796549840014f5e1c5dc36d99a">Initialize</a> (YAML::Node const &amp;options)</td></tr>
 <tr class="memdesc:a6c3c01796549840014f5e1c5dc36d99a"><td class="mdescLeft">&#160;</td><td class="mdescRight">Initialize the sample representation.  <a href="#a6c3c01796549840014f5e1c5dc36d99a">More...</a><br /></td></tr>
@@ -483,7 +486,7 @@ Static Private Attributes</h2></td></tr>
 
 </div>
 </div>
-<a class="anchor" id="ab18a250ef848d0b2ab304fcfe6931025"></a>
+<a class="anchor" id="ab50d8aca2d983bccf9f94487067c6c60"></a>
 <div class="memitem">
 <div class="memproto">
 <table class="mlabels">
@@ -494,7 +497,7 @@ Static Private Attributes</h2></td></tr>
           <td class="memname">double SampleRepresentation::KernelDerivativeAverage </td>
           <td>(</td>
           <td class="paramtype">std::size_t const&#160;</td>
-          <td class="paramname"><em>row</em>, </td>
+          <td class="paramname"><em>rowi</em>, </td>
         </tr>
         <tr>
           <td class="paramkey"></td>
@@ -526,6 +529,19 @@ Static Private Attributes</h2></td></tr>
   </tr>
 </table>
 </div><div class="memdoc">
+
+<p>Recursively compute the average of the kernel derivative over a given range of rows. </p>
+<p>Compute the sum </p><p class="formulaDsp">
+\begin{equation*} \bar{k}^{\prime}_{ij} = \sum_{l=i}^{j} \frac{2(n-l)-1)}{(j-i)(2n -j - i)} \bar{k}_l^{\prime} \end{equation*}
+</p>
+<p> (see <a class="el" href="classspi_1_1NumericalSolvers_1_1SampleRepresentation.html#a80bce07db76f96629985a26a2e4384aa" title="Compute the average of the pair-wise kernel derivative evaluations in a given row. ">spi::NumericalSolvers::SampleRepresentation::RecursiveKernelDerivativeRowAverage</a>) </p><dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[in]</td><td class="paramname">rowi</td><td>The row \(i\) </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">rowj</td><td>The row \(j\) </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">eps</td><td>The bandwidth parameter [in] rvec The variable bandwidth parameters \(\boldsymbol{r}\) </td></tr>
+  </table>
+  </dd>
+</dl>
 
 </div>
 </div>
@@ -780,58 +796,6 @@ Static Private Attributes</h2></td></tr>
 
 </div>
 </div>
-<a class="anchor" id="a4f54bcfb197a863eae831cdffc567989"></a>
-<div class="memitem">
-<div class="memproto">
-<table class="mlabels">
-  <tr>
-  <td class="mlabels-left">
-      <table class="memname">
-        <tr>
-          <td class="memname">double SampleRepresentation::RecursiveKernelDerivativeAverage </td>
-          <td>(</td>
-          <td class="paramtype">std::size_t const&#160;</td>
-          <td class="paramname"><em>row</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">std::size_t const&#160;</td>
-          <td class="paramname"><em>coli</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">std::size_t const&#160;</td>
-          <td class="paramname"><em>colj</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">double const&#160;</td>
-          <td class="paramname"><em>eps</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">Eigen::VectorXd const &amp;&#160;</td>
-          <td class="paramname"><em>theta</em>&#160;</td>
-        </tr>
-        <tr>
-          <td></td>
-          <td>)</td>
-          <td></td><td> const</td>
-        </tr>
-      </table>
-  </td>
-  <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">private</span></span>  </td>
-  </tr>
-</table>
-</div><div class="memdoc">
-
-</div>
-</div>
 <a class="anchor" id="a14312cf441d3f45e80df7c29c5b8bbeb"></a>
 <div class="memitem">
 <div class="memproto">
@@ -875,6 +839,87 @@ Static Private Attributes</h2></td></tr>
   </tr>
 </table>
 </div><div class="memdoc">
+
+<p>Compute the average of the kernel derivative over a given range of rows. </p>
+<p>Compute the sum </p><p class="formulaDsp">
+\begin{equation*} \bar{k}^{\prime}_{ij} = \sum_{l=i}^{j} \frac{2(n-l)-1)}{(j-i)(2n -j - i)} \bar{k}_l^{\prime} \end{equation*}
+</p>
+<p> (see <a class="el" href="classspi_1_1NumericalSolvers_1_1SampleRepresentation.html#a80bce07db76f96629985a26a2e4384aa" title="Compute the average of the pair-wise kernel derivative evaluations in a given row. ">spi::NumericalSolvers::SampleRepresentation::RecursiveKernelDerivativeRowAverage</a>) </p><dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[in]</td><td class="paramname">rowi</td><td>The row \(i\) </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">rowj</td><td>The row \(j\) </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">eps</td><td>The bandwidth parameter [in] rvec The variable bandwidth parameters \(\boldsymbol{r}\) </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a class="anchor" id="a80bce07db76f96629985a26a2e4384aa"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">double SampleRepresentation::RecursiveKernelDerivativeRowAverage </td>
+          <td>(</td>
+          <td class="paramtype">std::size_t const&#160;</td>
+          <td class="paramname"><em>row</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">std::size_t const&#160;</td>
+          <td class="paramname"><em>coli</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">std::size_t const&#160;</td>
+          <td class="paramname"><em>colj</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">double const&#160;</td>
+          <td class="paramname"><em>eps</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">Eigen::VectorXd const &amp;&#160;</td>
+          <td class="paramname"><em>theta</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td> const</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">private</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Compute the average of the pair-wise kernel derivative evaluations in a given row. </p>
+<p>We compute the average </p><p class="formulaDsp">
+\begin{equation*} \bar{k}_i^{\prime} = \frac{d}{d \epsilon} \left[ (2(m-k)-(i\in [m,k]))^{-1} \sum_{j=k}^{m} (2.0 - (j==i)) k\left( \frac{\|\boldsymbol{x}^{(i)}-\boldsymbol{x}^{(j)}\|^2}{\epsilon r_i r_j} \right) \right] = -(2(m-k)-(i\in [m,k]))^{-1} \sum_{j=k}^{m} (2.0 - (j==i)) \left. \frac{d k}{d \theta} \right|_{\theta = \frac{\|\boldsymbol{x}^{(i)}-\boldsymbol{x}^{(j)}\|^2}{\epsilon r_i r_j}} \frac{\|\boldsymbol{x}^{(i)}-\boldsymbol{x}^{(j)}\|^2}{\epsilon^2 r_i r_j} \end{equation*}
+</p>
+ <dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[in]</td><td class="paramname">row</td><td>The \(i^{th}\) row </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">coli</td><td>The column \(k\) </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">colj</td><td>The column \(m\) </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">eps</td><td>The bandwidth parameter \(\epsilon\) </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">theta</td><td>The vector \(\theta_j = \frac{1}{\epsilon r_i r_j}\) </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>The kernel derivative average \(\bar{k}^{\prime}_i\). </dd></dl>
 
 </div>
 </div>
