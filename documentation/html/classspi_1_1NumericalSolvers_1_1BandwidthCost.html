@@ -96,6 +96,8 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <div class="header">
   <div class="summary">
 <a href="#pub-methods">Public Member Functions</a> &#124;
+<a href="#pri-methods">Private Member Functions</a> &#124;
+<a href="#pri-attribs">Private Attributes</a> &#124;
 <a href="classspi_1_1NumericalSolvers_1_1BandwidthCost-members.html">List of all members</a>  </div>
   <div class="headertitle">
 <div class="title">spi::NumericalSolvers::BandwidthCost Class Reference</div>  </div>
@@ -103,24 +105,63 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <div class="contents">
 
 <p><code>#include &lt;<a class="el" href="BandwidthCost_8hpp_source.html">BandwidthCost.hpp</a>&gt;</code></p>
+<div class="dynheader">
+Inheritance diagram for spi::NumericalSolvers::BandwidthCost:</div>
+<div class="dyncontent">
+ <div class="center">
+  <img src="classspi_1_1NumericalSolvers_1_1BandwidthCost.png" usemap="#spi::NumericalSolvers::BandwidthCost_map" alt=""/>
+  <map id="spi::NumericalSolvers::BandwidthCost_map" name="spi::NumericalSolvers::BandwidthCost_map">
+</map>
+ </div></div>
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-methods"></a>
 Public Member Functions</h2></td></tr>
-<tr class="memitem:a4fa004335fa12529dab6f2ecab444202"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classspi_1_1NumericalSolvers_1_1BandwidthCost.html#a4fa004335fa12529dab6f2ecab444202">BandwidthCost</a> ()</td></tr>
-<tr class="separator:a4fa004335fa12529dab6f2ecab444202"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a428ec50fb7fc6fb4653e05e1a415f17f"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classspi_1_1NumericalSolvers_1_1BandwidthCost.html#a428ec50fb7fc6fb4653e05e1a415f17f">BandwidthCost</a> (Eigen::Ref&lt; const Eigen::VectorXd &gt; const &amp;<a class="el" href="classspi_1_1NumericalSolvers_1_1BandwidthCost.html#a5f47a691a21ffd5a49e18e17531dd4cb">bandwidth</a>, std::shared_ptr&lt; const <a class="el" href="classspi_1_1NumericalSolvers_1_1SampleRepresentation.html">SampleRepresentation</a> &gt; const &amp;<a class="el" href="classspi_1_1NumericalSolvers_1_1BandwidthCost.html#ac926932078c0cb94ea3f5ade09d58996">samples</a>)</td></tr>
+<tr class="separator:a428ec50fb7fc6fb4653e05e1a415f17f"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a44df89611936deed66867393718a271d"><td class="memItemLeft" align="right" valign="top">virtual&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classspi_1_1NumericalSolvers_1_1BandwidthCost.html#a44df89611936deed66867393718a271d">~BandwidthCost</a> ()=default</td></tr>
 <tr class="separator:a44df89611936deed66867393718a271d"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pri-methods"></a>
+Private Member Functions</h2></td></tr>
+<tr class="memitem:a7f0dadf7c3764d90fb3900f66921b6f7"><td class="memItemLeft" align="right" valign="top">virtual double&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classspi_1_1NumericalSolvers_1_1BandwidthCost.html#a7f0dadf7c3764d90fb3900f66921b6f7">CostImpl</a> (muq::Modeling::ref_vector&lt; Eigen::VectorXd &gt; const &amp;input) override</td></tr>
+<tr class="separator:a7f0dadf7c3764d90fb3900f66921b6f7"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ab71d52786407e518340b041a3c29c8dd"><td class="memItemLeft" align="right" valign="top">virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classspi_1_1NumericalSolvers_1_1BandwidthCost.html#ab71d52786407e518340b041a3c29c8dd">GradientImpl</a> (unsigned int const inputDimWrt, muq::Modeling::ref_vector&lt; Eigen::VectorXd &gt; const &amp;input, Eigen::VectorXd const &amp;sensitivity) override</td></tr>
+<tr class="separator:ab71d52786407e518340b041a3c29c8dd"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pri-attribs"></a>
+Private Attributes</h2></td></tr>
+<tr class="memitem:a5f47a691a21ffd5a49e18e17531dd4cb"><td class="memItemLeft" align="right" valign="top">const Eigen::VectorXd&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classspi_1_1NumericalSolvers_1_1BandwidthCost.html#a5f47a691a21ffd5a49e18e17531dd4cb">bandwidth</a></td></tr>
+<tr class="separator:a5f47a691a21ffd5a49e18e17531dd4cb"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ac926932078c0cb94ea3f5ade09d58996"><td class="memItemLeft" align="right" valign="top">std::shared_ptr&lt; const <a class="el" href="classspi_1_1NumericalSolvers_1_1SampleRepresentation.html">SampleRepresentation</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classspi_1_1NumericalSolvers_1_1BandwidthCost.html#ac926932078c0cb94ea3f5ade09d58996">samples</a></td></tr>
+<tr class="separator:ac926932078c0cb94ea3f5ade09d58996"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a4e46566a5bfa3c38928ef6893109a96b"><td class="memItemLeft" align="right" valign="top">double&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classspi_1_1NumericalSolvers_1_1BandwidthCost.html#a4e46566a5bfa3c38928ef6893109a96b">eps</a> = std::numeric_limits&lt;double&gt;::quiet_NaN()</td></tr>
+<tr class="separator:a4e46566a5bfa3c38928ef6893109a96b"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a736b67fa7dc894f7908d332d1041c23a"><td class="memItemLeft" align="right" valign="top">double&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classspi_1_1NumericalSolvers_1_1BandwidthCost.html#a736b67fa7dc894f7908d332d1041c23a">ksuml</a> = std::numeric_limits&lt;double&gt;::quiet_NaN()</td></tr>
+<tr class="separator:a736b67fa7dc894f7908d332d1041c23a"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a0be564ce0c25e36f035ebf41093b0ac2"><td class="memItemLeft" align="right" valign="top">double&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classspi_1_1NumericalSolvers_1_1BandwidthCost.html#a0be564ce0c25e36f035ebf41093b0ac2">ksumlp1</a> = std::numeric_limits&lt;double&gt;::quiet_NaN()</td></tr>
+<tr class="separator:a0be564ce0c25e36f035ebf41093b0ac2"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <h2 class="groupheader">Constructor &amp; Destructor Documentation</h2>
-<a class="anchor" id="a4fa004335fa12529dab6f2ecab444202"></a>
+<a class="anchor" id="a428ec50fb7fc6fb4653e05e1a415f17f"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
           <td class="memname">BandwidthCost::BandwidthCost </td>
           <td>(</td>
-          <td class="paramname"></td><td>)</td>
+          <td class="paramtype">Eigen::Ref&lt; const Eigen::VectorXd &gt; const &amp;&#160;</td>
+          <td class="paramname"><em>bandwidth</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
           <td></td>
+          <td class="paramtype">std::shared_ptr&lt; const <a class="el" href="classspi_1_1NumericalSolvers_1_1SampleRepresentation.html">SampleRepresentation</a> &gt; const &amp;&#160;</td>
+          <td class="paramname"><em>samples</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
         </tr>
       </table>
 </div><div class="memdoc">
@@ -144,6 +185,172 @@ Public Member Functions</h2></td></tr>
   </td>
   <td class="mlabels-right">
 <span class="mlabels"><span class="mlabel">virtual</span><span class="mlabel">default</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<h2 class="groupheader">Member Function Documentation</h2>
+<a class="anchor" id="a7f0dadf7c3764d90fb3900f66921b6f7"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">double BandwidthCost::CostImpl </td>
+          <td>(</td>
+          <td class="paramtype">muq::Modeling::ref_vector&lt; Eigen::VectorXd &gt; const &amp;&#160;</td>
+          <td class="paramname"><em>input</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">override</span><span class="mlabel">private</span><span class="mlabel">virtual</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a class="anchor" id="ab71d52786407e518340b041a3c29c8dd"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">void BandwidthCost::GradientImpl </td>
+          <td>(</td>
+          <td class="paramtype">unsigned int const&#160;</td>
+          <td class="paramname"><em>inputDimWrt</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">muq::Modeling::ref_vector&lt; Eigen::VectorXd &gt; const &amp;&#160;</td>
+          <td class="paramname"><em>input</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">Eigen::VectorXd const &amp;&#160;</td>
+          <td class="paramname"><em>sensitivity</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">override</span><span class="mlabel">private</span><span class="mlabel">virtual</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<h2 class="groupheader">Member Data Documentation</h2>
+<a class="anchor" id="a5f47a691a21ffd5a49e18e17531dd4cb"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">const Eigen::VectorXd spi::NumericalSolvers::BandwidthCost::bandwidth</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">private</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a class="anchor" id="a4e46566a5bfa3c38928ef6893109a96b"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">double spi::NumericalSolvers::BandwidthCost::eps = std::numeric_limits&lt;double&gt;::quiet_NaN()</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">private</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a class="anchor" id="a736b67fa7dc894f7908d332d1041c23a"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">double spi::NumericalSolvers::BandwidthCost::ksuml = std::numeric_limits&lt;double&gt;::quiet_NaN()</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">private</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a class="anchor" id="a0be564ce0c25e36f035ebf41093b0ac2"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">double spi::NumericalSolvers::BandwidthCost::ksumlp1 = std::numeric_limits&lt;double&gt;::quiet_NaN()</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">private</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a class="anchor" id="ac926932078c0cb94ea3f5ade09d58996"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">std::shared_ptr&lt;const <a class="el" href="classspi_1_1NumericalSolvers_1_1SampleRepresentation.html">SampleRepresentation</a>&gt; spi::NumericalSolvers::BandwidthCost::samples</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">private</span></span>  </td>
   </tr>
 </table>
 </div><div class="memdoc">

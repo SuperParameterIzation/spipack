@@ -1,6 +1,5 @@
 var searchData=
 [
-  ['candidatebandwidthparameters',['candidateBandwidthParameters',['../structspi_1_1NumericalSolvers_1_1DensityEstimation_1_1TuningData.html#a0ee254c90ddee02c3e09d8d627f95b03',1,'spi::NumericalSolvers::DensityEstimation::TuningData']]],
   ['category',['category',['../namespace__plot__result.html#a42596ccac6d2f13ecd3393bda9a20082',1,'_plot_result']]],
   ['cbar',['cbar',['../namespace__plot__result.html#a9eeb198989340f0153ea245da1028646',1,'_plot_result']]],
   ['clouds',['clouds',['../classspi_1_1Tools_1_1NearestNeighbors.html#aa08878638aa19d0dc249a64832a54d50',1,'spi::Tools::NearestNeighbors']]],
