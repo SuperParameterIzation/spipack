@@ -117,40 +117,6 @@ TEST_F(DensityEstimationTests, NearestNeighborsConstruction) {
   }
 }
 
-TEST_F(DensityEstimationTests, EstimateGaussian_Tuned) {
-  // create the graph laplacian from samples
-  auto samples = CreateFromSamples();
-  EXPECT_EQ(samples->size(), n);
-
-  // construct the kd-trees
-  density->BuildKDTrees();
-
-  // create the tuning data
-  DensityEstimation::TuningData tune;
-  tune.bandwidthExponent = Eigen::VectorXd::LinSpaced(15, -5.0, 5.0);
-
-  // estimate the density at each sample
-  const Eigen::VectorXd densityEstimate = density->Estimate(tune);
-  EXPECT_EQ(densityEstimate.size(), n);
-
-  // the coefficient of the max. density point
-  int coeff;
-  double map = densityEstimate.maxCoeff(&coeff);;
-
-  int maxL;
-  tune.logKernelAvgDerivative.maxCoeff(&maxL);
-
-  // the manifold dimension is dim
-  EXPECT_NEAR(2.0*tune.logKernelAvgDerivative(maxL), dim, 0.1);
-
-  // we have reset the bandwidth parameter
-  eps = tune.candidateBandwidthParameters(maxL);
-  std::cout << "eps: " << eps << std::endl;
-  std::cout << "max sigL: " << tune.logKernelAvgDerivative(maxL) << std::endl;
-  std::cout << "sigL: " << tune.logKernelAvgDerivative.transpose() << std::endl;
-}
-
-
 TEST_F(DensityEstimationTests, EstimateGaussian) {
   // create the graph laplacian from samples
   auto samples = CreateFromSamples();
@@ -162,7 +128,5 @@ TEST_F(DensityEstimationTests, EstimateGaussian) {
   // estimate the density at each sample
   const Eigen::VectorXd densityEstimate = density->Estimate();
   EXPECT_EQ(densityEstimate.size(), n);
-
-  std::cout << std::endl << std::endl;
-  density->Estimate();
+  eps = density->BandwidthParameter();
 }

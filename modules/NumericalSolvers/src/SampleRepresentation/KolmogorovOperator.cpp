@@ -21,11 +21,8 @@ density(this->samples, options["DensityOptions"].as<YAML::Node>(options)) // def
 {}
 
 void KolmogorovOperator::TuneDensityEstimation() {
-  // create the tuning data
-  DensityEstimation::TuningData tune;
-  tune.bandwidthExponent = Eigen::VectorXd::LinSpaced(15, -5.0, 5.0);
-
   // estimate the density at each sample
+  const bool tune = true;
   const Eigen::VectorXd densityEstimate = density.Estimate(tune);
 
   std::cout << "density estimate: " << densityEstimate.transpose() << std::endl;
