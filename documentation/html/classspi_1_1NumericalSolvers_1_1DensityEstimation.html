@@ -97,6 +97,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
   <div class="summary">
 <a href="#nested-classes">Classes</a> &#124;
 <a href="#pub-methods">Public Member Functions</a> &#124;
+<a href="#pri-methods">Private Member Functions</a> &#124;
 <a href="#pri-attribs">Private Attributes</a> &#124;
 <a href="#pri-static-attribs">Static Private Attributes</a> &#124;
 <a href="classspi_1_1NumericalSolvers_1_1DensityEstimation-members.html">List of all members</a>  </div>
@@ -199,6 +200,12 @@ Public Member Functions</h2></td></tr>
 <tr class="memdesc:a34f7a6dd29975239daa33945aa7f7247 inherit pub_methods_classspi_1_1NumericalSolvers_1_1SampleRepresentation"><td class="mdescLeft">&#160;</td><td class="mdescRight">Write the samples to file.  <a href="#a34f7a6dd29975239daa33945aa7f7247">More...</a><br /></td></tr>
 <tr class="separator:a34f7a6dd29975239daa33945aa7f7247 inherit pub_methods_classspi_1_1NumericalSolvers_1_1SampleRepresentation"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pri-methods"></a>
+Private Member Functions</h2></td></tr>
+<tr class="memitem:a58a42dc639c7a8387ac05f25f045d630"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classspi_1_1NumericalSolvers_1_1DensityEstimation.html#a58a42dc639c7a8387ac05f25f045d630">Initialize</a> (YAML::Node const &amp;options)</td></tr>
+<tr class="memdesc:a58a42dc639c7a8387ac05f25f045d630"><td class="mdescLeft">&#160;</td><td class="mdescRight">Initialize the density estimation.  <a href="#a58a42dc639c7a8387ac05f25f045d630">More...</a><br /></td></tr>
+<tr class="separator:a58a42dc639c7a8387ac05f25f045d630"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pri-attribs"></a>
 Private Attributes</h2></td></tr>
 <tr class="memitem:aefd4c093b324a9514cf8c70307353d56"><td class="memItemLeft" align="right" valign="top">double&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classspi_1_1NumericalSolvers_1_1DensityEstimation.html#aefd4c093b324a9514cf8c70307353d56">bandwidthPara</a></td></tr>
@@ -210,6 +217,9 @@ Private Attributes</h2></td></tr>
 <tr class="memitem:aa7609d7745fefab89c46dd88200e2f5c"><td class="memItemLeft" align="right" valign="top">const bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classspi_1_1NumericalSolvers_1_1DensityEstimation.html#aa7609d7745fefab89c46dd88200e2f5c">tuneManifoldDimension</a></td></tr>
 <tr class="memdesc:aa7609d7745fefab89c46dd88200e2f5c"><td class="mdescLeft">&#160;</td><td class="mdescRight">Tune the manifold dimension \(m\)?  <a href="#aa7609d7745fefab89c46dd88200e2f5c">More...</a><br /></td></tr>
 <tr class="separator:aa7609d7745fefab89c46dd88200e2f5c"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a5aecf448796ba61d3305e222d5d8263f"><td class="memItemLeft" align="right" valign="top">boost::property_tree::ptree&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classspi_1_1NumericalSolvers_1_1DensityEstimation.html#a5aecf448796ba61d3305e222d5d8263f">pt</a></td></tr>
+<tr class="memdesc:a5aecf448796ba61d3305e222d5d8263f"><td class="mdescLeft">&#160;</td><td class="mdescRight">Options for the parameter tuning optimization.  <a href="#a5aecf448796ba61d3305e222d5d8263f">More...</a><br /></td></tr>
+<tr class="separator:a5aecf448796ba61d3305e222d5d8263f"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pri-static-attribs"></a>
 Static Private Attributes</h2></td></tr>
@@ -246,6 +256,24 @@ Additional Inherited Members</h2></td></tr>
 <td>"ManifoldDimension" </td><td><code>double</code> </td><td><code>2.0</code> </td><td>The manifold dimension \(m\). </td></tr>
 <tr>
 <td>"TuneManifoldDimension" </td><td><code>bool</code> </td><td><code>false</code> </td><td>Tune the manifold dimension \(m\); if we know the exact manifold dimension then we do not need to tune it. </td></tr>
+<tr>
+<td>"Optimization" </td><td><code>YAML::Node</code> </td><td>see options below </td><td>Options for the optimization method used to tune algorithm parameters. </td></tr>
+</table>
+<p><b>Optimization Parameters:</b> </p><table class="doxtable">
+<tr>
+<th>Parameter Key </th><th>Type </th><th>Default Value </th><th>Description  </th></tr>
+<tr>
+<td>"Algorithm" </td><td><code>std::string</code> </td><td><code>"COBYLA"</code> </td><td>Which <a href="https://nlopt.readthedocs.io/en/latest/">NLopt</a> algorithm should we use? Default: <code>LBFGS</code> Options: <code>COBYLA</code>, <code>BOBYQA</code>, <code>NEWUOA</code>, <code>PRAXIS</code>, <code>NM</code>, <code>SBPLX</code>, <code>MMA</code>, <code>SLSQP</code>, <code>LBFGS</code>, <code>PreTN</code>, <code>LMVM</code> </td></tr>
+<tr>
+<td>"Ftol.AbsoluteTolerance" </td><td><code>double</code> </td><td><code>1e-6</code> </td><td>Absolute function tolerance. </td></tr>
+<tr>
+<td>"Ftol.RelativeTolerance" </td><td><code>double</code> </td><td><code>1e-6</code> </td><td>Relative function tolerance. </td></tr>
+<tr>
+<td>"Rtol.AbsoluteTolerance" </td><td><code>double</code> </td><td><code>1e-6</code> </td><td>Absolute state tolerance. </td></tr>
+<tr>
+<td>"Rtol.RelativeTolerance" </td><td><code>double</code> </td><td><code>1e-6</code> </td><td>Relative state tolerance. </td></tr>
+<tr>
+<td>"MaxEvaluations" </td><td><code>std::size_t</code> </td><td><code>1000</code> </td><td>The maximum number of cost function evaluations. </td></tr>
 </table>
 <p>References:</p><ul>
 <li><a href="https://www.sciencedirect.com/science/article/pii/S1063520315000020">"Variable bandwidth diffusion kernels" by T. Berry &amp; J. Harlim</a></li>
@@ -482,6 +510,38 @@ Additional Inherited Members</h2></td></tr>
 
 </div>
 </div>
+<a class="anchor" id="a58a42dc639c7a8387ac05f25f045d630"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">void DensityEstimation::Initialize </td>
+          <td>(</td>
+          <td class="paramtype">YAML::Node const &amp;&#160;</td>
+          <td class="paramname"><em>options</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">private</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Initialize the density estimation. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[in]</td><td class="paramname">options</td><td>Setup options </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
 <h2 class="groupheader">Member Data Documentation</h2>
 <a class="anchor" id="aefd4c093b324a9514cf8c70307353d56"></a>
 <div class="memitem">
@@ -546,6 +606,28 @@ Additional Inherited Members</h2></td></tr>
 </div><div class="memdoc">
 
 <p>The dimension of the manifold \(m\). </p>
+
+</div>
+</div>
+<a class="anchor" id="a5aecf448796ba61d3305e222d5d8263f"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">boost::property_tree::ptree spi::NumericalSolvers::DensityEstimation::pt</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">private</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Options for the parameter tuning optimization. </p>
 
 </div>
 </div>
