@@ -4,7 +4,6 @@
 
 #include "spipack/NumericalSolvers/SampleRepresentation/BandwidthCost.hpp"
 
-namespace pt = boost::property_tree;
 using namespace muq::Modeling;
 using namespace muq::Optimization;
 using namespace muq::SamplingAlgorithms;
@@ -16,21 +15,38 @@ SampleRepresentation(rv, options),
 bandwidthPara(options["BandwidthParameter"].as<double>(defaults.bandwidthPara)),
 manifoldDim(options["ManifoldDimension"].as<double>(defaults.manifoldDim)),
 tuneManifoldDimension(options["TuneManifoldDimension"].as<bool>(defaults.tuneManifoldDimension))
-{}
+{
+  Initialize(options);
+}
 
 DensityEstimation::DensityEstimation(std::shared_ptr<SampleCollection> const& samples, YAML::Node const& options) :
 SampleRepresentation(samples, options),
 bandwidthPara(options["BandwidthParameter"].as<double>(defaults.bandwidthPara)),
 manifoldDim(options["ManifoldDimension"].as<double>(defaults.manifoldDim)),
 tuneManifoldDimension(options["TuneManifoldDimension"].as<bool>(defaults.tuneManifoldDimension))
-{}
+{
+  Initialize(options);
+}
 
 DensityEstimation::DensityEstimation(std::shared_ptr<const NearestNeighbors> const& samples, YAML::Node const& options) :
 SampleRepresentation(samples, options),
 bandwidthPara(options["BandwidthParameter"].as<double>(defaults.bandwidthPara)),
 manifoldDim(options["ManifoldDimension"].as<double>(defaults.manifoldDim)),
 tuneManifoldDimension(options["TuneManifoldDimension"].as<bool>(defaults.tuneManifoldDimension))
-{}
+{
+  Initialize(options);
+}
+
+void DensityEstimation::Initialize(YAML::Node const& options) {
+  const YAML::Node& opt = options["Optimization"].as<YAML::Node>(YAML::Node());
+
+  pt.put("Ftol.AbsoluteTolerance", opt["Ftol.AbsoluteTolerance"].as<double>(1.0e-6));
+  pt.put("Ftol.RelativeTolerance", opt["Ftol.RelativeTolerance"].as<double>(1.0e-6));
+  pt.put("Xtol.AbsoluteTolerance", opt["Xtol.AbsoluteTolerance"].as<double>(1.0e-6));
+  pt.put("Xtol.RelativeTolerance", opt["Xtol.RelativeTolerance"].as<double>(1.0e-6));
+  pt.put("MaxEvaluations", opt["MaxEvaluations"].as<std::size_t>(1000));
+  pt.put("Algorithm", opt["Algorithm"].as<std::string>("COBYLA"));
+}
 
 double DensityEstimation::BandwidthParameter() const { return bandwidthPara; }
 
@@ -46,35 +62,23 @@ Eigen::VectorXd DensityEstimation::Estimate(Eigen::Ref<const Eigen::VectorXd> co
   const Eigen::VectorXd bandwidth = squaredBandwidth.array().sqrt();
 
   if( tune ) {
-    std::cout << "TUNING THE PARAMETER!" << std::endl;
-    // the cost function
+    // the cost function and optimizater
     auto cost = std::make_shared<BandwidthCost>(bandwidth, shared_from_this());
+    auto opt = std::make_shared<NLoptOptimizer>(cost, pt);
 
-    pt::ptree pt;
-    pt.put("Optimization.Ftol.AbsoluteTolerance", 1.0e-6);
-    pt.put("Optimization.Ftol.RelativeTolerance", 1.0e-6);
-    pt.put("Optimization.Xtol.AbsoluteTolerance", 1.0e-6);
-    pt.put("Optimization.Xtol.RelativeTolerance", 1.0e-6);
-    pt.put("Optimization.MaxEvaluations", 1000); // max number of cost function evaluations
-    pt.put("Optimization.Algorithm", "COBYLA");
-
-    auto opt = std::make_shared<NLoptOptimizer>(cost, pt.get_child("Optimization"));
-
+    // the initial condition for the optimization is the current parameter value
     std::vector<Eigen::VectorXd> inputs(1);
     inputs[0] = Eigen::VectorXd::Constant(1, std::log2(bandwidthPara));
 
+    // solve the optimization and update the parameters
     std::pair<Eigen::VectorXd, double> soln = opt->Solve(inputs);
-
-    std::cout << "opt eps: " << std::pow(2, soln.first(0)) << std::endl;
-    std::cout << "cost: " << soln.second << std::endl;
-
     bandwidthPara = std::pow(2, soln.first(0));
     if( tuneManifoldDimension ) { manifoldDim = 2.0*soln.second; }
   }
 
   // compute the kernel matrix
   Eigen::SparseMatrix<double> kmat;
-  const Eigen::VectorXd rowsum = KernelMatrix(bandwidthPara, squaredBandwidth.array().sqrt(), kmat);
+  const Eigen::VectorXd rowsum = KernelMatrix(bandwidthPara, bandwidth, kmat);
 
   // compute the volume vector
   const Eigen::VectorXd vol = ((NumSamples()*std::pow(M_PI*bandwidthPara, manifoldDim/2.0))*squaredBandwidth.array().pow(manifoldDim/2.0)).array().inverse();

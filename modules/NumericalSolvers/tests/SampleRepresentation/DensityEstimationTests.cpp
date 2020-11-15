@@ -65,13 +65,13 @@ protected:
   const unsigned int dim = 2;
 
   /// The number of samples
-  const std::size_t n = 5000;
+  const std::size_t n = 1000;
 
   /// The number of nearest neighbors
   const std::size_t nneighs = 15;
 
   /// The bandwidth parameter \f$\epsilon\f$
-  double eps = 1.0;
+  double eps = 8.0;
 
   /// The random variable that lets us sample from the underlying distribution
   std::shared_ptr<RandomVariable> rv;
