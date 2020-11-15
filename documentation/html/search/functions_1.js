@@ -1,6 +1,6 @@
 var searchData=
 [
-  ['bandwidthcost',['BandwidthCost',['../classspi_1_1NumericalSolvers_1_1BandwidthCost.html#a4fa004335fa12529dab6f2ecab444202',1,'spi::NumericalSolvers::BandwidthCost']]],
+  ['bandwidthcost',['BandwidthCost',['../classspi_1_1NumericalSolvers_1_1BandwidthCost.html#a428ec50fb7fc6fb4653e05e1a415f17f',1,'spi::NumericalSolvers::BandwidthCost']]],
   ['bandwidthparameter',['BandwidthParameter',['../classspi_1_1NumericalSolvers_1_1DensityEstimation.html#adc5dc897c2607a0a62085bb612c5c484',1,'spi::NumericalSolvers::DensityEstimation']]],
   ['bandwidthparametercandidates',['BandwidthParameterCandidates',['../classspi_1_1NumericalSolvers_1_1GraphLaplacian.html#a2851a590ecb91015f34898dd54f01a08',1,'spi::NumericalSolvers::GraphLaplacian']]],
   ['bandwidthrange',['BandwidthRange',['../classspi_1_1NumericalSolvers_1_1GraphLaplacian.html#a86a1e00907cc2920876d2c62b401ddb9',1,'spi::NumericalSolvers::GraphLaplacian']]],
