@@ -27,7 +27,7 @@ References:
 - <a href="https://www.sciencedirect.com/science/article/pii/S1063520315000020">"Variable bandwidth diffusion kernels" by T. Berry & J. Harlim</a>
 - <a href="https://www.sciencedirect.com/science/article/pii/S1063520317300982">"Data-driven spectral decomposition and forecasting of ergodic dynamical systems" by D. Giannakis</a>
 */
-class DensityEstimation : public SampleRepresentation {
+class DensityEstimation : public SampleRepresentation, public std::enable_shared_from_this<DensityEstimation> {
 public:
 
   /// Construct the density estimation by sampling a random variable from \f$\psi\f$
@@ -73,7 +73,7 @@ public:
 
   \return The density estimate \f$\psi^{(i)}\f$
   */
-  Eigen::VectorXd Estimate() const;
+  Eigen::VectorXd Estimate();
 
   /// Estimate the density at each sample (given bandwidth parameter \f$r_i\f$)
   /**
@@ -91,7 +91,7 @@ public:
   @param[in] squaredBandwidth The squared bandwidth parameter \f$r_i^2\f$
   \return The density estimate \f$\psi^{(i)}\f$
   */
-  Eigen::VectorXd Estimate(Eigen::Ref<const Eigen::VectorXd> const& squaredBandwidth) const;
+  Eigen::VectorXd Estimate(Eigen::Ref<const Eigen::VectorXd> const& squaredBandwidth);
 
   /// Input/output data used to tune the parameters to the density estimation
   /**

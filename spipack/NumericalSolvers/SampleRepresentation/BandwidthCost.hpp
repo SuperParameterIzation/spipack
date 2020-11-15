@@ -11,7 +11,7 @@ namespace NumericalSolvers {
 class BandwidthCost : public muq::Optimization::CostFunction {
 public:
 
-  BandwidthCost(std::shared_ptr<SampleRepresentation> const& samples);
+  BandwidthCost(Eigen::Ref<const Eigen::VectorXd> const& bandwidth, std::shared_ptr<const SampleRepresentation> const& samples);
 
   virtual ~BandwidthCost() = default;
 private:
@@ -19,7 +19,13 @@ private:
 
    virtual void GradientImpl(unsigned int const inputDimWrt, muq::Modeling::ref_vector<Eigen::VectorXd> const& input, Eigen::VectorXd const& sensitivity) override;
 
-   std::shared_ptr<SampleRepresentation> samples;
+   const Eigen::VectorXd bandwidth;
+
+   std::shared_ptr<const SampleRepresentation> samples;
+
+   double eps = std::numeric_limits<double>::quiet_NaN();
+   double ksuml = std::numeric_limits<double>::quiet_NaN();
+   double ksumlp1 = std::numeric_limits<double>::quiet_NaN();
 };
 
 } // namespace NumericalSolvers

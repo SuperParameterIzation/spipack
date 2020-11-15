@@ -28,7 +28,7 @@ protected:
 
     // set the kernel options
     YAML::Node kernelOptions;
-    kernelOptions["Kernel"] = "HatKernel";
+    kernelOptions["Kernel"] = "ExponentialKernel";
 
     // set the options for the graph laplacian
     options["NearestNeighbors"] = nnOptions;
@@ -62,16 +62,16 @@ protected:
   }
 
   /// The dimension of state spaces
-  const unsigned int dim = 1;
+  const unsigned int dim = 2;
 
   /// The number of samples
-  const std::size_t n = 3000;
+  const std::size_t n = 5000;
 
   /// The number of nearest neighbors
   const std::size_t nneighs = 15;
 
   /// The bandwidth parameter \f$\epsilon\f$
-  double eps = 25.0;
+  double eps = 1.0;
 
   /// The random variable that lets us sample from the underlying distribution
   std::shared_ptr<RandomVariable> rv;
@@ -117,7 +117,7 @@ TEST_F(DensityEstimationTests, NearestNeighborsConstruction) {
   }
 }
 
-TEST_F(DensityEstimationTests, EstimateGaussian) {
+TEST_F(DensityEstimationTests, EstimateGaussian_Tuned) {
   // create the graph laplacian from samples
   auto samples = CreateFromSamples();
   EXPECT_EQ(samples->size(), n);
@@ -145,4 +145,24 @@ TEST_F(DensityEstimationTests, EstimateGaussian) {
 
   // we have reset the bandwidth parameter
   eps = tune.candidateBandwidthParameters(maxL);
+  std::cout << "eps: " << eps << std::endl;
+  std::cout << "max sigL: " << tune.logKernelAvgDerivative(maxL) << std::endl;
+  std::cout << "sigL: " << tune.logKernelAvgDerivative.transpose() << std::endl;
+}
+
+
+TEST_F(DensityEstimationTests, EstimateGaussian) {
+  // create the graph laplacian from samples
+  auto samples = CreateFromSamples();
+  EXPECT_EQ(samples->size(), n);
+
+  // construct the kd-trees
+  density->BuildKDTrees();
+
+  // estimate the density at each sample
+  const Eigen::VectorXd densityEstimate = density->Estimate();
+  EXPECT_EQ(densityEstimate.size(), n);
+
+  std::cout << std::endl << std::endl;
+  density->Estimate();
 }

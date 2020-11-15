@@ -79,7 +79,7 @@ trueDensity = hdf5file['/true density'] [()].T [0]
 densityEstimate = hdf5file['/density estimate'] [()].T [0]
 
 bandwidthPara = hdf5file['/tune/candidate bandwidth parameters'] [()].T [0]
-logKernelAvgDerivative = hdf5file['/tune/log kernel average derivative'] [()].T [0]
+logKernelAvgDerivative = hdf5file['/tune/log kernel average change'] [()].T [0]
 
 optInd = np.argmax(logKernelAvgDerivative)
 print('Optimal bandwidth parameter:', bandwidthPara[optInd])
@@ -129,7 +129,7 @@ plt.close(fig)
 fig = MakeFigure(425, 0.9, False)
 ax = plt.gca()
 ax.plot([min(bandwidthPara), max(bandwidthPara)], [1, 1], '--', color='#737373')
-ax.semilogx(bandwidthPara[:len(bandwidthPara)-1], logKernelAvgDerivative, color='#525252')
+ax.semilogx(bandwidthPara, logKernelAvgDerivative, color='#525252')
 ax.plot(bandwidthPara[optInd], logKernelAvgDerivative[optInd], 'o', markersize=4, markerfacecolor='#a50f15', markeredgecolor='#a50f15')
 ax.set_xlim([min(bandwidthPara), max(bandwidthPara)])
 ax.set_ylim([0, 1.05])

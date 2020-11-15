@@ -57,5 +57,6 @@ list(APPEND MUQ_INCLUDE_DIRS
 list(APPEND MUQ_LIBRARIES
   "${CMAKE_BINARY_DIR}/external/muq/lib/${library_prefix}muqUtilities${shared_library_suffix}"
   "${CMAKE_BINARY_DIR}/external/muq/lib/${library_prefix}muqModeling${shared_library_suffix}"
+  "${CMAKE_BINARY_DIR}/external/muq/lib/${library_prefix}muqOptimization${shared_library_suffix}"
   "${CMAKE_BINARY_DIR}/external/muq/lib/${library_prefix}muqSamplingAlgorithms${shared_library_suffix}"
 )

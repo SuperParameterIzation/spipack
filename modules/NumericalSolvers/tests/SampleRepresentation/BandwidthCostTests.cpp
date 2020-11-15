@@ -11,10 +11,10 @@ using namespace spi::NumericalSolvers;
 
 TEST(BandwidthCostTests, ConstructCost) {
   // the parameter epsilon
-  const double eps = 8.0;
+  const double eps = std::log(10.0);
 
   // The dimension of state spaces
-  const unsigned int dim = 4;
+  const unsigned int dim = 2;
 
   // The number of samples
   std::size_t n = 1000;
@@ -56,11 +56,11 @@ TEST(BandwidthCostTests, ConstructCost) {
   representation->BuildKDTrees();
 
   // create the cost function
-  BandwidthCost bandCost(representation);
+  BandwidthCost bandCost(bandwidth, representation);
 
   // compute the cost gradient using exact and FD
-  const Eigen::VectorXd costGrad = bandCost.Gradient(0, Eigen::VectorXd::Constant(1, eps).eval(), bandwidth, Eigen::VectorXd::Ones(1).eval());
-  const double gradFD = (bandCost.Cost(Eigen::VectorXd::Constant(1, eps+1.0e-6).eval(), bandwidth)-bandCost.Cost(Eigen::VectorXd::Constant(1, eps).eval(), bandwidth))/1.0e-6;
+  const Eigen::VectorXd costGrad = bandCost.Gradient(0, Eigen::VectorXd::Constant(1, eps).eval(), Eigen::VectorXd::Ones(1).eval());
+  const double gradFD = (bandCost.Cost(Eigen::VectorXd::Constant(1, eps+1.0e-8).eval())-bandCost.Cost(Eigen::VectorXd::Constant(1, eps).eval()))/1.0e-8;
   EXPECT_EQ(costGrad.size(), 1);
-  EXPECT_NEAR(costGrad(0), gradFD, 1.0e5);
+  EXPECT_NEAR(costGrad(0), gradFD, 1.0e-2);
 }

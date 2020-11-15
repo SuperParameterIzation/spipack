@@ -1,6 +1,12 @@
 #include "spipack/NumericalSolvers/SampleRepresentation/DensityEstimation.hpp"
 
+#include <MUQ/Optimization/NLoptOptimizer.h>
+
+#include "spipack/NumericalSolvers/SampleRepresentation/BandwidthCost.hpp"
+
+namespace pt = boost::property_tree;
 using namespace muq::Modeling;
+using namespace muq::Optimization;
 using namespace muq::SamplingAlgorithms;
 using namespace spi::Tools;
 using namespace spi::NumericalSolvers;
@@ -28,7 +34,7 @@ tuneManifoldDimension(options["TuneManifoldDimension"].as<bool>(defaults.tuneMan
 
 double DensityEstimation::BandwidthParameter() const { return bandwidthPara; }
 
-Eigen::VectorXd DensityEstimation::Estimate() const {
+Eigen::VectorXd DensityEstimation::Estimate() {
   // compute the squared bandwidth
   Eigen::VectorXd squaredBandwidth = samples->SquaredBandwidth(numNearestNeighbors);
 
@@ -36,7 +42,36 @@ Eigen::VectorXd DensityEstimation::Estimate() const {
   return Estimate(squaredBandwidth);
 }
 
-Eigen::VectorXd DensityEstimation::Estimate(Eigen::Ref<const Eigen::VectorXd> const& squaredBandwidth) const {
+Eigen::VectorXd DensityEstimation::Estimate(Eigen::Ref<const Eigen::VectorXd> const& squaredBandwidth) {
+  const Eigen::VectorXd bandwidth = squaredBandwidth.array().sqrt();
+
+  {
+    std::cout << "TUNING THE PARAMETER!" << std::endl;
+    // the cost function
+    auto cost = std::make_shared<BandwidthCost>(bandwidth, shared_from_this());
+
+    pt::ptree pt;
+    pt.put("Optimization.Ftol.AbsoluteTolerance", 1.0e-6);
+    pt.put("Optimization.Ftol.RelativeTolerance", 1.0e-6);
+    pt.put("Optimization.Xtol.AbsoluteTolerance", 1.0e-6);
+    pt.put("Optimization.Xtol.RelativeTolerance", 1.0e-6);
+    pt.put("Optimization.MaxEvaluations", 1000); // max number of cost function evaluations
+    pt.put("Optimization.Algorithm", "COBYLA");
+
+    auto opt = std::make_shared<NLoptOptimizer>(cost, pt.get_child("Optimization"));
+
+    std::vector<Eigen::VectorXd> inputs(1);
+    inputs[0] = Eigen::VectorXd::Constant(1, std::log2(bandwidthPara));
+
+    std::pair<Eigen::VectorXd, double> soln = opt->Solve(inputs);
+
+    std::cout << "opt eps: " << std::pow(2, soln.first(0)) << std::endl;
+    std::cout << "cost: " << soln.second << std::endl;
+
+    bandwidthPara = std::pow(2, soln.first(0));
+
+  }
+
   // compute the kernel matrix
   Eigen::SparseMatrix<double> kmat;
   const Eigen::VectorXd rowsum = KernelMatrix(bandwidthPara, squaredBandwidth.array().sqrt(), kmat);
