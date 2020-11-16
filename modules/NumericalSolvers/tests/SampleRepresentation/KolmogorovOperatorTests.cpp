@@ -369,3 +369,159 @@ TEST_F(KolmogorovOperatorTests, TruncatedKernelMatrix_Sparse) {
     EXPECT_NEAR(sum, rowsumExpected(i), 1.0e-10);
   }
 }
+
+TEST_F(KolmogorovOperatorTests, KernelDerivativeAverage_Untruncated) {
+  options["TruncateKernelMatrix"] = false;
+
+  // create the graph laplacian from samples
+  auto samples = CreateFromSamples();
+  EXPECT_EQ(samples->size(), n);
+
+  // construct the kd-trees
+  kolOperator->BuildKDTrees();
+
+  // compute the scaled density
+  const Eigen::VectorXd rho = kolOperator->EstimateDensity(false).array().pow(bandwidthExponent);
+
+  // compute the kernel matrix
+  const double eps = 10.0;
+  const double avg = kolOperator->KernelDerivativeAverage(eps, rho);
+
+  // compute the expected kernel derivative average
+  double expectedAvg = 0.0;
+  {
+    auto kern = kolOperator->Kernel();
+    //#pragma omp parallel num_threads(omp_get_max_threads())
+    for( std::size_t i=0; i<n; ++i ) {
+      for( std::size_t j=i; j<n; ++j ) {
+        const Eigen::VectorXd diff = samples->at(i)->state[0]-samples->at(j)->state[0];
+        const double theta = diff.dot(diff)/(eps*rho(i)*rho(j));
+        const double deriv = -kern->IsotropicKernelDerivative(theta)*theta/eps;
+
+        expectedAvg += (i==j? 1.0 : 2.0)*deriv;
+        assert(!std::isnan(expectedAvg));
+      }
+    }
+    expectedAvg /= n*n;
+  }
+
+  EXPECT_NEAR(expectedAvg, avg, 1.0e-10);
+}
+
+TEST_F(KolmogorovOperatorTests, KernelDerivativeAverage_Truncated) {
+  const double tol = 5.0e-2;
+  options["TruncationTolerance"] = -std::log(tol);
+
+  // create the graph laplacian from samples
+  auto samples = CreateFromSamples();
+  EXPECT_EQ(samples->size(), n);
+
+  // construct the kd-trees
+  kolOperator->BuildKDTrees();
+
+  // compute the scaled density
+  const Eigen::VectorXd rho = kolOperator->EstimateDensity(false).array().pow(bandwidthExponent);
+
+  // compute the kernel matrix
+  const double eps = 10.0;
+  const double avg = kolOperator->KernelDerivativeAverage(eps, rho);
+
+  // compute the expected kernel derivative average
+  double expectedAvg = 0.0;
+  {
+    auto kern = kolOperator->Kernel();
+    //#pragma omp parallel num_threads(omp_get_max_threads())
+    for( std::size_t i=0; i<n; ++i ) {
+      for( std::size_t j=i; j<n; ++j ) {
+        const Eigen::VectorXd diff = samples->at(i)->state[0]-samples->at(j)->state[0];
+        const double theta = diff.dot(diff)/(eps*rho(i)*rho(j));
+        const double eval = kern->EvaluateIsotropicKernel(theta);
+        const double deriv = -kern->IsotropicKernelDerivative(theta)*theta/eps;
+
+        expectedAvg += (eval<tol? 0.0 : (i==j? 1.0 : 2.0)*deriv);
+        assert(!std::isnan(expectedAvg));
+      }
+    }
+    expectedAvg /= n*n;
+  }
+
+  EXPECT_NEAR(expectedAvg, avg, 1.0e-10);
+}
+
+TEST_F(KolmogorovOperatorTests, KernelSecondDerivativeAverage_Untruncated) {
+  options["TruncateKernelMatrix"] = false;
+
+  // create the graph laplacian from samples
+  auto samples = CreateFromSamples();
+  EXPECT_EQ(samples->size(), n);
+
+  // construct the kd-trees
+  kolOperator->BuildKDTrees();
+
+  // compute the scaled density
+  const Eigen::VectorXd rho = kolOperator->EstimateDensity(false).array().pow(bandwidthExponent);
+
+  // compute the kernel matrix
+  const double eps = 10.0;
+  const double avg = kolOperator->KernelSecondDerivativeAverage(eps, rho);
+
+  // compute the expected kernel derivative average
+  double expectedAvg = 0.0;
+  {
+    auto kern = kolOperator->Kernel();
+    //#pragma omp parallel num_threads(omp_get_max_threads())
+    for( std::size_t i=0; i<n; ++i ) {
+      for( std::size_t j=i; j<n; ++j ) {
+        const Eigen::VectorXd diff = samples->at(i)->state[0]-samples->at(j)->state[0];
+        const double theta = diff.dot(diff)/(eps*rho(i)*rho(j));
+        const double deriv = 2.0*kern->IsotropicKernelDerivative(theta)*theta/eps/eps + kern->IsotropicKernelSecondDerivative(theta)*theta*theta/eps/eps ;
+
+        expectedAvg += (i==j? 1.0 : 2.0)*deriv;
+        assert(!std::isnan(expectedAvg));
+      }
+    }
+    expectedAvg /= n*n;
+  }
+
+  EXPECT_NEAR(expectedAvg, avg, 1.0e-10);
+}
+
+TEST_F(KolmogorovOperatorTests, KernelSecondDerivativeAverage_Truncated) {
+  const double tol = 5.0e-2;
+  options["TruncationTolerance"] = -std::log(tol);
+
+  // create the graph laplacian from samples
+  auto samples = CreateFromSamples();
+  EXPECT_EQ(samples->size(), n);
+
+  // construct the kd-trees
+  kolOperator->BuildKDTrees();
+
+  // compute the scaled density
+  const Eigen::VectorXd rho = kolOperator->EstimateDensity(false).array().pow(bandwidthExponent);
+
+  // compute the kernel matrix
+  const double eps = 10.0;
+  const double avg = kolOperator->KernelSecondDerivativeAverage(eps, rho);
+
+  // compute the expected kernel derivative average
+  double expectedAvg = 0.0;
+  {
+    auto kern = kolOperator->Kernel();
+    //#pragma omp parallel num_threads(omp_get_max_threads())
+    for( std::size_t i=0; i<n; ++i ) {
+      for( std::size_t j=i; j<n; ++j ) {
+        const Eigen::VectorXd diff = samples->at(i)->state[0]-samples->at(j)->state[0];
+        const double theta = diff.dot(diff)/(eps*rho(i)*rho(j));
+        const double eval = kern->EvaluateIsotropicKernel(theta);
+        const double deriv = 2.0*kern->IsotropicKernelDerivative(theta)*theta/eps/eps + kern->IsotropicKernelSecondDerivative(theta)*theta*theta/eps/eps ;
+
+        expectedAvg += (eval<tol? 0.0 : (i==j? 1.0 : 2.0)*deriv);
+        assert(!std::isnan(expectedAvg));
+      }
+    }
+    expectedAvg /= n*n;
+  }
+
+  EXPECT_NEAR(expectedAvg, avg, 1.0e-10);
+}
