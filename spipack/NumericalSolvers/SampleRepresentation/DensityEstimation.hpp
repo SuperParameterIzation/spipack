@@ -22,7 +22,6 @@ In addition to the parameters/options below, this class has the same parameters/
 Parameter Key | Type | Default Value | Description |
 ------------- | ------------- | ------------- | ------------- |
 "BandwidthParameter"   | <tt>double</tt> | <tt>1.0</tt> | The parmeter \f$\epsilon\f$ used to compute the kernel |
-"ManifoldDimension"   | <tt>double</tt> | <tt>2.0</tt> | The manifold dimension \f$m\f$. |
 "TuneManifoldDimension"   | <tt>bool</tt> | <tt>false</tt> | Tune the manifold dimension \f$m\f$; if we know the exact manifold dimension then we do not need to tune it. |
 "Optimization"   | <tt>YAML::Node</tt> | see options below | Options for the optimization method used to tune algorithm parameters. |
 
@@ -127,9 +126,6 @@ private:
   /// The bandwidth parameter \f$\epsilon\f$
   double bandwidthPara;
 
-  /// The dimension of the manifold \f$m\f$
-  double manifoldDim;
-
   /// Tune the manifold dimension \f$m\f$?
   const bool tuneManifoldDimension;
 
@@ -140,9 +136,6 @@ private:
   struct DefaultParameters {
     /// The default bandwidth parameter \f$\epsilon\f$ is \f$1.0\f$
     inline static const double bandwidthPara = 1.0;
-
-    /// The default manifold dimension is \f$2\f$
-    inline static const double manifoldDim = 2.0;
 
     /// By default, do not tune the manifold dimension
     inline static const bool tuneManifoldDimension = false;

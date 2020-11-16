@@ -26,6 +26,7 @@ Parameter Key | Type | Default Value | Description |
 "NearestNeighbors"   | <tt>YAML::Node</tt> | - | Options for the spi::Tools::NearestNeighbors object.   |
 "NumNearestNeighbors"   | <tt>std::size_t</tt> | <tt>10</tt> | The number of nearest neighbors used to compute the bandwidth. |
 "KernelOptions"   | <tt>YAML::Node</tt> | - | The options for the spi::Tools::CompactKernel object |
+"ManifoldDimension"   | <tt>double</tt> | <tt>2.0</tt> | The manifold dimension \f$m\f$. |
 "TruncationTolerance"   | <tt>double</tt> | If the kernel is a compact kernel (spi::Tools::CompactKernel), the default is \f$\alpha = 1\f$. Otherwise the default is \f$\alpha = -\log{(5 \times 10^{-2})}\f$ | The parameter \f$\alpha\f$ for if we want to truncate the kernel matrix. If the kernel is compact, then this will <em>always</em> be set to one. |
 "TruncateKernelMatrix" | <tt>bool</tt> | <tt>true</tt> | <tt>true</tt>: When computing the kernel matrix \f$K_{\epsilon}^{(ij)} = k_{\epsilon}\left( \frac{\| \boldsymbol{x}^{(i)} - \boldsymbol{x}^{(j)} \|^2}{\epsilon r_i r_j} \right)\f$ only fill the matrix when \f$\frac{\| \boldsymbol{x}^{(i)} - \boldsymbol{x}^{(j)} \|^2}{\epsilon r_i r_j} < \alpha\f$; <tt>false</tt>: compute and fill every entry in the the kernel matrix (it will be a dense matrix) |
 "NumThreads"   | <tt>std::size_t</tt> | <tt>options["NearestNeighbors.NumThreads"]</tt> | The number of <tt>openMP</tt> threads available to this object. |
@@ -93,9 +94,10 @@ public:
 
   @param[in] eps The parameter \f$\epsilon>0\f$
   @param[out] kmat The kernel matrix \f$\boldsymbol{K}_{\epsilon}\f$
+  @param[in] options This parameter is not used in this default implementation, but is used by implementations in its children (defaults to <tt>nullptr</tt>)
   \return Each entry is the sum of a row in the kernel matrix \f$b_i = \sum_{j=1}^{n} K_{\epsilon}^{(ij)}\f$
   */
-  virtual Eigen::VectorXd KernelMatrix(double const eps, Eigen::Ref<Eigen::MatrixXd> kmat) const;
+  virtual Eigen::VectorXd KernelMatrix(double const eps, Eigen::Ref<Eigen::MatrixXd> kmat, const void* options = nullptr) const;
 
   /// Construct the (dense) kernel matrix \f$\boldsymbol{K}_{\epsilon}\f$
   /**
@@ -109,7 +111,7 @@ public:
   @param[out] kmat The kernel matrix \f$\boldsymbol{K}_{\epsilon}\f$
   \return Each entry is the sum of a row in the kernel matrix \f$b_i = \sum_{j=1}^{n} K_{\epsilon}^{(ij)}\f$
   */
-  Eigen::VectorXd KernelMatrix(double const eps, Eigen::Ref<const Eigen::VectorXd> const& rvec, Eigen::Ref<Eigen::MatrixXd> kmat) const;
+  virtual Eigen::VectorXd KernelMatrix(double const eps, Eigen::Ref<const Eigen::VectorXd> const& rvec, Eigen::Ref<Eigen::MatrixXd> kmat) const;
 
   /// Construct the kernel matrix \f$\boldsymbol{K}_{\epsilon}\f$
   /**
@@ -123,9 +125,10 @@ public:
 
   @param[in] eps The parameter \f$\epsilon>0\f$
   @param[out] kmat The kernel matrix \f$\boldsymbol{K}_{\epsilon}\f$
+  @param[in] options This parameter is not used in this default implementation, but is used by implementations in its children (defaults to <tt>nullptr</tt>)
   \return Each entry is the sum of a row in the kernel matrix \f$b_i = \sum_{j=1}^{n} K_{\epsilon}^{(ij)}\f$
   */
-  virtual Eigen::VectorXd KernelMatrix(double const eps, Eigen::SparseMatrix<double>& kmat) const;
+  virtual Eigen::VectorXd KernelMatrix(double const eps, Eigen::SparseMatrix<double>& kmat, const void* options = nullptr) const;
 
   /// Construct the kernel matrix \f$\boldsymbol{K}_{\epsilon}\f$
   /**
@@ -139,7 +142,7 @@ public:
   @param[out] kmat The kernel matrix \f$\boldsymbol{K}_{\epsilon}\f$
   \return Each entry is the sum of a row in the kernel matrix \f$b_i = \sum_{j=1}^{n} K_{\epsilon}^{(ij)}\f$
   */
-  Eigen::VectorXd KernelMatrix(double const eps, Eigen::Ref<const Eigen::VectorXd> const& rvec, Eigen::SparseMatrix<double>& kmat) const;
+  virtual Eigen::VectorXd KernelMatrix(double const eps, Eigen::Ref<const Eigen::VectorXd> const& rvec, Eigen::SparseMatrix<double>& kmat) const;
 
   /// Build the kd trees for the nearest neighbor computation
   void BuildKDTrees() const;
@@ -183,7 +186,29 @@ public:
   */
   void WriteToFile(std::string const& filename, std::string const& dataset = "/") const;
 
+  /// Get the manifold dimension
+  /**
+  \return The manifold dimension (could be estimated in child classes)
+  */
+  double ManifoldDimension() const;
+
 protected:
+
+  /// Compute the entries of the kernel matrix \f$\boldsymbol{K}_{\epsilon}\f$
+  /**
+  Used to construct a sparse kernel matrix
+
+  This function computes the kernel matrix \f$\boldsymbol{K}_{\epsilon}\f$ such that the \f$(i,j)\f$ component is
+  \f{equation*}{
+    K_{\epsilon}^{(ij)} = k_{\epsilon}(\boldsymbol{x}^{(i)}, \boldsymbol{x}^{(j)}) = k\left( \frac{\| \boldsymbol{x}^{(i)} - \boldsymbol{x}^{(j)} \|^2}{\epsilon r_i r_j} \right).
+  \f}
+  Recall that \f$k(\theta)\f$ is the kernel function.
+  @param[in] eps The parameter \f$\epsilon>0\f$
+  @param[in] rvec The vector of parameters \f$r_i\f$.
+  @param[out] entries The kernel matrix entries \f$\boldsymbol{K}_{\epsilon}\f$
+  \return Each entry is the sum of a row in the kernel matrix \f$b_i = \sum_{j=1}^{n} K_{\epsilon}^{(ij)}\f$
+  */
+  Eigen::VectorXd KernelMatrix(double const eps, Eigen::Ref<const Eigen::VectorXd> const& rvec, std::vector<Eigen::Triplet<double> >& entries) const;
 
   /// Store the samples from \f$\psi\f$.
   const std::shared_ptr<const spi::Tools::NearestNeighbors> samples;
@@ -200,6 +225,18 @@ protected:
   where \f$\epsilon\f$ and \f$\boldsymbol{r}\f$ are given parameters.
   */
   std::shared_ptr<spi::Tools::IsotropicKernel> kernel;
+
+  /// The dimension of the manifold \f$m\f$
+  mutable double manifoldDim;
+
+  /// The number of <tt>openMP</tt> threads available to this object.
+  const std::size_t numThreads;
+
+  /// Do we want to truncate the kernel matrix to enforce sparsity
+  /**
+  <tt>true</tt>: When computing the kernel matrix \f$K_{\epsilon}^{(ij)} = k_{\epsilon}\left( \frac{\| \boldsymbol{x}^{(i)} - \boldsymbol{x}^{(j)} \|^2}{\epsilon r_i r_j} \right)\f$ only fill the matrix when \f$\frac{\| \boldsymbol{x}^{(i)} - \boldsymbol{x}^{(j)} \|^2}{\epsilon r_i r_j} < \alpha\f$; <tt>false</tt>: compute and fill every entry in the the kernel matrix (it will be a dense matrix)
+  */
+  const bool truncateKernelMatrix;
 
 private:
 
@@ -261,12 +298,6 @@ private:
   /// Is the kernel a compact kernel?
   bool compactKernel = false;
 
-  /// Do we want to truncate the kernel matrix to enforce sparsity
-  /**
-  <tt>true</tt>: When computing the kernel matrix \f$K_{\epsilon}^{(ij)} = k_{\epsilon}\left( \frac{\| \boldsymbol{x}^{(i)} - \boldsymbol{x}^{(j)} \|^2}{\epsilon r_i r_j} \right)\f$ only fill the matrix when \f$\frac{\| \boldsymbol{x}^{(i)} - \boldsymbol{x}^{(j)} \|^2}{\epsilon r_i r_j} < \alpha\f$; <tt>false</tt>: compute and fill every entry in the the kernel matrix (it will be a dense matrix)
-  */
-  const bool truncateKernelMatrix;
-
   /// At what tolerance should we truncate the kernel matrix?
   /**
   Only used if truncateKernelMatrix is <tt>true</tt>.
@@ -281,9 +312,6 @@ private:
   \f}
   */
   double truncationTol;
-
-  /// The number of <tt>openMP</tt> threads available to this object.
-  const std::size_t numThreads;
 
   /// The default values for the spi::NumericalSolvers::SampleRepresentation class.
   struct DefaultParameters {
@@ -302,6 +330,9 @@ private:
 
     /// The default number of nearest neighbors for the bandwidth computation is \f$10\f$
     inline static const std::size_t numNearestNeighbors = 10;
+
+    /// The default manifold dimension is \f$2\f$
+    inline static const double manifoldDim = 2.0;
 
     /// Default to truncating the kernel matrix
     inline static const bool truncateKernelMatrix = true;

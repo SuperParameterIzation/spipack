@@ -14,6 +14,7 @@ SampleRepresentation::SampleRepresentation(std::shared_ptr<RandomVariable> const
 samples(std::make_shared<NearestNeighbors>(rv, options["NearestNeighbors"])),
 numNearestNeighbors(options["NumNearestNeighbors"].as<std::size_t>(defaults.numNearestNeighbors)),
 truncateKernelMatrix(options["TruncateKernelMatrix"].as<bool>(defaults.truncateKernelMatrix)),
+manifoldDim(options["ManifoldDimension"].as<double>(defaults.manifoldDim)),
 numThreads(options["NumThreads"].as<std::size_t>(samples->NumThreads()))
 {
   Initialize(options);
@@ -23,6 +24,7 @@ SampleRepresentation::SampleRepresentation(std::shared_ptr<SampleCollection> con
 samples(std::make_shared<NearestNeighbors>(samples, options["NearestNeighbors"])),
 numNearestNeighbors(options["NumNearestNeighbors"].as<std::size_t>(defaults.numNearestNeighbors)),
 truncateKernelMatrix(options["TruncateKernelMatrix"].as<bool>(defaults.truncateKernelMatrix)),
+manifoldDim(options["ManifoldDimension"].as<double>(defaults.manifoldDim)),
 numThreads(options["NumThreads"].as<std::size_t>(this->samples->NumThreads()))
 {
   Initialize(options);
@@ -32,6 +34,7 @@ SampleRepresentation::SampleRepresentation(std::shared_ptr<const NearestNeighbor
 samples(samples),
 numNearestNeighbors(options["NumNearestNeighbors"].as<std::size_t>(defaults.numNearestNeighbors)),
 truncateKernelMatrix(options["TruncateKernelMatrix"].as<bool>(defaults.truncateKernelMatrix)),
+manifoldDim(options["ManifoldDimension"].as<double>(defaults.manifoldDim)),
 numThreads(options["NumThreads"].as<std::size_t>(this->samples->NumThreads()))
 {
   Initialize(options);
@@ -62,7 +65,7 @@ void SampleRepresentation::BuildKDTrees() const { samples->BuildKDTrees(); }
 
 Eigen::VectorXd SampleRepresentation::SquaredBandwidth() const { return samples->SquaredBandwidth(numNearestNeighbors); }
 
-Eigen::VectorXd SampleRepresentation::KernelMatrix(double const eps, Eigen::Ref<Eigen::MatrixXd> kmat) const {
+Eigen::VectorXd SampleRepresentation::KernelMatrix(double const eps, Eigen::Ref<Eigen::MatrixXd> kmat, const void* options) const {
   assert(eps>0.0);
 
   // compute the squared bandwidth
@@ -108,7 +111,7 @@ Eigen::VectorXd SampleRepresentation::KernelMatrix(double const eps, Eigen::Ref<
   return kmat.rowwise().sum();
 }
 
-Eigen::VectorXd SampleRepresentation::KernelMatrix(double const eps, Eigen::SparseMatrix<double>& kmat) const {
+Eigen::VectorXd SampleRepresentation::KernelMatrix(double const eps, Eigen::SparseMatrix<double>& kmat, const void* options) const {
   assert(eps>0.0);
 
   // compute the squared bandwidth
@@ -126,16 +129,13 @@ Eigen::VectorXd SampleRepresentation::KernelMatrix(double const eps, Eigen::Spar
   return rowsum;
 }
 
-Eigen::VectorXd SampleRepresentation::KernelMatrix(double const eps, Eigen::Ref<const Eigen::VectorXd> const& rvec, Eigen::SparseMatrix<double>& kmat) const {
-  // the number of samples
+Eigen::VectorXd SampleRepresentation::KernelMatrix(double const eps, Eigen::Ref<const Eigen::VectorXd> const& rvec, std::vector<Eigen::Triplet<double> >& entries) const {
+    // the number of samples
   const std::size_t n = NumSamples();
   assert(rvec.size()==n);
 
-  // resize the matrix
-  kmat.resize(n, n);
-
   // reserve n*log(n) entries (just a guess)
-  std::vector<Eigen::Triplet<double> > entries;
+  entries.clear();
   entries.reserve(std::max((std::size_t)1, (std::size_t)(n*std::log((double)n))));
 
   #pragma omp parallel num_threads(numThreads)
@@ -182,8 +182,22 @@ Eigen::VectorXd SampleRepresentation::KernelMatrix(double const eps, Eigen::Ref<
   // the sum of each row in the kernel matrix
   Eigen::VectorXd rowsum = Eigen::VectorXd::Zero(n);
   for( const auto& entry : entries ) { rowsum(entry.row()) += entry.value(); }
+  return rowsum;
+}
 
+Eigen::VectorXd SampleRepresentation::KernelMatrix(double const eps, Eigen::Ref<const Eigen::VectorXd> const& rvec, Eigen::SparseMatrix<double>& kmat) const {
+  // the number of samples
+  const std::size_t n = NumSamples();
+  assert(rvec.size()==n);
+
+  // compute the entries of the matrix
+  std::vector<Eigen::Triplet<double> > entries;
+  const Eigen::VectorXd rowsum = KernelMatrix(eps, rvec, entries);
+
+  // resize the matrix
+  kmat.resize(n, n);
   kmat.setFromTriplets(entries.begin(), entries.end());
+
   return rowsum;
 }
 
@@ -308,5 +322,7 @@ void SampleRepresentation::WriteToFile(std::string const& filename, std::string 
 
   file->Close();
 }
+
+double SampleRepresentation::ManifoldDimension() const { return manifoldDim; }
 
 double SampleRepresentation::DefaultParameters::TruncationTolerance(bool const compact) { return (compact? 1.0 : -std::log(5.0e-2)); }

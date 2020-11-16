@@ -32,7 +32,6 @@ protected:
     densityOptions["NearestNeighbors"] = nnOptions;
     densityOptions["NumNearestNeighbors"] = nneighs;
     densityOptions["KernelOptions"] = kernelOptions;
-    densityOptions["BandwidthParameter"] = eps;
     densityOptions["ManifoldDimension"] = (double)dim;
 
     // set the options for the Kolmogorov operator
@@ -40,6 +39,10 @@ protected:
     options["NumNearestNeighbors"] = nneighs;
     options["KernelOptions"] = kernelOptions;
     options["DensityOptions"] = densityOptions;
+    options["BandwidthParameter"] = eps;
+    options["BandwidthExponent"] =  bandwidthExponent;
+    options["OperatorParameter"] = operatorParameter;
+    options["ManifoldDimension"] = (double)dim;
   }
 
   /// Make sure everything is what we expect
@@ -65,7 +68,7 @@ protected:
   }
 
   /// The dimension of state spaces
-  const unsigned int dim = 4;
+  const unsigned int dim = 1;
 
   /// The number of samples
   std::size_t n = 1000;
@@ -74,7 +77,13 @@ protected:
   const std::size_t nneighs = 15;
 
   /// The bandwidth parameter \f$\epsilon\f$
-  double eps = 25.0;
+  double eps = 0.15;
+
+  /// The operator parameter \f$c\f$
+  const double operatorParameter = 0.75;
+
+  /// The bandwidth exponent \f$\beta\f$
+  const double bandwidthExponent = -0.25;
 
   /// The random variable that lets us sample from the underlying distribution
   std::shared_ptr<RandomVariable> rv;
@@ -117,15 +126,246 @@ TEST_F(KolmogorovOperatorTests, NearestNeighborsConstruction) {
   }
 }
 
-/*
 TEST_F(KolmogorovOperatorTests, UntruncatedKernelMatrix_Dense) {
+  options["TruncateKernelMatrix"] = false;
+
   // create the Kolmogorov operator from samples
   auto samples = CreateFromSamples();
 
   // construct the kd-trees
   kolOperator->BuildKDTrees();
 
-  // tune the density estimation
-  kolOperator->TuneDensityEstimation();
+  // do we want to tune the bandwidth parameter for the density estimation?
+  const bool tuneDensity = true;
+
+  // the kernel matrix
+  Eigen::MatrixXd kmat(n, n);
+  const Eigen::VectorXd rowsum = kolOperator->KernelMatrix(eps, kmat, &tuneDensity);
+  EXPECT_EQ(rowsum.size(), n);
+
+  // compute the expected kernel matrix
+  Eigen::MatrixXd kernmatExpected(n, n);
+  {
+    // compute the density to the beta power (do not return the density estimation parameter)
+    const Eigen::VectorXd rho = kolOperator->EstimateDensity(false).array().pow(bandwidthExponent);
+
+    auto kern = kolOperator->Kernel();
+    #pragma omp parallel num_threads(omp_get_max_threads())
+    for( std::size_t i=0; i<n; ++i ) {
+      for( std::size_t j=i; j<n; ++j ) {
+        const Eigen::VectorXd diff = samples->at(i)->state[0]-samples->at(j)->state[0];
+
+        kernmatExpected(i, j) = kern->EvaluateIsotropicKernel(diff.dot(diff)/(eps*rho(i)*rho(j)));
+        kernmatExpected(j, i) = kernmatExpected(i, j);
+      }
+    }
+
+    const double para = 1.0+0.5*dim*bandwidthExponent+bandwidthExponent-0.5*operatorParameter;
+    Eigen::VectorXd rowsumExpected = kernmatExpected.rowwise().sum();
+    rowsumExpected = (rowsumExpected.array()/rho.array().pow((double)dim)).pow(para);
+
+    for( std::size_t i=0; i<n; ++i ) {
+      for( std::size_t j=i; j<n; ++j ) {
+        kernmatExpected(i, j) /= rowsumExpected(i)*rowsumExpected(j);
+        kernmatExpected(j, i) = kernmatExpected(i, j);
+      }
+    }
+  }
+  const Eigen::VectorXd rowsumExpected = kernmatExpected.rowwise().sum();
+
+  #pragma omp parallel num_threads(omp_get_max_threads())
+  for( std::size_t i=0; i<n; ++i ) {
+    EXPECT_NEAR(rowsum(i), rowsumExpected(i), 1.0e-10);
+
+    double sum = 0.0;
+    for( std::size_t j=0; j<n; ++j ) {
+      sum += kmat(i, j);
+      EXPECT_NEAR(kmat(i, j), kernmatExpected(i, j), 1.0e-10);
+    }
+    EXPECT_NEAR(sum, rowsumExpected(i), 1.0e-10);
+  }
 }
-*/
+
+TEST_F(KolmogorovOperatorTests, TruncatedKernelMatrix_Dense) {
+  const double tol = 5.0e-2;
+  options["TruncationTolerance"] = -std::log(tol);
+
+  // create the Kolmogorov operator from samples
+  auto samples = CreateFromSamples();
+
+  // construct the kd-trees
+  kolOperator->BuildKDTrees();
+
+  // do we want to tune the bandwidth parameter for the density estimation?
+  const bool tuneDensity = true;
+
+  // the kernel matrix
+  Eigen::MatrixXd kmat(n, n);
+  const Eigen::VectorXd rowsum = kolOperator->KernelMatrix(eps, kmat, &tuneDensity);
+  EXPECT_EQ(rowsum.size(), n);
+
+  // compute the expected kernel matrix
+  Eigen::MatrixXd kernmatExpected(n, n);
+  {
+    // compute the density to the beta power (do not return the density estimation parameter)
+    const Eigen::VectorXd rho = kolOperator->EstimateDensity(false).array().pow(bandwidthExponent);
+
+    auto kern = kolOperator->Kernel();
+    #pragma omp parallel num_threads(omp_get_max_threads())
+    for( std::size_t i=0; i<n; ++i ) {
+      for( std::size_t j=i; j<n; ++j ) {
+        const Eigen::VectorXd diff = samples->at(i)->state[0]-samples->at(j)->state[0];
+        const double eval = kern->EvaluateIsotropicKernel(diff.dot(diff)/(eps*rho(i)*rho(j)));
+
+        kernmatExpected(i, j) = eval<tol? 0.0 : eval;
+        kernmatExpected(j, i) = eval<tol? 0.0 : kernmatExpected(i, j);
+      }
+    }
+
+    const double para = 1.0+0.5*dim*bandwidthExponent+bandwidthExponent-0.5*operatorParameter;
+    Eigen::VectorXd rowsumExpected = kernmatExpected.rowwise().sum();
+    rowsumExpected = (rowsumExpected.array()/rho.array().pow((double)dim)).pow(para);
+
+    for( std::size_t i=0; i<n; ++i ) {
+      for( std::size_t j=i; j<n; ++j ) {
+        kernmatExpected(i, j) /= rowsumExpected(i)*rowsumExpected(j);
+        kernmatExpected(j, i) = kernmatExpected(i, j);
+      }
+    }
+  }
+  const Eigen::VectorXd rowsumExpected = kernmatExpected.rowwise().sum();
+
+  #pragma omp parallel num_threads(omp_get_max_threads())
+  for( std::size_t i=0; i<n; ++i ) {
+    EXPECT_NEAR(rowsum(i), rowsumExpected(i), 1.0e-10);
+
+    double sum = 0.0;
+    for( std::size_t j=0; j<n; ++j ) {
+      sum += kmat(i, j);
+      EXPECT_NEAR(kmat(i, j), kernmatExpected(i, j), 1.0e-10);
+    }
+    EXPECT_NEAR(sum, rowsumExpected(i), 1.0e-10);
+  }
+}
+
+TEST_F(KolmogorovOperatorTests, UntruncatedKernelMatrix_Sparse) {
+  options["TruncateKernelMatrix"] = false;
+
+  // create the Kolmogorov operator from samples
+  auto samples = CreateFromSamples();
+
+  // construct the kd-trees
+  kolOperator->BuildKDTrees();
+
+  // do we want to tune the bandwidth parameter for the density estimation?
+  const bool tuneDensity = true;
+
+  // the kernel matrix
+  Eigen::SparseMatrix<double> kmat;
+  const Eigen::VectorXd rowsum = kolOperator->KernelMatrix(eps, kmat, &tuneDensity);
+  EXPECT_EQ(rowsum.size(), n);
+
+  // compute the expected kernel matrix
+  Eigen::MatrixXd kernmatExpected(n, n);
+  {
+    // compute the density to the beta power (do not return the density estimation parameter)
+    const Eigen::VectorXd rho = kolOperator->EstimateDensity(false).array().pow(bandwidthExponent);
+
+    auto kern = kolOperator->Kernel();
+    #pragma omp parallel num_threads(omp_get_max_threads())
+    for( std::size_t i=0; i<n; ++i ) {
+      for( std::size_t j=i; j<n; ++j ) {
+        const Eigen::VectorXd diff = samples->at(i)->state[0]-samples->at(j)->state[0];
+
+        kernmatExpected(i, j) = kern->EvaluateIsotropicKernel(diff.dot(diff)/(eps*rho(i)*rho(j)));
+        kernmatExpected(j, i) = kernmatExpected(i, j);
+      }
+    }
+
+    const double para = 1.0+0.5*dim*bandwidthExponent+bandwidthExponent-0.5*operatorParameter;
+    Eigen::VectorXd rowsumExpected = kernmatExpected.rowwise().sum();
+    rowsumExpected = (rowsumExpected.array()/rho.array().pow((double)dim)).pow(para);
+
+    for( std::size_t i=0; i<n; ++i ) {
+      for( std::size_t j=i; j<n; ++j ) {
+        kernmatExpected(i, j) /= rowsumExpected(i)*rowsumExpected(j);
+        kernmatExpected(j, i) = kernmatExpected(i, j);
+      }
+    }
+  }
+  const Eigen::VectorXd rowsumExpected = kernmatExpected.rowwise().sum();
+
+  #pragma omp parallel num_threads(omp_get_max_threads())
+  for( std::size_t i=0; i<n; ++i ) {
+    EXPECT_NEAR(rowsum(i), rowsumExpected(i), 1.0e-10);
+
+    double sum = 0.0;
+    for( std::size_t j=0; j<n; ++j ) {
+      sum += kmat.coeff(i, j);
+      EXPECT_NEAR(kmat.coeff(i, j), kernmatExpected(i, j), 1.0e-10);
+    }
+    EXPECT_NEAR(sum, rowsumExpected(i), 1.0e-10);
+  }
+}
+
+TEST_F(KolmogorovOperatorTests, TruncatedKernelMatrix_Sparse) {
+  const double tol = 5.0e-2;
+  options["TruncationTolerance"] = -std::log(tol);
+
+  // create the Kolmogorov operator from samples
+  auto samples = CreateFromSamples();
+
+  // construct the kd-trees
+  kolOperator->BuildKDTrees();
+
+  // do we want to tune the bandwidth parameter for the density estimation?
+  const bool tuneDensity = true;
+
+  // the kernel matrix
+  Eigen::SparseMatrix<double> kmat;
+  const Eigen::VectorXd rowsum = kolOperator->KernelMatrix(eps, kmat, &tuneDensity);
+  EXPECT_EQ(rowsum.size(), n);
+
+  // compute the expected kernel matrix
+  Eigen::MatrixXd kernmatExpected(n, n);
+  {
+    // compute the density to the beta power (do not return the density estimation parameter)
+    const Eigen::VectorXd rho = kolOperator->EstimateDensity(false).array().pow(bandwidthExponent);
+
+    auto kern = kolOperator->Kernel();
+    #pragma omp parallel num_threads(omp_get_max_threads())
+    for( std::size_t i=0; i<n; ++i ) {
+      for( std::size_t j=i; j<n; ++j ) {
+        const Eigen::VectorXd diff = samples->at(i)->state[0]-samples->at(j)->state[0];
+        const double eval = kern->EvaluateIsotropicKernel(diff.dot(diff)/(eps*rho(i)*rho(j)));
+
+        kernmatExpected(i, j) = eval<tol? 0.0 : eval;
+        kernmatExpected(j, i) = eval<tol? 0.0 : kernmatExpected(i, j);
+      }
+    }
+
+    const double para = 1.0+0.5*dim*bandwidthExponent+bandwidthExponent-0.5*operatorParameter;
+    Eigen::VectorXd rowsumExpected = kernmatExpected.rowwise().sum();
+    rowsumExpected = (rowsumExpected.array()/rho.array().pow((double)dim)).pow(para);
+
+    for( std::size_t i=0; i<n; ++i ) {
+      for( std::size_t j=i; j<n; ++j ) {
+        kernmatExpected(i, j) /= rowsumExpected(i)*rowsumExpected(j);
+        kernmatExpected(j, i) = kernmatExpected(i, j);
+      }
+    }
+  }
+  const Eigen::VectorXd rowsumExpected = kernmatExpected.rowwise().sum();
+
+  #pragma omp parallel num_threads(omp_get_max_threads())
+  for( std::size_t i=0; i<n; ++i ) {
+    EXPECT_NEAR(rowsum(i), rowsumExpected(i), 1.0e-10);
+
+    double sum = 0.0;
+    for( std::size_t j=0; j<n; ++j ) {
+      sum += kmat.coeff(i, j);
+      EXPECT_NEAR(kmat.coeff(i, j), kernmatExpected(i, j), 1.0e-10);
+    }
+    EXPECT_NEAR(sum, rowsumExpected(i), 1.0e-10);
+  }
+}

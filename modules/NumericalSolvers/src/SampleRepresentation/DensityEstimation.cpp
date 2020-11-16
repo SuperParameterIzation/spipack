@@ -13,7 +13,6 @@ using namespace spi::NumericalSolvers;
 DensityEstimation::DensityEstimation(std::shared_ptr<RandomVariable> const& rv, YAML::Node const& options) :
 SampleRepresentation(rv, options),
 bandwidthPara(options["BandwidthParameter"].as<double>(defaults.bandwidthPara)),
-manifoldDim(options["ManifoldDimension"].as<double>(defaults.manifoldDim)),
 tuneManifoldDimension(options["TuneManifoldDimension"].as<bool>(defaults.tuneManifoldDimension))
 {
   Initialize(options);
@@ -22,7 +21,6 @@ tuneManifoldDimension(options["TuneManifoldDimension"].as<bool>(defaults.tuneMan
 DensityEstimation::DensityEstimation(std::shared_ptr<SampleCollection> const& samples, YAML::Node const& options) :
 SampleRepresentation(samples, options),
 bandwidthPara(options["BandwidthParameter"].as<double>(defaults.bandwidthPara)),
-manifoldDim(options["ManifoldDimension"].as<double>(defaults.manifoldDim)),
 tuneManifoldDimension(options["TuneManifoldDimension"].as<bool>(defaults.tuneManifoldDimension))
 {
   Initialize(options);
@@ -31,7 +29,6 @@ tuneManifoldDimension(options["TuneManifoldDimension"].as<bool>(defaults.tuneMan
 DensityEstimation::DensityEstimation(std::shared_ptr<const NearestNeighbors> const& samples, YAML::Node const& options) :
 SampleRepresentation(samples, options),
 bandwidthPara(options["BandwidthParameter"].as<double>(defaults.bandwidthPara)),
-manifoldDim(options["ManifoldDimension"].as<double>(defaults.manifoldDim)),
 tuneManifoldDimension(options["TuneManifoldDimension"].as<bool>(defaults.tuneManifoldDimension))
 {
   Initialize(options);
@@ -51,8 +48,10 @@ void DensityEstimation::Initialize(YAML::Node const& options) {
 double DensityEstimation::BandwidthParameter() const { return bandwidthPara; }
 
 Eigen::VectorXd DensityEstimation::Estimate(bool const tune) {
+  assert(samples);
+
   // compute the squared bandwidth
-  Eigen::VectorXd squaredBandwidth = samples->SquaredBandwidth(numNearestNeighbors);
+  const Eigen::VectorXd squaredBandwidth = samples->SquaredBandwidth(numNearestNeighbors);
 
   // compute the density
   return Estimate(squaredBandwidth, tune);
@@ -73,7 +72,7 @@ Eigen::VectorXd DensityEstimation::Estimate(Eigen::Ref<const Eigen::VectorXd> co
     // solve the optimization and update the parameters
     std::pair<Eigen::VectorXd, double> soln = opt->Solve(inputs);
     bandwidthPara = std::pow(2, soln.first(0));
-    if( tuneManifoldDimension ) { manifoldDim = 2.0*soln.second; }
+    if( tuneManifoldDimension ) { manifoldDim = -2.0*soln.second; }
   }
 
   // compute the kernel matrix
