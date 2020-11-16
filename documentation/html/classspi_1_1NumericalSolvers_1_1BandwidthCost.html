@@ -104,6 +104,9 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 </div><!--header-->
 <div class="contents">
 
+<p>The cost function used to tune the bandwidth parameter \(\epsilon\).  
+ <a href="classspi_1_1NumericalSolvers_1_1BandwidthCost.html#details">More...</a></p>
+
 <p><code>#include &lt;<a class="el" href="BandwidthCost_8hpp_source.html">BandwidthCost.hpp</a>&gt;</code></p>
 <div class="dynheader">
 Inheritance diagram for spi::NumericalSolvers::BandwidthCost:</div>
@@ -117,6 +120,7 @@ Inheritance diagram for spi::NumericalSolvers::BandwidthCost:</div>
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-methods"></a>
 Public Member Functions</h2></td></tr>
 <tr class="memitem:a428ec50fb7fc6fb4653e05e1a415f17f"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classspi_1_1NumericalSolvers_1_1BandwidthCost.html#a428ec50fb7fc6fb4653e05e1a415f17f">BandwidthCost</a> (Eigen::Ref&lt; const Eigen::VectorXd &gt; const &amp;<a class="el" href="classspi_1_1NumericalSolvers_1_1BandwidthCost.html#a5f47a691a21ffd5a49e18e17531dd4cb">bandwidth</a>, std::shared_ptr&lt; const <a class="el" href="classspi_1_1NumericalSolvers_1_1SampleRepresentation.html">SampleRepresentation</a> &gt; const &amp;<a class="el" href="classspi_1_1NumericalSolvers_1_1BandwidthCost.html#ac926932078c0cb94ea3f5ade09d58996">samples</a>)</td></tr>
+<tr class="memdesc:a428ec50fb7fc6fb4653e05e1a415f17f"><td class="mdescLeft">&#160;</td><td class="mdescRight">Construct the cost function.  <a href="#a428ec50fb7fc6fb4653e05e1a415f17f">More...</a><br /></td></tr>
 <tr class="separator:a428ec50fb7fc6fb4653e05e1a415f17f"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a44df89611936deed66867393718a271d"><td class="memItemLeft" align="right" valign="top">virtual&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classspi_1_1NumericalSolvers_1_1BandwidthCost.html#a44df89611936deed66867393718a271d">~BandwidthCost</a> ()=default</td></tr>
 <tr class="separator:a44df89611936deed66867393718a271d"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -124,24 +128,35 @@ Public Member Functions</h2></td></tr>
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pri-methods"></a>
 Private Member Functions</h2></td></tr>
 <tr class="memitem:a7f0dadf7c3764d90fb3900f66921b6f7"><td class="memItemLeft" align="right" valign="top">virtual double&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classspi_1_1NumericalSolvers_1_1BandwidthCost.html#a7f0dadf7c3764d90fb3900f66921b6f7">CostImpl</a> (muq::Modeling::ref_vector&lt; Eigen::VectorXd &gt; const &amp;input) override</td></tr>
+<tr class="memdesc:a7f0dadf7c3764d90fb3900f66921b6f7"><td class="mdescLeft">&#160;</td><td class="mdescRight">An implementation of the cost function \(\Sigma_l^{\prime}\).  <a href="#a7f0dadf7c3764d90fb3900f66921b6f7">More...</a><br /></td></tr>
 <tr class="separator:a7f0dadf7c3764d90fb3900f66921b6f7"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ab71d52786407e518340b041a3c29c8dd"><td class="memItemLeft" align="right" valign="top">virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classspi_1_1NumericalSolvers_1_1BandwidthCost.html#ab71d52786407e518340b041a3c29c8dd">GradientImpl</a> (unsigned int const inputDimWrt, muq::Modeling::ref_vector&lt; Eigen::VectorXd &gt; const &amp;input, Eigen::VectorXd const &amp;sensitivity) override</td></tr>
+<tr class="memdesc:ab71d52786407e518340b041a3c29c8dd"><td class="mdescLeft">&#160;</td><td class="mdescRight">An implementation of the cost function derivative \(\frac{d}{d \epsilon}\Sigma_l^{\prime}\).  <a href="#ab71d52786407e518340b041a3c29c8dd">More...</a><br /></td></tr>
 <tr class="separator:ab71d52786407e518340b041a3c29c8dd"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pri-attribs"></a>
 Private Attributes</h2></td></tr>
 <tr class="memitem:a5f47a691a21ffd5a49e18e17531dd4cb"><td class="memItemLeft" align="right" valign="top">const Eigen::VectorXd&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classspi_1_1NumericalSolvers_1_1BandwidthCost.html#a5f47a691a21ffd5a49e18e17531dd4cb">bandwidth</a></td></tr>
+<tr class="memdesc:a5f47a691a21ffd5a49e18e17531dd4cb"><td class="mdescLeft">&#160;</td><td class="mdescRight">The bandwidth vector \(\boldsymbol{r}\) that defines the kernel matrix.  <a href="#a5f47a691a21ffd5a49e18e17531dd4cb">More...</a><br /></td></tr>
 <tr class="separator:a5f47a691a21ffd5a49e18e17531dd4cb"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ac926932078c0cb94ea3f5ade09d58996"><td class="memItemLeft" align="right" valign="top">std::shared_ptr&lt; const <a class="el" href="classspi_1_1NumericalSolvers_1_1SampleRepresentation.html">SampleRepresentation</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classspi_1_1NumericalSolvers_1_1BandwidthCost.html#ac926932078c0cb94ea3f5ade09d58996">samples</a></td></tr>
+<tr class="memdesc:ac926932078c0cb94ea3f5ade09d58996"><td class="mdescLeft">&#160;</td><td class="mdescRight">A discrete sample representation of the density \(\psi\).  <a href="#ac926932078c0cb94ea3f5ade09d58996">More...</a><br /></td></tr>
 <tr class="separator:ac926932078c0cb94ea3f5ade09d58996"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a4e46566a5bfa3c38928ef6893109a96b"><td class="memItemLeft" align="right" valign="top">double&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classspi_1_1NumericalSolvers_1_1BandwidthCost.html#a4e46566a5bfa3c38928ef6893109a96b">eps</a> = std::numeric_limits&lt;double&gt;::quiet_NaN()</td></tr>
+<tr class="memdesc:a4e46566a5bfa3c38928ef6893109a96b"><td class="mdescLeft">&#160;</td><td class="mdescRight">The value of the bandwidth parameter \(\epsilon_l = 2^{l}\) at the most recent function call.  <a href="#a4e46566a5bfa3c38928ef6893109a96b">More...</a><br /></td></tr>
 <tr class="separator:a4e46566a5bfa3c38928ef6893109a96b"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a736b67fa7dc894f7908d332d1041c23a"><td class="memItemLeft" align="right" valign="top">double&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classspi_1_1NumericalSolvers_1_1BandwidthCost.html#a736b67fa7dc894f7908d332d1041c23a">ksuml</a> = std::numeric_limits&lt;double&gt;::quiet_NaN()</td></tr>
+<tr class="memdesc:a736b67fa7dc894f7908d332d1041c23a"><td class="mdescLeft">&#160;</td><td class="mdescRight">A cached value of the sum of the entries in the kernel matrix at \(\epsilon_l = 2^{l}\).  <a href="#a736b67fa7dc894f7908d332d1041c23a">More...</a><br /></td></tr>
 <tr class="separator:a736b67fa7dc894f7908d332d1041c23a"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a0be564ce0c25e36f035ebf41093b0ac2"><td class="memItemLeft" align="right" valign="top">double&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classspi_1_1NumericalSolvers_1_1BandwidthCost.html#a0be564ce0c25e36f035ebf41093b0ac2">ksumlp1</a> = std::numeric_limits&lt;double&gt;::quiet_NaN()</td></tr>
+<tr class="memdesc:a0be564ce0c25e36f035ebf41093b0ac2"><td class="mdescLeft">&#160;</td><td class="mdescRight">A cached value of the sum of the entries in the kernel matrix at \(\epsilon_{l+1} = 2^{l+1}\).  <a href="#a0be564ce0c25e36f035ebf41093b0ac2">More...</a><br /></td></tr>
 <tr class="separator:a0be564ce0c25e36f035ebf41093b0ac2"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
-<h2 class="groupheader">Constructor &amp; Destructor Documentation</h2>
+<a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
+<div class="textblock"><p>The cost function used to tune the bandwidth parameter \(\epsilon\). </p>
+<p>If <code>tune</code> is <code>true</code>, we must choose the optimal \(\epsilon\) for the density estimation. Given the bandwidth exponent \(l \in [l_{min}, l_{max}]\), we choose \(\epsilon \in [2^{(l_{min})}, 2^{(l_{max})}]\). We do this by defining the parameters \(\Sigma_{l} = \frac{1}{n^2} \sum_{i,j=1}^{n} K_{\epsilon_l}^{(ij)}\) and \(\Sigma_{\epsilon_l}^{\prime} = (\log{(\Sigma_{\epsilon_{l+1}})}-\log{(\Sigma_{\epsilon_l})})/\log{(2)}\)</p>
+<p>The optimal \(\epsilon\) maximizes \(\Sigma_{\epsilon}^{\prime}\) and the corresponding manifold dimension estimate is \(m = 2 \max{(\Sigma_{\epsilon}^{\prime})}\). </p>
+</div><h2 class="groupheader">Constructor &amp; Destructor Documentation</h2>
 <a class="anchor" id="a428ec50fb7fc6fb4653e05e1a415f17f"></a>
 <div class="memitem">
 <div class="memproto">
@@ -165,6 +180,15 @@ Private Attributes</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
+
+<p>Construct the cost function. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[in]</td><td class="paramname">bandwidth</td><td>The vector \(\boldsymbol{r}\) that defines the kernel matrix </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">samples</td><td>A discrete sample representation of the density \(\psi\) </td></tr>
+  </table>
+  </dd>
+</dl>
 
 </div>
 </div>
@@ -214,6 +238,15 @@ Private Attributes</h2></td></tr>
 </table>
 </div><div class="memdoc">
 
+<p>An implementation of the cost function \(\Sigma_l^{\prime}\). </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[in]</td><td class="paramname">input</td><td>Only one input vector: a vector of length \(1\) containing the candidate parameter \(\epsilon\) </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>The cost function \(\Sigma_l^{\prime}\) </dd></dl>
+
 </div>
 </div>
 <a class="anchor" id="ab71d52786407e518340b041a3c29c8dd"></a>
@@ -254,6 +287,15 @@ Private Attributes</h2></td></tr>
 </table>
 </div><div class="memdoc">
 
+<p>An implementation of the cost function derivative \(\frac{d}{d \epsilon}\Sigma_l^{\prime}\). </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[in]</td><td class="paramname">inputDimWrt</td><td>Since there is only one input vector, this must be \(0\). </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">input</td><td>Only one input vector: a vector of length \(1\) containing the candidate parameter \(\epsilon\) </td></tr>
+  </table>
+  </dd>
+</dl>
+
 </div>
 </div>
 <h2 class="groupheader">Member Data Documentation</h2>
@@ -275,6 +317,8 @@ Private Attributes</h2></td></tr>
 </table>
 </div><div class="memdoc">
 
+<p>The bandwidth vector \(\boldsymbol{r}\) that defines the kernel matrix. </p>
+
 </div>
 </div>
 <a class="anchor" id="a4e46566a5bfa3c38928ef6893109a96b"></a>
@@ -294,6 +338,9 @@ Private Attributes</h2></td></tr>
   </tr>
 </table>
 </div><div class="memdoc">
+
+<p>The value of the bandwidth parameter \(\epsilon_l = 2^{l}\) at the most recent function call. </p>
+<p>We store the results (because they are expensive to compute). </p>
 
 </div>
 </div>
@@ -315,6 +362,8 @@ Private Attributes</h2></td></tr>
 </table>
 </div><div class="memdoc">
 
+<p>A cached value of the sum of the entries in the kernel matrix at \(\epsilon_l = 2^{l}\). </p>
+
 </div>
 </div>
 <a class="anchor" id="a0be564ce0c25e36f035ebf41093b0ac2"></a>
@@ -335,6 +384,8 @@ Private Attributes</h2></td></tr>
 </table>
 </div><div class="memdoc">
 
+<p>A cached value of the sum of the entries in the kernel matrix at \(\epsilon_{l+1} = 2^{l+1}\). </p>
+
 </div>
 </div>
 <a class="anchor" id="ac926932078c0cb94ea3f5ade09d58996"></a>
@@ -354,6 +405,8 @@ Private Attributes</h2></td></tr>
   </tr>
 </table>
 </div><div class="memdoc">
+
+<p>A discrete sample representation of the density \(\psi\). </p>
 
 </div>
 </div>
