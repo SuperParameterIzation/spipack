@@ -121,7 +121,7 @@ Protected Member Functions</h2></td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pro-attribs"></a>
 Protected Attributes</h2></td></tr>
-<tr class="memitem:a165494fd97633601455a66f8277cdbdd"><td class="memItemLeft" align="right" valign="top">const unsigned int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classKolmogorovOperatorTests.html#a165494fd97633601455a66f8277cdbdd">dim</a> = 4</td></tr>
+<tr class="memitem:a165494fd97633601455a66f8277cdbdd"><td class="memItemLeft" align="right" valign="top">const unsigned int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classKolmogorovOperatorTests.html#a165494fd97633601455a66f8277cdbdd">dim</a> = 1</td></tr>
 <tr class="memdesc:a165494fd97633601455a66f8277cdbdd"><td class="mdescLeft">&#160;</td><td class="mdescRight">The dimension of state spaces.  <a href="#a165494fd97633601455a66f8277cdbdd">More...</a><br /></td></tr>
 <tr class="separator:a165494fd97633601455a66f8277cdbdd"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a61328525e099195fb1956b764334ecdc"><td class="memItemLeft" align="right" valign="top">std::size_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classKolmogorovOperatorTests.html#a61328525e099195fb1956b764334ecdc">n</a> = 1000</td></tr>
@@ -130,9 +130,15 @@ Protected Attributes</h2></td></tr>
 <tr class="memitem:a5823facc490aa88a70bc0bacadff5dd7"><td class="memItemLeft" align="right" valign="top">const std::size_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classKolmogorovOperatorTests.html#a5823facc490aa88a70bc0bacadff5dd7">nneighs</a> = 15</td></tr>
 <tr class="memdesc:a5823facc490aa88a70bc0bacadff5dd7"><td class="mdescLeft">&#160;</td><td class="mdescRight">The number of nearest neighbors.  <a href="#a5823facc490aa88a70bc0bacadff5dd7">More...</a><br /></td></tr>
 <tr class="separator:a5823facc490aa88a70bc0bacadff5dd7"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:af0af19e15ef99c6b1b0ae7dc0772d83c"><td class="memItemLeft" align="right" valign="top">double&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classKolmogorovOperatorTests.html#af0af19e15ef99c6b1b0ae7dc0772d83c">eps</a> = 25.0</td></tr>
+<tr class="memitem:af0af19e15ef99c6b1b0ae7dc0772d83c"><td class="memItemLeft" align="right" valign="top">double&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classKolmogorovOperatorTests.html#af0af19e15ef99c6b1b0ae7dc0772d83c">eps</a> = 0.15</td></tr>
 <tr class="memdesc:af0af19e15ef99c6b1b0ae7dc0772d83c"><td class="mdescLeft">&#160;</td><td class="mdescRight">The bandwidth parameter \(\epsilon\).  <a href="#af0af19e15ef99c6b1b0ae7dc0772d83c">More...</a><br /></td></tr>
 <tr class="separator:af0af19e15ef99c6b1b0ae7dc0772d83c"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ad0b3764e9830c0206e61557a2cc41e22"><td class="memItemLeft" align="right" valign="top">const double&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classKolmogorovOperatorTests.html#ad0b3764e9830c0206e61557a2cc41e22">operatorParameter</a> = 0.75</td></tr>
+<tr class="memdesc:ad0b3764e9830c0206e61557a2cc41e22"><td class="mdescLeft">&#160;</td><td class="mdescRight">The operator parameter \(c\).  <a href="#ad0b3764e9830c0206e61557a2cc41e22">More...</a><br /></td></tr>
+<tr class="separator:ad0b3764e9830c0206e61557a2cc41e22"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a09645c050a311b116ad85ba5b94b79f7"><td class="memItemLeft" align="right" valign="top">const double&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classKolmogorovOperatorTests.html#a09645c050a311b116ad85ba5b94b79f7">bandwidthExponent</a> = -0.25</td></tr>
+<tr class="memdesc:a09645c050a311b116ad85ba5b94b79f7"><td class="mdescLeft">&#160;</td><td class="mdescRight">The bandwidth exponent \(\beta\).  <a href="#a09645c050a311b116ad85ba5b94b79f7">More...</a><br /></td></tr>
+<tr class="separator:a09645c050a311b116ad85ba5b94b79f7"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ac84af796f7e3a136f56b11f847001399"><td class="memItemLeft" align="right" valign="top">std::shared_ptr&lt; RandomVariable &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classKolmogorovOperatorTests.html#ac84af796f7e3a136f56b11f847001399">rv</a></td></tr>
 <tr class="memdesc:ac84af796f7e3a136f56b11f847001399"><td class="mdescLeft">&#160;</td><td class="mdescRight">The random variable that lets us sample from the underlying distribution.  <a href="#ac84af796f7e3a136f56b11f847001399">More...</a><br /></td></tr>
 <tr class="separator:ac84af796f7e3a136f56b11f847001399"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -221,6 +227,28 @@ Protected Attributes</h2></td></tr>
 </div>
 </div>
 <h2 class="groupheader">Member Data Documentation</h2>
+<a class="anchor" id="a09645c050a311b116ad85ba5b94b79f7"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">const double KolmogorovOperatorTests::bandwidthExponent = -0.25</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">protected</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>The bandwidth exponent \(\beta\). </p>
+
+</div>
+</div>
 <a class="anchor" id="a165494fd97633601455a66f8277cdbdd"></a>
 <div class="memitem">
 <div class="memproto">
@@ -229,7 +257,7 @@ Protected Attributes</h2></td></tr>
   <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname">const unsigned int KolmogorovOperatorTests::dim = 4</td>
+          <td class="memname">const unsigned int KolmogorovOperatorTests::dim = 1</td>
         </tr>
       </table>
   </td>
@@ -251,7 +279,7 @@ Protected Attributes</h2></td></tr>
   <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname">double KolmogorovOperatorTests::eps = 25.0</td>
+          <td class="memname">double KolmogorovOperatorTests::eps = 0.15</td>
         </tr>
       </table>
   </td>
@@ -328,6 +356,28 @@ Protected Attributes</h2></td></tr>
 </div><div class="memdoc">
 
 <p>The number of nearest neighbors. </p>
+
+</div>
+</div>
+<a class="anchor" id="ad0b3764e9830c0206e61557a2cc41e22"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">const double KolmogorovOperatorTests::operatorParameter = 0.75</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">protected</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>The operator parameter \(c\). </p>
 
 </div>
 </div>
