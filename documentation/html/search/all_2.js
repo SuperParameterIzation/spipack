@@ -6,6 +6,7 @@ var searchData=
   ['bandwidthcost_2ecpp',['BandwidthCost.cpp',['../BandwidthCost_8cpp.html',1,'']]],
   ['bandwidthcost_2ehpp',['BandwidthCost.hpp',['../BandwidthCost_8hpp.html',1,'']]],
   ['bandwidthcosttests_2ecpp',['BandwidthCostTests.cpp',['../BandwidthCostTests_8cpp.html',1,'']]],
+  ['bandwidthexponent',['bandwidthExponent',['../classKolmogorovOperatorTests.html#a09645c050a311b116ad85ba5b94b79f7',1,'KolmogorovOperatorTests']]],
   ['bandwidthindex',['bandwidthIndex',['../classGraphLaplacianTests.html#af1a36af73af080b9cef5742e7e27779f',1,'GraphLaplacianTests']]],
   ['bandwidthpara',['bandwidthPara',['../classspi_1_1NumericalSolvers_1_1DensityEstimation.html#aefd4c093b324a9514cf8c70307353d56',1,'spi::NumericalSolvers::DensityEstimation::bandwidthPara()'],['../structspi_1_1NumericalSolvers_1_1DensityEstimation_1_1DefaultParameters.html#af3ce0494267597505410f0676fa00d40',1,'spi::NumericalSolvers::DensityEstimation::DefaultParameters::bandwidthPara()'],['../namespace__plot__result.html#aaa521a950d50df10d805e026095bbee1',1,'_plot_result.bandwidthPara()']]],
   ['bandwidthparameter',['BandwidthParameter',['../classspi_1_1NumericalSolvers_1_1DensityEstimation.html#adc5dc897c2607a0a62085bb612c5c484',1,'spi::NumericalSolvers::DensityEstimation']]],
