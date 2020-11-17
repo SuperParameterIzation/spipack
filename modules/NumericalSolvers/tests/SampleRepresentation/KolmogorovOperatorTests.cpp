@@ -525,3 +525,15 @@ TEST_F(KolmogorovOperatorTests, KernelSecondDerivativeAverage_Truncated) {
 
   EXPECT_NEAR(expectedAvg, avg, 1.0e-10);
 }
+
+
+TEST_F(KolmogorovOperatorTests, Tuning) {
+  // create the graph laplacian from samples
+  auto samples = CreateFromSamples();
+  EXPECT_EQ(samples->size(), n);
+
+  // construct the kd-trees
+  kolOperator->BuildKDTrees();
+
+  kolOperator->TuneBandwidthParameter();
+}

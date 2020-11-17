@@ -12,40 +12,18 @@ using namespace spi::NumericalSolvers;
 
 DensityEstimation::DensityEstimation(std::shared_ptr<RandomVariable> const& rv, YAML::Node const& options) :
 SampleRepresentation(rv, options),
-bandwidthPara(options["BandwidthParameter"].as<double>(defaults.bandwidthPara)),
 tuneManifoldDimension(options["TuneManifoldDimension"].as<bool>(defaults.tuneManifoldDimension))
-{
-  Initialize(options);
-}
+{}
 
 DensityEstimation::DensityEstimation(std::shared_ptr<SampleCollection> const& samples, YAML::Node const& options) :
 SampleRepresentation(samples, options),
-bandwidthPara(options["BandwidthParameter"].as<double>(defaults.bandwidthPara)),
 tuneManifoldDimension(options["TuneManifoldDimension"].as<bool>(defaults.tuneManifoldDimension))
-{
-  Initialize(options);
-}
+{}
 
 DensityEstimation::DensityEstimation(std::shared_ptr<const NearestNeighbors> const& samples, YAML::Node const& options) :
 SampleRepresentation(samples, options),
-bandwidthPara(options["BandwidthParameter"].as<double>(defaults.bandwidthPara)),
 tuneManifoldDimension(options["TuneManifoldDimension"].as<bool>(defaults.tuneManifoldDimension))
-{
-  Initialize(options);
-}
-
-void DensityEstimation::Initialize(YAML::Node const& options) {
-  const YAML::Node& opt = options["Optimization"].as<YAML::Node>(YAML::Node());
-
-  pt.put("Ftol.AbsoluteTolerance", opt["Ftol.AbsoluteTolerance"].as<double>(1.0e-6));
-  pt.put("Ftol.RelativeTolerance", opt["Ftol.RelativeTolerance"].as<double>(1.0e-6));
-  pt.put("Xtol.AbsoluteTolerance", opt["Xtol.AbsoluteTolerance"].as<double>(1.0e-6));
-  pt.put("Xtol.RelativeTolerance", opt["Xtol.RelativeTolerance"].as<double>(1.0e-6));
-  pt.put("MaxEvaluations", opt["MaxEvaluations"].as<std::size_t>(1000));
-  pt.put("Algorithm", opt["Algorithm"].as<std::string>("COBYLA"));
-}
-
-double DensityEstimation::BandwidthParameter() const { return bandwidthPara; }
+{}
 
 Eigen::VectorXd DensityEstimation::Estimate(bool const tune) {
   assert(samples);

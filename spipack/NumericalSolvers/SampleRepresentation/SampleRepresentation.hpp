@@ -1,6 +1,8 @@
 #ifndef SAMPLEREPRESENTATION_HPP_
 #define SAMPLEREPRESENTATION_HPP_
 
+#include <boost/property_tree/ptree.hpp>
+
 #include <Eigen/Sparse>
 
 #include "spipack/Tools/NearestNeighbors.hpp"
@@ -56,6 +58,12 @@ public:
   SampleRepresentation(std::shared_ptr<const spi::Tools::NearestNeighbors> const& samples, YAML::Node const& options);
 
   virtual ~SampleRepresentation() = default;
+
+  /// Get the bandwith parameter \f$\epsilon\f$
+  /**
+  \return The bandwith parameter \f$\epsilon\f$
+  */
+  double BandwidthParameter() const;
 
   /// How many samples are in the collection?
   /**
@@ -238,6 +246,12 @@ protected:
   */
   const bool truncateKernelMatrix;
 
+  /// Options for the parameter tuning optimization
+  boost::property_tree::ptree pt;
+
+  /// The bandwidth parameter \f$\epsilon\f$
+  double bandwidthPara;
+
 private:
 
   /// Compute the average of the pair-wise kernel derivative evaluations in a given row
@@ -327,6 +341,9 @@ private:
     \return The default truncation tolerance parameter
     */
     static double TruncationTolerance(bool const compact);
+
+    /// The default bandwidth parameter \f$\epsilon\f$ is \f$1.0\f$
+    inline static const double bandwidthPara = 1.0;
 
     /// The default number of nearest neighbors for the bandwidth computation is \f$10\f$
     inline static const std::size_t numNearestNeighbors = 10;

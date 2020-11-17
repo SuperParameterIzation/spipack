@@ -15,6 +15,7 @@ samples(std::make_shared<NearestNeighbors>(rv, options["NearestNeighbors"])),
 numNearestNeighbors(options["NumNearestNeighbors"].as<std::size_t>(defaults.numNearestNeighbors)),
 truncateKernelMatrix(options["TruncateKernelMatrix"].as<bool>(defaults.truncateKernelMatrix)),
 manifoldDim(options["ManifoldDimension"].as<double>(defaults.manifoldDim)),
+bandwidthPara(options["BandwidthParameter"].as<double>(defaults.bandwidthPara)),
 numThreads(options["NumThreads"].as<std::size_t>(samples->NumThreads()))
 {
   Initialize(options);
@@ -25,6 +26,7 @@ samples(std::make_shared<NearestNeighbors>(samples, options["NearestNeighbors"])
 numNearestNeighbors(options["NumNearestNeighbors"].as<std::size_t>(defaults.numNearestNeighbors)),
 truncateKernelMatrix(options["TruncateKernelMatrix"].as<bool>(defaults.truncateKernelMatrix)),
 manifoldDim(options["ManifoldDimension"].as<double>(defaults.manifoldDim)),
+bandwidthPara(options["BandwidthParameter"].as<double>(defaults.bandwidthPara)),
 numThreads(options["NumThreads"].as<std::size_t>(this->samples->NumThreads()))
 {
   Initialize(options);
@@ -35,10 +37,13 @@ samples(samples),
 numNearestNeighbors(options["NumNearestNeighbors"].as<std::size_t>(defaults.numNearestNeighbors)),
 truncateKernelMatrix(options["TruncateKernelMatrix"].as<bool>(defaults.truncateKernelMatrix)),
 manifoldDim(options["ManifoldDimension"].as<double>(defaults.manifoldDim)),
+bandwidthPara(options["BandwidthParameter"].as<double>(defaults.bandwidthPara)),
 numThreads(options["NumThreads"].as<std::size_t>(this->samples->NumThreads()))
 {
   Initialize(options);
 }
+
+double SampleRepresentation::BandwidthParameter() const { return bandwidthPara; }
 
 void SampleRepresentation::Initialize(YAML::Node const& options) {
   // create the kernel
@@ -48,6 +53,15 @@ void SampleRepresentation::Initialize(YAML::Node const& options) {
   compactKernel = (compactKernelPtr!=nullptr);
   truncationTol = (compactKernel? 1.0 : options["TruncationTolerance"].as<double>(defaults.TruncationTolerance(compactKernel)));
   assert(truncationTol>0.0);
+
+  const YAML::Node& opt = options["Optimization"].as<YAML::Node>(YAML::Node());
+
+  pt.put("Ftol.AbsoluteTolerance", opt["Ftol.AbsoluteTolerance"].as<double>(1.0e-6));
+  pt.put("Ftol.RelativeTolerance", opt["Ftol.RelativeTolerance"].as<double>(1.0e-6));
+  pt.put("Xtol.AbsoluteTolerance", opt["Xtol.AbsoluteTolerance"].as<double>(1.0e-6));
+  pt.put("Xtol.RelativeTolerance", opt["Xtol.RelativeTolerance"].as<double>(1.0e-6));
+  pt.put("MaxEvaluations", opt["MaxEvaluations"].as<std::size_t>(1000));
+  pt.put("Algorithm", opt["Algorithm"].as<std::string>("COBYLA"));
 }
 
 std::size_t SampleRepresentation::NumSamples() const { return samples->NumSamples(); }

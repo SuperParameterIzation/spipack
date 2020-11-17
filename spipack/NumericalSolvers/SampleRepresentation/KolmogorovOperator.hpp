@@ -20,7 +20,7 @@ References:
 - <a href="https://www.sciencedirect.com/science/article/pii/S1063520315000020">"Variable bandwidth diffusion kernels" by T. Berry & J. Harlim</a>
 - <a href="https://www.sciencedirect.com/science/article/pii/S1063520317300982">"Data-driven spectral decomposition and forecasting of ergodic dynamical systems" by D. Giannakis</a>
 */
-class KolmogorovOperator : public SampleRepresentation {
+class KolmogorovOperator : public SampleRepresentation, public std::enable_shared_from_this<KolmogorovOperator> {
 public:
 
   /// Construct the Kolmogorov operator by sampling a random variable from \f$\psi\f$
@@ -61,6 +61,20 @@ public:
 
   virtual Eigen::VectorXd KernelMatrix(double const eps, Eigen::Ref<const Eigen::VectorXd> const& dens, Eigen::SparseMatrix<double>& kmat) const override;
 
+  void TuneBandwidthParameter();
+
+  /// Get the parameter used as the variable bandwidth exponent
+  /**
+  \return The variable bandwidth exponent \f$\alpha\f$.
+  */
+  double VariableBandwidthExponent() const;
+
+  /// Get the exponent parameter \f$\beta\f$
+  /**
+  \return The exponent parameter \f$\beta\f$.
+  */
+  double ExponentParameter() const;
+
 private:
 
   /// By default, do we want to tune the bandwidth parameter values?
@@ -72,19 +86,19 @@ private:
   /// Estimate the density of the underlying distribution
   std::shared_ptr<DensityEstimation> density;
 
-  /// The operator parameter \f$\alpha\f$
+  /// The operator parameter \f$c\f$
   const double operatorConstant;
 
-  /// Variable bandwidth exponent \f$\beta\f$
-  const double variableBandwidthExponent;
+  /// The exponent parameter \f$\beta\f$
+  const double exponentPara;
 
   /// The default values for the spi::NumericalSolvers::DensityEstimation class.
   struct DefaultParameters {
     /// The default operator parameter is \f$c=1\f$
     inline static const double operatorConstant = 1.0;
 
-    /// The default variable bandwidth exponent is \f$\beta=-0.5\f$
-    inline static const double variableBandwidthExponent = -0.5;
+    /// The exponent parameter defaults to \f$\beta=-0.5\f$
+    inline static const double exponentPara = -0.5;
   };
 
   /// Store the default parameter values

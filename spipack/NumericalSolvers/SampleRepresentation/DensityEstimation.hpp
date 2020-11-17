@@ -1,8 +1,6 @@
 #ifndef DENSITYESTIMATION_HPP_
 #define DENSITYESTIMATION_HPP_
 
-#include <boost/property_tree/ptree.hpp>
-
 #include "spipack/NumericalSolvers/SampleRepresentation/SampleRepresentation.hpp"
 
 namespace spi {
@@ -65,12 +63,6 @@ public:
 
   virtual ~DensityEstimation() = default;
 
-  /// Get the bandwith parameter \f$\epsilon\f$
-  /**
-  \return The bandwith parameter \f$\epsilon\f$
-  */
-  double BandwidthParameter() const;
-
   /// Estimate the density at each sample
   /**
   This function computes the bandwidth \f$r_i^2 = \frac{1}{k} \sum_{j=1}^{k} \| \boldsymbol{x}^{(i)}-\boldsymbol{x}^{(I(i,j))} \|^2\f$ and the kernel marix \f$\boldsymbol{K}_{\epsilon}\f$. We then estimate the density at each sample as
@@ -117,26 +109,11 @@ public:
 
 private:
 
-  /// Initialize the density estimation
-  /**
-  @param[in] options Setup options
-  */
-  void Initialize(YAML::Node const& options);
-
-  /// The bandwidth parameter \f$\epsilon\f$
-  double bandwidthPara;
-
   /// Tune the manifold dimension \f$m\f$?
   const bool tuneManifoldDimension;
 
-  /// Options for the parameter tuning optimization
-  boost::property_tree::ptree pt;
-
   /// The default values for the spi::NumericalSolvers::DensityEstimation class.
   struct DefaultParameters {
-    /// The default bandwidth parameter \f$\epsilon\f$ is \f$1.0\f$
-    inline static const double bandwidthPara = 1.0;
-
     /// By default, do not tune the manifold dimension
     inline static const bool tuneManifoldDimension = false;
   };
