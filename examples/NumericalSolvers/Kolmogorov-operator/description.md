@@ -87,11 +87,11 @@ and the augmented kernel
 
 $$
 \begin{equation}
-k_{\epsilon,\beta,\alpha}(\boldsymbol{x}^{(i)}, \boldsymbol{x}^{(j)}) = \frac{k_{\epsilon,\beta}(\boldsymbol{x}^{(i)}, \boldsymbol{x}^{(j)})}{q_{\epsilon, beta}^{ \alpha}(\boldsymbol{x}^{(j)}) q_{\epsilon, beta}^{ \alpha}(\boldsymbol{x}^{(i)})}
+k_{\epsilon,\beta,\alpha}(\boldsymbol{x}^{(i)}, \boldsymbol{x}^{(j)}) = \frac{k_{\epsilon,\beta}(\boldsymbol{x}^{(i)}, \boldsymbol{x}^{(j)})}{q_{\epsilon, \beta}^{ \alpha}(\boldsymbol{x}^{(j)}) q_{\epsilon, \beta}^{ \alpha}(\boldsymbol{x}^{(i)})}
 \end{equation}
 $$
 
-where $\alpha = $
+where $\alpha = 1 + \frac{1}{2} d \beta + \beta - \frac{1}{2} c$ defines the normalization.
 
 ## References
 
