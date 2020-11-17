@@ -26,7 +26,7 @@ int main(int argc, char **argv) {
   const std::string filename = "outputData.h5";
 
   // the number of samples
-  const std::size_t n = 5000;
+  const std::size_t n = 1000;
 
   // numerical parameters
   const std::size_t numNeighbors = 25;
@@ -128,7 +128,8 @@ int main(int argc, char **argv) {
   //Eigen::MatrixXd Lhat = (dens.array()*dens.array()).inverse().matrix().asDiagonal();
   Eigen::SparseMatrix<double> Lhat(n, n);
   Lhat.setIdentity();
-  Lhat = D.array().inverse().matrix().asDiagonal()*kmat-Lhat;
+  Lhat = (P.array()*P.array()).inverse().matrix().asDiagonal();
+  Lhat = S.array().inverse().matrix().asDiagonal()*kmat*S.array().inverse().matrix().asDiagonal()-Lhat;
 
   //Lhat = (P.array()*P.array()).inverse().matrix().asDiagonal();
 
@@ -164,7 +165,7 @@ int main(int argc, char **argv) {
 
   Eigen::MatrixXd Lfeig = (1.0/kolOperator->BandwidthParameter())*(P.array()*P.array()).inverse().matrix().asDiagonal()*eigvecs*eigvals.asDiagonal()*eigvecs.transpose()*f;
 
-  //std::cout << eigvecs*eigvals.asDiagonal()*eigvecs.transpose()-Lhat << std::endl;
+  std::cout << eigvecs*eigvals.asDiagonal()*eigvecs.transpose()-Lhat << std::endl;
 
   //std::cout << id << std::endl;
 

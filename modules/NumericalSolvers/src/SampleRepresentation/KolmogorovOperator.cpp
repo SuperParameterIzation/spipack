@@ -64,7 +64,7 @@ Eigen::VectorXd KolmogorovOperator::KernelMatrix(double const eps, Eigen::Ref<co
   assert(dens.size()==n);
 
   // compute the unnormalized kernel matrix K
-  Eigen::VectorXd rowsum = SampleRepresentation::KernelMatrix(eps, dens.array().pow(exponentPara), kmat);
+  Eigen::VectorXd rowsum = SampleRepresentation::KernelMatrix(4.0*eps, dens.array().pow(exponentPara), kmat);
 
   const double para = VariableBandwidthExponent();
 
@@ -104,7 +104,7 @@ Eigen::VectorXd KolmogorovOperator::KernelMatrix(double const eps, Eigen::Ref<co
 
   // compute the unnormalized kernel matrix K
   std::vector<Eigen::Triplet<double> > entries;
-  Eigen::VectorXd rowsum = SampleRepresentation::KernelMatrix(eps, dens.array().pow(exponentPara), entries);
+  Eigen::VectorXd rowsum = SampleRepresentation::KernelMatrix(4.0*eps, dens.array().pow(exponentPara), entries);
 
   // compute the normalization for the new kernel matrix
   rowsum = (rowsum.array()/dens.array().pow(manifoldDim*exponentPara)).pow(para);
@@ -140,7 +140,7 @@ void KolmogorovOperator::TuneBandwidthParameter() {
 
   // solve the optimization and update the parameters
   std::pair<Eigen::VectorXd, double> soln = opt->Solve(inputs);
-  bandwidthPara = std::pow(2, soln.first(0));
+  bandwidthPara = std::pow(2, soln.first(0))/4.0;
 }
 
 double KolmogorovOperator::VariableBandwidthExponent() const { return 1.0+0.5*manifoldDim*exponentPara+exponentPara-0.5*operatorConstant; }
