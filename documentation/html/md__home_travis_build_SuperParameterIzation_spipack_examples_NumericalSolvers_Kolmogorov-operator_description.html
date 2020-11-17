@@ -88,26 +88,44 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <div class="contents">
 <div class="textblock"><hr/>
  <h2>layout: default </h2>
-<h1>Density estimation</h1>
-<p>Let $$ be a probability density function and let $[ {x}^{(i)} ]_{i=1}^{n}$ be samples from $$. Define the sample bandwidth</p>
-<p>$$ {equation} r_i^2 = {1}{k} {j=1}^{k} | {x}^{(i)}-{x}^{(I(i,j))} |^2, {equation} $$</p>
-<p>where $I(i,j)$ is the index of $j^{th}$ closest sample to ${x}^{(i)}$. In other words, $r_i$ is the average distance between ${x}^{(i)}$ and its $k$ nearest neighbors.</p>
-<p>For the purpose of this example, assume that $ = {N}({0}, {I})$ is a 2-dimensional standard normal distribution.</p>
-<p>&lt;figure&gt; &lt;figcaption&gt;The squared bandwidth $r_i^2 = {1}{k} {j=1}^{k} | {x}^{(i)}-{x}^{(I(i,j))} |^2$ at all $n=10^4$ samples with $k=25$ nearest neighbors.&lt;/figcaption&gt; &lt;embed src="figures/SquaredBandwidth.pdf" width="500" height="375" type="application/pdf"&gt; &lt;/figure&gt;</p>
+<h1>Kolmogorov operator</h1>
+<p>This example relies on work shown in <a href="https://www.sciencedirect.com/science/article/pii/S1063520315000020">"Variable bandwidth diffusion kernels" by T. Berry &amp; J. Harlim</a>.</p>
+<p>Let $$ be a probability density function and let $[ {x}^{(i)} ]_{i=1}^{n}$ be samples from $$. Given constant $c$ and function f, define the Kolmogorov operator</p>
+<p>$$ {equation} {L}_{, c} f =  f + c  f  { }{} {equation} $$</p>
+<p>Note the special cases:</p><ul>
+<li>$c=0$: The Laplacian operator ${L}_{,0} f =  f$</li>
+<li>$c=1$: The weighted Laplacian operator ${L}_{,1} f =  f +  f  { }{} = ^{-1}   (  f)$</li>
+</ul>
+<h2>Density estimation phase</h2>
+<p>See the ../density-estimation/description.md "density estimation" example for details.</p>
+<p>&lt;figure&gt; &lt;figcaption&gt;The estimated density $^{(i)}  ({x}^{(i)})$ at each sample.&lt;/figcaption&gt; &lt;embed src="figures/DensityEstimation.pdf" width="500" height="375" type="application/pdf"&gt; &lt;/figure&gt;</p>
+<p>Importantly: we have an estimate an $^{(i)}$ of the density at each sample.</p>
+<h2>Discretize the operator</h2>
+<p>Parameters:</p><ul>
+<li>The operator constant $c$ (defines the operator)</li>
+<li>The exponent $$ (user-prescribed, typically we choose $ = -0.5$)</li>
+<li>The bandwidth $$ (user-prescribed or tuned using the procedure shown below)</li>
+<li>The manifold dimension $d$ (estimated in the density estimation phase, if not know already)</li>
+</ul>
 <p>Let $k() = {( -    )}$ and define the kernel</p>
-<p>$$ {equation} k_{}({x}^{(i)}, {x}^{(j)}) = k( { | {x}^{(i)} - {x}^{(j)} |^2 }{  r_i r_j } ). {equation} $$</p>
+<p>$$ {equation} k_{,}({x}^{(i)}, {x}^{(j)}) = k( { | {x}^{(i)} - {x}^{(j)} |^2 }{  ^{ }({x}^{(i)}) ^{ }({x}^{(j)}) } ). {equation}. $$</p>
+<h3>Parameter tuning</h3>
+<p>Following the same procedure in the ../density-estimation/description.md "density estimation" example.</p>
 <p>Let $  [{(l_{min})}, {(l_{max})}]$ be candidate bandwidth parameters. Define the parameter</p>
-<p>$$ {equation}  = {i,j=1}^{N} k_{}({x}^{(i)}, {x}^{(j)}). {equation} $$</p>
+<p>$$ {equation}  = {i,j=1}^{N} k_{,}({x}^{(i)}, {x}^{(j)}). {equation} $$</p>
 <p>and an approximation of how it changes with respect to $$</p>
 <p>$$ {equation} ^{} = {{({l+1})} - {({l})}}{{({l+1})} - {({l})}} {equation}. $$</p>
-<p>Let $${}_l^{}={l}{(^{})}$$ (with corresponding index ${l}$ and optimal bandwidth parameter ${}$). The estimated manifold dimension is $m = 2 {}_l$; in this case we know that $m = 2$ so we expect ${}_l^{} = 1$.</p>
-<p>&lt;figure&gt; &lt;figcaption&gt;The value of $^{}$ for candidate bandwidth parameters $$; the optimal bandwidth parameter is ${}  9.4$.&lt;/figcaption&gt; &lt;embed src="figures/LogKernelAvgDerivative.pdf" width="500" height="375" type="application/pdf"&gt; &lt;/figure&gt;</p>
-<p>Given the optimal bandwidth parameter ${}$, the estimated density for the $i^{th}$ sample is</p>
-<p>$$ {equation} ^{(i)} = {j=1}^{n} {k_{}({x}^{(i)}, {x}^{(j)})}{n ( {} r_i^2)^{m/2} } {equation} $$</p>
-<p>(recall that $m=2$ in this case). The resulting estimate and exact density are both shown below.</p>
-<p>&lt;figure&gt; &lt;figcaption&gt;The estimated density $^{(i)}$ at all $n=10^4$.&lt;/figcaption&gt; &lt;embed src="figures/DensityEstimation.pdf" width="500" height="375" type="application/pdf"&gt; &lt;/figure&gt;</p>
-<p>&lt;figure&gt; &lt;figcaption&gt;The true density evaluation ${N}({x}^{(i)}; {0}, {I})$ at all $n=10^4$.&lt;/figcaption&gt; &lt;embed src="figures/TrueDensity.pdf" width="500" height="375" type="application/pdf"&gt; &lt;/figure&gt;</p>
-<p>&lt;embed src="_density-estimation.cpp"&gt;</p>
+<p>Let $${}_l^{}={l}{(^{})}$$ (with corresponding index ${l}$ and optimal bandwidth parameter ${}$).</p>
+<p>&lt;figure&gt; &lt;figcaption&gt;The value of $^{}$ for candidate bandwidth parameters $$; the optimal bandwidth parameter is ${}  0.28$.&lt;/figcaption&gt; &lt;embed src="figures/LogKernelAvgDerivative.pdf" width="500" height="375" type="application/pdf"&gt; &lt;/figure&gt;</p>
+<p>We continue to discretize the operator by defining the normalization</p>
+<p>$$ {equation} q_{,} ({x}^{(i)}) = ^{-d }({x}^{(i)}) {j=1}^{n} k_{,}({x}^{(i)}, {x}^{(j)}) {equation} $$</p>
+<p>and the augmented kernel</p>
+<p>$$ {equation} k_{,,}({x}^{(i)}, {x}^{(j)}) = {k_{,}({x}^{(i)}, {x}^{(j)})}{q_{, }^{ }({x}^{(j)}) q_{, }^{ }({x}^{(i)})} {equation} $$</p>
+<p>where $ = 1 + {1}{2} d  +  - {1}{2} c$ defines the normalization. Finally, define a second normalization</p>
+<p>$$ {equation} q_{,,} ({x}^{(i)}) = {j=1}^{n} k_{,, }({x}^{(i)}, {x}^{(j)}) {equation} $$</p>
+<p>Denote the symmetric kernel matrix ${K}$ such that $K^{(ij)} = k_{,,}({x}^{(i)}, {x}^{(j)})$ and the diagonal matrices ${D}$ and ${P}$ such that $D^{(ii)} = q_{,,} ({x}^{(i)})$ and $P^{(ii)} = ^{}({x}^{(i)})$. The discrete Kolmogorov operator is</p>
+<p>$$ {equation} {L}_{,c}  {L} = ^{-1} {P}^{-2} ({D}^{-1} {K} - {I}). {equation} $$</p>
+<p>&lt;figure&gt; &lt;figcaption&gt;CAPTION&lt;/figcaption&gt; &lt;embed src="figures/Eigenfunctions.pdf" width="500" height="375" type="application/pdf"&gt; &lt;/figure&gt;</p>
 <h2>References</h2>
 <ul>
 <li><a href="https://www.sciencedirect.com/science/article/pii/S1063520315000020">"Variable bandwidth diffusion kernels" by T. Berry &amp; J. Harlim</a></li>
