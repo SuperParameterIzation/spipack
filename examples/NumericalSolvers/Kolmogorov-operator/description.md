@@ -79,7 +79,7 @@ We continue to discretize the operator by defining the normalization
 
 $$
 \begin{equation}
-q_{\epsilon,\beta} = \psi^{-d \beta}(\boldsymbol{x}^{(i)}) \sum_{j=1}^{n} k_{\epsilon,\beta}(\boldsymbol{x}^{(i)}, \boldsymbol{x}^{(j)})
+q_{\epsilon,\beta} (\boldsymbol{x}^{(i)}) = \psi^{-d \beta}(\boldsymbol{x}^{(i)}) \sum_{j=1}^{n} k_{\epsilon,\beta}(\boldsymbol{x}^{(i)}, \boldsymbol{x}^{(j)})
 \end{equation}
 $$
 
@@ -95,7 +95,7 @@ where $\alpha = 1 + \frac{1}{2} d \beta + \beta - \frac{1}{2} c$ defines the nor
 
 $$
 \begin{equation}
-q_{\epsilon,\beta,\alpha} = \sum_{j=1}^{n} k_{\epsilon,\beta, \alpha}(\boldsymbol{x}^{(i)}, \boldsymbol{x}^{(j)})
+q_{\epsilon,\beta,\alpha} (\boldsymbol{x}^{(i)}) = \sum_{j=1}^{n} k_{\epsilon,\beta, \alpha}(\boldsymbol{x}^{(i)}, \boldsymbol{x}^{(j)})
 \end{equation}
 $$
 
