@@ -70,7 +70,7 @@ $$
 Let $$\widetilde{\Sigma}_l^{\prime}=\max_{l}{(\Sigma_l^{\prime})}$$ (with corresponding index $\tilde{l}$ and optimal bandwidth parameter $\tilde{\epsilon}$).
 
 <figure>
-<figcaption>The value of $\Sigma_l^{\prime}$ for candidate bandwidth parameters $\epsilon$; the optimal bandwidth parameter is $\tilde{\epsilon} \approx 9.4$.</figcaption>
+<figcaption>The value of $\Sigma_l^{\prime}$ for candidate bandwidth parameters $\epsilon$; the optimal bandwidth parameter is $\tilde{\epsilon} \approx 0.28$.</figcaption>
 <embed src="figures/LogKernelAvgDerivative.pdf" width="500" height="375"
 type="application/pdf">
 </figure>
