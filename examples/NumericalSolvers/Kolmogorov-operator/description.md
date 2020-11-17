@@ -83,6 +83,16 @@ q_{\epsilon,\beta} = \psi^{-d \beta}(\boldsymbol{x}^{(i)}) \sum_{j=1}^{n} k_{\ep
 \end{equation}
 $$
 
+and the augmented kernel
+
+$$
+\begin{equation}
+k_{\epsilon,\beta,\alpha}(\boldsymbol{x}^{(i)}, \boldsymbol{x}^{(j)}) = \frac{k_{\epsilon,\beta}(\boldsymbol{x}^{(i)}, \boldsymbol{x}^{(j)})}{q_{\epsilon, beta}^{ \alpha}(\boldsymbol{x}^{(j)}) q_{\epsilon, beta}^{ \alpha}(\boldsymbol{x}^{(i)})}
+\end{equation}
+$$
+
+where $\alpha = $
+
 ## References
 
 - ["Variable bandwidth diffusion kernels" by T. Berry & J. Harlim](https://www.sciencedirect.com/science/article/pii/S1063520315000020)
