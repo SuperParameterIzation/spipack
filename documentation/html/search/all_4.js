@@ -17,7 +17,9 @@ var searchData=
   ['densityestimationtests',['DensityEstimationTests',['../classDensityEstimationTests.html',1,'']]],
   ['densityestimationtests_2ecpp',['DensityEstimationTests.cpp',['../DensityEstimationTests_8cpp.html',1,'']]],
   ['descending',['Descending',['../classspi_1_1Tools_1_1SortVector.html#a9931062c28aeba2d5316e869c3e037fd',1,'spi::Tools::SortVector']]],
-  ['description_2emd',['description.md',['../description_8md.html',1,'']]],
+  ['description_2emd',['description.md',['../density-estimation_2description_8md.html',1,'']]],
+  ['description_2emd',['description.md',['../Kolmogorov-operator_2description_8md.html',1,'']]],
   ['dim',['dim',['../classDensityEstimationTests.html#a5e2edfde9e13c7b07fae0718261472b3',1,'DensityEstimationTests::dim()'],['../classGraphLaplacianTests.html#abe551b8b442a60a6035f5d88ac6d68ab',1,'GraphLaplacianTests::dim()'],['../classKolmogorovOperatorTests.html#a165494fd97633601455a66f8277cdbdd',1,'KolmogorovOperatorTests::dim()'],['../classSampleRepresentationTests.html#a9072d9f0949b56162dc29ad4173018c4',1,'SampleRepresentationTests::dim()'],['../classNearestNeighborsTests.html#aa16fc1b3af0a381cba6c8e1ac4eaf3f6',1,'NearestNeighborsTests::dim()']]],
-  ['description',['description',['../md__home_travis_build_SuperParameterIzation_spipack_examples_NumericalSolvers_density-estimation_description.html',1,'']]]
+  ['description',['description',['../md__home_travis_build_SuperParameterIzation_spipack_examples_NumericalSolvers_density-estimation_description.html',1,'']]],
+  ['description',['description',['../md__home_travis_build_SuperParameterIzation_spipack_examples_NumericalSolvers_Kolmogorov-operator_description.html',1,'']]]
 ];

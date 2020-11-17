@@ -143,6 +143,9 @@ Public Member Functions</h2></td></tr>
 <tr class="separator:ae0348620185161c2f626ccce0a7c274b"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ad9226df4bc3bde9e3c01d7220cc328d0"><td class="memItemLeft" align="right" valign="top">virtual&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classspi_1_1NumericalSolvers_1_1SampleRepresentation.html#ad9226df4bc3bde9e3c01d7220cc328d0">~SampleRepresentation</a> ()=default</td></tr>
 <tr class="separator:ad9226df4bc3bde9e3c01d7220cc328d0"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a1b43aa8c9f499b57b3bb85f140122087"><td class="memItemLeft" align="right" valign="top">double&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classspi_1_1NumericalSolvers_1_1SampleRepresentation.html#a1b43aa8c9f499b57b3bb85f140122087">BandwidthParameter</a> () const </td></tr>
+<tr class="memdesc:a1b43aa8c9f499b57b3bb85f140122087"><td class="mdescLeft">&#160;</td><td class="mdescRight">Get the bandwith parameter \(\epsilon\).  <a href="#a1b43aa8c9f499b57b3bb85f140122087">More...</a><br /></td></tr>
+<tr class="separator:a1b43aa8c9f499b57b3bb85f140122087"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:aa502135a356a8976d9fcaa19e182f213"><td class="memItemLeft" align="right" valign="top">std::size_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classspi_1_1NumericalSolvers_1_1SampleRepresentation.html#aa502135a356a8976d9fcaa19e182f213">NumSamples</a> () const </td></tr>
 <tr class="memdesc:aa502135a356a8976d9fcaa19e182f213"><td class="mdescLeft">&#160;</td><td class="mdescRight">How many samples are in the collection?  <a href="#aa502135a356a8976d9fcaa19e182f213">More...</a><br /></td></tr>
 <tr class="separator:aa502135a356a8976d9fcaa19e182f213"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -212,6 +215,12 @@ Protected Attributes</h2></td></tr>
 <tr class="memitem:a209f5fe069adbc1811eaa7b2c6420ae9"><td class="memItemLeft" align="right" valign="top">const bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classspi_1_1NumericalSolvers_1_1SampleRepresentation.html#a209f5fe069adbc1811eaa7b2c6420ae9">truncateKernelMatrix</a></td></tr>
 <tr class="memdesc:a209f5fe069adbc1811eaa7b2c6420ae9"><td class="mdescLeft">&#160;</td><td class="mdescRight">Do we want to truncate the kernel matrix to enforce sparsity.  <a href="#a209f5fe069adbc1811eaa7b2c6420ae9">More...</a><br /></td></tr>
 <tr class="separator:a209f5fe069adbc1811eaa7b2c6420ae9"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:af1c41fe02ffd92b68bc2103502598ea5"><td class="memItemLeft" align="right" valign="top">boost::property_tree::ptree&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classspi_1_1NumericalSolvers_1_1SampleRepresentation.html#af1c41fe02ffd92b68bc2103502598ea5">pt</a></td></tr>
+<tr class="memdesc:af1c41fe02ffd92b68bc2103502598ea5"><td class="mdescLeft">&#160;</td><td class="mdescRight">Options for the parameter tuning optimization.  <a href="#af1c41fe02ffd92b68bc2103502598ea5">More...</a><br /></td></tr>
+<tr class="separator:af1c41fe02ffd92b68bc2103502598ea5"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a1a44ea58c52bbd6a4e94dbd6763be299"><td class="memItemLeft" align="right" valign="top">double&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classspi_1_1NumericalSolvers_1_1SampleRepresentation.html#a1a44ea58c52bbd6a4e94dbd6763be299">bandwidthPara</a></td></tr>
+<tr class="memdesc:a1a44ea58c52bbd6a4e94dbd6763be299"><td class="mdescLeft">&#160;</td><td class="mdescRight">The bandwidth parameter \(\epsilon\).  <a href="#a1a44ea58c52bbd6a4e94dbd6763be299">More...</a><br /></td></tr>
+<tr class="separator:a1a44ea58c52bbd6a4e94dbd6763be299"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pri-methods"></a>
 Private Member Functions</h2></td></tr>
@@ -398,6 +407,24 @@ Static Private Attributes</h2></td></tr>
 </div>
 </div>
 <h2 class="groupheader">Member Function Documentation</h2>
+<a class="anchor" id="a1b43aa8c9f499b57b3bb85f140122087"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">double SampleRepresentation::BandwidthParameter </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td> const</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Get the bandwith parameter \(\epsilon\). </p>
+<dl class="section return"><dt>Returns</dt><dd>The bandwith parameter \(\epsilon\) </dd></dl>
+
+</div>
+</div>
 <a class="anchor" id="a5ae60ef9b8bb97a45448a6823ee3187c"></a>
 <div class="memitem">
 <div class="memproto">
@@ -1169,6 +1196,28 @@ Static Private Attributes</h2></td></tr>
 </div>
 </div>
 <h2 class="groupheader">Member Data Documentation</h2>
+<a class="anchor" id="a1a44ea58c52bbd6a4e94dbd6763be299"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">double spi::NumericalSolvers::SampleRepresentation::bandwidthPara</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">protected</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>The bandwidth parameter \(\epsilon\). </p>
+
+</div>
+</div>
 <a class="anchor" id="a9b4b7f77c7a9898114a89bd4aaae67a8"></a>
 <div class="memitem">
 <div class="memproto">
@@ -1302,6 +1351,28 @@ Static Private Attributes</h2></td></tr>
 </div><div class="memdoc">
 
 <p>The number of <code>openMP</code> threads available to this object. </p>
+
+</div>
+</div>
+<a class="anchor" id="af1c41fe02ffd92b68bc2103502598ea5"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">boost::property_tree::ptree spi::NumericalSolvers::SampleRepresentation::pt</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">protected</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Options for the parameter tuning optimization. </p>
 
 </div>
 </div>
