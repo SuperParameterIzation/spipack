@@ -4,7 +4,7 @@ layout: default
 
 ## Kolmogorov operator
 
-Let $\psi$ be a probability density function and let $\{ \boldsymbol{x}^{(i)} \}_{i=1}^{n}$ be samples from $\psi$. Given constant $c$ and function f, define the Kolmogorov operator
+Let $\psi$ be a probability density function and let $\left{ \boldsymbol{x}^{(i)} \right}_{i=1}^{n}$ be samples from $\psi$. Given constant $c$ and function f, define the Kolmogorov operator
 
 $$
 \begin{equation}
@@ -14,7 +14,10 @@ $$
 
 Note the special cases:
 - $c=0$: The Laplacian operator $\mathcal{L}_{\psi,0} f = \Delta f$
-- $c=1$: The weighted Laplacian operator $\mathcal{L}_{\psi,1} f = \Delta f + \nabla f \cdot \frac{\nabla \psi}{\psi} = \psi^{-1} \nabla \cdot (\psi \nabla f) = \Delta_{\psi} f$
+- $c=1$: The weighted Laplacian operator $\mathcal{L}_{\psi,1} f =$
+
+
+$\mathcal{L}_{\psi,1} f = \Delta f + \nabla f \cdot \frac{\nabla \psi}{\psi} = \psi^{-1} \nabla \cdot (\psi \nabla f) = \Delta_{\psi} f$
 
 # Density estimation phase
 
