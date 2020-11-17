@@ -49,6 +49,32 @@ $$
 
 ### Parameter tuning
 
+Following the same procedure in the [density estimation](../density-estimation/description.md) example.
+
+Let $\epsilon \in [\exp{(l_{min})}, \exp{(l_{max})}]$ be candidate bandwidth parameters. Define the parameter
+
+$$
+\begin{equation}
+\Sigma_l = \sum_{i,j=1}^{N} k_{\epsilon}(\boldsymbol{x}^{(i)}, \boldsymbol{x}^{(j)}).
+\end{equation}
+$$
+
+and an approximation of how it changes with respect to $\epsilon_l$
+
+$$
+\begin{equation}
+\Sigma_l^{\prime} = \frac{\log{(\Sigma_{l+1})} - \log{(\Sigma_{l})}}{\log{(\epsilon_{l+1})} - \log{(\epsilon_{l})}}
+\end{equation}.
+$$
+
+Let $$\widetilde{\Sigma}_l^{\prime}=\max_{l}{(\Sigma_l^{\prime})}$$ (with corresponding index $\tilde{l}$ and optimal bandwidth parameter $\tilde{\epsilon}$).
+
+<figure>
+<figcaption>The value of $\Sigma_l^{\prime}$ for candidate bandwidth parameters $\epsilon$; the optimal bandwidth parameter is $\tilde{\epsilon} \approx 9.4$.</figcaption>
+<embed src="figures/LogKernelAvgDerivative.pdf" width="500" height="375"
+type="application/pdf">
+</figure>
+
 ## References
 
 - ["Variable bandwidth diffusion kernels" by T. Berry & J. Harlim](https://www.sciencedirect.com/science/article/pii/S1063520315000020)

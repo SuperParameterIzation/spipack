@@ -30,7 +30,7 @@ k_{\epsilon}(\boldsymbol{x}^{(i)}, \boldsymbol{x}^{(j)}) = k\left( \frac{ \| \bo
 \end{equation}
 $$
 
-Let $\epsilon \in [\exp{(h l_{min})}, \exp{(h l_{max})}]$ ($h$ is a stepsize parameter) be candidate bandwidth parameters. Define the parameter
+Let $\epsilon \in [\exp{(l_{min})}, \exp{(l_{max})}]$ be candidate bandwidth parameters. Define the parameter
 
 $$
 \begin{equation}
