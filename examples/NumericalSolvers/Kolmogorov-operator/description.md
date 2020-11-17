@@ -102,7 +102,7 @@ $$
 Denote the symmetric kernel matrix \$\boldsymbol{K}$ such that $K^{(ij)} = k_{\epsilon,\beta,\alpha}(\boldsymbol{x}^{(i)}, \boldsymbol{x}^{(j)})$ and the diagonal matrices $\boldsymbol{D}$ and $\boldsymbol{P}$ such that $D^{(ii)} = q_{\epsilon,\beta,\alpha} (\boldsymbol{x}^{(i)})$ and $P^{(ii)} = \psi^{\alpha}(\boldsymbol{x}^{(i)})$. The discrete Kolmogorov operator is
 
 $$
-\begin{equaion}
+\begin{equation}
 \mathcal{L}_{\psi,c} \approx \boldsymbol{L} = \epsilon^{-1} \boldsymbol{P}^{-2} (\boldsymbol{D}^{-1} \boldsymbol{K} - \boldsymbol{I}).
 \end{equation}
 $$
