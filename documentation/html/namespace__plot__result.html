@@ -151,6 +151,8 @@ Variables</h2></td></tr>
 <tr class="separator:acbeab8342bc7f3dcbf2a1546eac654d1"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a9ee3e7a34435e0816bba548392bbc669"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespace__plot__result.html#a9ee3e7a34435e0816bba548392bbc669">Lf</a> = <a class="el" href="namespace__plot__result.html#ac07d28d72ab82f66f56614340ab3edba">hdf5file</a>['/applied Kolmogorov operator'][()].T</td></tr>
 <tr class="separator:a9ee3e7a34435e0816bba548392bbc669"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a6e129380678f87098bea55c40bf9992f"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespace__plot__result.html#a6e129380678f87098bea55c40bf9992f">Lfeig</a> = <a class="el" href="namespace__plot__result.html#ac07d28d72ab82f66f56614340ab3edba">hdf5file</a>['/applied Kolmogorov operator (eigendecomposition)'][()].T</td></tr>
+<tr class="separator:a6e129380678f87098bea55c40bf9992f"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a7013e40a5c2ae58e539983095a930ed4"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespace__plot__result.html#a7013e40a5c2ae58e539983095a930ed4">Linvf</a> = <a class="el" href="namespace__plot__result.html#ac07d28d72ab82f66f56614340ab3edba">hdf5file</a>['/applied inverse Kolmogorov operator'][()].T</td></tr>
 <tr class="separator:a7013e40a5c2ae58e539983095a930ed4"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a4f1646abce9873e45a5a7e89a19072d0"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespace__plot__result.html#a4f1646abce9873e45a5a7e89a19072d0">pdf</a> = matplotlib.backends.backend_pdf.PdfPages(&quot;figures/AppliedKolmogorovOperator.pdf&quot;)</td></tr>
@@ -159,7 +161,9 @@ Variables</h2></td></tr>
 <tr class="separator:a710a8107bdcf36ea821fc65a3c1b4d60"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ac562c3c10908e130da6867502f052f50"><td class="memItemLeft" align="right" valign="top">string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespace__plot__result.html#ac562c3c10908e130da6867502f052f50">Lftitle</a> = r'$\mathcal{L}_{\psi, 1} f$ ('</td></tr>
 <tr class="separator:ac562c3c10908e130da6867502f052f50"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a42f96e3528ca7a5a826b923829126135"><td class="memItemLeft" align="right" valign="top">string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespace__plot__result.html#a42f96e3528ca7a5a826b923829126135">Linvftitle</a> = r'$\mathcal{L}_{\psi, 1}^{-1} f$ ('</td></tr>
+<tr class="memitem:acdf10b25ec45791d6b0d4a7e9107e98c"><td class="memItemLeft" align="right" valign="top">string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespace__plot__result.html#acdf10b25ec45791d6b0d4a7e9107e98c">Eigftitle</a> = r'$\mathcal{L}_{\psi, 1} <a class="el" href="namespace__plot__result.html#acbeab8342bc7f3dcbf2a1546eac654d1">f</a> \approx \frac{1}{\epsilon} \mathbf{P}^{-2} \mathbf{Q} \mathbf{\Lambda} \mathbf{Q}^T \mathbf{<a class="el" href="namespace__plot__result.html#acbeab8342bc7f3dcbf2a1546eac654d1">f</a>}$ ('</td></tr>
+<tr class="separator:acdf10b25ec45791d6b0d4a7e9107e98c"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a42f96e3528ca7a5a826b923829126135"><td class="memItemLeft" align="right" valign="top">string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespace__plot__result.html#a42f96e3528ca7a5a826b923829126135">Linvftitle</a> = r'$\mathcal{L}_{\psi, 1}^{-\dagger} <a class="el" href="namespace__plot__result.html#acbeab8342bc7f3dcbf2a1546eac654d1">f</a> \approx \epsilon \mathbf{Q} \mathbf{\Lambda}^{-\dagger} \mathbf{Q}^T \mathbf{P}^{2}f$ ('</td></tr>
 <tr class="separator:a42f96e3528ca7a5a826b923829126135"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <h2 class="groupheader">Function Documentation</h2>
@@ -292,6 +296,18 @@ Variables</h2></td></tr>
 
 </div>
 </div>
+<a class="anchor" id="acdf10b25ec45791d6b0d4a7e9107e98c"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">string _plot_result.Eigftitle = r'$\mathcal{L}_{\psi, 1} <a class="el" href="namespace__plot__result.html#acbeab8342bc7f3dcbf2a1546eac654d1">f</a> \approx \frac{1}{\epsilon} \mathbf{P}^{-2} \mathbf{Q} \mathbf{\Lambda} \mathbf{Q}^T \mathbf{<a class="el" href="namespace__plot__result.html#acbeab8342bc7f3dcbf2a1546eac654d1">f</a>}$ ('</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
 <a class="anchor" id="aadb0541029c391d80ecd8948bca03801"></a>
 <div class="memitem">
 <div class="memproto">
@@ -388,6 +404,18 @@ Variables</h2></td></tr>
 
 </div>
 </div>
+<a class="anchor" id="a6e129380678f87098bea55c40bf9992f"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">_plot_result.Lfeig = <a class="el" href="namespace__plot__result.html#ac07d28d72ab82f66f56614340ab3edba">hdf5file</a>['/applied Kolmogorov operator (eigendecomposition)'][()].T</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
 <a class="anchor" id="ac562c3c10908e130da6867502f052f50"></a>
 <div class="memitem">
 <div class="memproto">
@@ -417,7 +445,7 @@ Variables</h2></td></tr>
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">string _plot_result.Linvftitle = r'$\mathcal{L}_{\psi, 1}^{-1} f$ ('</td>
+          <td class="memname">string _plot_result.Linvftitle = r'$\mathcal{L}_{\psi, 1}^{-\dagger} <a class="el" href="namespace__plot__result.html#acbeab8342bc7f3dcbf2a1546eac654d1">f</a> \approx \epsilon \mathbf{Q} \mathbf{\Lambda}^{-\dagger} \mathbf{Q}^T \mathbf{P}^{2}f$ ('</td>
         </tr>
       </table>
 </div><div class="memdoc">
