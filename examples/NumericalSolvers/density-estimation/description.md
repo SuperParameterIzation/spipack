@@ -80,5 +80,5 @@ type="application/pdf">
 
 ## References
 
-- ["Variable bandwidth diffusion kernels" by T. Berry & J Harlim](https://www.sciencedirect.com/science/article/pii/S1063520315000020)
+- ["Variable bandwidth diffusion kernels" by T. Berry & J. Harlim](https://www.sciencedirect.com/science/article/pii/S1063520315000020)
 - ["Data-driven spectral decomposition and forecasting of ergodic dynamical systems" by D. Giannakis](https://www.sciencedirect.com/science/article/pii/S1063520317300982)
