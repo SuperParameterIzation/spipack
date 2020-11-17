@@ -103,15 +103,21 @@ Denote the symmetric kernel matrix \$\boldsymbol{K}$ such that $K^{(ij)} = k_{\e
 
 $$
 \begin{equation}
-\mathcal{L}_{\psi,c} \approx \boldsymbol{L} = \epsilon^{-1} \boldsymbol{P}^{-2} (\boldsymbol{D}^{-1} \boldsymbol{K} - \boldsymbol{I}).
+\mathcal{L}_{\psi,c} \approx \boldsymbol{L} = \epsilon^{-1} \boldsymbol{P}^{-2} (\boldsymbol{D}^{-1} \boldsymbol{K} - \boldsymbol{I}) = \epsilon^{-1} \boldsymbol{P}^{-2} \boldsymbol{\hat{L}}.
 \end{equation}
 $$
 
+## Eigen decomposition
+
+Let's take the eigendecomposition of $\boldsymbol{\hat{L}} \boldsymbol{\hat{Q}} = \boldsymbol{\Lambda} \boldsymbol{\hat{Q}}$.
+
 <figure>
-<figcaption>CAPTION</figcaption>
+<figcaption>The smallest eigenvalues of $\boldsymbol{\hat{L}}$ and their corresponding eigenfunctions.</figcaption>
 <embed src="figures/Eigenfunctions.pdf" width="500" height="375"
 type="application/pdf">
 </figure>
+
+This allows us to define the pseudo inverse $\boldsymbol{\hat{L}}^{\dagger}$
 
 ## References
 

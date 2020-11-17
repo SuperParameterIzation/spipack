@@ -87,6 +87,10 @@ eigvecs = hdf5file['/eigenvectors'] [()].T
 eigvals = hdf5file['/eigenvalues'] [()].T [0]
 #eigvals = np.sort(eigvals)
 
+f = hdf5file['/apply function'] [()].T
+Lf = hdf5file['/applied Kolmogorov operator'] [()].T
+Linvf = hdf5file['/applied inverse Kolmogorov operator'] [()].T
+
 fig = MakeFigure(425, 0.9, False)
 ax = plt.gca()
 scatter = ax.scatter(samples.T[0], samples.T[1], s=3, c=densityEstimate, vmin=0.0, vmax=0.16)
@@ -100,6 +104,66 @@ ax.set_xlabel(r'$x_0$')
 ax.set_ylabel(r'$x_1$')
 plt.savefig('figures/DensityEstimation.pdf', format='pdf', bbox_inches='tight')
 plt.close(fig)
+
+pdf = matplotlib.backends.backend_pdf.PdfPages("figures/AppliedKolmogorovOperator.pdf")
+
+for i in range(len(f)):
+    ftitle = ''
+    if i==0:
+        ftitle = r'$f(\mathbf{x})=1$'
+    if i==1:
+        ftitle = r'$f(\mathbf{x})=x_0$'
+    if i==2:
+        ftitle = r'$f(\mathbf{x})=x_1$'
+
+    Lftitle = r'$\mathcal{L}_{\psi, 1} f$ (' + ftitle + ')'
+    Linvftitle = r'$\mathcal{L}_{\psi, 1}^{-1} f$ (' + ftitle + ')'
+
+    fig = MakeFigure(425, 0.9, False)
+    ax = plt.gca()
+    scatter = ax.scatter(samples.T[0], samples.T[1], s=3, c=f[i])
+    cbar = plt.colorbar(scatter)
+    ax.spines['right'].set_visible(False)
+    ax.spines['top'].set_visible(False)
+    ax.yaxis.set_ticks_position('left')
+    ax.xaxis.set_ticks_position('bottom')
+    cbar.ax.set_ylabel(r'Magnitude')
+    ax.set_title(ftitle)
+    ax.set_xlabel(r'$x_0$')
+    ax.set_ylabel(r'$x_1$')
+    pdf.savefig(fig, bbox_inches='tight')
+    plt.close(fig)
+
+    fig = MakeFigure(425, 0.9, False)
+    ax = plt.gca()
+    scatter = ax.scatter(samples.T[0], samples.T[1], s=3, c=Lf[i])
+    cbar = plt.colorbar(scatter)
+    ax.spines['right'].set_visible(False)
+    ax.spines['top'].set_visible(False)
+    ax.yaxis.set_ticks_position('left')
+    ax.xaxis.set_ticks_position('bottom')
+    cbar.ax.set_ylabel(r'Magnitude')
+    ax.set_title(Lftitle)
+    ax.set_xlabel(r'$x_0$')
+    ax.set_ylabel(r'$x_1$')
+    pdf.savefig(fig, bbox_inches='tight')
+    plt.close(fig)
+
+    fig = MakeFigure(425, 0.9, False)
+    ax = plt.gca()
+    scatter = ax.scatter(samples.T[0], samples.T[1], s=3, c=Linvf[i])
+    cbar = plt.colorbar(scatter)
+    ax.spines['right'].set_visible(False)
+    ax.spines['top'].set_visible(False)
+    ax.yaxis.set_ticks_position('left')
+    ax.xaxis.set_ticks_position('bottom')
+    cbar.ax.set_ylabel(r'Magnitude')
+    ax.set_title(Linvftitle)
+    ax.set_xlabel(r'$x_0$')
+    ax.set_ylabel(r'$x_1$')
+    pdf.savefig(fig, bbox_inches='tight')
+    plt.close(fig)
+pdf.close()
 
 pdf = matplotlib.backends.backend_pdf.PdfPages("figures/Eigenfunctions.pdf")
 fig = MakeFigure(425, 0.9, False)
