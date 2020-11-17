@@ -10,7 +10,7 @@ namespace NumericalSolvers {
 /**
 Define the Kolmogorov operator applied to a smooth function \f$f\f$
 \f{equation*}{
-\mathcal{L}_{\psi,\alpha} f = \Delta f + c \nabla f \cdot \frac{\nabla \psi}{\psi}
+\mathcal{L}_{\psi,c} f = \Delta f + c \nabla f \cdot \frac{\nabla \psi}{\psi}
 \f}
 Special cases:
 - \f$c=0\f$: The Laplacian operator \f$\mathcal{L}_{\psi,0} f = \Delta f\f$
