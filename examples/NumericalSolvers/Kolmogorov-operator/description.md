@@ -2,7 +2,7 @@
 layout: default
 ---
 
-## Kolmogorov operator
+# Kolmogorov operator
 
 Let $\psi$ be a probability density function and let $\left[ \boldsymbol{x}^{(i)} \right]_{i=1}^{n}$ be samples from $\psi$. Given constant $c$ and function f, define the Kolmogorov operator
 
@@ -19,7 +19,7 @@ Note the special cases:
 
 $\mathcal{L}_{\psi,1} f = \Delta f + \nabla f \cdot \frac{\nabla \psi}{\psi} = \psi^{-1} \nabla \cdot (\psi \nabla f) = \Delta_{\psi} f$
 
-# Density estimation phase
+## Density estimation phase
 
 See the [density estimation](../density-estimation/description.md) example for details.
 
@@ -31,4 +31,9 @@ type="application/pdf">
 
 Importantly: we have an estimate an $\psi^{(i)}$ of the density at each sample.
 
-# Discretize the operator
+## Discretize the operator
+
+## References
+
+- ["Variable bandwidth diffusion kernels" by T. Berry & J Harlim](https://www.sciencedirect.com/science/article/pii/S1063520315000020)
+- ["Data-driven spectral decomposition and forecasting of ergodic dynamical systems" by D. Giannakis](https://www.sciencedirect.com/science/article/pii/S1063520317300982)

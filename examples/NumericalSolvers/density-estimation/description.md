@@ -2,7 +2,7 @@
 layout: default
 ---
 
-## Density estimation
+# Density estimation
 
 Let $\psi$ be a probability density function and let $\left[ \boldsymbol{x}^{(i)} \right]_{i=1}^{n}$ be samples from $\psi$. Define the sample bandwidth
 
@@ -77,3 +77,8 @@ type="application/pdf">
 </figure>
 
 <embed src="_density-estimation.cpp">
+
+## References
+
+- ["Variable bandwidth diffusion kernels" by T. Berry & J Harlim](https://www.sciencedirect.com/science/article/pii/S1063520315000020)
+- ["Data-driven spectral decomposition and forecasting of ergodic dynamical systems" by D. Giannakis](https://www.sciencedirect.com/science/article/pii/S1063520317300982)
