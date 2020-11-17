@@ -99,6 +99,7 @@ q_{\epsilon,\beta,\alpha} (\boldsymbol{x}^{(i)}) = \sum_{j=1}^{n} k_{\epsilon,\b
 \end{equation}
 $$
 
+Denote the symmetric kernel matrix \$\boldsymbol{K}$ such that $\boldsymbol{K}^{(ij)} = k_{\epsilon,\beta,\alpha}(\boldsymbol{x}^{(i)}, \boldsymbol{x}^{(j)})\f$ and the diagonal matrices $\boldsymbol{D}$ and \boldsymbol{P}$ such that $D^{(ii)} = q_{\epsilon,\beta,\alpha} (\boldsymbol{x}^{(i)})$ and $P^{(ii)} = \psi^{\alpha}(\boldsymbol{x}^{(i)})$
 
 ## References
 
