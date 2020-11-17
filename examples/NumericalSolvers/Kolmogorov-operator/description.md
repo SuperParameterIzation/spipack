@@ -33,11 +33,16 @@ Importantly: we have an estimate an $\psi^{(i)}$ of the density at each sample.
 
 ## Discretize the operator
 
+Parameters:
+- The operator constant $c$
+- The exponent $\beta$
+- The bandwidth $\epsilon$ 
+
 Let $k(\theta) = \exp{\left( - \vert \theta \vert \right)}$ and define the kernel
 
 $$
 \begin{equation}
-k_{\epsilon,\beta}(\boldsymbol{x}^{(i)}, \boldsymbol{x}^{(j)}) = k\left( \frac{ \| \boldsymbol{x}^{(i)} - \boldsymbol{x}^{(j)} \|^2 }{ \epsilon \psi^{ \beta}(\boldsymbol{x}^{i)}) \psi^{ \beta}(\boldsymbol{x}^{(j)}) } \right).
+k_{\epsilon,\beta}(\boldsymbol{x}^{(i)}, \boldsymbol{x}^{(j)}) = k\left( \frac{ \| \boldsymbol{x}^{(i)} - \boldsymbol{x}^{(j)} \|^2 }{ \epsilon \psi^{ \beta}(\boldsymbol{x}^{(i)}) \psi^{ \beta}(\boldsymbol{x}^{(j)}) } \right).
 \end{equation}
 $$
 
