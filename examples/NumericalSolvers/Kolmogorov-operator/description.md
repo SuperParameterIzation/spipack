@@ -34,9 +34,9 @@ Importantly: we have an estimate an $\psi^{(i)}$ of the density at each sample.
 ## Discretize the operator
 
 Parameters:
-- The operator constant $c$
-- The exponent $\beta$
-- The bandwidth $\epsilon$
+- The operator constant $c$ (defines the operator)
+- The exponent $\beta$ (user-prescribed, typically we choose $\beta = -0.5$)
+- The bandwidth $\epsilon$ (user-prescribed or tuned using the procedure shown below)
 - The manifold dimension $d$ (estimated in the density estimation phase, if not know already)
 
 Let $k(\theta) = \exp{\left( - \vert \theta \vert \right)}$ and define the kernel
@@ -74,6 +74,14 @@ Let $$\widetilde{\Sigma}_l^{\prime}=\max_{l}{(\Sigma_l^{\prime})}$$ (with corres
 <embed src="figures/LogKernelAvgDerivative.pdf" width="500" height="375"
 type="application/pdf">
 </figure>
+
+We continue to discretize the operator by defining the normalization
+
+$$
+\begin{equation}
+q_{\epsilon,\beta} = \psi^{-d \beta}(\boldsymbol{x}^{(i)}) \sum_{j=1}^{n} k_{\epsilon,\beta}(\boldsymbol{x}^{(i)}, \boldsymbol{x}^{(j)})
+\end{equation}
+$$
 
 ## References
 
