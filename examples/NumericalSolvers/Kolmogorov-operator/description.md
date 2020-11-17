@@ -107,6 +107,12 @@ $$
 \end{equation}
 $$
 
+<figure>
+<figcaption>CAPTION</figcaption>
+<embed src="figures/Eigenfunctions.pdf" width="500" height="375"
+type="application/pdf">
+</figure>
+
 ## References
 
 - ["Variable bandwidth diffusion kernels" by T. Berry & J. Harlim](https://www.sciencedirect.com/science/article/pii/S1063520315000020)
