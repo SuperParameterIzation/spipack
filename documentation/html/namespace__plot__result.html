@@ -147,8 +147,20 @@ Variables</h2></td></tr>
 <tr class="separator:a7682a8791357b4e11a791340efd9a783"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:aadb0541029c391d80ecd8948bca03801"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespace__plot__result.html#aadb0541029c391d80ecd8948bca03801">eigvals</a> = <a class="el" href="namespace__plot__result.html#ac07d28d72ab82f66f56614340ab3edba">hdf5file</a>['/eigenvalues'][()].T[0]</td></tr>
 <tr class="separator:aadb0541029c391d80ecd8948bca03801"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a4f1646abce9873e45a5a7e89a19072d0"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespace__plot__result.html#a4f1646abce9873e45a5a7e89a19072d0">pdf</a> = matplotlib.backends.backend_pdf.PdfPages(&quot;figures/Eigenfunctions.pdf&quot;)</td></tr>
+<tr class="memitem:acbeab8342bc7f3dcbf2a1546eac654d1"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespace__plot__result.html#acbeab8342bc7f3dcbf2a1546eac654d1">f</a> = <a class="el" href="namespace__plot__result.html#ac07d28d72ab82f66f56614340ab3edba">hdf5file</a>['/apply function'][()].T</td></tr>
+<tr class="separator:acbeab8342bc7f3dcbf2a1546eac654d1"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a9ee3e7a34435e0816bba548392bbc669"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespace__plot__result.html#a9ee3e7a34435e0816bba548392bbc669">Lf</a> = <a class="el" href="namespace__plot__result.html#ac07d28d72ab82f66f56614340ab3edba">hdf5file</a>['/applied Kolmogorov operator'][()].T</td></tr>
+<tr class="separator:a9ee3e7a34435e0816bba548392bbc669"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a7013e40a5c2ae58e539983095a930ed4"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespace__plot__result.html#a7013e40a5c2ae58e539983095a930ed4">Linvf</a> = <a class="el" href="namespace__plot__result.html#ac07d28d72ab82f66f56614340ab3edba">hdf5file</a>['/applied inverse Kolmogorov operator'][()].T</td></tr>
+<tr class="separator:a7013e40a5c2ae58e539983095a930ed4"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a4f1646abce9873e45a5a7e89a19072d0"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespace__plot__result.html#a4f1646abce9873e45a5a7e89a19072d0">pdf</a> = matplotlib.backends.backend_pdf.PdfPages(&quot;figures/AppliedKolmogorovOperator.pdf&quot;)</td></tr>
 <tr class="separator:a4f1646abce9873e45a5a7e89a19072d0"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a710a8107bdcf36ea821fc65a3c1b4d60"><td class="memItemLeft" align="right" valign="top">string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespace__plot__result.html#a710a8107bdcf36ea821fc65a3c1b4d60">ftitle</a> = ''</td></tr>
+<tr class="separator:a710a8107bdcf36ea821fc65a3c1b4d60"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ac562c3c10908e130da6867502f052f50"><td class="memItemLeft" align="right" valign="top">string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespace__plot__result.html#ac562c3c10908e130da6867502f052f50">Lftitle</a> = r'$\mathcal{L}_{\psi, 1} f$ ('</td></tr>
+<tr class="separator:ac562c3c10908e130da6867502f052f50"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a42f96e3528ca7a5a826b923829126135"><td class="memItemLeft" align="right" valign="top">string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespace__plot__result.html#a42f96e3528ca7a5a826b923829126135">Linvftitle</a> = r'$\mathcal{L}_{\psi, 1}^{-1} f$ ('</td></tr>
+<tr class="separator:a42f96e3528ca7a5a826b923829126135"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <h2 class="groupheader">Function Documentation</h2>
 <a class="anchor" id="a5a851c04650a9266dc94353111df0982"></a>
@@ -304,6 +316,18 @@ Variables</h2></td></tr>
 
 </div>
 </div>
+<a class="anchor" id="acbeab8342bc7f3dcbf2a1546eac654d1"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">_plot_result.f = <a class="el" href="namespace__plot__result.html#ac07d28d72ab82f66f56614340ab3edba">hdf5file</a>['/apply function'][()].T</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
 <a class="anchor" id="a6e39593effbebea8d8ddb94eca917056"></a>
 <div class="memitem">
 <div class="memproto">
@@ -328,12 +352,72 @@ Variables</h2></td></tr>
 
 </div>
 </div>
+<a class="anchor" id="a710a8107bdcf36ea821fc65a3c1b4d60"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">string _plot_result.ftitle = ''</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
 <a class="anchor" id="ac07d28d72ab82f66f56614340ab3edba"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
           <td class="memname">_plot_result.hdf5file = h5py.File('outputData.h5', 'r')</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a class="anchor" id="a9ee3e7a34435e0816bba548392bbc669"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">_plot_result.Lf = <a class="el" href="namespace__plot__result.html#ac07d28d72ab82f66f56614340ab3edba">hdf5file</a>['/applied Kolmogorov operator'][()].T</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a class="anchor" id="ac562c3c10908e130da6867502f052f50"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">string _plot_result.Lftitle = r'$\mathcal{L}_{\psi, 1} f$ ('</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a class="anchor" id="a7013e40a5c2ae58e539983095a930ed4"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">_plot_result.Linvf = <a class="el" href="namespace__plot__result.html#ac07d28d72ab82f66f56614340ab3edba">hdf5file</a>['/applied inverse Kolmogorov operator'][()].T</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a class="anchor" id="a42f96e3528ca7a5a826b923829126135"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">string _plot_result.Linvftitle = r'$\mathcal{L}_{\psi, 1}^{-1} f$ ('</td>
         </tr>
       </table>
 </div><div class="memdoc">
@@ -405,7 +489,7 @@ Variables</h2></td></tr>
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">_plot_result.pdf = matplotlib.backends.backend_pdf.PdfPages(&quot;figures/Eigenfunctions.pdf&quot;)</td>
+          <td class="memname">_plot_result.pdf = matplotlib.backends.backend_pdf.PdfPages(&quot;figures/AppliedKolmogorovOperator.pdf&quot;)</td>
         </tr>
       </table>
 </div><div class="memdoc">

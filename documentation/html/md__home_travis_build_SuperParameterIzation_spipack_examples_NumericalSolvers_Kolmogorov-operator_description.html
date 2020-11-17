@@ -124,8 +124,11 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <p>where $ = 1 + {1}{2} d  +  - {1}{2} c$ defines the normalization. Finally, define a second normalization</p>
 <p>$$ {equation} q_{,,} ({x}^{(i)}) = {j=1}^{n} k_{,, }({x}^{(i)}, {x}^{(j)}) {equation} $$</p>
 <p>Denote the symmetric kernel matrix ${K}$ such that $K^{(ij)} = k_{,,}({x}^{(i)}, {x}^{(j)})$ and the diagonal matrices ${D}$ and ${P}$ such that $D^{(ii)} = q_{,,} ({x}^{(i)})$ and $P^{(ii)} = ^{}({x}^{(i)})$. The discrete Kolmogorov operator is</p>
-<p>$$ {equation} {L}_{,c}  {L} = ^{-1} {P}^{-2} ({D}^{-1} {K} - {I}). {equation} $$</p>
-<p>&lt;figure&gt; &lt;figcaption&gt;CAPTION&lt;/figcaption&gt; &lt;embed src="figures/Eigenfunctions.pdf" width="500" height="375" type="application/pdf"&gt; &lt;/figure&gt;</p>
+<p>$$ {equation} {L}_{,c}  {L} = ^{-1} {P}^{-2} ({D}^{-1} {K} - {I}) = ^{-1} {P}^{-2} {{L}}. {equation} $$</p>
+<h2>Eigen decomposition</h2>
+<p>Let's take the eigendecomposition of ${{L}} {{Q}} = {} {{Q}}$.</p>
+<p>&lt;figure&gt; &lt;figcaption&gt;The smallest eigenvalues of ${{L}}$ and their corresponding eigenfunctions.&lt;/figcaption&gt; &lt;embed src="figures/Eigenfunctions.pdf" width="500" height="375" type="application/pdf"&gt; &lt;/figure&gt;</p>
+<p>This allows us to define the pseudo inverse ${{L}}^{}$</p>
 <h2>References</h2>
 <ul>
 <li><a href="https://www.sciencedirect.com/science/article/pii/S1063520315000020">"Variable bandwidth diffusion kernels" by T. Berry &amp; J. Harlim</a></li>
