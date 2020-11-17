@@ -55,7 +55,7 @@ Let $\epsilon \in [\exp{(l_{min})}, \exp{(l_{max})}]$ be candidate bandwidth par
 
 $$
 \begin{equation}
-\Sigma_l = \sum_{i,j=1}^{N} k_{\epsilon}(\boldsymbol{x}^{(i)}, \boldsymbol{x}^{(j)}).
+\Sigma_l = \sum_{i,j=1}^{N} k_{\epsilon,\beta}(\boldsymbol{x}^{(i)}, \boldsymbol{x}^{(j)}).
 \end{equation}
 $$
 
