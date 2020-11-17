@@ -89,6 +89,7 @@ eigvals = hdf5file['/eigenvalues'] [()].T [0]
 
 f = hdf5file['/apply function'] [()].T
 Lf = hdf5file['/applied Kolmogorov operator'] [()].T
+Lfeig = hdf5file['/applied Kolmogorov operator (eigendecomposition)'] [()].T
 Linvf = hdf5file['/applied inverse Kolmogorov operator'] [()].T
 
 fig = MakeFigure(425, 0.9, False)
@@ -117,7 +118,8 @@ for i in range(len(f)):
         ftitle = r'$f(\mathbf{x})=x_1$'
 
     Lftitle = r'$\mathcal{L}_{\psi, 1} f$ (' + ftitle + ')'
-    Linvftitle = r'$\mathcal{L}_{\psi, 1}^{-1} f$ (' + ftitle + ')'
+    Eigftitle = r'$\mathcal{L}_{\psi, 1} f \approx \frac{1}{\epsilon} \mathbf{P}^{-2} \mathbf{Q} \mathbf{\Lambda} \mathbf{Q}^T \mathbf{f}$ (' + ftitle + ')'
+    Linvftitle = r'$\mathcal{L}_{\psi, 1}^{-\dagger} f \approx \epsilon \mathbf{Q} \mathbf{\Lambda}^{-\dagger} \mathbf{Q}^T \mathbf{P}^{2}f$ (' + ftitle + ')'
 
     fig = MakeFigure(425, 0.9, False)
     ax = plt.gca()
@@ -144,6 +146,21 @@ for i in range(len(f)):
     ax.xaxis.set_ticks_position('bottom')
     cbar.ax.set_ylabel(r'Magnitude')
     ax.set_title(Lftitle)
+    ax.set_xlabel(r'$x_0$')
+    ax.set_ylabel(r'$x_1$')
+    pdf.savefig(fig, bbox_inches='tight')
+    plt.close(fig)
+
+    fig = MakeFigure(425, 0.9, False)
+    ax = plt.gca()
+    scatter = ax.scatter(samples.T[0], samples.T[1], s=3, c=Lfeig[i])
+    cbar = plt.colorbar(scatter)
+    ax.spines['right'].set_visible(False)
+    ax.spines['top'].set_visible(False)
+    ax.yaxis.set_ticks_position('left')
+    ax.xaxis.set_ticks_position('bottom')
+    cbar.ax.set_ylabel(r'Magnitude')
+    ax.set_title(Eigftitle)
     ax.set_xlabel(r'$x_0$')
     ax.set_ylabel(r'$x_1$')
     pdf.savefig(fig, bbox_inches='tight')

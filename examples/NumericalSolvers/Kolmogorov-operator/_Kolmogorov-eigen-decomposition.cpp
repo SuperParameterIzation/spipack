@@ -162,7 +162,7 @@ int main(int argc, char **argv) {
 
   Eigen::MatrixXd Linvf = kolOperator->BandwidthParameter()*eigvecs*eigvalsInv.asDiagonal()*eigvecs.transpose()*(P.array()*P.array()).matrix().asDiagonal()*f;
 
-  std::cout << Lkol*Linvf-f << std::endl;
+  Eigen::MatrixXd Lfeig = (1.0/kolOperator->BandwidthParameter())*(P.array()*P.array()).inverse().matrix().asDiagonal()*eigvecs*eigvals.asDiagonal()*eigvecs.transpose()*f;
 
   //std::cout << eigvecs*eigvals.asDiagonal()*eigvecs.transpose()-Lhat << std::endl;
 
@@ -190,6 +190,7 @@ int main(int argc, char **argv) {
 
   hdf5file.WriteMatrix("/apply function", f);
   hdf5file.WriteMatrix("/applied Kolmogorov operator", Lf);
+  hdf5file.WriteMatrix("/applied Kolmogorov operator (eigendecomposition)", Lfeig);
   hdf5file.WriteMatrix("/applied inverse Kolmogorov operator", Linvf);
   hdf5file.Close();
 }

@@ -109,7 +109,7 @@ $$
 
 ## Eigen decomposition
 
-Let's take the eigendecomposition of $\boldsymbol{\hat{L}} \boldsymbol{\hat{Q}} = \boldsymbol{\Lambda} \boldsymbol{\hat{Q}}$.
+Let's take the eigendecomposition of $\boldsymbol{\hat{L}} \boldsymbol{\hat{Q}} = \boldsymbol{\hat{Q}} \boldsymbol{\Lambda}$.
 
 <figure>
 <figcaption>The smallest eigenvalues of $\boldsymbol{\hat{L}}$ and their corresponding eigenfunctions.</figcaption>
@@ -117,7 +117,13 @@ Let's take the eigendecomposition of $\boldsymbol{\hat{L}} \boldsymbol{\hat{Q}} 
 type="application/pdf">
 </figure>
 
-This allows us to define the pseudo inverse $\boldsymbol{\hat{L}}^{\dagger}$
+This allows us to define the pseudo inverse $\boldsymbol{\hat{L}}^{-\dagger} = \boldsymbol{\hat{Q}} \boldsymbol{\Lambda}^{-\dagger} \boldsymbol{\hat{Q}}^T$. Therefore, we can approximate the action of the discrete Kolmogorov operator and its inverse as $\boldsymbol{L} = \epsilon^{-1} \boldsymbol{P}^{-2} \boldsymbol{\hat{L}} = \boldsymbol{\hat{Q}} \boldsymbol{\Lambda} \boldsymbol{\hat{Q}}^T$ and $\boldsymbol{L}^{-\dagger} = \epsilon \boldsymbol{\hat{L}}^{-\dagger} \boldsymbol{P}^{2} = \epsilon \boldsymbol{\hat{Q}} \boldsymbol{\Lambda}^{-\dagger} \boldsymbol{\hat{Q}}^T \boldsymbol{P}^{2}$, respectively.
+
+<figure>
+<figcaption>The smallest eigenvalues of $\boldsymbol{\hat{L}}$ and their corresponding eigenfunctions.</figcaption>
+<embed src="figures/AppliedKolmogorovOperator.pdf" width="500" height="375"
+type="application/pdf">
+</figure>
 
 ## References
 
