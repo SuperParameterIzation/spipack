@@ -91,7 +91,14 @@ k_{\epsilon,\beta,\alpha}(\boldsymbol{x}^{(i)}, \boldsymbol{x}^{(j)}) = \frac{k_
 \end{equation}
 $$
 
-where $\alpha = 1 + \frac{1}{2} d \beta + \beta - \frac{1}{2} c$ defines the normalization.
+where $\alpha = 1 + \frac{1}{2} d \beta + \beta - \frac{1}{2} c$ defines the normalization. Finally, define a second normalization
+
+$$
+\begin{equation}
+q_{\epsilon,\beta,\alpha} = \sum_{j=1}^{n} k_{\epsilon,\beta, \alpha}(\boldsymbol{x}^{(i)}, \boldsymbol{x}^{(j)})
+\end{equation}
+$$
+
 
 ## References
 
