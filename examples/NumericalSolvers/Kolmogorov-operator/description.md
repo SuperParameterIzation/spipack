@@ -21,6 +21,8 @@ $\mathcal{L}_{\psi,1} f = \Delta f + \nabla f \cdot \frac{\nabla \psi}{\psi} = \
 
 # Density estimation phase
 
+See the [density estimation](../density-estimation/description.md) example for details.
+
 <figure>
 <figcaption>The estimated density $\psi_i \approx \psi(\boldsymbol{x}^{(i)})$ at each sample.</figcaption>
 <embed src="figures/DensityEstimation.pdf" width="500" height="375"
