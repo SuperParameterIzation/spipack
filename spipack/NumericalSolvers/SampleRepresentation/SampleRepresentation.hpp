@@ -173,7 +173,7 @@ public:
   @param[in] rvec The vector \f$\boldsymbol{r}\f$
   \return The kernel derivative average \f$\bar{k}^{\prime}\f$.
   */
-  double KernelDerivativeAverage(double const eps, Eigen::VectorXd const& rvec) const;
+  virtual double KernelDerivativeAverage(double const eps, Eigen::VectorXd const& rvec) const;
 
   /// Compute the average of the pair-wise kernel second derivative evaluations \f$\bar{k}^{\prime} = \frac{d^2}{d \epsilon^2} \left[ n^{-2} \sum_{i,j=0}^{n} k\left( \frac{\|\boldsymbol{x}^{(i)}-\boldsymbol{x}^{(j)}\|^2}{\epsilon r_i r_j} \right) \right] \f$
   /**
@@ -185,7 +185,7 @@ public:
   @param[in] rvec The vector \f$\boldsymbol{r}\f$
   \return The kernel derivative average \f$\bar{k}^{\prime}\f$.
   */
-  double KernelSecondDerivativeAverage(double const eps, Eigen::VectorXd const& rvec) const;
+  virtual double KernelSecondDerivativeAverage(double const eps, Eigen::VectorXd const& rvec) const;
 
   /// Write the samples to file
   /**

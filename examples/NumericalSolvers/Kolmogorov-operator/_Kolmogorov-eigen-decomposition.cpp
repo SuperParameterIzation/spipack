@@ -53,7 +53,7 @@ int main(int argc, char **argv) {
   densityOptions["NearestNeighbors"] = nnOptions;
   densityOptions["KernelOptions"] = kernelOptions;
   densityOptions["NumNearestNeighbors"] = numNeighbors;
-  densityOptions["TruncationTolerance"] = -std::log(1.0e-1);
+  densityOptions["TruncationTolerance"] = -std::log(1.0e-2);
   densityOptions["ManifoldDimension"] = (double)dim;
 
   // set the options for the Kolmogorov operator
@@ -64,6 +64,8 @@ int main(int argc, char **argv) {
   options["OperatorParameter"] = 1.0;
   options["TruncationTolerance"] = -std::log(1.0e-1);
   options["ManifoldDimension"] = (double)dim;
+  options["BandwidthExponent"] = -0.5;
+  options["BandwidthParameter"] = 1.0e-2;
 
   // create the Kolmogorov operator
   auto kolOperator = std::make_shared<KolmogorovOperator>(samples, options);
@@ -72,7 +74,7 @@ int main(int argc, char **argv) {
   kolOperator->BuildKDTrees();
 
   // tune the bandwidth parameter
-  kolOperator->TuneBandwidthParameter();
+  //kolOperator->TuneBandwidthParameter();
 
   // estimate the density at each sample
   Eigen::VectorXd dens = kolOperator->EstimateDensity(false);
@@ -129,7 +131,7 @@ int main(int argc, char **argv) {
   Eigen::SparseMatrix<double> Lhat(n, n);
   Lhat.setIdentity();
   Lhat = (P.array()*P.array()).inverse().matrix().asDiagonal();
-  Lhat = S.array().inverse().matrix().asDiagonal()*kmat*S.array().inverse().matrix().asDiagonal()-Lhat;
+  Lhat = (S.array().inverse().matrix().asDiagonal()*kmat*S.array().inverse().matrix().asDiagonal()-Lhat)/kolOperator->BandwidthParameter();
 
   //Lhat = (P.array()*P.array()).inverse().matrix().asDiagonal();
 
@@ -154,7 +156,7 @@ int main(int argc, char **argv) {
   Eigen::VectorXd eigvals = eigsolver.eigenvalues().real();
   //Eigen::MatrixXd eigvecs = (dens.array().pow(-2.0*kolOperator->ExponentParameter())*D.array().sqrt().inverse()).matrix().asDiagonal()*eigsolver.eigenvectors()/kolOperator->BandwidthParameter();
   //Eigen::MatrixXd eigvecs = eigsolver.eigenvectors();
-  Eigen::MatrixXd eigvecs = eigsolver.eigenvectors().real();
+  Eigen::MatrixXd eigvecs = S.array().inverse().matrix().asDiagonal()*eigsolver.eigenvectors().real();
 
   Eigen::VectorXd eigvalsInv(neigs);
   for( std::size_t i=0; i<neigs; ++i ) { eigvalsInv(i) = (std::abs(eigvals(i))>1.0e-12? 1.0/eigvals(i) : 0.0); }
@@ -165,7 +167,7 @@ int main(int argc, char **argv) {
 
   Eigen::MatrixXd Lfeig = (1.0/kolOperator->BandwidthParameter())*(P.array()*P.array()).inverse().matrix().asDiagonal()*eigvecs*eigvals.asDiagonal()*eigvecs.transpose()*f;
 
-  std::cout << eigvecs*eigvals.asDiagonal()*eigvecs.transpose()-Lhat << std::endl;
+  //std::cout << eigvecs*eigvals.asDiagonal()*eigvecs.transpose()-Lhat << std::endl;
 
   //std::cout << id << std::endl;
 

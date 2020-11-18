@@ -53,6 +53,38 @@ public:
   */
   Eigen::VectorXd EstimateDensity(bool const tune = true) const;
 
+    /// Compute the squared bandwidth \f$r_i^2 = \frac{1}{k} \sum_{j=1}^{k} \| \boldsymbol{x}^{(i)}-\boldsymbol{x}^{(I(i,j))} \|^2\f$
+  /**
+  This function does NOT compute the kd trees. It assumes that spi::NumericalSolvers::SampleRepresentation::BuildKDTrees has already been called.
+
+  \return The squared bandwidth \f$r_i^2 = \frac{1}{k} \sum_{j=1}^{k} \| \boldsymbol{x}^{(i)}-\boldsymbol{x}^{(I(i,j))} \|^2\f$
+  */
+  Eigen::VectorXd SquaredBandwidth() const;
+
+  /// Compute the average of the pair-wise kernel derivative evaluations \f$\bar{k}^{\prime} = \frac{d}{d \epsilon} \left[ n^{-2} \sum_{i,j=0}^{n} k\left( \frac{\|\boldsymbol{x}^{(i)}-\boldsymbol{x}^{(j)}\|^2}{\epsilon r_i r_j} \right) \right] \f$
+  /**
+  We (recursively) compute the average
+  \f{equation*}{
+  \bar{k}^{\prime} = \frac{d}{d \epsilon} \left[ n^{-2} \sum_{i,j=0}^{n} k\left( \frac{\|\boldsymbol{x}^{(i)}-\boldsymbol{x}^{(j)}\|^2}{\epsilon r_i r_j} \right) \right] = -n^{-2} \sum_{i,j=0}^{n} \left. \frac{d k}{d \theta} \right|_{\theta = \frac{\|\boldsymbol{x}^{(i)}-\boldsymbol{x}^{(j)}\|^2}{\epsilon r_i r_j}} \frac{\|\boldsymbol{x}^{(i)}-\boldsymbol{x}^{(j)}\|^2}{\epsilon^2 r_i r_j}
+  \f}
+  @param[in] eps The bandwidth parameter \f$\epsilon\f$
+  @param[in] rvec The vector \f$\boldsymbol{r}\f$
+  \return The kernel derivative average \f$\bar{k}^{\prime}\f$.
+  */
+  virtual double KernelDerivativeAverage(double const eps, Eigen::VectorXd const& rvec) const override;
+
+  /// Compute the average of the pair-wise kernel second derivative evaluations \f$\bar{k}^{\prime} = \frac{d^2}{d \epsilon^2} \left[ n^{-2} \sum_{i,j=0}^{n} k\left( \frac{\|\boldsymbol{x}^{(i)}-\boldsymbol{x}^{(j)}\|^2}{\epsilon r_i r_j} \right) \right] \f$
+  /**
+  We (recursively) compute the average
+  \f{equation*}{
+  \bar{k}^{\prime} = \frac{d^2}{d \epsilon^2} \left[ n^{-2} \sum_{i,j=0}^{n} k\left( \frac{\|\boldsymbol{x}^{(i)}-\boldsymbol{x}^{(j)}\|^2}{\epsilon r_i r_j} \right) \right] = -n^{-2} \sum_{i,j=0}^{n} \left( -2 \left. \frac{d k}{d \theta} \right|_{\theta = \frac{\|\boldsymbol{x}^{(i)}-\boldsymbol{x}^{(j)}\|^2}{\epsilon r_i r_j}} \frac{\|\boldsymbol{x}^{(i)}-\boldsymbol{x}^{(j)}\|^2}{\epsilon^3 r_i r_j} - \left. \frac{d^2 k}{d \theta^2} \right|_{\theta = \frac{\|\boldsymbol{x}^{(i)}-\boldsymbol{x}^{(j)}\|^2}{\epsilon r_i r_j}} \left( \frac{\|\boldsymbol{x}^{(i)}-\boldsymbol{x}^{(j)}\|^2}{\epsilon^2 r_i r_j} \right)^2 \right)
+  \f}
+  @param[in] eps The bandwidth parameter \f$\epsilon\f$
+  @param[in] rvec The vector \f$\boldsymbol{r}\f$
+  \return The kernel derivative average \f$\bar{k}^{\prime}\f$.
+  */
+  virtual double KernelSecondDerivativeAverage(double const eps, Eigen::VectorXd const& rvec) const override;
+
   virtual Eigen::VectorXd KernelMatrix(double const eps, Eigen::Ref<Eigen::MatrixXd> kmat, const void* tune = &tuneDefault) const override;
 
   virtual Eigen::VectorXd KernelMatrix(double const eps, Eigen::Ref<const Eigen::VectorXd> const& dens, Eigen::Ref<Eigen::MatrixXd> kmat) const override;

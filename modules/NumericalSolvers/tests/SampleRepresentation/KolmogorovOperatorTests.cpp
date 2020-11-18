@@ -155,7 +155,7 @@ TEST_F(KolmogorovOperatorTests, UntruncatedKernelMatrix_Dense) {
       for( std::size_t j=i; j<n; ++j ) {
         const Eigen::VectorXd diff = samples->at(i)->state[0]-samples->at(j)->state[0];
 
-        kernmatExpected(i, j) = kern->EvaluateIsotropicKernel(diff.dot(diff)/(eps*rho(i)*rho(j)));
+        kernmatExpected(i, j) = kern->EvaluateIsotropicKernel(diff.dot(diff)/(4.0*eps*rho(i)*rho(j)));
         kernmatExpected(j, i) = kernmatExpected(i, j);
       }
     }
@@ -215,7 +215,7 @@ TEST_F(KolmogorovOperatorTests, TruncatedKernelMatrix_Dense) {
     for( std::size_t i=0; i<n; ++i ) {
       for( std::size_t j=i; j<n; ++j ) {
         const Eigen::VectorXd diff = samples->at(i)->state[0]-samples->at(j)->state[0];
-        const double eval = kern->EvaluateIsotropicKernel(diff.dot(diff)/(eps*rho(i)*rho(j)));
+        const double eval = kern->EvaluateIsotropicKernel(diff.dot(diff)/(4.0*eps*rho(i)*rho(j)));
 
         kernmatExpected(i, j) = eval<tol? 0.0 : eval;
         kernmatExpected(j, i) = eval<tol? 0.0 : kernmatExpected(i, j);
@@ -277,7 +277,7 @@ TEST_F(KolmogorovOperatorTests, UntruncatedKernelMatrix_Sparse) {
       for( std::size_t j=i; j<n; ++j ) {
         const Eigen::VectorXd diff = samples->at(i)->state[0]-samples->at(j)->state[0];
 
-        kernmatExpected(i, j) = kern->EvaluateIsotropicKernel(diff.dot(diff)/(eps*rho(i)*rho(j)));
+        kernmatExpected(i, j) = kern->EvaluateIsotropicKernel(diff.dot(diff)/(4.0*eps*rho(i)*rho(j)));
         kernmatExpected(j, i) = kernmatExpected(i, j);
       }
     }
@@ -337,7 +337,7 @@ TEST_F(KolmogorovOperatorTests, TruncatedKernelMatrix_Sparse) {
     for( std::size_t i=0; i<n; ++i ) {
       for( std::size_t j=i; j<n; ++j ) {
         const Eigen::VectorXd diff = samples->at(i)->state[0]-samples->at(j)->state[0];
-        const double eval = kern->EvaluateIsotropicKernel(diff.dot(diff)/(eps*rho(i)*rho(j)));
+        const double eval = kern->EvaluateIsotropicKernel(diff.dot(diff)/(4.0*eps*rho(i)*rho(j)));
 
         kernmatExpected(i, j) = eval<tol? 0.0 : eval;
         kernmatExpected(j, i) = eval<tol? 0.0 : kernmatExpected(i, j);

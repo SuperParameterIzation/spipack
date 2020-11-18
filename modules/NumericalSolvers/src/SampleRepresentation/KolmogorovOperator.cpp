@@ -43,6 +43,10 @@ Eigen::VectorXd KolmogorovOperator::EstimateDensity(bool const tune) const {
   return dens;
 }
 
+double KolmogorovOperator::KernelDerivativeAverage(double const eps, Eigen::VectorXd const& rvec) const { return SampleRepresentation::KernelDerivativeAverage(eps, rvec); }
+
+double KolmogorovOperator::KernelSecondDerivativeAverage(double const eps, Eigen::VectorXd const& rvec) const { return SampleRepresentation::KernelSecondDerivativeAverage(eps, rvec); }
+
 Eigen::VectorXd KolmogorovOperator::KernelMatrix(double const eps, Eigen::Ref<Eigen::MatrixXd> kmat, const void* tune) const {
   // estimate the density at each sample
   const Eigen::VectorXd dens = EstimateDensity(*(const bool*)tune);
