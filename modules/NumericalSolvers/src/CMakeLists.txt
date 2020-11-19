@@ -7,8 +7,6 @@ set(SOURCE
   SampleRepresentation/BandwidthCost.cpp
 )
 
-message(STATUS ${SPIPACK_EXTERNAL_LIBRARIES})
-
 add_library(spiNS SHARED ${SOURCE})
 target_link_libraries(spiNS spiTS ${SPIPACK_EXTERNAL_LIBRARIES})
 if( DEFINED SPIPACK_BUILT_DEPENDENCIES )

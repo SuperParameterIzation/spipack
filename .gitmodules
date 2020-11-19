@@ -10,3 +10,9 @@
 [submodule "external/muq"]
 	path = external/muq
 	url = https://andrew_d_davis@bitbucket.org/mituq/muq2.git
+[submodule "external/ExaHyPE-Engine"]
+	path = external/ExaHyPE-Engine
+	url = https://gitlab.lrz.de/exahype/ExaHyPE-Engine.git
+[submodule "external/Peano"]
+	path = external/Peano
+	url = https://gitlab.lrz.de/hpcsoftware/Peano.git

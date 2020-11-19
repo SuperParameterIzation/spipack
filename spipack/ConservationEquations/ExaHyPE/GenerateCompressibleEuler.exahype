@@ -1,0 +1,57 @@
+exahype-project CompressibleEuler
+  peano-kernel-path const = ./Peano
+  exahype-path const = ./ExaHyPE
+  output-directory const = ../../spipack/ConservationEquations/ExaHyPE/GenerateSource/
+  computational-domain
+    dimension const         = 2
+    width const             = 1.0, 1.0
+    offset const            = 0.0, 0.0
+    end-time                = 0.001
+  end computational-domain
+
+  global-optimisation
+    fuse-algorithmic-steps          = all
+    fuse-algorithmic-steps-rerun-factor   = 0.99
+    fuse-algorithmic-steps-diffusion-factor   = 0.99
+    spawn-predictor-as-background-thread = on
+    spawn-amr-background-threads = on
+    disable-vertex-exchange-in-time-steps        = on
+    time-step-batch-factor           = 0.1
+    disable-metadata-exchange-in-batched-time-steps = on
+    double-compression = 0.0
+    spawn-double-compression-as-background-thread = off
+  end global-optimisation
+
+  solver Limiting-ADER-DG CompressibleEulerSolver
+    variables const            = rho:1,j:3,E:1
+    order const                = 3
+    maximum-mesh-size          = 0.01
+    maximum-mesh-depth         = 0
+    time-stepping              = global
+    type const                 = nonlinear
+    terms const                = flux
+    optimisation const         = generic
+    language const             = C
+    limiter-type const         = musclhancock
+    limiter-optimisation const = generic
+    limiter-language const     = C
+    dmp-observables     const  = 5
+    dmp-relaxation-parameter   = 1e-4
+    dmp-difference-scaling     = 1e-3
+
+    plot vtu::Cartesian::cells::limited::ascii EulerWriter
+      variables const = 5
+      time            = 0.0
+      repeat          = 0.01
+      output          = ./variables
+    end plot
+
+
+    plot vtk::Cartesian::subcells::limited::ascii EulerSubcellsWriter
+      variables const = 5
+      time            = 0.0
+      repeat          = 0.1
+      output          = ./variables-fv
+    end plot
+  end solver
+end exahype-project
