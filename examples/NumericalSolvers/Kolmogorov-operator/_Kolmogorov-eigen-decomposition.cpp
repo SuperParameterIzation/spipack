@@ -65,7 +65,7 @@ int main(int argc, char **argv) {
   options["TruncationTolerance"] = -std::log(1.0e-1);
   options["ManifoldDimension"] = (double)dim;
   options["BandwidthExponent"] = -0.5;
-  options["BandwidthParameter"] = 1.0e-2;
+  options["BandwidthParameter"] = 1.0e-1;
 
   // create the Kolmogorov operator
   auto kolOperator = std::make_shared<KolmogorovOperator>(samples, options);
@@ -77,12 +77,16 @@ int main(int argc, char **argv) {
   //kolOperator->TuneBandwidthParameter();
 
   // estimate the density at each sample
-  Eigen::VectorXd dens = kolOperator->EstimateDensity(false);
+  Eigen::VectorXd dens = kolOperator->EstimateDensity(true);
 
   //std::cout << eps*(dens.array()*dens.array()).matrix().transpose() << std::endl;
 
   Eigen::SparseMatrix<double> kmat;
   Eigen::VectorXd D = kolOperator->KernelMatrix(kolOperator->BandwidthParameter(), dens, kmat);
+
+  //std::cout << ((Eigen::MatrixXd)kmat).rowwise().sum() << std::endl;
+
+  //std::cout << D.transpose() << std::endl;
 
   const Eigen::VectorXd P = dens.array().pow(kolOperator->ExponentParameter());
   const Eigen::VectorXd S = P.array()*(D.array().sqrt());
@@ -91,13 +95,15 @@ int main(int argc, char **argv) {
   BandwidthCost bandCost(P, kolOperator);
 
   // create the tuning data
-  const Eigen::VectorXd bandwidthExponent = Eigen::VectorXd::LinSpaced(50, -10.0, 10.0);
+  const Eigen::VectorXd bandwidthExponent = Eigen::VectorXd::LinSpaced(50, -10.0, 25.0);
   Eigen::VectorXd candidateBandwidthParameters(bandwidthExponent.size());
   Eigen::VectorXd logKernelAvgChange(bandwidthExponent.size());
   for( std::size_t l=0; l<bandwidthExponent.size(); ++l ) {
     candidateBandwidthParameters(l) = std::pow(2.0, bandwidthExponent(l));
     logKernelAvgChange(l) = -bandCost.Cost(Eigen::VectorXd::Constant(1, bandwidthExponent(l)).eval());
   }
+
+  //std::cout << logKernelAvgChange.transpose() << std::endl;
 
   std::cout << "finished set up" << std::endl;
 
@@ -145,7 +151,7 @@ int main(int argc, char **argv) {
 
   std::cout << "computing eigs... " << std::endl;
 
-  Spectra::GenEigsSolver<double, Spectra::SMALLEST_MAGN, Spectra::SparseGenMatProd<double> > eigsolver(&matvec, neigs, 10*neigs);
+  Spectra::SymEigsSolver<double, Spectra::SMALLEST_MAGN, Spectra::SparseGenMatProd<double> > eigsolver(&matvec, neigs, 10*neigs);
 
   // initialize and compute
   eigsolver.init();
@@ -153,10 +159,10 @@ int main(int argc, char **argv) {
 
   std::cout << "ncomputed: " << ncomputed << std::endl;
 
-  Eigen::VectorXd eigvals = eigsolver.eigenvalues().real();
+  Eigen::VectorXd eigvals = eigsolver.eigenvalues();
   //Eigen::MatrixXd eigvecs = (dens.array().pow(-2.0*kolOperator->ExponentParameter())*D.array().sqrt().inverse()).matrix().asDiagonal()*eigsolver.eigenvectors()/kolOperator->BandwidthParameter();
-  //Eigen::MatrixXd eigvecs = eigsolver.eigenvectors();
-  Eigen::MatrixXd eigvecs = S.array().inverse().matrix().asDiagonal()*eigsolver.eigenvectors().real();
+  Eigen::MatrixXd eigvecs = eigsolver.eigenvectors();
+  //Eigen::MatrixXd eigvecs = S.array().inverse().matrix().asDiagonal()*eigsolver.eigenvectors().real();
 
   Eigen::VectorXd eigvalsInv(neigs);
   for( std::size_t i=0; i<neigs; ++i ) { eigvalsInv(i) = (std::abs(eigvals(i))>1.0e-12? 1.0/eigvals(i) : 0.0); }

@@ -140,8 +140,10 @@ TEST_F(KolmogorovOperatorTests, UntruncatedKernelMatrix_Dense) {
 
   // the kernel matrix
   Eigen::MatrixXd kmat(n, n);
-  const Eigen::VectorXd rowsum = kolOperator->KernelMatrix(eps, kmat, &tuneDensity);
-  EXPECT_EQ(rowsum.size(), n);
+  kolOperator->KernelMatrix(eps, kmat, &tuneDensity);
+
+  const Eigen::MatrixXd rowsum = kolOperator->KernelMatrix(eps, kmat, &tuneDensity);
+  EXPECT_EQ(rowsum.rows(), n);
 
   // compute the expected kernel matrix
   Eigen::MatrixXd kernmatExpected(n, n);
@@ -201,8 +203,8 @@ TEST_F(KolmogorovOperatorTests, TruncatedKernelMatrix_Dense) {
 
   // the kernel matrix
   Eigen::MatrixXd kmat(n, n);
-  const Eigen::VectorXd rowsum = kolOperator->KernelMatrix(eps, kmat, &tuneDensity);
-  EXPECT_EQ(rowsum.size(), n);
+  const Eigen::MatrixXd rowsum = kolOperator->KernelMatrix(eps, kmat, &tuneDensity);
+  EXPECT_EQ(rowsum.rows(), n);
 
   // compute the expected kernel matrix
   Eigen::MatrixXd kernmatExpected(n, n);
@@ -262,8 +264,8 @@ TEST_F(KolmogorovOperatorTests, UntruncatedKernelMatrix_Sparse) {
 
   // the kernel matrix
   Eigen::SparseMatrix<double> kmat;
-  const Eigen::VectorXd rowsum = kolOperator->KernelMatrix(eps, kmat, &tuneDensity);
-  EXPECT_EQ(rowsum.size(), n);
+  const Eigen::MatrixXd rowsum = kolOperator->KernelMatrix(eps, kmat, &tuneDensity);
+  EXPECT_EQ(rowsum.rows(), n);
 
   // compute the expected kernel matrix
   Eigen::MatrixXd kernmatExpected(n, n);
@@ -323,8 +325,8 @@ TEST_F(KolmogorovOperatorTests, TruncatedKernelMatrix_Sparse) {
 
   // the kernel matrix
   Eigen::SparseMatrix<double> kmat;
-  const Eigen::VectorXd rowsum = kolOperator->KernelMatrix(eps, kmat, &tuneDensity);
-  EXPECT_EQ(rowsum.size(), n);
+  const Eigen::MatrixXd rowsum = kolOperator->KernelMatrix(eps, kmat, &tuneDensity);
+  EXPECT_EQ(rowsum.rows(), n);
 
   // compute the expected kernel matrix
   Eigen::MatrixXd kernmatExpected(n, n);

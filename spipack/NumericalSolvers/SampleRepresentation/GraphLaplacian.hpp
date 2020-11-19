@@ -110,7 +110,7 @@ public:
   @param[out] kernmat The kernel matrix such that \f$K_{ij} = k(\|\boldsymbol{x}^{(i)}-\boldsymbol{x}^{(j)}\|^2/(\epsilon r_i r_j))\f$
   \return Each entry is the sum of the corresponding row
   */
-  Eigen::VectorXd KernelMatrix(double const bandwidthPara, Eigen::Ref<Eigen::VectorXd const> const& bandwidth, Eigen::SparseMatrix<double>& kernmat) const;
+  Eigen::MatrixXd KernelMatrix(double const bandwidthPara, Eigen::Ref<Eigen::VectorXd const> const& bandwidth, Eigen::SparseMatrix<double>& kernmat) const;
 
   /**
   @param[in] bandwidthPara The bandwidth parameter \f$\epsilon\f$
@@ -119,7 +119,7 @@ public:
   @param[out] kernmat The kernel matrix such that \f$K_{ij} = k(\|\boldsymbol{x}^{(i)}-\boldsymbol{x}^{(j)}\|^2/(\epsilon r_i r_j))\f$
   \return Each entry is the sum of the corresponding row
   */
-  Eigen::VectorXd KernelMatrix(double const bandwidthPara, Eigen::Ref<Eigen::VectorXd const> const& bandwidth, std::vector<std::vector<std::pair<std::size_t, double> > > const& neighbors, Eigen::SparseMatrix<double>& kernmat) const;
+  Eigen::MatrixXd KernelMatrix(double const bandwidthPara, Eigen::Ref<Eigen::VectorXd const> const& bandwidth, std::vector<std::vector<std::pair<std::size_t, double> > > const& neighbors, Eigen::SparseMatrix<double>& kernmat) const;
 
   /// Construct the heat matrix \f$\boldsymbol{P}\f$
   /**

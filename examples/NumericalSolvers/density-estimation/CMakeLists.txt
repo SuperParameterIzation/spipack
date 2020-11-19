@@ -1,6 +1,6 @@
 cmake_minimum_required (VERSION 3.4)
 set(CMAKE_MACOSX_RPATH 1)
-project(HEAT_MATRIX_EIGENVALUES_EXAMPLE)
+project(DENSITY_ESTIMATION_EXAMPLE)
 
 if(CMAKE_SOURCE_DIR STREQUAL CMAKE_CURRENT_SOURCE_DIR) # Only look for SPIPACK when building example as standalone project
   find_package(SPIPACK REQUIRED HINTS ${SPIPACK_DIR})

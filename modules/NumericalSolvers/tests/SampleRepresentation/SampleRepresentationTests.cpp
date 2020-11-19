@@ -118,8 +118,8 @@ TEST_F(SampleRepresentationTests, UntruncatedKernelMatrix_Dense) {
   // compute the kernel matrix
   const double eps = 10.0;
   Eigen::MatrixXd kmat(n, n);
-  const Eigen::VectorXd rowsum = representation->KernelMatrix(eps, kmat);
-  EXPECT_EQ(rowsum.size(), n);
+  const Eigen::MatrixXd rowsum = representation->KernelMatrix(eps, kmat);
+  EXPECT_EQ(rowsum.rows(), n);
   EXPECT_EQ(kmat.rows(), n);
   EXPECT_EQ(kmat.cols(), n);
 
@@ -153,6 +153,7 @@ TEST_F(SampleRepresentationTests, UntruncatedKernelMatrix_Dense) {
     for( std::size_t j=0; j<n; ++j ) {
       sum += kmat(i, j);
       EXPECT_NEAR(kmat(i, j), kernmatExpected(i, j), 1.0e-10);
+      EXPECT_NEAR(kmat.coeff(i, j), kmat.coeff(j, i), 1.0e-10);
     }
     EXPECT_NEAR(sum, rowsumExpected(i), 1.0e-10);
   }
@@ -171,8 +172,8 @@ TEST_F(SampleRepresentationTests, UntruncatedKernelMatrix_Sparse) {
   // compute the kernel matrix
   const double eps = 10.0;
   Eigen::SparseMatrix<double> kmat;
-  const Eigen::VectorXd rowsum = representation->KernelMatrix(eps, kmat);
-  EXPECT_EQ(rowsum.size(), n);
+  const Eigen::MatrixXd rowsum = representation->KernelMatrix(eps, kmat);
+  EXPECT_EQ(rowsum.rows(), n);
   EXPECT_EQ(kmat.rows(), n);
   EXPECT_EQ(kmat.cols(), n);
   EXPECT_TRUE(kmat.nonZeros()==n*n); // this matrix is dense
@@ -207,6 +208,7 @@ TEST_F(SampleRepresentationTests, UntruncatedKernelMatrix_Sparse) {
     for( std::size_t j=0; j<n; ++j ) {
       sum += kmat.coeff(i, j);
       EXPECT_NEAR(kmat.coeff(i, j), kernmatExpected(i, j), 1.0e-10);
+      EXPECT_NEAR(kmat.coeff(i, j), kmat.coeff(j, i), 1.0e-10);
     }
     EXPECT_NEAR(sum, rowsumExpected(i), 1.0e-10);
   }
@@ -226,8 +228,8 @@ TEST_F(SampleRepresentationTests, TruncatedKernelMatrix_Dense) {
   // compute the kernel matrix
   const double eps = 10.0;
   Eigen::MatrixXd kmat(n, n);
-  const Eigen::VectorXd rowsum = representation->KernelMatrix(eps, kmat);
-  EXPECT_EQ(rowsum.size(), n);
+  const Eigen::MatrixXd rowsum = representation->KernelMatrix(eps, kmat);
+  EXPECT_EQ(rowsum.rows(), n);
   EXPECT_EQ(kmat.rows(), n);
   EXPECT_EQ(kmat.cols(), n);
 
@@ -263,6 +265,7 @@ TEST_F(SampleRepresentationTests, TruncatedKernelMatrix_Dense) {
     for( std::size_t j=0; j<n; ++j ) {
       sum += kmat.coeff(i, j);
       EXPECT_NEAR(kmat(i, j), kernmatExpected(i, j), 1.0e-10);
+      EXPECT_NEAR(kmat.coeff(i, j), kmat.coeff(j, i), 1.0e-10);
     }
     EXPECT_NEAR(sum, rowsumExpected(i), 1.0e-10);
   }
@@ -283,8 +286,9 @@ TEST_F(SampleRepresentationTests, TruncatedKernelMatrix_Sparse) {
   // compute the kernel matrix
   const double eps = 10.0;
   Eigen::SparseMatrix<double> kmat;
-  const Eigen::VectorXd rowsum = representation->KernelMatrix(eps, kmat);
-  EXPECT_EQ(rowsum.size(), n);
+  const Eigen::MatrixXd rowsum = representation->KernelMatrix(eps, kmat);
+  EXPECT_EQ(rowsum.rows(), n);
+  EXPECT_EQ(rowsum.cols(), 1);
   EXPECT_EQ(kmat.rows(), n);
   EXPECT_EQ(kmat.cols(), n);
   EXPECT_TRUE(kmat.nonZeros()>=n);
@@ -322,6 +326,7 @@ TEST_F(SampleRepresentationTests, TruncatedKernelMatrix_Sparse) {
     for( std::size_t j=0; j<n; ++j ) {
       sum += kmat.coeff(i, j);
       EXPECT_NEAR(kmat.coeff(i, j), kernmatExpected(i, j), 1.0e-10);
+      EXPECT_NEAR(kmat.coeff(i, j), kmat.coeff(j, i), 1.0e-10);
     }
     EXPECT_NEAR(sum, rowsumExpected(i), 1.0e-10);
   }
