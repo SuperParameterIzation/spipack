@@ -134,7 +134,7 @@ Eigen::MatrixXd KolmogorovOperator::KernelMatrix(double const eps, Eigen::Ref<co
   Eigen::MatrixXd rowsum = SampleRepresentation::KernelMatrix(4.0*eps, dens.array().pow(exponentPara), entries);
 
   // compute the normalization for the new kernel matrix
-  rowsum = (rowsum.array()/dens.array().pow(manifoldDim*exponentPara)).pow(para);
+  rowsum = rowsum.array()/dens.array().pow(manifoldDim*exponentPara*para);
 
   // renormalize the kernel matrix
   #pragma omp parallel for num_threads(numThreads)
@@ -152,12 +152,11 @@ Eigen::MatrixXd KolmogorovOperator::KernelMatrix(double const eps, Eigen::Ref<co
   return rowsum;
 }
 
-void KolmogorovOperator::TuneBandwidthParameter() {
-  const bool tuneDens = true;
+void KolmogorovOperator::TuneBandwidthParameter(bool const tuneDens) {
   const Eigen::VectorXd rho = EstimateDensity(tuneDens).array().pow(exponentPara);
 
   // the cost function and optimizater
-  auto cost = std::make_shared<BandwidthCost>(rho, shared_from_this());
+  auto cost = std::make_shared<BandwidthCost>(rho, Density());
   auto opt = std::make_shared<NLoptOptimizer>(cost, pt);
 
   // the initial condition for the optimization is the current parameter value
@@ -173,3 +172,5 @@ void KolmogorovOperator::TuneBandwidthParameter() {
 double KolmogorovOperator::VariableBandwidthExponent() const { return 1.0+0.5*manifoldDim*exponentPara+exponentPara-0.5*operatorConstant; }
 
 double KolmogorovOperator::ExponentParameter() const { return exponentPara; }
+
+std::shared_ptr<DensityEstimation> KolmogorovOperator::Density() const { return density; }

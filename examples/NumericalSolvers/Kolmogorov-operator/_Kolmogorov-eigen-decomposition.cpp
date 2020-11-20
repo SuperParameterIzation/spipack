@@ -26,7 +26,7 @@ int main(int argc, char **argv) {
   const std::string filename = "outputData.h5";
 
   // the number of samples
-  const std::size_t n = 1000;
+  const std::size_t n = 10000;
 
   // numerical parameters
   const std::size_t numNeighbors = 25;
@@ -62,7 +62,7 @@ int main(int argc, char **argv) {
   options["KernelOptions"] = kernelOptions;
   options["DensityOptions"] = densityOptions;
   options["OperatorParameter"] = 1.0;
-  options["TruncationTolerance"] = -std::log(1.0e-1);
+  options["TruncationTolerance"] = -std::log(1.0e-2);
   options["ManifoldDimension"] = (double)dim;
   options["BandwidthExponent"] = -0.5;
   options["BandwidthParameter"] = 1.0e-1;
@@ -71,119 +71,89 @@ int main(int argc, char **argv) {
   auto kolOperator = std::make_shared<KolmogorovOperator>(samples, options);
 
   // construct the kd-trees
+  std::cout << "building kd trees ... " << std::flush;
   kolOperator->BuildKDTrees();
+  std::cout << "done." << std::endl;
 
   // tune the bandwidth parameter
-  //kolOperator->TuneBandwidthParameter();
+  std::cout << "tune the bandwidth parameter ... " << std::flush;
+  kolOperator->TuneBandwidthParameter();
+  std::cout << "done." << std::endl;
 
   // estimate the density at each sample
-  Eigen::VectorXd dens = kolOperator->EstimateDensity(true);
+  std::cout << "estimating the underlying density ... " << std::flush;
+  Eigen::VectorXd dens = kolOperator->EstimateDensity(false);
+  std::cout << "done." << std::endl;
 
-  //std::cout << eps*(dens.array()*dens.array()).matrix().transpose() << std::endl;
-
-  Eigen::SparseMatrix<double> kmat;
-  Eigen::VectorXd D = kolOperator->KernelMatrix(kolOperator->BandwidthParameter(), dens, kmat);
-
-  //std::cout << ((Eigen::MatrixXd)kmat).rowwise().sum() << std::endl;
-
-  //std::cout << D.transpose() << std::endl;
-
-  const Eigen::VectorXd P = dens.array().pow(kolOperator->ExponentParameter());
-  const Eigen::VectorXd S = P.array()*(D.array().sqrt());
-
-  // create a cost function
-  BandwidthCost bandCost(P, kolOperator);
-
-  // create the tuning data
-  const Eigen::VectorXd bandwidthExponent = Eigen::VectorXd::LinSpaced(50, -10.0, 25.0);
+  // compute the tuning cost function (for plotting purposes)
+  std::cout << "computing tuning cost function (for plotting purposes only) ... " << std::flush;
+  BandwidthCost bandCost(dens.array().pow(kolOperator->ExponentParameter()), kolOperator->Density());
+  const Eigen::VectorXd bandwidthExponent = Eigen::VectorXd::LinSpaced(50, -25.0, 5.0);
   Eigen::VectorXd candidateBandwidthParameters(bandwidthExponent.size());
   Eigen::VectorXd logKernelAvgChange(bandwidthExponent.size());
   for( std::size_t l=0; l<bandwidthExponent.size(); ++l ) {
-    candidateBandwidthParameters(l) = std::pow(2.0, bandwidthExponent(l));
+    candidateBandwidthParameters(l) = std::pow(2.0, bandwidthExponent(l))/4.0;
     logKernelAvgChange(l) = -bandCost.Cost(Eigen::VectorXd::Constant(1, bandwidthExponent(l)).eval());
   }
+  std::cout << "done." << std::endl;
 
-  //std::cout << logKernelAvgChange.transpose() << std::endl;
+  // estimate the symmetric kernel matrix K
+  std::cout << "estimating the kernel matrix K ... " << std::flush;
+  Eigen::SparseMatrix<double> kmat;
+  Eigen::VectorXd D = kolOperator->KernelMatrix(kolOperator->BandwidthParameter(), dens, kmat);
+  std::cout << "done." << std::endl;
 
-  std::cout << "finished set up" << std::endl;
+  // compute the diagonal matrices P=\psi^{beta} and S = P D^{1/2}
+  std::cout << "creating L and Lhat ... " << std::flush;
+  const Eigen::VectorXd P = dens.array().pow(kolOperator->ExponentParameter());
+  const Eigen::VectorXd S = P.array()*(D.array().sqrt());
+  const Eigen::VectorXd Sinv = S.array().inverse();
 
-  // create the discrete Kolmogorov operator
+  // directly compute the discrete Kolmogorov operator
   Eigen::SparseMatrix<double> Lkol(n, n);
   Lkol.setIdentity();
   Lkol = (P.array()*P.array()).inverse().matrix().asDiagonal()*(D.array().inverse().matrix().asDiagonal()*kmat-Lkol)/kolOperator->BandwidthParameter();
 
-  // application to a function
-  Eigen::MatrixXd f = Eigen::MatrixXd::Ones(n, 3);
+  // a test function
+  Eigen::MatrixXd f = Eigen::MatrixXd::Ones(n, 3); // f(x) = 1
   for( std::size_t i=0; i<n; ++i ) {
-    f(i, 1) = samples->at(i)->state[0](0);
-    f(i, 2) = samples->at(i)->state[0](1);
+    f(i, 1) = samples->at(i)->state[0](0); // f(x) = x_0
+    f(i, 2) = samples->at(i)->state[0](1); // f(x) = x_1
   }
+
+  // apply the discrete Kolmogorov operator to a function
   const Eigen::MatrixXd Lf = Lkol*f;
 
-  /*// create a copy of the discrete operator that enforces E[h] = 0
-  Eigen::SparseMatrix<double> Lboundary = Lkol;
-  for( std::size_t i=0; i<n; ++i ) {
-    Lboundary.coeffRef(0, i) = 1.0;
-  }
-
-  // invert the discrete laplacian (enforce that the expected value is 0)
-  Eigen::SparseLU<Eigen::SparseMatrix<double> > solver;
-  solver.compute(Lboundary);
-  Eigen::MatrixXd rhs = f;
-  rhs.row(0) = Eigen::VectorXd::Zero(3);
-  Eigen::MatrixXd Linvf = solver.solve(rhs);*/
-
-  //Eigen::MatrixXd Lhat = (dens.array()*dens.array()).inverse().matrix().asDiagonal();
+  // compute Lhat, which is related to the Kolmogorov operator by a similarity transformation
   Eigen::SparseMatrix<double> Lhat(n, n);
   Lhat.setIdentity();
   Lhat = (P.array()*P.array()).inverse().matrix().asDiagonal();
-  Lhat = (S.array().inverse().matrix().asDiagonal()*kmat*S.array().inverse().matrix().asDiagonal()-Lhat)/kolOperator->BandwidthParameter();
+  Lhat = (Sinv.asDiagonal()*kmat*Sinv.asDiagonal()-Lhat)/kolOperator->BandwidthParameter();
 
-  //Lhat = (P.array()*P.array()).inverse().matrix().asDiagonal();
+  // apply the similarity trasformation operator to a function
+  const Eigen::MatrixXd SinvLhatSf = Sinv.asDiagonal()*Lhat*S.asDiagonal()*f;
+  std::cout << "done." << std::endl;
 
-  //Lhat = (S.array().inverse().matrix().asDiagonal()*kmat*S.array().inverse().matrix().asDiagonal() - Lhat)/kolOperator->BandwidthParameter();
-  //Lhat = (D.array().sqrt().inverse().matrix().asDiagonal()*kmat*D.array().sqrt().inverse().matrix().asDiagonal() - Lhat)/kolOperator->BandwidthParameter();
-  //Lhat = D.asDiagonal()*kmat - Lhat;///(eps*eps);
-
+  // compute the eigendecomposition of Lhat
+  std::cout << "computing eigendecomposition of Lhat ... " << std::flush;
   Spectra::SparseGenMatProd<double> matvec(Lhat);
-
-  const std::size_t neigs = 25;
-
-  std::cout << "computing eigs... " << std::endl;
-
-  Spectra::SymEigsSolver<double, Spectra::SMALLEST_MAGN, Spectra::SparseGenMatProd<double> > eigsolver(&matvec, neigs, 10*neigs);
-
-  // initialize and compute
+  const std::size_t neigs = 100;
+  Spectra::SymEigsSolver<double, Spectra::SMALLEST_MAGN, Spectra::SparseGenMatProd<double> > eigsolver(&matvec, neigs, std::max(10*neigs, n));
   eigsolver.init();
-  const int ncomputed = eigsolver.compute(1000, 1.0e-4);
+  const std::size_t ncomputed = eigsolver.compute(1000, 1.0e-5);
+  std::cout << "done (" << ncomputed << " of " << neigs << " computed)" << std::endl;
 
-  std::cout << "ncomputed: " << ncomputed << std::endl;
+  // retrieve the eigenvalues and eigen vectors (of Lhat)
+  const Eigen::VectorXd lambda = eigsolver.eigenvalues();
+  const Eigen::MatrixXd Uhat = eigsolver.eigenvectors();
+  Eigen::VectorXd lambdaInv(neigs);
+  for( std::size_t i=0; i<neigs; ++i ) { lambdaInv(i) = (std::abs(lambda(i))>1.0e-12? 1.0/lambda(i) : 0.0); }
 
-  Eigen::VectorXd eigvals = eigsolver.eigenvalues();
-  //Eigen::MatrixXd eigvecs = (dens.array().pow(-2.0*kolOperator->ExponentParameter())*D.array().sqrt().inverse()).matrix().asDiagonal()*eigsolver.eigenvectors()/kolOperator->BandwidthParameter();
-  Eigen::MatrixXd eigvecs = eigsolver.eigenvectors();
-  //Eigen::MatrixXd eigvecs = S.array().inverse().matrix().asDiagonal()*eigsolver.eigenvectors().real();
+  // apply Lhat inverse to the function
+  const Eigen::MatrixXd Lhatinvf = Uhat*lambdaInv.asDiagonal()*Uhat.transpose()*f;
 
-  Eigen::VectorXd eigvalsInv(neigs);
-  for( std::size_t i=0; i<neigs; ++i ) { eigvalsInv(i) = (std::abs(eigvals(i))>1.0e-12? 1.0/eigvals(i) : 0.0); }
-
-  //Eigen::MatrixXd id = eigvecs*eigvalsInv.asDiagonal()*eigvecs.transpose()*Lhat;
-
-  Eigen::MatrixXd Linvf = kolOperator->BandwidthParameter()*eigvecs*eigvalsInv.asDiagonal()*eigvecs.transpose()*(P.array()*P.array()).matrix().asDiagonal()*f;
-
-  Eigen::MatrixXd Lfeig = (1.0/kolOperator->BandwidthParameter())*(P.array()*P.array()).inverse().matrix().asDiagonal()*eigvecs*eigvals.asDiagonal()*eigvecs.transpose()*f;
-
-  //std::cout << eigvecs*eigvals.asDiagonal()*eigvecs.transpose()-Lhat << std::endl;
-
-  //std::cout << id << std::endl;
-
-
-  //std::cout << eigvecs.transpose()*eigvecs << std::endl;
-
-  Eigen::VectorXd R = Eigen::VectorXd::Ones(n);
-
-
-  //std::cout << dens.array().pow(2.0).matrix().asDiagonal()*R/eps << std::endl;
+  // apply L inverse to the function
+  const Eigen::MatrixXd Linvf = Sinv.asDiagonal()*Uhat*lambdaInv.asDiagonal()*Uhat.transpose()*S.asDiagonal()*f;
 
   // write the samples to file
   kolOperator->WriteToFile(filename);
@@ -191,15 +161,17 @@ int main(int argc, char **argv) {
     // open the file and write data to file
   HDF5File hdf5file(filename);
   hdf5file.WriteMatrix("/density estimate", dens);
-  hdf5file.WriteMatrix("/eigenvalues", eigvals);
-  hdf5file.WriteMatrix("/eigenvectors", eigvecs);
+  hdf5file.WriteMatrix("/eigenvalues", lambda);
+  hdf5file.WriteMatrix("/eigenvectors (L)", (Sinv.asDiagonal()*Uhat).eval());
+  hdf5file.WriteMatrix("/eigenvectors (Lhat)", Uhat);
 
   hdf5file.WriteMatrix("/tune/candidate bandwidth parameters", candidateBandwidthParameters);
   hdf5file.WriteMatrix("/tune/log kernel average change", logKernelAvgChange);
 
   hdf5file.WriteMatrix("/apply function", f);
-  hdf5file.WriteMatrix("/applied Kolmogorov operator", Lf);
-  hdf5file.WriteMatrix("/applied Kolmogorov operator (eigendecomposition)", Lfeig);
+  hdf5file.WriteMatrix("/applied Kolmogorov operator (L)", Lf);
+  hdf5file.WriteMatrix("/applied Kolmogorov operator (Sinv Lhat S)", SinvLhatSf);
+  hdf5file.WriteMatrix("/applied inverse transfromed Kolmogorov operator", Lhatinvf);
   hdf5file.WriteMatrix("/applied inverse Kolmogorov operator", Linvf);
   hdf5file.Close();
 }

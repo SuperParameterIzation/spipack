@@ -93,7 +93,11 @@ public:
 
   virtual Eigen::MatrixXd KernelMatrix(double const eps, Eigen::Ref<const Eigen::VectorXd> const& dens, Eigen::SparseMatrix<double>& kmat) const override;
 
-  void TuneBandwidthParameter();
+  /// Tune the bandwidth parameter for the Kolmogorov operator
+  /**
+  @param tuneDens Also tune the bandwidth for the underlying density estimation (defaults to <tt>true</tt>)
+  */
+  void TuneBandwidthParameter(bool const tuneDens = true);
 
   /// Get the parameter used as the variable bandwidth exponent
   /**
@@ -106,6 +110,12 @@ public:
   \return The exponent parameter \f$\beta\f$.
   */
   double ExponentParameter() const;
+
+  /// Get the density estimator
+  /**
+  \return The density estimator
+  */
+  std::shared_ptr<DensityEstimation> Density() const;
 
 private:
 

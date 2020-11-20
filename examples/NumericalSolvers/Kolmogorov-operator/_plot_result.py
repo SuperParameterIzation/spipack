@@ -1,6 +1,7 @@
 import sys
 
 import numpy as np
+from math import *
 
 import random
 
@@ -83,14 +84,25 @@ logKernelAvgDerivative = hdf5file['/tune/log kernel average change'] [()].T [0]
 optInd = np.argmax(logKernelAvgDerivative)
 print('Optimal bandwidth parameter:', bandwidthPara[optInd])
 
-eigvecs = hdf5file['/eigenvectors'] [()].T
+eigvecsL = hdf5file['/eigenvectors (L)'] [()].T
+eigvecsLhat = hdf5file['/eigenvectors (Lhat)'] [()].T
 eigvals = hdf5file['/eigenvalues'] [()].T [0]
-#eigvals = np.sort(eigvals)
 
 f = hdf5file['/apply function'] [()].T
-Lf = hdf5file['/applied Kolmogorov operator'] [()].T
-Lfeig = hdf5file['/applied Kolmogorov operator (eigendecomposition)'] [()].T
+Lf = hdf5file['/applied Kolmogorov operator (L)'] [()].T
+SinvLhatSf = hdf5file['/applied Kolmogorov operator (Sinv Lhat S)'] [()].T
+Lhatinvf = hdf5file['/applied inverse transfromed Kolmogorov operator'] [()].T
 Linvf = hdf5file['/applied inverse Kolmogorov operator'] [()].T
+
+
+# find the point that is farthest from 0 (to identify the tails)
+dist = 0.0
+tailind = -1
+for i in range(len(samples)):
+    d = np.linalg.norm(samples[i])
+    if d>dist:
+        dist = d
+        tailind = i
 
 fig = MakeFigure(425, 0.9, False)
 ax = plt.gca()
@@ -117,13 +129,15 @@ for i in range(len(f)):
     if i==2:
         ftitle = r'$f(\mathbf{x})=x_1$'
 
-    Lftitle = r'$\mathcal{L}_{\psi, 1} f$ (' + ftitle + ')'
-    Eigftitle = r'$\mathcal{L}_{\psi, 1} f \approx \frac{1}{\epsilon} \mathbf{P}^{-2} \mathbf{Q} \mathbf{\Lambda} \mathbf{Q}^T \mathbf{f}$ (' + ftitle + ')'
-    Linvftitle = r'$\mathcal{L}_{\psi, 1}^{-\dagger} f \approx \epsilon \mathbf{Q} \mathbf{\Lambda}^{-\dagger} \mathbf{Q}^T \mathbf{P}^{2}f$ (' + ftitle + ')'
+    Lftitle = r'$\mathbf{L}_{\psi, 1} \mathbf{f}$ (' + ftitle + ')'
+    SinvLhatSftitle = r'$\mathbf{S}^{-1} \mathbf{\hat{L}}_{\psi, 1} \mathbf{S} \mathbf{f}$ (' + ftitle + ')'
+    Lhatinvftitle = r'$\mathbf{\hat{L}}_{\psi, 1}^{-\dagger} \mathbf{f} \approx \mathbf{\hat{U}} \mathbf{\Lambda}^{-\dagger} \mathbf{\hat{U}}^T \mathbf{f}$ (' + ftitle + ')'
+    Linvftitle = r'$\mathbf{L}_{\psi, 1}^{-\dagger} \mathbf{f} \approx \mathbf{S}^{-1} \mathbf{\hat{U}} \mathbf{\Lambda}^{-\dagger} \mathbf{\hat{U}}^T \mathbf{S} \mathbf{f}$ (' + ftitle + ')'
 
+    # plot f
     fig = MakeFigure(425, 0.9, False)
     ax = plt.gca()
-    scatter = ax.scatter(samples.T[0], samples.T[1], s=3, c=f[i])
+    scatter = ax.scatter(samples.T[0], samples.T[1], s=3, c=f[i], vmin=min(f[i]), vmax=max(f[i]))
     cbar = plt.colorbar(scatter)
     ax.spines['right'].set_visible(False)
     ax.spines['top'].set_visible(False)
@@ -136,9 +150,10 @@ for i in range(len(f)):
     pdf.savefig(fig, bbox_inches='tight')
     plt.close(fig)
 
+    # plot L f
     fig = MakeFigure(425, 0.9, False)
     ax = plt.gca()
-    scatter = ax.scatter(samples.T[0], samples.T[1], s=3, c=Lf[i])
+    scatter = ax.scatter(samples.T[0], samples.T[1], s=3, c=Lf[i], vmin=min(Lf[i]), vmax=max(Lf[i]))
     cbar = plt.colorbar(scatter)
     ax.spines['right'].set_visible(False)
     ax.spines['top'].set_visible(False)
@@ -151,24 +166,42 @@ for i in range(len(f)):
     pdf.savefig(fig, bbox_inches='tight')
     plt.close(fig)
 
+    # plot Sinv Lhat S f
     fig = MakeFigure(425, 0.9, False)
     ax = plt.gca()
-    scatter = ax.scatter(samples.T[0], samples.T[1], s=3, c=Lfeig[i])
+    scatter = ax.scatter(samples.T[0], samples.T[1], s=3, c=SinvLhatSf[i], vmin=min(SinvLhatSf[i]), vmax=max(SinvLhatSf[i]))
     cbar = plt.colorbar(scatter)
     ax.spines['right'].set_visible(False)
     ax.spines['top'].set_visible(False)
     ax.yaxis.set_ticks_position('left')
     ax.xaxis.set_ticks_position('bottom')
     cbar.ax.set_ylabel(r'Magnitude')
-    ax.set_title(Eigftitle)
+    ax.set_title(SinvLhatSftitle)
     ax.set_xlabel(r'$x_0$')
     ax.set_ylabel(r'$x_1$')
     pdf.savefig(fig, bbox_inches='tight')
     plt.close(fig)
 
+    # plot Lhatinv f = Uhat lambdainv Uhat^T f
     fig = MakeFigure(425, 0.9, False)
     ax = plt.gca()
-    scatter = ax.scatter(samples.T[0], samples.T[1], s=3, c=Linvf[i])
+    scatter = ax.scatter(samples.T[0], samples.T[1], s=3, c=Lhatinvf[i], vmin=min(Lhatinvf[i]), vmax=max(Lhatinvf[i]))
+    cbar = plt.colorbar(scatter)
+    ax.spines['right'].set_visible(False)
+    ax.spines['top'].set_visible(False)
+    ax.yaxis.set_ticks_position('left')
+    ax.xaxis.set_ticks_position('bottom')
+    cbar.ax.set_ylabel(r'Magnitude')
+    ax.set_title(Lhatinvftitle)
+    ax.set_xlabel(r'$x_0$')
+    ax.set_ylabel(r'$x_1$')
+    pdf.savefig(fig, bbox_inches='tight')
+    plt.close(fig)
+
+    # plot Linv f = S^{-1} Uhat lambdainv Uhat^T S f
+    fig = MakeFigure(425, 0.9, False)
+    ax = plt.gca()
+    scatter = ax.scatter(samples.T[0], samples.T[1], s=3, c=Linvf[i], vmin=min(Linvf[i]), vmax=max(Linvf[i]))
     cbar = plt.colorbar(scatter)
     ax.spines['right'].set_visible(False)
     ax.spines['top'].set_visible(False)
@@ -182,7 +215,7 @@ for i in range(len(f)):
     plt.close(fig)
 pdf.close()
 
-pdf = matplotlib.backends.backend_pdf.PdfPages("figures/Eigenfunctions.pdf")
+pdf = matplotlib.backends.backend_pdf.PdfPages("figures/Eigenfunctions_L.pdf")
 fig = MakeFigure(425, 0.9, False)
 ax = plt.gca()
 ax.plot(range(1, len(eigvals)+1), eigvals, color='#525252')
@@ -196,10 +229,103 @@ ax.set_ylabel(r'Eigenvalues $\lambda_i$')
 pdf.savefig(fig, bbox_inches='tight')
 plt.close(fig)
 
-for i in range(max([25, len(eigvecs)])):
+for i in range(min([25, len(eigvecsL)])):
+    mn = min(eigvecsL[i])
+    mx = max(eigvecsL[i])
+    mntkx = floor(log10(abs(mn)))
+    mxtkx = floor(log10(abs(mx)))
+    if mx<0.0:
+        mxtk = -10**mxtkx
+    else:
+        if mn>0.0:
+            mxtkx = max([mntkx+1, mxtkx])
+            mxtk = 10**mxtkx
+        else:
+            mxtk = 10**mntkx
+    if mn<0.0:
+        if mx<0.0:
+            mntkx = max([mxtkx+1, mntkx])
+            mntk = -10**mntkx
+        else:
+            mntk = -10**mntkx
+    else:
+        mntk = 10**mntkx
+
     fig = MakeFigure(425, 0.9, False)
     ax = plt.gca()
-    scatter = ax.scatter(samples.T[0], samples.T[1], s=3, c=eigvecs[i])
+    scale = 0.001*max(abs(mn), abs(mx))
+    #scatter = ax.scatter(samples.T[0], samples.T[1], s=3, c=eigvecsL[i], norm=mcolors.SymLogNorm(linthresh=scale, linscale=scale, vmin=min(mn, mntk), vmax=max(mx, mxtk)))
+    if mxtk<0.0:
+        mxtkm = 1.5*mxtk
+    else:
+        mxtkm = 0.5*mxtk
+    if mntk<0.0:
+        mntkm = 0.5*mntk
+    else:
+        mntkm = 1.5*mntk
+    scatter = ax.scatter(samples.T[0], samples.T[1], s=3, c=eigvecsL[i], vmin=mntkm, vmax=mxtkm)
+    cbar = plt.colorbar(scatter, ticks=np.sort([mntk, 0.0, mxtk]))
+    ax.spines['right'].set_visible(False)
+    ax.spines['top'].set_visible(False)
+    ax.yaxis.set_ticks_position('left')
+    ax.xaxis.set_ticks_position('bottom')
+    cbar.ax.set_ylabel(r'Magnitude')
+    ax.set_title(r'Eigenfunction '+str(i+1)+' ($\lambda_{'+str(i+1)+'}='+str(round(eigvals[i], 2))+'$)')
+    ax.set_xlabel(r'$x_0$')
+    ax.set_ylabel(r'$x_1$')
+    pdf.savefig(fig, bbox_inches='tight')
+    plt.close(fig)
+pdf.close()
+
+pdf = matplotlib.backends.backend_pdf.PdfPages("figures/Eigenfunctions_Lhat.pdf")
+fig = MakeFigure(425, 0.9, False)
+ax = plt.gca()
+ax.plot(range(1, len(eigvals)+1), eigvals, color='#525252')
+ax.spines['right'].set_visible(False)
+ax.spines['top'].set_visible(False)
+ax.yaxis.set_ticks_position('left')
+ax.xaxis.set_ticks_position('bottom')
+ax.set_xlim([1, len(eigvals)])
+ax.set_xlabel(r'Index $i$')
+ax.set_ylabel(r'Eigenvalues $\lambda_i$')
+pdf.savefig(fig, bbox_inches='tight')
+plt.close(fig)
+
+for i in range(min([25, len(eigvecsLhat)])):
+    mn = min(eigvecsLhat[i])
+    mx = max(eigvecsLhat[i])
+    mntkx = floor(log10(abs(mn)))
+    mxtkx = floor(log10(abs(mx)))
+    if mx<0.0:
+        mxtk = -10**mxtkx
+    else:
+        if mn>0.0:
+            mxtkx = max([mntkx+1, mxtkx])
+            mxtk = 10**mxtkx
+        else:
+            mxtk = 10**mntkx
+    if mn<0.0:
+        if mx<0.0:
+            mntkx = max([mxtkx+1, mntkx])
+            mntk = -10**mntkx
+        else:
+            mntk = -10**mntkx
+    else:
+        mntk = 10**mntkx
+
+    fig = MakeFigure(425, 0.9, False)
+    ax = plt.gca()
+    scale = 0.001*max(abs(mn), abs(mx))
+    #scatter = ax.scatter(samples.T[0], samples.T[1], s=3, c=eigvecsLhat[i], norm=mcolors.SymLogNorm(linthresh=scale, linscale=scale, vmin=min(mn, mntk), vmax=max(mx, mxtk)))
+    if mxtk<0.0:
+        mxtkm = 1.4*mxtk
+    else:
+        mxtkm = 0.6*mxtk
+    if mntk<0.0:
+        mntkm = 0.6*mntk
+    else:
+        mntkm = 1.4*mntk
+    scatter = ax.scatter(samples.T[0], samples.T[1], s=3, c=eigvecsLhat[i], vmin=mntkm, vmax=mxtkm)
     cbar = plt.colorbar(scatter)
     ax.spines['right'].set_visible(False)
     ax.spines['top'].set_visible(False)

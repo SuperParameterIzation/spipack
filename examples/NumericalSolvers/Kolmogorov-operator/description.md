@@ -113,7 +113,7 @@ Let's take the eigendecomposition of $\boldsymbol{\hat{L}} \boldsymbol{\hat{Q}} 
 
 <figure>
 <figcaption>The smallest eigenvalues of $\boldsymbol{\hat{L}}$ and their corresponding eigenfunctions.</figcaption>
-<embed src="figures/Eigenfunctions.pdf" width="500" height="375"
+<embed src="figures/Eigenfunctions_L.pdf" width="500" height="375"
 type="application/pdf">
 </figure>
 
