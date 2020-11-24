@@ -77,7 +77,7 @@ int main(int argc, char **argv) {
 
   // tune the bandwidth parameter
   std::cout << "tune the bandwidth parameter ... " << std::flush;
-  kolOperator->TuneBandwidthParameter();
+  kolOperator->TuneBandwidthParameter(true);
   std::cout << "done." << std::endl;
 
   // estimate the density at each sample

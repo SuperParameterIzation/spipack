@@ -21,15 +21,13 @@ Note the special cases:
 
 ## Density estimation phase
 
-See the [density estimation](../density-estimation/description.md) example for details.
+We use the same procedure as in the [density estimation example](../density-estimation/description.md) to compute an estimate of $\psi^{(i)} \approx \psi(\boldsymbol{x}^{(i)})$$ at each sample $\boldsymbol{x}^{(i)}$.
 
 <figure>
 <figcaption>The estimated density $\psi^{(i)} \approx \psi(\boldsymbol{x}^{(i)})$ at each sample.</figcaption>
 <embed src="figures/DensityEstimation.pdf" width="500" height="375"
 type="application/pdf">
 </figure>
-
-Importantly: we have an estimate an $\psi^{(i)}$ of the density at each sample.
 
 ## Discretize the operator
 
