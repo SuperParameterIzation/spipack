@@ -538,4 +538,14 @@ TEST_F(KolmogorovOperatorTests, Tuning) {
   kolOperator->BuildKDTrees();
 
   kolOperator->TuneBandwidthParameter();
+  EXPECT_TRUE(kolOperator->BandwidthParameter()>0.0);
+}
+
+TEST_F(KolmogorovOperatorTests, Eigendecomposition) {
+  // create the graph laplacian from samples
+  auto samples = CreateFromSamples();
+  EXPECT_EQ(samples->size(), n);
+
+  // construct the kd-trees
+  kolOperator->BuildKDTrees();
 }

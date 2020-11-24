@@ -23,7 +23,7 @@ int main(int argc, char **argv) {
   const std::size_t dim = 2;
 
   // the output filename
-  const std::string filename = "outputData.h5";
+  const std::string filename = "outputData_eigendecomposition.h5";
 
   // the number of samples
   const std::size_t n = 10000;

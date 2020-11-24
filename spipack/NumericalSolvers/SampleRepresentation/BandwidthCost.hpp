@@ -22,7 +22,7 @@ public:
   @param[in] bandwidth The vector \f$\boldsymbol{r}\f$ that defines the kernel matrix
   @param[in] samples A discrete sample representation of the density \f$\psi\f$
   */
-  BandwidthCost(Eigen::Ref<const Eigen::VectorXd> const& bandwidth, std::shared_ptr<const SampleRepresentation> const& samples);
+  BandwidthCost(Eigen::Ref<const Eigen::VectorXd> const& bandwidth, std::shared_ptr<SampleRepresentation> const& samples);
 
   virtual ~BandwidthCost() = default;
 private:
@@ -44,7 +44,7 @@ private:
   const Eigen::VectorXd bandwidth;
 
   /// A discrete sample representation of the density \f$\psi\f$
-  std::shared_ptr<const SampleRepresentation> samples;
+  std::shared_ptr<SampleRepresentation> samples;
 
   /// The value of the bandwidth parameter \f$\epsilon_l = 2^{l}\f$ at the most recent function call.
   /**

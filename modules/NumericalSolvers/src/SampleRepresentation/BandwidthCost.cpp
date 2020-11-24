@@ -4,7 +4,7 @@ using namespace muq::Modeling;
 using namespace muq::Optimization;
 using namespace spi::NumericalSolvers;
 
-BandwidthCost::BandwidthCost(Eigen::Ref<const Eigen::VectorXd> const& bandwidth, std::shared_ptr<const SampleRepresentation> const& samples) :
+BandwidthCost::BandwidthCost(Eigen::Ref<const Eigen::VectorXd> const& bandwidth, std::shared_ptr<SampleRepresentation> const& samples) :
 CostFunction(Eigen::VectorXi::Constant(1, 1)),
 bandwidth(bandwidth),
 samples(samples)

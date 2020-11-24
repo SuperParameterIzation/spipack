@@ -2,7 +2,6 @@ set(SOURCE
   SampleRepresentation/SampleRepresentation.cpp
   SampleRepresentation/DensityEstimation.cpp
   SampleRepresentation/KolmogorovOperator.cpp
-  SampleRepresentation/GraphLaplacian.cpp
 
   SampleRepresentation/BandwidthCost.cpp
 )

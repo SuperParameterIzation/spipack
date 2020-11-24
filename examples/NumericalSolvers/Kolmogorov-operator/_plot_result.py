@@ -73,7 +73,7 @@ def MakeFigure(totalWidthPts, fraction, presentationVersion = False):
     return fig
 
 # load the data file
-hdf5file = h5py.File('outputData.h5', 'r')
+hdf5file = h5py.File('outputData_eigendecomposition.h5', 'r')
 
 samples = hdf5file['/samples'] [()].T
 densityEstimate = hdf5file['/density estimate'] [()].T [0]

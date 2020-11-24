@@ -65,7 +65,7 @@ public:
   @param[in] tune <tt>true</tt>: Tune the parameter used to estimate the density \f$\psi\f$; <tt>false</tt>: Do not tune the parameter used to estimate \f$\psi\f$
   \return The row sum of the kernel matrix
   */
-  virtual Eigen::VectorXd KernelMatrix(double const eps, Eigen::Ref<Eigen::MatrixXd> kmat, const void* tune = &tuneDefault) const override;
+  virtual Eigen::VectorXd KernelMatrix(double const eps, Eigen::Ref<Eigen::MatrixXd> kmat, const void* tune = &tuneDefault) override;
 
   /// Construct the kernel matrix \f$\boldsymbol{K}_{\epsilon}\f$
   /**
@@ -86,11 +86,11 @@ public:
   \rho^{(i)} = \sum_{j=1}^{n} K_{\epsilon}^{(ij)},
   \f}
   @param[in] eps The bandwidth parameer \f$\epsilon\f$
-  @param[in] dens An estimate of the density function \f$\psi|f$
+  @param[in] dens An estimate of the density function \f$\psi\f$
   @param[out] kmat The kernel matrix \f$\boldsymbol{K}\f$
   \return The row sum of the kernel matrix
   */
-  virtual Eigen::VectorXd KernelMatrix(double const eps, Eigen::Ref<const Eigen::VectorXd> const& dens, Eigen::Ref<Eigen::MatrixXd> kmat) const override;
+  virtual Eigen::VectorXd KernelMatrix(double const eps, Eigen::Ref<const Eigen::VectorXd> const& dens, Eigen::Ref<Eigen::MatrixXd> kmat) override;
 
   /// Construct the kernel matrix \f$\boldsymbol{K}_{\epsilon}\f$
   /**
@@ -103,7 +103,7 @@ public:
   @param[in] tune <tt>true</tt>: Tune the parameter used to estimate the density \f$\psi\f$; <tt>false</tt>: Do not tune the parameter used to estimate \f$\psi\f$
   \return The row sum of the kernel matrix
   */
-  virtual Eigen::VectorXd KernelMatrix(double const eps, Eigen::SparseMatrix<double>& kmat, const void* tune = &tuneDefault) const override;
+  virtual Eigen::VectorXd KernelMatrix(double const eps, Eigen::SparseMatrix<double>& kmat, const void* tune = &tuneDefault) override;
 
   /// Construct the kernel matrix \f$\boldsymbol{K}_{\epsilon}\f$
   /**
@@ -124,11 +124,11 @@ public:
   \rho^{(i)} = \sum_{j=1}^{n} K_{\epsilon}^{(ij)},
   \f}
   @param[in] eps The bandwidth parameer \f$\epsilon\f$
-  @param[in] dens An estimate of the density function \f$\psi|f$
+  @param[in] dens An estimate of the density function \f$\psi\f$
   @param[out] kmat The kernel matrix \f$\boldsymbol{K}\f$
   \return The row sum of the kernel matrix
   */
-  virtual Eigen::VectorXd KernelMatrix(double const eps, Eigen::Ref<const Eigen::VectorXd> const& dens, Eigen::SparseMatrix<double>& kmat) const override;
+  virtual Eigen::VectorXd KernelMatrix(double const eps, Eigen::Ref<const Eigen::VectorXd> const& dens, Eigen::SparseMatrix<double>& kmat) override;
 
   /// Tune the bandwidth parameter for the Kolmogorov operator
   /**
@@ -154,7 +154,15 @@ public:
   */
   std::shared_ptr<DensityEstimation> Density() const;
 
+  void UpdateEigendecomposition();
+
 private:
+
+  /// The diagonal of the matrix \f$\boldsymbol{P}\f$, where \f$P^{(ii)} = \psi^{\beta}(\boldsymbol{x}^{(i)})\f$
+  /**
+  \f$\beta\f$ is the numerical parameter spi::NumericalSolvers::KolmogorovOperator::exponentPara.
+  */
+  Eigen::VectorXd P;
 
   /// By default, do we want to tune the bandwidth parameter values?
   /**
