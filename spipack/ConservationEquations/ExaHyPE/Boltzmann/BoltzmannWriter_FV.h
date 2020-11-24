@@ -4,20 +4,20 @@
 // ========================
 //   www.exahype.eu
 // ========================
-#ifndef POSTPROCESSING_EulerSubcellsWriter_CLASS_HEADER_
-#define POSTPROCESSING_EulerSubcellsWriter_CLASS_HEADER_
+#ifndef POSTPROCESSING_BoltzmannWriter_FV_CLASS_HEADER_
+#define POSTPROCESSING_BoltzmannWriter_FV_CLASS_HEADER_
 
 #include "exahype/plotters/Plotter.h"
 
 namespace Boltzmann {
   class BoltzmannSolver;
-  class EulerSubcellsWriter;
+  class BoltzmannWriter_FV;
 }
 
-class Boltzmann::EulerSubcellsWriter : public exahype::plotters::Plotter::UserOnTheFlyPostProcessing {
+class Boltzmann::BoltzmannWriter_FV : public exahype::plotters::Plotter::UserOnTheFlyPostProcessing {
 public:
-  EulerSubcellsWriter(Boltzmann::BoltzmannSolver& solver);
-  virtual ~EulerSubcellsWriter();
+  BoltzmannWriter_FV(Boltzmann::BoltzmannSolver& solver);
+  virtual ~BoltzmannWriter_FV();
 
   void startPlotting(double time) override;
   void finishPlotting() override;
@@ -31,4 +31,4 @@ public:
     double timeStamp) override;
 };
 
-#endif /* POSTPROCESSING_EulerSubcellsWriter_CLASS_HEADER_ */
+#endif /* POSTPROCESSING_BoltzmannWriter_FV_CLASS_HEADER_ */

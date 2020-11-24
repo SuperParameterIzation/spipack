@@ -1,4 +1,4 @@
-macro(ExaHyPE_System equation dim)
+macro(ExaHyPE_System equation)
   configure_file(${CMAKE_CURRENT_SOURCE_DIR}/cmake/exahype/${equation}/buildinfo.h.in "${CMAKE_CURRENT_SOURCE_DIR}/spipack/ConservationEquations/ExaHyPE/${equation}/buildinfo.h" @ONLY)
 
   # load the exahype file list
@@ -9,10 +9,6 @@ macro(ExaHyPE_System equation dim)
   target_include_directories(spiEX_${equation} PRIVATE
   ${PEANO_DIRS}
   spipack/ConservationEquations/ExaHyPE/${equation})
-
-  set_target_properties(spiEX_${equation}
-  PROPERTIES COMPILE_FLAGS "-DDim${dim} -DTrackGridStatistics"
-  )
 
   install(TARGETS spiEX_${equation}
         EXPORT ${CMAKE_PROJECT_NAME}Depends
@@ -29,9 +25,16 @@ set(PEANO_DIRS
   ${EXAHYPE_DIR}/Peano/ ${EXAHYPE_DIR}/Peano/peano ${EXAHYPE_DIR}/Peano/tarch ${EXAHYPE_DIR}/Peano/multiscalelinkedcell ${EXAHYPE_DIR}/Peano/sharedmemoryoracles ${EXAHYPE_DIR}/Peano/mpibalancing
 )
 
-list(APPEND SPIPACK_EXTERNAL_INCLUDE_DIRS ${EXAHYPE_DIR}/ExaHyPE/)
+list(APPEND SPIPACK_EXTERNAL_INCLUDE_DIRS
+     ${EXAHYPE_DIR}/ExaHyPE/
+     ${PEANO_DIRS}
+     )
+
+
+# flags to make exahype work (only in 2 dimensions for now)
+set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -DDim2 -DTrackGridStatistics")
 
 set(SPIEX_LIBRARIES )
 
-#ExaHyPE_System(CompressibleEuler 2)
-ExaHyPE_System(Boltzmann 2)
+#ExaHyPE_System(CompressibleEuler)
+ExaHyPE_System(Boltzmann)

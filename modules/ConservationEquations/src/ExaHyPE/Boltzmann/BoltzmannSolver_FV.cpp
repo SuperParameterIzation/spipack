@@ -7,28 +7,25 @@ tarch::logging::Log Boltzmann::BoltzmannSolver_FV::_log( "Boltzmann::BoltzmannSo
 
 void Boltzmann::BoltzmannSolver_FV::init(const std::vector<std::string>& cmdlineargs,const exahype::parser::ParserView& constants) {
   // Tip: You find documentation for this method in header file "Boltzmann::BoltzmannSolver_FV.h".
-  
+
   // @todo Please implement/augment if required
 }
 
 void Boltzmann::BoltzmannSolver_FV::adjustSolution(const double* const x,const double t,const double dt, double* const Q) {
-  // Tip: You find documentation for this method in header file "Boltzmann::BoltzmannSolver_FV.h".
-  // Tip: See header file "Boltzmann::AbstractBoltzmannSolver_FV.h" for toolkit generated compile-time 
-  //      constants such as PatchSize, NumberOfVariables, and NumberOfParameters.
-  
-  // @todo Please implement/augment if required
-  Q[0] = 0.0;
-  Q[1] = 0.0;
-  Q[2] = 0.0;
-  Q[3] = 0.0;
-  Q[4] = 0.0;
+  if (tarch::la::equals(t,0.0)) {
+    Variables vars(Q);
+
+    vars.massDensity() = 1.0+x[0];
+    vars.momentum(1.0, 0.0);
+    vars.coordinates(x[0], x[1]);
+  }
 }
 
 void Boltzmann::BoltzmannSolver_FV::eigenvalues(const double* const Q, const int dIndex, double* const lambda) {
   // Tip: You find documentation for this method in header file "Boltzmann::BoltzmannSolver_FV.h".
-  // Tip: See header file "Boltzmann::AbstractBoltzmannSolver_FV.h" for toolkit generated compile-time 
+  // Tip: See header file "Boltzmann::AbstractBoltzmannSolver_FV.h" for toolkit generated compile-time
   //      constants such as PatchSize, NumberOfVariables, and NumberOfParameters.
-  
+
   // @todo Please implement/augment if required
   lambda[0] = 1.0;
   lambda[1] = 1.0;
@@ -45,7 +42,7 @@ void Boltzmann::BoltzmannSolver_FV::boundaryValues(
     const double* const stateInside,
     double* const stateOutside) {
   // Tip: You find documentation for this method in header file "Boltzmann::BoltzmannSolver_FV.h".
-  // Tip: See header file "Boltzmann::AbstractBoltzmannSolver_FV.h" for toolkit generated compile-time 
+  // Tip: See header file "Boltzmann::AbstractBoltzmannSolver_FV.h" for toolkit generated compile-time
   //      constants such as PatchSize, NumberOfVariables, and NumberOfParameters.
 
   // @todo Please implement/augment if required
@@ -63,11 +60,9 @@ void Boltzmann::BoltzmannSolver_FV::boundaryValues(
 //to add new PDEs specify them in the specification file, delete this file and its header and rerun the toolkit
 
 
-
-
-void Boltzmann::BoltzmannSolver_FV::viscousFlux(const double* const Q,const double* const gradQ, double** const F) {
+void Boltzmann::BoltzmannSolver_FV::flux(const double* const Q,double** const F) {
   // Tip: You find documentation for this method in header file "Boltzmann::BoltzmannSolver_FV.h".
-  // Tip: See header file "Boltzmann::AbstractBoltzmannSolver_FV.h" for toolkit generated compile-time 
+  // Tip: See header file "Boltzmann::AbstractBoltzmannSolver_FV.h" for toolkit generated compile-time
   //      constants such as PatchSize, NumberOfVariables, and NumberOfParameters.
 
   // @todo Please implement/augment if required
@@ -85,19 +80,18 @@ void Boltzmann::BoltzmannSolver_FV::viscousFlux(const double* const Q,const doub
 
 }
 
-void Boltzmann::BoltzmannSolver_FV::viscousEigenvalues(const double* const Q, const int dIndex, double* const lambda) {
+
+
+
+//You can either implement this method or modify fusedSource
+void Boltzmann::BoltzmannSolver_FV::algebraicSource(const tarch::la::Vector<DIMENSIONS, double>& x, double t, const double *const Q, double *S) {
   // Tip: You find documentation for this method in header file "Boltzmann::BoltzmannSolver_FV.h".
-  // Tip: See header file "Boltzmann::AbstractBoltzmannSolver_FV.h" for toolkit generated compile-time 
+  // Tip: See header file "Boltzmann::AbstractBoltzmannSolver_FV.h" for toolkit generated compile-time
   //      constants such as PatchSize, NumberOfVariables, and NumberOfParameters.
-
   // @todo Please implement/augment if required
-  lambda[0] = 1.0;
-  lambda[1] = 1.0;
-  lambda[2] = 1.0;
-  lambda[3] = 1.0;
-  lambda[4] = 1.0;
+  S[0] = 0.0;
+  S[1] = 0.0;
+  S[2] = 0.0;
+  S[3] = 0.0;
+  S[4] = 0.0;
 }
-
-
-
-

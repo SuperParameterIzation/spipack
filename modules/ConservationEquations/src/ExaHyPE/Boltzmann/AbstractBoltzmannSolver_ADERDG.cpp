@@ -126,13 +126,13 @@ int Boltzmann::AbstractBoltzmannSolver_ADERDG::fusedSpaceTimePredictorVolumeInte
   
   double* lQhi = memory; memory+=sizeLQhi;
   double* lFhi = memory; memory+=sizeLFhi;
-  const int picardIterations = kernels::aderdg::generic::c::spaceTimePredictorNonlinear<false, true, true, false, false, BoltzmannSolver_ADERDG>(*static_cast<BoltzmannSolver_ADERDG*>(this), lQhbnd, lGradQhbnd, lFhbnd, lQi, rhs, lFi, gradQ, lQhi, lFhi, luh, cellCentre, tarch::la::invertEntries(cellSize), t, dt);
+  const int picardIterations = kernels::aderdg::generic::c::spaceTimePredictorNonlinear<true, true, false, false, false, BoltzmannSolver_ADERDG>(*static_cast<BoltzmannSolver_ADERDG*>(this), lQhbnd, lGradQhbnd, lFhbnd, lQi, rhs, lFi, gradQ, lQhi, lFhi, luh, cellCentre, tarch::la::invertEntries(cellSize), t, dt);
  
   if ( addVolumeIntegralResultToUpdate ) {
-    kernels::aderdg::generic::c::volumeIntegralNonlinear<BoltzmannSolver_ADERDG, false, true, false, NumberOfVariables, Order+1>(lduh,lFhi,cellSize); 
+    kernels::aderdg::generic::c::volumeIntegralNonlinear<BoltzmannSolver_ADERDG, true, true, false, NumberOfVariables, Order+1>(lduh,lFhi,cellSize); 
   } else { // directly add the result to the solution
     double tempUpdate[NumberOfVariables*spaceBasisSize] = {0.0};
-    kernels::aderdg::generic::c::volumeIntegralNonlinear<BoltzmannSolver_ADERDG, false, true, false, NumberOfVariables, Order+1>(tempUpdate,lFhi,cellSize);
+    kernels::aderdg::generic::c::volumeIntegralNonlinear<BoltzmannSolver_ADERDG, true, true, false, NumberOfVariables, Order+1>(tempUpdate,lFhi,cellSize);
     addUpdateToSolution(luh,luh,tempUpdate,dt);
   }
   
@@ -173,7 +173,7 @@ void Boltzmann::AbstractBoltzmannSolver_ADERDG::faceIntegral(double* const out/*
 void Boltzmann::AbstractBoltzmannSolver_ADERDG::riemannSolver(double* const FL,double* const FR,const double* const QL,const double* const QR,const double t,const double dt, const tarch::la::Vector<DIMENSIONS, double>& cellSize, const int direction, bool isBoundaryFace, int faceIndex) {
   assertion2(direction>=0,dt,direction);
   assertion2(direction<DIMENSIONS,dt,direction);
-kernels::aderdg::generic::c::riemannSolverNonlinear<false,true,BoltzmannSolver_ADERDG>(*static_cast<BoltzmannSolver_ADERDG*>(this),FL,FR,QL,QR,t,dt,cellSize,direction);
+kernels::aderdg::generic::c::riemannSolverNonlinear<false,false,BoltzmannSolver_ADERDG>(*static_cast<BoltzmannSolver_ADERDG*>(this),FL,FR,QL,QR,t,dt,cellSize,direction);
 }
 
 void Boltzmann::AbstractBoltzmannSolver_ADERDG::boundaryConditions(double* const fluxIn,const double* const stateIn,const double* const gradStateIn, const double* const luh,const tarch::la::Vector<DIMENSIONS,double>& cellCentre,const tarch::la::Vector<DIMENSIONS,double>& cellSize,const double t,const double dt,const int direction,const int orientation) {
@@ -189,7 +189,7 @@ void Boltzmann::AbstractBoltzmannSolver_ADERDG::boundaryConditions(double* const
   double* fluxOut  = memory; memory+=sizeFluxOut;
 
   const int faceIndex = 2*direction+orientation;
-    kernels::aderdg::generic::c::boundaryConditions<true,BoltzmannSolver_ADERDG>(*static_cast<BoltzmannSolver_ADERDG*>(this),fluxOut,stateOut,fluxIn,stateIn,gradStateIn,cellCentre,cellSize,t,dt,faceIndex,direction);
+    kernels::aderdg::generic::c::boundaryConditions<false,BoltzmannSolver_ADERDG>(*static_cast<BoltzmannSolver_ADERDG*>(this),fluxOut,stateOut,fluxIn,stateIn,gradStateIn,cellCentre,cellSize,t,dt,faceIndex,direction);
   if ( orientation==0 ) {
     double* FL = fluxOut; const double* const QL = stateOut;
     double* FR = fluxIn;  const double* const QR = stateIn;
@@ -205,7 +205,7 @@ void Boltzmann::AbstractBoltzmannSolver_ADERDG::boundaryConditions(double* const
 }
 
 double Boltzmann::AbstractBoltzmannSolver_ADERDG::stableTimeStepSize(const double* const luh,const tarch::la::Vector<DIMENSIONS,double>& cellSize) {
-  double d = kernels::aderdg::generic::c::stableTimeStepSize<BoltzmannSolver_ADERDG,true>(*static_cast<BoltzmannSolver_ADERDG*>(this),luh,cellSize);
+  double d = kernels::aderdg::generic::c::stableTimeStepSize<BoltzmannSolver_ADERDG,false>(*static_cast<BoltzmannSolver_ADERDG*>(this),luh,cellSize);
   return d;
 }
 void Boltzmann::AbstractBoltzmannSolver_ADERDG::adjustSolution(double* const luh,const tarch::la::Vector<DIMENSIONS,double>& cellCentre,const tarch::la::Vector<DIMENSIONS,double>& cellSize,double t,double dt) {

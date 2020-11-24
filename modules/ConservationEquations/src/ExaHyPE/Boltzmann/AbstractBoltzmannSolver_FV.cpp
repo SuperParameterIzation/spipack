@@ -47,7 +47,7 @@ void Boltzmann::AbstractBoltzmannSolver_FV::abortWithMsg(const char* const msg) 
 
 void Boltzmann::AbstractBoltzmannSolver_FV::solutionUpdate(double* luh,const tarch::la::Vector<DIMENSIONS,double>& cellCenter,const tarch::la::Vector<DIMENSIONS,double>& cellSize,const double t, const double dt,double& maxAdmissibleDt) {
   maxAdmissibleDt = kernels::finitevolumes::musclhancock::c::solutionUpdate<
-    false, false, true, true, false,
+    true, false, true, false, false,
     kernels::finitevolumes::commons::c::minmod,
     BoltzmannSolver_FV
     >(*static_cast<BoltzmannSolver_FV*>(this),luh,cellCenter,cellSize,t,dt);
@@ -55,7 +55,7 @@ void Boltzmann::AbstractBoltzmannSolver_FV::solutionUpdate(double* luh,const tar
 
 
 double Boltzmann::AbstractBoltzmannSolver_FV::stableTimeStepSize(const double* const luh,const tarch::la::Vector<DIMENSIONS,double>& cellSize) {
-  double maxAdmissibleDt = kernels::finitevolumes::commons::c::stableTimeStepSize<BoltzmannSolver_FV,true>(*static_cast<BoltzmannSolver_FV*>(this),luh,cellSize);
+  double maxAdmissibleDt = kernels::finitevolumes::commons::c::stableTimeStepSize<BoltzmannSolver_FV,false>(*static_cast<BoltzmannSolver_FV*>(this),luh,cellSize);
   return maxAdmissibleDt;
 }
 
@@ -101,7 +101,7 @@ void Boltzmann::AbstractBoltzmannSolver_FV::boundaryLayerExtraction(double* cons
 
 double Boltzmann::AbstractBoltzmannSolver_FV::riemannSolver(double* fL, double *fR, const double* qL, const double* qR, const double* gradQL, const double* gradQR, const double* cellSize, int direction) {
   // Default FV Riemann Solver
-  return kernels::finitevolumes::riemannsolvers::c::rusanov<false, true, true, BoltzmannSolver_FV>(*static_cast<BoltzmannSolver_FV*>(this), fL,fR,qL,qR,gradQL, gradQR, cellSize, direction);
+  return kernels::finitevolumes::riemannsolvers::c::rusanov<false, true, false, BoltzmannSolver_FV>(*static_cast<BoltzmannSolver_FV*>(this), fL,fR,qL,qR,gradQL, gradQR, cellSize, direction);
 
 }
 

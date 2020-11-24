@@ -42,11 +42,11 @@ struct Boltzmann::AbstractBoltzmannSolver_FV::VariableMetrics {
 class Boltzmann::AbstractBoltzmannSolver_FV::VariableShortcuts : public Boltzmann::AbstractBoltzmannSolver_FV::VariableMetrics {
 public:
   /// positions of fields inside the unknown vector (solution vector) Q
-  const int _Q[numDistinctVariables + 1] = { 0,1,4 };
+  const int _Q[numDistinctVariables + 1] = { 0,1,3 };
 
-  const int rho = 0;
-  const int j = 1;
-  const int E = 4;
+  const int massDensity = 0;
+  const int momentum = 1;
+  const int coordinates = 3;
 
   const int* asArray() const { return _Q; }
   int operator [] (int index) const { return _Q[index]; }
@@ -62,11 +62,11 @@ class Boltzmann::AbstractBoltzmannSolver_FV::VariableMultiplicities : public Bol
 public:
   /// positions of fields inside the unknown vector (solution vector) Q
  
-  const int _Q[numDistinctVariables] = { 1,3,1 };
+  const int _Q[numDistinctVariables] = { 1,2,2 };
 
-  const int rho = 1;
-  const int j = 3;
-  const int E = 1;
+  const int massDensity = 1;
+  const int momentum = 2;
+  const int coordinates = 2;
 
   const int* asArray() const { return _Q; }
   int operator [] (int index) const { return _Q[index]; }
@@ -81,11 +81,11 @@ public:
  **/
 class Boltzmann::AbstractBoltzmannSolver_FV::VariableNames : public Boltzmann::AbstractBoltzmannSolver_FV::VariableMetrics {
 public:
-  char const *_Q[numDistinctVariables + 1] = { "rho","j","E" };
+  char const *_Q[numDistinctVariables + 1] = { "massDensity","momentum","coordinates" };
 
-  const char* rho = "rho";
-  const char* j = "j";
-  const char* E = "E";
+  const char* massDensity = "massDensity";
+  const char* momentum = "momentum";
+  const char* coordinates = "coordinates";
 
   const char* const* asArray() const { return _Q; } // type: whatever
   const char* operator [] (int index) const { return _Q[index]; }
@@ -117,14 +117,14 @@ public:
 namespace Boltzmann {
   namespace BoltzmannSolver_FV_Variables {
     namespace shortcuts {
-      constexpr int rho = 0;
-      constexpr int j = 1;
-      constexpr int E = 4;
+      constexpr int massDensity = 0;
+      constexpr int momentum = 1;
+      constexpr int coordinates = 3;
     } // namespace shortcuts
     namespace names {
-      constexpr char rho[] = "rho"; 
-      constexpr char j[] = "j"; 
-      constexpr char E[] = "E"; 
+      constexpr char massDensity[] = "massDensity"; 
+      constexpr char momentum[] = "momentum"; 
+      constexpr char coordinates[] = "coordinates"; 
     } // namespace names
   } // end of namespace Boltzmann::BoltzmannSolver_FV_Variables 
 } // end of namespace Boltzmann
@@ -177,22 +177,30 @@ class Boltzmann::AbstractBoltzmannSolver_FV::ReadOnlyVariables : public Boltzman
       return SizeParameters;
     }
 
-    // getter and setter for rho
-    double rho() const {return _Q[0];}
+    // getter and setter for massDensity
+    double massDensity() const {return _Q[0];}
         
-    // getters for j 
-    double j(int index) const {
-      assertion(index >= 0 && index<3);
+    // getters for momentum 
+    double momentum(int index) const {
+      assertion(index >= 0 && index<2);
       return _Q[1+index];
     }
-    tarch::la::Vector<3,double> j() const {
-      tarch::la::Vector<3,double> values;
-      values=_Q[1],_Q[2],_Q[3];
+    tarch::la::Vector<2,double> momentum() const {
+      tarch::la::Vector<2,double> values;
+      values=_Q[1],_Q[2];
       return values;
     }
         
-    // getter and setter for E
-    double E() const {return _Q[4];}
+    // getters for coordinates 
+    double coordinates(int index) const {
+      assertion(index >= 0 && index<2);
+      return _Q[3+index];
+    }
+    tarch::la::Vector<2,double> coordinates() const {
+      tarch::la::Vector<2,double> values;
+      values=_Q[3],_Q[4];
+      return values;
+    }
         
 }; // end of ReadOnlyVariables
 
@@ -244,36 +252,51 @@ class Boltzmann::AbstractBoltzmannSolver_FV::Variables : public Boltzmann::Abstr
       return SizeParameters;
     }
 
-    // getter and setter for rho
-    double rho() const {return _Q[0];}
-    double& rho() {return _Q[0];}
+    // getter and setter for massDensity
+    double massDensity() const {return _Q[0];}
+    double& massDensity() {return _Q[0];}
     
-    // getters for j 
-    double j(int index) const {
-      assertion(index >= 0 && index<3);
+    // getters for momentum 
+    double momentum(int index) const {
+      assertion(index >= 0 && index<2);
       return _Q[1+index];
     }
-    tarch::la::Vector<3,double> j() const {
-      tarch::la::Vector<3,double> values;
-      values=_Q[1],_Q[2],_Q[3];
+    tarch::la::Vector<2,double> momentum() const {
+      tarch::la::Vector<2,double> values;
+      values=_Q[1],_Q[2];
       return values;
     }
-    // setters for j
-    double& j(int index) {return _Q[1+index];}
-    void j(const tarch::la::Vector<3,double>& values) const {
+    // setters for momentum
+    double& momentum(int index) {return _Q[1+index];}
+    void momentum(const tarch::la::Vector<2,double>& values) const {
       _Q[1] = values[0];
       _Q[2] = values[1];
-      _Q[3] = values[2];
     }
-    void j(double j0,double j1,double j2) {
-      _Q[1] = j0;
-      _Q[2] = j1;
-      _Q[3] = j2;
+    void momentum(double momentum0,double momentum1) {
+      _Q[1] = momentum0;
+      _Q[2] = momentum1;
     }
     
-    // getter and setter for E
-    double E() const {return _Q[4];}
-    double& E() {return _Q[4];}
+    // getters for coordinates 
+    double coordinates(int index) const {
+      assertion(index >= 0 && index<2);
+      return _Q[3+index];
+    }
+    tarch::la::Vector<2,double> coordinates() const {
+      tarch::la::Vector<2,double> values;
+      values=_Q[3],_Q[4];
+      return values;
+    }
+    // setters for coordinates
+    double& coordinates(int index) {return _Q[3+index];}
+    void coordinates(const tarch::la::Vector<2,double>& values) const {
+      _Q[3] = values[0];
+      _Q[4] = values[1];
+    }
+    void coordinates(double coordinates0,double coordinates1) {
+      _Q[3] = coordinates0;
+      _Q[4] = coordinates1;
+    }
     
 }; // end of Variables
 
@@ -295,12 +318,12 @@ class Boltzmann::AbstractBoltzmannSolver_FV::Fluxes : public Boltzmann::Abstract
     }
 
 
-    // getters for rho
-    double rho(int column) const {
+    // getters for massDensity
+    double massDensity(int column) const {
       assertion(column >= 0 && column<DIMENSIONS);
       return _F[column][0];
     }
-    tarch::la::Vector<DIMENSIONS,double> rho() const {
+    tarch::la::Vector<DIMENSIONS,double> massDensity() const {
       #if DIMENSIONS==2 
       tarch::la::Vector<DIMENSIONS,double> values(_F[0][0],_F[1][0]);
       #elif DIMENSIONS==3 
@@ -308,13 +331,13 @@ class Boltzmann::AbstractBoltzmannSolver_FV::Fluxes : public Boltzmann::Abstract
       #endif
       return values;
     }
-    // setters for rho
-    double& rho(int column) {
+    // setters for massDensity
+    double& massDensity(int column) {
       assertion(column >= 0 && column<DIMENSIONS);
       return _F[column][0];
     }
 
-    void rho(const tarch::la::Vector<DIMENSIONS,double>& values) {
+    void massDensity(const tarch::la::Vector<DIMENSIONS,double>& values) {
       _F[0][0] = values[0];
       _F[1][0] = values[1];
       #if DIMENSIONS==3
@@ -324,14 +347,14 @@ class Boltzmann::AbstractBoltzmannSolver_FV::Fluxes : public Boltzmann::Abstract
 
     #if DIMENSIONS==2
     // setter for 2.5D calculations. Third vector element is ignored.*/;
-    void rho(const tarch::la::Vector<3,double>& values) {
+    void massDensity(const tarch::la::Vector<3,double>& values) {
       _F[0][0] = values[0];
       _F[1][0] = values[1];
     }
     #endif
 
     // setter for 3D and 2.5D calculations. Third argument is ignored for the latter.
-    void rho(double v0,double v1,double v2) {
+    void massDensity(double v0,double v1,double v2) {
       _F[0][0] = v0;
       _F[1][0] = v1;
       #if DIMENSIONS==3
@@ -340,19 +363,19 @@ class Boltzmann::AbstractBoltzmannSolver_FV::Fluxes : public Boltzmann::Abstract
     }
     
     #if DIMENSIONS==2
-    void rho(double v0,double v1) {
+    void massDensity(double v0,double v1) {
       _F[0][0] = v0;
       _F[1][0] = v1;
     }
     #endif
-    // getters for j
-    double j(int row, int column) const {
-      assertion(row >= 0 && row<3);
+    // getters for momentum
+    double momentum(int row, int column) const {
+      assertion(row >= 0 && row<2);
       assertion(column >= 0 && column<DIMENSIONS);
       return _F[column][1+row];
     }
-    tarch::la::Vector<DIMENSIONS,double> j(int row) const {
-      assertion(row >= 0 && row<3);
+    tarch::la::Vector<DIMENSIONS,double> momentum(int row) const {
+      assertion(row >= 0 && row<2);
       #if DIMENSIONS==2
       tarch::la::Vector<DIMENSIONS,double> values(_F[0][1+row],_F[1][1+row]);
       #elif DIMENSIONS==3 
@@ -360,56 +383,49 @@ class Boltzmann::AbstractBoltzmannSolver_FV::Fluxes : public Boltzmann::Abstract
       #endif
       return values;
     }
-    tarch::la::Matrix<3,DIMENSIONS,double> j() const {
-      tarch::la::Matrix<3,DIMENSIONS,double> values;
+    tarch::la::Matrix<2,DIMENSIONS,double> momentum() const {
+      tarch::la::Matrix<2,DIMENSIONS,double> values;
       #if DIMENSIONS==2
       values = 
 _F[0][1+0],_F[1][1+0],
-_F[0][1+1],_F[1][1+1],
-_F[0][1+2],_F[1][1+2];
+_F[0][1+1],_F[1][1+1];
       #elif DIMENSIONS==3
       values = 
 _F[0][1+0],_F[1][1+0],_F[2][1+0],
-_F[0][1+1],_F[1][1+1],_F[2][1+1],
-_F[0][1+2],_F[1][1+2],_F[2][1+2];
+_F[0][1+1],_F[1][1+1],_F[2][1+1];
       #endif
       return values;
     }
-    // setters for j
-    double& j(int row, int column) {
-      assertion(row >= 0 && row<3);
+    // setters for momentum
+    double& momentum(int row, int column) {
+      assertion(row >= 0 && row<2);
       assertion(column >= 0 && column<DIMENSIONS);
       return _F[column][1+row];
     }
 
-    void j(const tarch::la::Matrix<3,DIMENSIONS,double>& values) {
+    void momentum(const tarch::la::Matrix<2,DIMENSIONS,double>& values) {
       _F[0][1+0] = values(0,0);
       _F[0][1+1] = values(1,0);
-      _F[0][1+2] = values(2,0);
       _F[1][1+0] = values(0,1);
       _F[1][1+1] = values(1,1);
-      _F[1][1+2] = values(2,1);
       #if DIMENSIONS==3
       _F[2][1+0] = values(0,2);
       _F[2][1+1] = values(1,2);
-      _F[2][1+2] = values(2,2);
       #endif
     }
     #if DIMENSIONS==2
     // setter for 2.5D calculations. Third matrix column is ignored.*/;
-    void j(const tarch::la::Matrix<3,3,double>& values) {
+    void momentum(const tarch::la::Matrix<2,3,double>& values) {
       _F[0][1+0] = values(0,0);
       _F[0][1+1] = values(1,0);
-      _F[0][1+2] = values(2,0);
       _F[1][1+0] = values(0,1);
       _F[1][1+1] = values(1,1);
-      _F[1][1+2] = values(2,1);
     }
     #endif
       
     // setter for 3D and 2.5D calculations. Third argument is ignored for the latter.
-    void j(int row, double v0,double v1,double v2) {
-      assertion(row >= 0 && row<3);
+    void momentum(int row, double v0,double v1,double v2) {
+      assertion(row >= 0 && row<2);
       _F[0][1+row] = v0;
       _F[1][1+row] = v1;
       #if DIMENSIONS==3
@@ -418,85 +434,122 @@ _F[0][1+2],_F[1][1+2],_F[2][1+2];
     }
     #if DIMENSIONS==2
     // setter for 2D calculations.*/;
-    void j(int row, double v0,double v1) {
-      assertion(row >= 0 && row<3);
+    void momentum(int row, double v0,double v1) {
+      assertion(row >= 0 && row<2);
       _F[0][1+row] = v0;
       _F[1][1+row] = v1;
     }
     #endif
 
     // setter for 3D and 2.5D calculations. Third column values are ignored for the latter.
-    void j(double v00,double v01,double v02,double v10,double v11,double v12,double v20,double v21,double v22) {
+    void momentum(double v00,double v01,double v02,double v10,double v11,double v12) {
       _F[0][1+0] = v00;
       _F[0][1+1] = v10;
-      _F[0][1+2] = v20;
       _F[1][1+0] = v01;
       _F[1][1+1] = v11;
-      _F[1][1+2] = v21;
       #if DIMENSIONS==3
       _F[2][1+0] = v02;
       _F[2][1+1] = v12;
-      _F[2][1+2] = v22;
       #endif
     }
     #if DIMENSIONS==2
-    void j(double v00,double v01,double v10,double v11,double v20,double v21) {
+    void momentum(double v00,double v01,double v10,double v11) {
       _F[0][1+0] = v00;
       _F[0][1+1] = v10;
-      _F[0][1+2] = v20;
       _F[1][1+0] = v01;
       _F[1][1+1] = v11;
-      _F[1][1+2] = v21;
     }
     #endif
-    // getters for E
-    double E(int column) const {
+    // getters for coordinates
+    double coordinates(int row, int column) const {
+      assertion(row >= 0 && row<2);
       assertion(column >= 0 && column<DIMENSIONS);
-      return _F[column][4];
+      return _F[column][3+row];
     }
-    tarch::la::Vector<DIMENSIONS,double> E() const {
-      #if DIMENSIONS==2 
-      tarch::la::Vector<DIMENSIONS,double> values(_F[0][4],_F[1][4]);
+    tarch::la::Vector<DIMENSIONS,double> coordinates(int row) const {
+      assertion(row >= 0 && row<2);
+      #if DIMENSIONS==2
+      tarch::la::Vector<DIMENSIONS,double> values(_F[0][3+row],_F[1][3+row]);
       #elif DIMENSIONS==3 
-      tarch::la::Vector<DIMENSIONS,double> values(_F[0][4],_F[1][4],_F[2][4]);
+      tarch::la::Vector<DIMENSIONS,double> values(_F[0][3+row],_F[1][3+row],_F[2][3+row]);
       #endif
       return values;
     }
-    // setters for E
-    double& E(int column) {
+    tarch::la::Matrix<2,DIMENSIONS,double> coordinates() const {
+      tarch::la::Matrix<2,DIMENSIONS,double> values;
+      #if DIMENSIONS==2
+      values = 
+_F[0][3+0],_F[1][3+0],
+_F[0][3+1],_F[1][3+1];
+      #elif DIMENSIONS==3
+      values = 
+_F[0][3+0],_F[1][3+0],_F[2][3+0],
+_F[0][3+1],_F[1][3+1],_F[2][3+1];
+      #endif
+      return values;
+    }
+    // setters for coordinates
+    double& coordinates(int row, int column) {
+      assertion(row >= 0 && row<2);
       assertion(column >= 0 && column<DIMENSIONS);
-      return _F[column][4];
+      return _F[column][3+row];
     }
 
-    void E(const tarch::la::Vector<DIMENSIONS,double>& values) {
-      _F[0][4] = values[0];
-      _F[1][4] = values[1];
+    void coordinates(const tarch::la::Matrix<2,DIMENSIONS,double>& values) {
+      _F[0][3+0] = values(0,0);
+      _F[0][3+1] = values(1,0);
+      _F[1][3+0] = values(0,1);
+      _F[1][3+1] = values(1,1);
       #if DIMENSIONS==3
-      _F[2][4] = values[2];
+      _F[2][3+0] = values(0,2);
+      _F[2][3+1] = values(1,2);
       #endif
     }
-
     #if DIMENSIONS==2
-    // setter for 2.5D calculations. Third vector element is ignored.*/;
-    void E(const tarch::la::Vector<3,double>& values) {
-      _F[0][4] = values[0];
-      _F[1][4] = values[1];
+    // setter for 2.5D calculations. Third matrix column is ignored.*/;
+    void coordinates(const tarch::la::Matrix<2,3,double>& values) {
+      _F[0][3+0] = values(0,0);
+      _F[0][3+1] = values(1,0);
+      _F[1][3+0] = values(0,1);
+      _F[1][3+1] = values(1,1);
+    }
+    #endif
+      
+    // setter for 3D and 2.5D calculations. Third argument is ignored for the latter.
+    void coordinates(int row, double v0,double v1,double v2) {
+      assertion(row >= 0 && row<2);
+      _F[0][3+row] = v0;
+      _F[1][3+row] = v1;
+      #if DIMENSIONS==3
+      _F[2][3+row] = v2;
+      #endif
+    }
+    #if DIMENSIONS==2
+    // setter for 2D calculations.*/;
+    void coordinates(int row, double v0,double v1) {
+      assertion(row >= 0 && row<2);
+      _F[0][3+row] = v0;
+      _F[1][3+row] = v1;
     }
     #endif
 
-    // setter for 3D and 2.5D calculations. Third argument is ignored for the latter.
-    void E(double v0,double v1,double v2) {
-      _F[0][4] = v0;
-      _F[1][4] = v1;
+    // setter for 3D and 2.5D calculations. Third column values are ignored for the latter.
+    void coordinates(double v00,double v01,double v02,double v10,double v11,double v12) {
+      _F[0][3+0] = v00;
+      _F[0][3+1] = v10;
+      _F[1][3+0] = v01;
+      _F[1][3+1] = v11;
       #if DIMENSIONS==3
-      _F[2][4] = v2;
+      _F[2][3+0] = v02;
+      _F[2][3+1] = v12;
       #endif
     }
-    
     #if DIMENSIONS==2
-    void E(double v0,double v1) {
-      _F[0][4] = v0;
-      _F[1][4] = v1;
+    void coordinates(double v00,double v01,double v10,double v11) {
+      _F[0][3+0] = v00;
+      _F[0][3+1] = v10;
+      _F[1][3+0] = v01;
+      _F[1][3+1] = v11;
     }
     #endif
 }; // end of Fluxes

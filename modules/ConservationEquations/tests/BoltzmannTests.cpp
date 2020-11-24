@@ -7,5 +7,5 @@ using namespace spi::ConservationEquations;
 TEST(BoltzmannTests, Construct) {
   Boltzmann boltzmannEquation;
 
-  std::cout << "DONE" << std::endl;
+  boltzmannEquation.Run();
 }

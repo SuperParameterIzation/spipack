@@ -16,6 +16,7 @@ Generate() {
 
   # make the generated project
   cd spipack/ConservationEquations/ExaHyPE/GenerateSource
+  export MODE=Release
   export COMPILER=GNU
   make -j10
 

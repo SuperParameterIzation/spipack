@@ -5,25 +5,25 @@
 // ========================
 //   www.exahype.eu
 // ========================
-#include "EulerWriter.h"
+#include "BoltzmannWriter.h"
 
-Boltzmann::EulerWriter::EulerWriter(Boltzmann::BoltzmannSolver& solver) {
+Boltzmann::BoltzmannWriter::BoltzmannWriter(Boltzmann::BoltzmannSolver& solver) {
   // @TODO Please insert your code here.
 }
 
-Boltzmann::EulerWriter::~EulerWriter() {
+Boltzmann::BoltzmannWriter::~BoltzmannWriter() {
 }
 
-void Boltzmann::EulerWriter::startPlotting( double time) {
+void Boltzmann::BoltzmannWriter::startPlotting( double time) {
   // @TODO Please insert your code here.
 }
 
 
-void Boltzmann::EulerWriter::finishPlotting() {
+void Boltzmann::BoltzmannWriter::finishPlotting() {
   // @TODO Please insert your code here.
 }
 
-void Boltzmann::EulerWriter::mapQuantities(
+void Boltzmann::BoltzmannWriter::mapQuantities(
     const tarch::la::Vector<DIMENSIONS, double>& offsetOfPatch,
     const tarch::la::Vector<DIMENSIONS, double>& sizeOfPatch,
     const tarch::la::Vector<DIMENSIONS, double>& x,

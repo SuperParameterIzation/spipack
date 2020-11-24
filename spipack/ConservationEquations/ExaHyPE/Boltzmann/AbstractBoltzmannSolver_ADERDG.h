@@ -72,7 +72,7 @@ public:
   double constexpr_getCFLNumber()          const { return CFL; };
 
   bool isLinear() const override { return false; }  
-  bool isUseViscousFlux() const override { return true; }
+  bool isUseViscousFlux() const override { return false; }
 
   // Access Objects
   class VariableMetrics;

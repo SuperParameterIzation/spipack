@@ -1,0 +1,19 @@
+#ifndef SPIPACKDIRECTORIES_HPP_
+#define SPIPACKDIRECTORIES_HPP_
+
+#include <string>
+
+namespace spi {
+
+/// The install directory for the spipack package
+inline static const std::string SPIPACK_INSTALL_DIR = "@CMAKE_INSTALL_PREFIX@";
+
+/// The ExaHyPE directory
+/**
+Required to call ExaHyPE shell scripts.
+*/
+inline static const std::string EXAHYPE_DIR = "@EXAHYPE_DIR@";
+
+} // namespace spi
+
+#endif

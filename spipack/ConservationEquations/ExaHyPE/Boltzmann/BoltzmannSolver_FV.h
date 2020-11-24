@@ -91,28 +91,38 @@ class Boltzmann::BoltzmannSolver_FV : public Boltzmann::AbstractBoltzmannSolver_
      */
     void boundaryValues(const double* const x,const double t,const double dt,const int faceIndex,const int direction,const double* const QIn,double* const QOut) override;
     
-    /* flux() function not included, as requested in the specification file */
+    /**
+     * Compute the flux tensor.
+     *
+     * @param[in]    Q vector of state variables (plus parameters); 
+     *                 range: [0,nVar+nPar-1], already allocated.
+     *                 
+     * @param[inout] F flux at that point;
+     *                 range[outer->inner]: [0,nDim-1]x[0,nVar-1], 
+     *                 already allocated.
+     */
+    void flux(const double* const Q,double** const F) override;
 
     
+    /* viscousFlux() function not included, as requested in the specification file */
+
+
     /**
-     * Compute the flux tensor with diffusive components.
-     *
-     * @param[in]    Q     vector of state variables (plus parameters); 
-     *                     range: [0,nVar+nPar-1], already allocated.
-     *
-     * @param[in]    gradQ gradient of the conserved variables 
-     *                     (plus parameters);
-     *                     range: [0,nDim*(nVar+nPar)-1], already allocated.
-     *
-     * @param[inout] F     viscous flux at that point; 
-     *                     range[outer->inner]: [0,nDim-1]x[0,nVar-1], 
-     *                     already allocated.
-     */
-    void viscousFlux(const double* const Q,const double* const gradQ, double** const F) override;
-    void viscousEigenvalues(const double* const Q,const int direction,double* const lambda) override;
-
-
-    /* algebraicSource() function not included, as requested by the specification file */
+    * Compute the Algebraic Sourceterms.
+    * 
+    * You may want to overwrite this with your PDE Source (algebraic RHS contributions).
+    * However, in all schemes we have so far, the source-type contributions are
+    * collected with non-conservative contributions into a fusedSource, see the
+    * fusedSource method. From the kernels given with ExaHyPE, only the fusedSource
+    * is called and there is a default implementation for the fusedSource calling
+    * again seperately the nonConservativeProduct function and the algebraicSource
+    * function.
+    *
+    * @param[in]    Q vector of state variables (plus material 
+    *                 parameters); range: [0,nVar+nPar-1], already allocated.
+    * @param[inout] S source term; range: [0,nVar-1], already allocated.
+    */
+    void algebraicSource(const tarch::la::Vector<DIMENSIONS, double>& x, double t, const double *const Q, double *S) override;
 
     /* nonConservativeProduct() function is not included, as requested in the specification file */
     

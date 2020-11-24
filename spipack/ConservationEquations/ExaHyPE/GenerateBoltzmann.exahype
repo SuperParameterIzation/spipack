@@ -2,11 +2,13 @@ exahype-project Boltzmann
   peano-kernel-path const = ./Peano
   exahype-path const = ./ExaHyPE
   output-directory const = ../../spipack/ConservationEquations/ExaHyPE/GenerateSource/
+  log-file = BoltzmannSolverLogFile.log
+
   computational-domain
     dimension const         = 2
     width const             = 1.0, 1.0
     offset const            = 0.0, 0.0
-    end-time                = 0.001
+    end-time                = 0.01
   end computational-domain
 
   global-optimisation
@@ -23,13 +25,13 @@ exahype-project Boltzmann
   end global-optimisation
 
   solver Limiting-ADER-DG BoltzmannSolver
-    variables const            = rho:1,j:3,E:1
+    variables const            = massDensity:1,momentum:2,coordinates:2
     order const                = 3
-    maximum-mesh-size          = 0.01
+    maximum-mesh-size          = 0.05
     maximum-mesh-depth         = 0
     time-stepping              = global
     type const                 = nonlinear
-    terms const                = viscousflux,sources
+    terms const                = flux, source
     optimisation const         = generic
     language const             = C
     limiter-type const         = musclhancock
@@ -39,19 +41,26 @@ exahype-project Boltzmann
     dmp-relaxation-parameter   = 1e-4
     dmp-difference-scaling     = 1e-3
 
-    plot vtu::Cartesian::cells::limited::ascii EulerWriter
+    plot vtu::Cartesian::cells::limited::ascii BoltzmannWriter
       variables const = 5
       time            = 0.0
       repeat          = 0.01
       output          = ./variables
     end plot
 
-
-    plot vtk::Cartesian::subcells::limited::ascii EulerSubcellsWriter
+    plot vtk::Cartesian::subcells::limited::ascii BoltzmannWriter_FV
       variables const = 5
       time            = 0.0
       repeat          = 0.1
       output          = ./variables-fv
     end plot
+
+    plot user::defined UpdateParticleMethods
+      variables const = 5
+      time            = 0.0
+      repeat          = 0.0001
+      output          = ./variables-test
+    end plot
+
   end solver
 end exahype-project

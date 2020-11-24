@@ -45,6 +45,9 @@ include_directories(${CMAKE_SOURCE_DIR} ${SPIPACK_EXTERNAL_INCLUDE_DIRS})
 # Build SPIPACK
 ###############################################
 
+# Create the SPIPACKDirectories.hpp file
+configure_file(cmake/SPIPACKDirectories.hpp.in "${CMAKE_CURRENT_SOURCE_DIR}/spipack/SPIPACKDirectories.hpp" @ONLY)
+
 add_subdirectory(modules)
 
 include_directories(${GTEST_INCLUDE_DIR})
@@ -81,6 +84,14 @@ install(DIRECTORY spipack
 install(DIRECTORY spipack
         DESTINATION "${CMAKE_INSTALL_PREFIX}/include"
 	      FILES_MATCHING PATTERN "*.h")
+
+# install all the ExaHyPE external files
+install(DIRECTORY spipack/ConservationEquations/ExaHyPE
+        DESTINATION "${CMAKE_INSTALL_PREFIX}"
+	      FILES_MATCHING PATTERN "*.exahype")
+install(DIRECTORY spipack/ConservationEquations/ExaHyPE
+        DESTINATION "${CMAKE_INSTALL_PREFIX}"
+	      FILES_MATCHING PATTERN "exahype.log-filter")
 
 set(CMAKE_LIBRARY_OUTPUT_DIRECTORY ${INSTALL_LIB_DIR})
 set(CMAKE_ARCHIVE_OUTPUT_DIRECTORY ${INSTALL_LIB_DIR})

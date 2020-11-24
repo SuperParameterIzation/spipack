@@ -5,25 +5,25 @@
 // ========================
 //   www.exahype.eu
 // ========================
-#include "EulerSubcellsWriter.h"
+#include "BoltzmannWriter_FV.h"
 
-CompressibleEuler::EulerSubcellsWriter::EulerSubcellsWriter(CompressibleEuler::CompressibleEulerSolver& solver) {
+Boltzmann::BoltzmannWriter_FV::BoltzmannWriter_FV(Boltzmann::BoltzmannSolver& solver) {
   // @TODO Please insert your code here.
 }
 
-CompressibleEuler::EulerSubcellsWriter::~EulerSubcellsWriter() {
+Boltzmann::BoltzmannWriter_FV::~BoltzmannWriter_FV() {
 }
 
-void CompressibleEuler::EulerSubcellsWriter::startPlotting( double time) {
+void Boltzmann::BoltzmannWriter_FV::startPlotting( double time) {
   // @TODO Please insert your code here.
 }
 
 
-void CompressibleEuler::EulerSubcellsWriter::finishPlotting() {
+void Boltzmann::BoltzmannWriter_FV::finishPlotting() {
   // @TODO Please insert your code here.
 }
 
-void CompressibleEuler::EulerSubcellsWriter::mapQuantities(
+void Boltzmann::BoltzmannWriter_FV::mapQuantities(
     const tarch::la::Vector<DIMENSIONS, double>& offsetOfPatch,
     const tarch::la::Vector<DIMENSIONS, double>& sizeOfPatch,
     const tarch::la::Vector<DIMENSIONS, double>& x,
