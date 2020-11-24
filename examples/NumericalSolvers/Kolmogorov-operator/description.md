@@ -21,7 +21,7 @@ Note the special cases:
 
 ## Density estimation phase
 
-We use the same procedure as in the [density estimation example](../density-estimation/description.md) to compute an estimate of $\psi^{(i)} \approx \psi(\boldsymbol{x}^{(i)})$$ at each sample $\boldsymbol{x}^{(i)}$.
+We use the same procedure as in the [density estimation example](../density-estimation/description.md) to compute an estimate of $\psi^{(i)} \approx \psi(\boldsymbol{x}^{(i)})$ at each sample $\boldsymbol{x}^{(i)}$.
 
 <figure>
 <figcaption>The estimated density $\psi^{(i)} \approx \psi(\boldsymbol{x}^{(i)})$ at each sample.</figcaption>
@@ -32,7 +32,7 @@ type="application/pdf">
 ## Discretize the operator
 
 Parameters:
-- The operator constant $c$ (defines the operator)
+- The operator constant $c=1$ (defines the operator)
 - The exponent $\beta$ (user-prescribed, typically we choose $\beta = -0.5$)
 - The bandwidth $\epsilon$ (user-prescribed or tuned using the procedure shown below)
 - The manifold dimension $d$ (estimated in the density estimation phase, if not know already)
@@ -45,15 +45,17 @@ k_{\epsilon,\beta}(\boldsymbol{x}^{(i)}, \boldsymbol{x}^{(j)}) = k\left( \frac{ 
 \end{equation}.
 $$
 
+which corresponds to the unnormalized kernel matrix $\boldsymbol{\widetilde{K}}$ such that $\widetilde{K}^{(ij)} = k_{\epsilon,\beta}(\boldsymbol{x}^{(i)}, \boldsymbol{x}^{(j)})$.
+
 ### Parameter tuning
 
-Following the same procedure in the [density estimation](../density-estimation/description.md) example.
+(Following the same procedure in the [density estimation example](../density-estimation/description.md).)
 
 Let $\epsilon \in [\exp{(l_{min})}, \exp{(l_{max})}]$ be candidate bandwidth parameters. Define the parameter
 
 $$
 \begin{equation}
-\Sigma_l = \sum_{i,j=1}^{N} k_{\epsilon,\beta}(\boldsymbol{x}^{(i)}, \boldsymbol{x}^{(j)}).
+\Sigma_l = \sum_{i,j=1}^{N} \widetilde{K}^{(ij)} = k_{\epsilon,\beta}(\boldsymbol{x}^{(i)}, \boldsymbol{x}^{(j)}).
 \end{equation}
 $$
 
@@ -65,7 +67,7 @@ $$
 \end{equation}.
 $$
 
-Let $$\widetilde{\Sigma}_l^{\prime}=\max_{l}{(\Sigma_l^{\prime})}$$ (with corresponding index $\tilde{l}$ and optimal bandwidth parameter $\tilde{\epsilon}$).
+Let $$\widetilde{\Sigma}_l^{\prime}=\max_{l}{(\Sigma_l^{\prime})}$$ (with corresponding optimal bandwidth parameter $\tilde{\epsilon}$).
 
 <figure>
 <figcaption>The value of $\Sigma_l^{\prime}$ for candidate bandwidth parameters $\epsilon$; the optimal bandwidth parameter is $\tilde{\epsilon} \approx 0.28$.</figcaption>
