@@ -114,15 +114,21 @@ Additionally, define the diagonal matrix $\boldsymbol{S} = \boldsymbol{P} \bolds
 Let's take the eigendecomposition of $\boldsymbol{\hat{L}} \boldsymbol{\hat{Q}} = \boldsymbol{\hat{Q}} \boldsymbol{\Lambda}$---the corresponding eigendecomposition of $\boldsymbol{L}$ is $\boldsymbol{L} \boldsymbol{Q} = \boldsymbol{Q} \boldsymbol{\Lambda}$, where $\boldsymbol{Q} = \boldsymbol{S}^{-1} \boldsymbol{\hat{Q}}$. Note that because $\boldsymbol{\hat{L}}$ is symmetric that $\boldsymbol{\hat{Q}} \boldsymbol{\hat{Q}}^T = \boldsymbol{I}$.
 
 <figure>
-<figcaption>The smallest eigenvalues of $\boldsymbol{\hat{L}}$ and their corresponding eigenfunctions.</figcaption>
+<figcaption>The smallest eigenvalues of $\boldsymbol{\hat{L}}$ and their corresponding eigenfunctions (columns of $\boldsymbol{\hat{Q}}$).</figcaption>
 <embed src="figures/Eigenfunctions_L.pdf" width="500" height="375"
 type="application/pdf">
 </figure>
 
-This allows us to define the pseudo-inverse $\boldsymbol{\hat{L}}^{-\dagger} = \boldsymbol{\hat{Q}} \boldsymbol{\Lambda}^{-\dagger} \boldsymbol{\hat{Q}}^T$. Therefore, we can approximate the action of the discrete Kolmogorov operator and its pseudo-inverse as $\boldsymbol{L} = \epsilon^{-1} \boldsymbol{P}^{-2} \boldsymbol{\hat{L}} = \boldsymbol{\hat{Q}} \boldsymbol{\Lambda} \boldsymbol{\hat{Q}}^T$ and $\boldsymbol{L}^{-\dagger} = \epsilon \boldsymbol{\hat{L}}^{-\dagger} \boldsymbol{P}^{2} = \epsilon \boldsymbol{\hat{Q}} \boldsymbol{\Lambda}^{-\dagger} \boldsymbol{\hat{Q}}^T \boldsymbol{P}^{2}$, respectively.
+<figure>
+<figcaption>The smallest eigenvalues of $\boldsymbol{L}$ and their corresponding eigenfunctions (columns of $\boldsymbol{Q}$).</figcaption>
+<embed src="figures/Eigenfunctions_Lhat.pdf" width="500" height="375"
+type="application/pdf">
+</figure>
+
+This allows us to define the pseudo-inverse $\boldsymbol{\hat{L}}^{-\dagger} = \boldsymbol{\hat{Q}} \boldsymbol{\Lambda}^{-\dagger} \boldsymbol{\hat{Q}}^T$. Therefore, we can approximate the pseudo-inverse the discrete Kolmogorov operator as $\boldsymbol{L}^{-\dagger} = \boldsymbol{S}^{-1} \boldsymbol{\hat{L}}^{-\dagger} \boldsymbol{S} = \boldsymbol{S}^{-1} \boldsymbol{\hat{Q}} \boldsymbol{\Lambda}^{-\dagger} \boldsymbol{\hat{Q}}^T \boldsymbol{S}$, respectively.
 
 <figure>
-<figcaption>The smallest eigenvalues of $\boldsymbol{\hat{L}}$ and their corresponding eigenfunctions.</figcaption>
+<figcaption>The action of $\boldsymbol{L}$, $\boldsymbol{\hat{L}}^{-\dagger}$, and $\boldsymbol{L}^{-\dagger}$ on example functions.</figcaption>
 <embed src="figures/AppliedKolmogorovOperator.pdf" width="500" height="375"
 type="application/pdf">
 </figure>
