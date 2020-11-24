@@ -17,11 +17,9 @@ var searchData=
   ['evaluatekernel',['EvaluateKernel',['../classspi_1_1NumericalSolvers_1_1GraphLaplacian.html#a898a3fa46f68d2a05b9ba3992ab92c91',1,'spi::NumericalSolvers::GraphLaplacian']]],
   ['expon',['expon',['../classspi_1_1Tools_1_1BumpKernel.html#ae3eb15b5b30650b95aed9bfa497281cb',1,'spi::Tools::BumpKernel::expon()'],['../classspi_1_1Tools_1_1ExponentialKernel.html#aba088c82e3893165c6f63417faa56f69',1,'spi::Tools::ExponentialKernel::expon()']]],
   ['exponent',['Exponent',['../classspi_1_1Tools_1_1BumpKernel.html#a0656d20a90b166449f45e6782f81b6e2',1,'spi::Tools::BumpKernel::Exponent()'],['../classspi_1_1Tools_1_1ExponentialKernel.html#a751e95e5294f6028660ea18780131256',1,'spi::Tools::ExponentialKernel::Exponent()']]],
-  ['exponentialkernel',['ExponentialKernel',['../classspi_1_1Tools_1_1ExponentialKernel.html',1,'spi::Tools']]],
   ['exponentialkernel',['ExponentialKernel',['../classspi_1_1Tools_1_1ExponentialKernel.html#ac1b6d7ca4fa7217ff9a5d0008de63c06',1,'spi::Tools::ExponentialKernel::ExponentialKernel(YAML::Node const &amp;options)'],['../classspi_1_1Tools_1_1ExponentialKernel.html#aeb3c021b23fecafef8298e110d768681',1,'spi::Tools::ExponentialKernel::ExponentialKernel()=default']]],
+  ['exponentialkernel',['ExponentialKernel',['../classspi_1_1Tools_1_1ExponentialKernel.html',1,'spi::Tools']]],
   ['exponentialkernel_2ecpp',['ExponentialKernel.cpp',['../ExponentialKernel_8cpp.html',1,'']]],
   ['exponentialkernel_2ehpp',['ExponentialKernel.hpp',['../ExponentialKernel_8hpp.html',1,'']]],
-  ['exponentialkerneltests_2ecpp',['ExponentialKernelTests.cpp',['../ExponentialKernelTests_8cpp.html',1,'']]],
-  ['exponentpara',['exponentPara',['../classspi_1_1NumericalSolvers_1_1KolmogorovOperator.html#af1f6f4e4d25a0a859231cbf191c1c57d',1,'spi::NumericalSolvers::KolmogorovOperator::exponentPara()'],['../structspi_1_1NumericalSolvers_1_1KolmogorovOperator_1_1DefaultParameters.html#a71ef6ff4631bfb57b079693fc22801e2',1,'spi::NumericalSolvers::KolmogorovOperator::DefaultParameters::exponentPara()']]],
-  ['exponentparameter',['ExponentParameter',['../classspi_1_1NumericalSolvers_1_1KolmogorovOperator.html#a578c9d8538a754b9b5a1d8a77d23931b',1,'spi::NumericalSolvers::KolmogorovOperator']]]
+  ['exponentialkerneltests_2ecpp',['ExponentialKernelTests.cpp',['../ExponentialKernelTests_8cpp.html',1,'']]]
 ];
