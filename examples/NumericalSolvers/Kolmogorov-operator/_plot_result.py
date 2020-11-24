@@ -131,8 +131,8 @@ for i in range(len(f)):
 
     Lftitle = r'$\mathbf{L}_{\psi, 1} \mathbf{f}$ (' + ftitle + ')'
     SinvLhatSftitle = r'$\mathbf{S}^{-1} \mathbf{\hat{L}}_{\psi, 1} \mathbf{S} \mathbf{f}$ (' + ftitle + ')'
-    Lhatinvftitle = r'$\mathbf{\hat{L}}_{\psi, 1}^{-\dagger} \mathbf{f} \approx \mathbf{\hat{U}} \mathbf{\Lambda}^{-\dagger} \mathbf{\hat{U}}^T \mathbf{f}$ (' + ftitle + ')'
-    Linvftitle = r'$\mathbf{L}_{\psi, 1}^{-\dagger} \mathbf{f} \approx \mathbf{S}^{-1} \mathbf{\hat{U}} \mathbf{\Lambda}^{-\dagger} \mathbf{\hat{U}}^T \mathbf{S} \mathbf{f}$ (' + ftitle + ')'
+    Lhatinvftitle = r'$\mathbf{\hat{L}}_{\psi, 1}^{-\dagger} \mathbf{f} \approx \mathbf{\hat{Q}} \mathbf{\Lambda}^{-\dagger} \mathbf{\hat{Q}}^T \mathbf{f}$ (' + ftitle + ')'
+    Linvftitle = r'$\mathbf{L}_{\psi, 1}^{-\dagger} \mathbf{f} \approx \mathbf{S}^{-1} \mathbf{\hat{Q}} \mathbf{\Lambda}^{-\dagger} \mathbf{\hat{Q}}^T \mathbf{S} \mathbf{f}$ (' + ftitle + ')'
 
     # plot f
     fig = MakeFigure(425, 0.9, False)
