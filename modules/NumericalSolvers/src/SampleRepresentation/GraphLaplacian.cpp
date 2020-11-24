@@ -67,7 +67,7 @@ Eigen::VectorXd GraphLaplacian::SquaredBandwidth() const {
   return SquaredBandwidth(neighbors);
 }
 
-Eigen::MatrixXd GraphLaplacian::KernelMatrix(double const bandwidthPara, Eigen::Ref<Eigen::VectorXd const> const& bandwidth, std::vector<std::vector<std::pair<std::size_t, double> > > const& neighbors, Eigen::SparseMatrix<double>& kernmat) const {
+Eigen::VectorXd GraphLaplacian::KernelMatrix(double const bandwidthPara, Eigen::Ref<Eigen::VectorXd const> const& bandwidth, std::vector<std::vector<std::pair<std::size_t, double> > > const& neighbors, Eigen::SparseMatrix<double>& kernmat) const {
   assert(kernmat.cols()==bandwidth.size());
   assert(kernmat.rows()==bandwidth.size());
 
@@ -105,7 +105,7 @@ Eigen::MatrixXd GraphLaplacian::KernelMatrix(double const bandwidthPara, Eigen::
   return rowsum;
 }
 
-Eigen::MatrixXd GraphLaplacian::KernelMatrix(double const bandwidthPara, Eigen::Ref<Eigen::VectorXd const> const& bandwidth, Eigen::SparseMatrix<double>& kernmat) const {
+Eigen::VectorXd GraphLaplacian::KernelMatrix(double const bandwidthPara, Eigen::Ref<Eigen::VectorXd const> const& bandwidth, Eigen::SparseMatrix<double>& kernmat) const {
   assert(kernmat.cols()==bandwidth.size());
   assert(kernmat.rows()==bandwidth.size());
 

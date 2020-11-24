@@ -79,7 +79,7 @@ void SampleRepresentation::BuildKDTrees() const { samples->BuildKDTrees(); }
 
 Eigen::VectorXd SampleRepresentation::SquaredBandwidth() const { return samples->SquaredBandwidth(numNearestNeighbors); }
 
-Eigen::MatrixXd SampleRepresentation::KernelMatrix(double const eps, Eigen::Ref<Eigen::MatrixXd> kmat, const void* options) const {
+Eigen::VectorXd SampleRepresentation::KernelMatrix(double const eps, Eigen::Ref<Eigen::MatrixXd> kmat, const void* options) const {
   assert(eps>0.0);
 
   // compute the squared bandwidth
@@ -97,7 +97,7 @@ Eigen::MatrixXd SampleRepresentation::KernelMatrix(double const eps, Eigen::Ref<
   return KernelMatrix(eps, squaredBandwidth.array().sqrt(), kmat);
 }
 
-Eigen::MatrixXd SampleRepresentation::KernelMatrix(double const eps, Eigen::Ref<const Eigen::VectorXd> const& rvec, Eigen::Ref<Eigen::MatrixXd> kmat) const {
+Eigen::VectorXd SampleRepresentation::KernelMatrix(double const eps, Eigen::Ref<const Eigen::VectorXd> const& rvec, Eigen::Ref<Eigen::MatrixXd> kmat) const {
   // the number of samples
   const std::size_t n = NumSamples();
   assert(rvec.rows()==n);
@@ -125,7 +125,7 @@ Eigen::MatrixXd SampleRepresentation::KernelMatrix(double const eps, Eigen::Ref<
   return kmat.rowwise().sum();
 }
 
-Eigen::MatrixXd SampleRepresentation::KernelMatrix(double const eps, Eigen::SparseMatrix<double>& kmat, const void* options) const {
+Eigen::VectorXd SampleRepresentation::KernelMatrix(double const eps, Eigen::SparseMatrix<double>& kmat, const void* options) const {
   assert(eps>0.0);
 
   // compute the squared bandwidth
@@ -199,7 +199,7 @@ Eigen::VectorXd SampleRepresentation::KernelMatrix(double const eps, Eigen::Ref<
   return rowsum;
 }
 
-Eigen::MatrixXd SampleRepresentation::KernelMatrix(double const eps, Eigen::Ref<const Eigen::VectorXd> const& rvec, Eigen::SparseMatrix<double>& kmat) const {
+Eigen::VectorXd SampleRepresentation::KernelMatrix(double const eps, Eigen::Ref<const Eigen::VectorXd> const& rvec, Eigen::SparseMatrix<double>& kmat) const {
   // the number of samples
   const std::size_t n = NumSamples();
   assert(rvec.size()==n);

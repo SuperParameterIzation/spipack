@@ -43,11 +43,7 @@ Eigen::VectorXd KolmogorovOperator::EstimateDensity(bool const tune) const {
   return dens;
 }
 
-double KolmogorovOperator::KernelDerivativeAverage(double const eps, Eigen::VectorXd const& rvec) const { return SampleRepresentation::KernelDerivativeAverage(eps, rvec); }
-
-double KolmogorovOperator::KernelSecondDerivativeAverage(double const eps, Eigen::VectorXd const& rvec) const { return SampleRepresentation::KernelSecondDerivativeAverage(eps, rvec); }
-
-Eigen::MatrixXd KolmogorovOperator::KernelMatrix(double const eps, Eigen::Ref<Eigen::MatrixXd> kmat, const void* tune) const {
+Eigen::VectorXd KolmogorovOperator::KernelMatrix(double const eps, Eigen::Ref<Eigen::MatrixXd> kmat, const void* tune) const {
   assert(kmat.rows()==NumSamples());
   assert(kmat.cols()==NumSamples());
 
@@ -65,7 +61,7 @@ Eigen::MatrixXd KolmogorovOperator::KernelMatrix(double const eps, Eigen::Ref<Ei
   return KernelMatrix(eps, dens, kmat);
 }
 
-Eigen::MatrixXd KolmogorovOperator::KernelMatrix(double const eps, Eigen::Ref<const Eigen::VectorXd> const& dens, Eigen::Ref<Eigen::MatrixXd> kmat) const {
+Eigen::VectorXd KolmogorovOperator::KernelMatrix(double const eps, Eigen::Ref<const Eigen::VectorXd> const& dens, Eigen::Ref<Eigen::MatrixXd> kmat) const {
   // the number of samples
   const std::size_t n = NumSamples();
   assert(dens.rows()==n);
@@ -76,7 +72,7 @@ Eigen::MatrixXd KolmogorovOperator::KernelMatrix(double const eps, Eigen::Ref<co
   const double para = VariableBandwidthExponent();
 
   // compute the normalization for the new kernel matrix
-  rowsum = (rowsum.array()/dens.array().pow(exponentPara*manifoldDim)).pow(para);
+  rowsum = rowsum.array()/(dens.array().pow(exponentPara*manifoldDim)).pow(para);
 
   // renormalize the kernel matrix
   #pragma omp parallel for num_threads(numThreads)
@@ -89,7 +85,7 @@ Eigen::MatrixXd KolmogorovOperator::KernelMatrix(double const eps, Eigen::Ref<co
   //return kmat.rowwise().sum();
 }
 
-Eigen::MatrixXd KolmogorovOperator::KernelMatrix(double const eps, Eigen::SparseMatrix<double>& kmat, const void* tune) const {
+Eigen::VectorXd KolmogorovOperator::KernelMatrix(double const eps, Eigen::SparseMatrix<double>& kmat, const void* tune) const {
   // estimate the density at each sample
   const Eigen::VectorXd dens = EstimateDensity(*(const bool*)tune);
 
@@ -104,28 +100,10 @@ Eigen::MatrixXd KolmogorovOperator::KernelMatrix(double const eps, Eigen::Sparse
   return rowsum;
 }
 
-Eigen::MatrixXd KolmogorovOperator::KernelMatrix(double const eps, Eigen::Ref<const Eigen::VectorXd> const& dens, Eigen::SparseMatrix<double>& kmat) const {
+Eigen::VectorXd KolmogorovOperator::KernelMatrix(double const eps, Eigen::Ref<const Eigen::VectorXd> const& dens, Eigen::SparseMatrix<double>& kmat) const {
   // the number of samples
   const std::size_t n = NumSamples();
   assert(dens.size()==n);
-
-  /*std::vector<Eigen::Triplet<double> > entries;
-  Eigen::MatrixXd q = SampleRepresentation::KernelMatrix(eps, dens.array().pow(-1.0/manifoldDim), entries);
-
-  Eigen::VectorXd d = Eigen::VectorXd::Zero(n);
-  for( const auto& entry : entries ) {
-    d(entry.row()) += entry.value()/q(entry.col());
-  }
-
-  // resize the matrix
-  kmat.resize(n, n);
-  kmat.setFromTriplets(entries.begin(), entries.end());
-
-  kmat = (d.array()*q.array()).sqrt().inverse().matrix().asDiagonal()*kmat*(d.array()*q.array()).sqrt().inverse().matrix().asDiagonal();
-  //kmat = q.array().inverse().matrix().asDiagonal()*kmat;//*q.array().sqrt().inverse().matrix().asDiagonal();
-
-  return d.array()/q.array();*/
-  //std::cout (q.asDiagonal()*kmat).rowwise().sum()
 
   const double para = VariableBandwidthExponent();
 

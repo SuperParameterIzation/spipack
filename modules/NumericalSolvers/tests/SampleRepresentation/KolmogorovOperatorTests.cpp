@@ -164,7 +164,7 @@ TEST_F(KolmogorovOperatorTests, UntruncatedKernelMatrix_Dense) {
 
     const double para = 1.0+0.5*dim*bandwidthExponent+bandwidthExponent-0.5*operatorParameter;
     Eigen::VectorXd rowsumExpected = kernmatExpected.rowwise().sum();
-    rowsumExpected = (rowsumExpected.array()/rho.array().pow((double)dim)).pow(para);
+    rowsumExpected = rowsumExpected.array()/(rho.array().pow((double)dim)).pow(para);
 
     for( std::size_t i=0; i<n; ++i ) {
       for( std::size_t j=i; j<n; ++j ) {
@@ -226,7 +226,7 @@ TEST_F(KolmogorovOperatorTests, TruncatedKernelMatrix_Dense) {
 
     const double para = 1.0+0.5*dim*bandwidthExponent+bandwidthExponent-0.5*operatorParameter;
     Eigen::VectorXd rowsumExpected = kernmatExpected.rowwise().sum();
-    rowsumExpected = (rowsumExpected.array()/rho.array().pow((double)dim)).pow(para);
+    rowsumExpected = rowsumExpected.array()/(rho.array().pow((double)dim)).pow(para);
 
     for( std::size_t i=0; i<n; ++i ) {
       for( std::size_t j=i; j<n; ++j ) {
@@ -286,7 +286,7 @@ TEST_F(KolmogorovOperatorTests, UntruncatedKernelMatrix_Sparse) {
 
     const double para = 1.0+0.5*dim*bandwidthExponent+bandwidthExponent-0.5*operatorParameter;
     Eigen::VectorXd rowsumExpected = kernmatExpected.rowwise().sum();
-    rowsumExpected = (rowsumExpected.array()/rho.array().pow((double)dim)).pow(para);
+    rowsumExpected = rowsumExpected.array()/(rho.array().pow((double)dim)).pow(para);
 
     for( std::size_t i=0; i<n; ++i ) {
       for( std::size_t j=i; j<n; ++j ) {
@@ -348,7 +348,7 @@ TEST_F(KolmogorovOperatorTests, TruncatedKernelMatrix_Sparse) {
 
     const double para = 1.0+0.5*dim*bandwidthExponent+bandwidthExponent-0.5*operatorParameter;
     Eigen::VectorXd rowsumExpected = kernmatExpected.rowwise().sum();
-    rowsumExpected = (rowsumExpected.array()/rho.array().pow((double)dim)).pow(para);
+    rowsumExpected = rowsumExpected.array()/(rho.array().pow((double)dim)).pow(para);
 
     for( std::size_t i=0; i<n; ++i ) {
       for( std::size_t j=i; j<n; ++j ) {

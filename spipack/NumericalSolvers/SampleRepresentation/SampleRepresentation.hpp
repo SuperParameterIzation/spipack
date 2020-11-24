@@ -105,7 +105,7 @@ public:
   @param[in] options This parameter is not used in this default implementation, but is used by implementations in its children (defaults to <tt>nullptr</tt>)
   \return Each entry is the sum of a row in the kernel matrix \f$b_i = \sum_{j=1}^{n} K_{\epsilon}^{(ij)}\f$
   */
-  virtual Eigen::MatrixXd KernelMatrix(double const eps, Eigen::Ref<Eigen::MatrixXd> kmat, const void* options = nullptr) const;
+  virtual Eigen::VectorXd KernelMatrix(double const eps, Eigen::Ref<Eigen::MatrixXd> kmat, const void* options = nullptr) const;
 
   /// Construct the (dense) kernel matrix \f$\boldsymbol{K}_{\epsilon}\f$
   /**
@@ -119,7 +119,7 @@ public:
   @param[out] kmat The kernel matrix \f$\boldsymbol{K}_{\epsilon}\f$
   \return Each entry is the sum of a row in the kernel matrix \f$b_i = \sum_{j=1}^{n} K_{\epsilon}^{(ij)}\f$
   */
-  virtual Eigen::MatrixXd KernelMatrix(double const eps, Eigen::Ref<const Eigen::VectorXd> const& rvec, Eigen::Ref<Eigen::MatrixXd> kmat) const;
+  virtual Eigen::VectorXd KernelMatrix(double const eps, Eigen::Ref<const Eigen::VectorXd> const& rvec, Eigen::Ref<Eigen::MatrixXd> kmat) const;
 
   /// Construct the kernel matrix \f$\boldsymbol{K}_{\epsilon}\f$
   /**
@@ -136,7 +136,7 @@ public:
   @param[in] options This parameter is not used in this default implementation, but is used by implementations in its children (defaults to <tt>nullptr</tt>)
   \return Each entry is the sum of a row in the kernel matrix \f$b_i = \sum_{j=1}^{n} K_{\epsilon}^{(ij)}\f$
   */
-  virtual Eigen::MatrixXd KernelMatrix(double const eps, Eigen::SparseMatrix<double>& kmat, const void* options = nullptr) const;
+  virtual Eigen::VectorXd KernelMatrix(double const eps, Eigen::SparseMatrix<double>& kmat, const void* options = nullptr) const;
 
   /// Construct the kernel matrix \f$\boldsymbol{K}_{\epsilon}\f$
   /**
@@ -150,7 +150,7 @@ public:
   @param[out] kmat The kernel matrix \f$\boldsymbol{K}_{\epsilon}\f$
   \return Each entry is the sum of a row in the kernel matrix \f$b_i = \sum_{j=1}^{n} K_{\epsilon}^{(ij)}\f$
   */
-  virtual Eigen::MatrixXd KernelMatrix(double const eps, Eigen::Ref<const Eigen::VectorXd> const& rvec, Eigen::SparseMatrix<double>& kmat) const;
+  virtual Eigen::VectorXd KernelMatrix(double const eps, Eigen::Ref<const Eigen::VectorXd> const& rvec, Eigen::SparseMatrix<double>& kmat) const;
 
   /// Build the kd trees for the nearest neighbor computation
   void BuildKDTrees() const;
