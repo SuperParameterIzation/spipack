@@ -70,7 +70,7 @@ $$
 Let $$\widetilde{\Sigma}_l^{\prime}=\max_{l}{(\Sigma_l^{\prime})}$$ (with corresponding optimal bandwidth parameter $\tilde{\epsilon}$).
 
 <figure>
-<figcaption>The value of $\Sigma_l^{\prime}$ for candidate bandwidth parameters $\epsilon$; the optimal bandwidth parameter is $\tilde{\epsilon} \approx 0.28$.</figcaption>
+<figcaption>The value of $\Sigma_l^{\prime}$ for candidate bandwidth parameters $\epsilon$; the optimal bandwidth parameter is $\tilde{\epsilon} \approx 7 \times 10^{-4}$.</figcaption>
 <embed src="figures/LogKernelAvgDerivative.pdf" width="500" height="375"
 type="application/pdf">
 </figure>
@@ -103,9 +103,11 @@ Denote the symmetric kernel matrix \$\boldsymbol{K}$ such that $K^{(ij)} = k_{\e
 
 $$
 \begin{equation}
-\mathcal{L}_{\psi,c} \approx \boldsymbol{L} = \epsilon^{-1} \boldsymbol{P}^{-2} (\boldsymbol{D}^{-1} \boldsymbol{K} - \boldsymbol{I}) = \epsilon^{-1} \boldsymbol{P}^{-2} \boldsymbol{\hat{L}}.
+\mathcal{L}_{\psi,c} \approx \boldsymbol{L} = \epsilon^{-1} \boldsymbol{P}^{-2} (\boldsymbol{D}^{-1} \boldsymbol{K} - \boldsymbol{I}).
 \end{equation}
 $$
+
+Additionally, define the diagonal matrix $\boldsymbol{S} = \boldsymbol{P} \boldsymbol{D}^{1/2}$ and let $\boldsymbol{\hat{L}} = \epsilon^{-1} (\boldsymbol{S}^{-1} \boldsymbol{K} \boldsymbol{S}^{-1} - \boldsymbol{P}^{-2})$.
 
 ## Eigen decomposition
 
