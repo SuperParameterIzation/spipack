@@ -141,35 +141,30 @@ Public Member Functions</h2></td></tr>
 <tr class="memitem:add6416f5382319fa2d24f89de09d3c6c"><td class="memItemLeft" align="right" valign="top">Eigen::VectorXd&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classspi_1_1NumericalSolvers_1_1KolmogorovOperator.html#add6416f5382319fa2d24f89de09d3c6c">EstimateDensity</a> (bool const tune=true) const </td></tr>
 <tr class="memdesc:add6416f5382319fa2d24f89de09d3c6c"><td class="mdescLeft">&#160;</td><td class="mdescRight">Compute the density estimate.  <a href="#add6416f5382319fa2d24f89de09d3c6c">More...</a><br /></td></tr>
 <tr class="separator:add6416f5382319fa2d24f89de09d3c6c"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:aa1c58c4ff49c2f6194a8c120b70276e2"><td class="memItemLeft" align="right" valign="top">Eigen::VectorXd&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classspi_1_1NumericalSolvers_1_1KolmogorovOperator.html#aa1c58c4ff49c2f6194a8c120b70276e2">SquaredBandwidth</a> () const </td></tr>
-<tr class="memdesc:aa1c58c4ff49c2f6194a8c120b70276e2"><td class="mdescLeft">&#160;</td><td class="mdescRight">Compute the squared bandwidth \(r_i^2 = \frac{1}{k} \sum_{j=1}^{k} \| \boldsymbol{x}^{(i)}-\boldsymbol{x}^{(I(i,j))} \|^2\).  <a href="#aa1c58c4ff49c2f6194a8c120b70276e2">More...</a><br /></td></tr>
-<tr class="separator:aa1c58c4ff49c2f6194a8c120b70276e2"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:af66a111f3f394279a67eaa0bd214bc87"><td class="memItemLeft" align="right" valign="top">virtual double&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classspi_1_1NumericalSolvers_1_1KolmogorovOperator.html#af66a111f3f394279a67eaa0bd214bc87">KernelDerivativeAverage</a> (double const eps, Eigen::VectorXd const &amp;rvec) const override</td></tr>
-<tr class="memdesc:af66a111f3f394279a67eaa0bd214bc87"><td class="mdescLeft">&#160;</td><td class="mdescRight">Compute the average of the pair-wise kernel derivative evaluations \(\bar{k}^{\prime} = \frac{d}{d \epsilon} \left[ n^{-2} \sum_{i,j=0}^{n} k\left( \frac{\|\boldsymbol{x}^{(i)}-\boldsymbol{x}^{(j)}\|^2}{\epsilon r_i r_j} \right) \right] \).  <a href="#af66a111f3f394279a67eaa0bd214bc87">More...</a><br /></td></tr>
-<tr class="separator:af66a111f3f394279a67eaa0bd214bc87"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a978ca336ccf11e8fe2537d4e073615c3"><td class="memItemLeft" align="right" valign="top">virtual double&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classspi_1_1NumericalSolvers_1_1KolmogorovOperator.html#a978ca336ccf11e8fe2537d4e073615c3">KernelSecondDerivativeAverage</a> (double const eps, Eigen::VectorXd const &amp;rvec) const override</td></tr>
-<tr class="memdesc:a978ca336ccf11e8fe2537d4e073615c3"><td class="mdescLeft">&#160;</td><td class="mdescRight">Compute the average of the pair-wise kernel second derivative evaluations \(\bar{k}^{\prime} = \frac{d^2}{d \epsilon^2} \left[ n^{-2} \sum_{i,j=0}^{n} k\left( \frac{\|\boldsymbol{x}^{(i)}-\boldsymbol{x}^{(j)}\|^2}{\epsilon r_i r_j} \right) \right] \).  <a href="#a978ca336ccf11e8fe2537d4e073615c3">More...</a><br /></td></tr>
-<tr class="separator:a978ca336ccf11e8fe2537d4e073615c3"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a7b272d707bacff2b976048a4fa3a6587"><td class="memItemLeft" align="right" valign="top">virtual Eigen::MatrixXd&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classspi_1_1NumericalSolvers_1_1KolmogorovOperator.html#a7b272d707bacff2b976048a4fa3a6587">KernelMatrix</a> (double const eps, Eigen::Ref&lt; Eigen::MatrixXd &gt; kmat, const void *tune=&amp;<a class="el" href="classspi_1_1NumericalSolvers_1_1KolmogorovOperator.html#a583eb3e4b0823f5bea55004868f9b2bd">tuneDefault</a>) const override</td></tr>
-<tr class="memdesc:a7b272d707bacff2b976048a4fa3a6587"><td class="mdescLeft">&#160;</td><td class="mdescRight">Construct the (dense) kernel matrix \(\boldsymbol{K}_{\epsilon}\).  <a href="#a7b272d707bacff2b976048a4fa3a6587">More...</a><br /></td></tr>
-<tr class="separator:a7b272d707bacff2b976048a4fa3a6587"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:aecd56d010aabc213e9da3dc07e6a83be"><td class="memItemLeft" align="right" valign="top">virtual Eigen::MatrixXd&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classspi_1_1NumericalSolvers_1_1KolmogorovOperator.html#aecd56d010aabc213e9da3dc07e6a83be">KernelMatrix</a> (double const eps, Eigen::Ref&lt; const Eigen::VectorXd &gt; const &amp;dens, Eigen::Ref&lt; Eigen::MatrixXd &gt; kmat) const override</td></tr>
-<tr class="memdesc:aecd56d010aabc213e9da3dc07e6a83be"><td class="mdescLeft">&#160;</td><td class="mdescRight">Construct the (dense) kernel matrix \(\boldsymbol{K}_{\epsilon}\).  <a href="#aecd56d010aabc213e9da3dc07e6a83be">More...</a><br /></td></tr>
-<tr class="separator:aecd56d010aabc213e9da3dc07e6a83be"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:aa2781438e2d02ff280b86f92b4eb21ec"><td class="memItemLeft" align="right" valign="top">virtual Eigen::MatrixXd&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classspi_1_1NumericalSolvers_1_1KolmogorovOperator.html#aa2781438e2d02ff280b86f92b4eb21ec">KernelMatrix</a> (double const eps, Eigen::SparseMatrix&lt; double &gt; &amp;kmat, const void *tune=&amp;<a class="el" href="classspi_1_1NumericalSolvers_1_1KolmogorovOperator.html#a583eb3e4b0823f5bea55004868f9b2bd">tuneDefault</a>) const override</td></tr>
-<tr class="memdesc:aa2781438e2d02ff280b86f92b4eb21ec"><td class="mdescLeft">&#160;</td><td class="mdescRight">Construct the kernel matrix \(\boldsymbol{K}_{\epsilon}\).  <a href="#aa2781438e2d02ff280b86f92b4eb21ec">More...</a><br /></td></tr>
-<tr class="separator:aa2781438e2d02ff280b86f92b4eb21ec"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a7fe910787a89ff070a46d4ba096ec8f6"><td class="memItemLeft" align="right" valign="top">virtual Eigen::MatrixXd&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classspi_1_1NumericalSolvers_1_1KolmogorovOperator.html#a7fe910787a89ff070a46d4ba096ec8f6">KernelMatrix</a> (double const eps, Eigen::Ref&lt; const Eigen::VectorXd &gt; const &amp;dens, Eigen::SparseMatrix&lt; double &gt; &amp;kmat) const override</td></tr>
-<tr class="memdesc:a7fe910787a89ff070a46d4ba096ec8f6"><td class="mdescLeft">&#160;</td><td class="mdescRight">Construct the kernel matrix \(\boldsymbol{K}_{\epsilon}\).  <a href="#a7fe910787a89ff070a46d4ba096ec8f6">More...</a><br /></td></tr>
-<tr class="separator:a7fe910787a89ff070a46d4ba096ec8f6"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a65ebad9de33f4c4dedc0e233924cc379"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classspi_1_1NumericalSolvers_1_1KolmogorovOperator.html#a65ebad9de33f4c4dedc0e233924cc379">TuneBandwidthParameter</a> ()</td></tr>
-<tr class="separator:a65ebad9de33f4c4dedc0e233924cc379"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a6ecac63d417b96027f7d59ab878da497"><td class="memItemLeft" align="right" valign="top">virtual Eigen::VectorXd&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classspi_1_1NumericalSolvers_1_1KolmogorovOperator.html#a6ecac63d417b96027f7d59ab878da497">KernelMatrix</a> (double const eps, Eigen::Ref&lt; Eigen::MatrixXd &gt; kmat, const void *tune=&amp;<a class="el" href="classspi_1_1NumericalSolvers_1_1KolmogorovOperator.html#a583eb3e4b0823f5bea55004868f9b2bd">tuneDefault</a>) const override</td></tr>
+<tr class="memdesc:a6ecac63d417b96027f7d59ab878da497"><td class="mdescLeft">&#160;</td><td class="mdescRight">Construct the (dense) kernel matrix \(\boldsymbol{K}_{\epsilon}\).  <a href="#a6ecac63d417b96027f7d59ab878da497">More...</a><br /></td></tr>
+<tr class="separator:a6ecac63d417b96027f7d59ab878da497"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:af6cbd47e98f1bd7c74b5a076838bbe0b"><td class="memItemLeft" align="right" valign="top">virtual Eigen::VectorXd&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classspi_1_1NumericalSolvers_1_1KolmogorovOperator.html#af6cbd47e98f1bd7c74b5a076838bbe0b">KernelMatrix</a> (double const eps, Eigen::Ref&lt; const Eigen::VectorXd &gt; const &amp;dens, Eigen::Ref&lt; Eigen::MatrixXd &gt; kmat) const override</td></tr>
+<tr class="memdesc:af6cbd47e98f1bd7c74b5a076838bbe0b"><td class="mdescLeft">&#160;</td><td class="mdescRight">Construct the (dense) kernel matrix \(\boldsymbol{K}_{\epsilon}\).  <a href="#af6cbd47e98f1bd7c74b5a076838bbe0b">More...</a><br /></td></tr>
+<tr class="separator:af6cbd47e98f1bd7c74b5a076838bbe0b"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:acf0ce13c1a4bbe7cd2f8a6a35e241f2e"><td class="memItemLeft" align="right" valign="top">virtual Eigen::VectorXd&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classspi_1_1NumericalSolvers_1_1KolmogorovOperator.html#acf0ce13c1a4bbe7cd2f8a6a35e241f2e">KernelMatrix</a> (double const eps, Eigen::SparseMatrix&lt; double &gt; &amp;kmat, const void *tune=&amp;<a class="el" href="classspi_1_1NumericalSolvers_1_1KolmogorovOperator.html#a583eb3e4b0823f5bea55004868f9b2bd">tuneDefault</a>) const override</td></tr>
+<tr class="memdesc:acf0ce13c1a4bbe7cd2f8a6a35e241f2e"><td class="mdescLeft">&#160;</td><td class="mdescRight">Construct the kernel matrix \(\boldsymbol{K}_{\epsilon}\).  <a href="#acf0ce13c1a4bbe7cd2f8a6a35e241f2e">More...</a><br /></td></tr>
+<tr class="separator:acf0ce13c1a4bbe7cd2f8a6a35e241f2e"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ab72da3febd51855b21cbcc30b7ba5adc"><td class="memItemLeft" align="right" valign="top">virtual Eigen::VectorXd&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classspi_1_1NumericalSolvers_1_1KolmogorovOperator.html#ab72da3febd51855b21cbcc30b7ba5adc">KernelMatrix</a> (double const eps, Eigen::Ref&lt; const Eigen::VectorXd &gt; const &amp;dens, Eigen::SparseMatrix&lt; double &gt; &amp;kmat) const override</td></tr>
+<tr class="memdesc:ab72da3febd51855b21cbcc30b7ba5adc"><td class="mdescLeft">&#160;</td><td class="mdescRight">Construct the kernel matrix \(\boldsymbol{K}_{\epsilon}\).  <a href="#ab72da3febd51855b21cbcc30b7ba5adc">More...</a><br /></td></tr>
+<tr class="separator:ab72da3febd51855b21cbcc30b7ba5adc"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a9b0f112c2dbb2bf0608152b8a536ead5"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classspi_1_1NumericalSolvers_1_1KolmogorovOperator.html#a9b0f112c2dbb2bf0608152b8a536ead5">TuneBandwidthParameter</a> (bool const tuneDens=true)</td></tr>
+<tr class="memdesc:a9b0f112c2dbb2bf0608152b8a536ead5"><td class="mdescLeft">&#160;</td><td class="mdescRight">Tune the bandwidth parameter for the Kolmogorov operator.  <a href="#a9b0f112c2dbb2bf0608152b8a536ead5">More...</a><br /></td></tr>
+<tr class="separator:a9b0f112c2dbb2bf0608152b8a536ead5"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a34d8ba032526eb8e9f08ff18496b389c"><td class="memItemLeft" align="right" valign="top">double&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classspi_1_1NumericalSolvers_1_1KolmogorovOperator.html#a34d8ba032526eb8e9f08ff18496b389c">VariableBandwidthExponent</a> () const </td></tr>
 <tr class="memdesc:a34d8ba032526eb8e9f08ff18496b389c"><td class="mdescLeft">&#160;</td><td class="mdescRight">Get the parameter used as the variable bandwidth exponent.  <a href="#a34d8ba032526eb8e9f08ff18496b389c">More...</a><br /></td></tr>
 <tr class="separator:a34d8ba032526eb8e9f08ff18496b389c"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a578c9d8538a754b9b5a1d8a77d23931b"><td class="memItemLeft" align="right" valign="top">double&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classspi_1_1NumericalSolvers_1_1KolmogorovOperator.html#a578c9d8538a754b9b5a1d8a77d23931b">ExponentParameter</a> () const </td></tr>
 <tr class="memdesc:a578c9d8538a754b9b5a1d8a77d23931b"><td class="mdescLeft">&#160;</td><td class="mdescRight">Get the exponent parameter \(\beta\).  <a href="#a578c9d8538a754b9b5a1d8a77d23931b">More...</a><br /></td></tr>
 <tr class="separator:a578c9d8538a754b9b5a1d8a77d23931b"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a612816850e104d41f613dd32b5d904b7"><td class="memItemLeft" align="right" valign="top">std::shared_ptr&lt; <a class="el" href="classspi_1_1NumericalSolvers_1_1DensityEstimation.html">DensityEstimation</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classspi_1_1NumericalSolvers_1_1KolmogorovOperator.html#a612816850e104d41f613dd32b5d904b7">Density</a> () const </td></tr>
+<tr class="memdesc:a612816850e104d41f613dd32b5d904b7"><td class="mdescLeft">&#160;</td><td class="mdescRight">Get the density estimator.  <a href="#a612816850e104d41f613dd32b5d904b7">More...</a><br /></td></tr>
+<tr class="separator:a612816850e104d41f613dd32b5d904b7"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="inherit_header pub_methods_classspi_1_1NumericalSolvers_1_1SampleRepresentation"><td colspan="2" onclick="javascript:toggleInherit('pub_methods_classspi_1_1NumericalSolvers_1_1SampleRepresentation')"><img src="closed.png" alt="-"/>&#160;Public Member Functions inherited from <a class="el" href="classspi_1_1NumericalSolvers_1_1SampleRepresentation.html">spi::NumericalSolvers::SampleRepresentation</a></td></tr>
 <tr class="memitem:a10425f4a35ee78bfe75d9eaf9c9e3aff inherit pub_methods_classspi_1_1NumericalSolvers_1_1SampleRepresentation"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classspi_1_1NumericalSolvers_1_1SampleRepresentation.html#a10425f4a35ee78bfe75d9eaf9c9e3aff">SampleRepresentation</a> (std::shared_ptr&lt; muq::Modeling::RandomVariable &gt; const &amp;rv, YAML::Node const &amp;options)</td></tr>
 <tr class="memdesc:a10425f4a35ee78bfe75d9eaf9c9e3aff inherit pub_methods_classspi_1_1NumericalSolvers_1_1SampleRepresentation"><td class="mdescLeft">&#160;</td><td class="mdescRight">Construct the sample representation by sampling a random variable from \(\psi\).  <a href="#a10425f4a35ee78bfe75d9eaf9c9e3aff">More...</a><br /></td></tr>
@@ -203,6 +198,12 @@ Public Member Functions</h2></td></tr>
 <tr class="memitem:ab86f869ebf77fc478803ae010b521ee8 inherit pub_methods_classspi_1_1NumericalSolvers_1_1SampleRepresentation"><td class="memItemLeft" align="right" valign="top">Eigen::VectorXd&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classspi_1_1NumericalSolvers_1_1SampleRepresentation.html#ab86f869ebf77fc478803ae010b521ee8">SquaredBandwidth</a> () const </td></tr>
 <tr class="memdesc:ab86f869ebf77fc478803ae010b521ee8 inherit pub_methods_classspi_1_1NumericalSolvers_1_1SampleRepresentation"><td class="mdescLeft">&#160;</td><td class="mdescRight">Compute the squared bandwidth \(r_i^2 = \frac{1}{k} \sum_{j=1}^{k} \| \boldsymbol{x}^{(i)}-\boldsymbol{x}^{(I(i,j))} \|^2\).  <a href="#ab86f869ebf77fc478803ae010b521ee8">More...</a><br /></td></tr>
 <tr class="separator:ab86f869ebf77fc478803ae010b521ee8 inherit pub_methods_classspi_1_1NumericalSolvers_1_1SampleRepresentation"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a34c2a35faa14e4ba9d91d457193b740e inherit pub_methods_classspi_1_1NumericalSolvers_1_1SampleRepresentation"><td class="memItemLeft" align="right" valign="top">virtual double&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classspi_1_1NumericalSolvers_1_1SampleRepresentation.html#a34c2a35faa14e4ba9d91d457193b740e">KernelDerivativeAverage</a> (double const eps, Eigen::VectorXd const &amp;rvec) const </td></tr>
+<tr class="memdesc:a34c2a35faa14e4ba9d91d457193b740e inherit pub_methods_classspi_1_1NumericalSolvers_1_1SampleRepresentation"><td class="mdescLeft">&#160;</td><td class="mdescRight">Compute the average of the pair-wise kernel derivative evaluations \(\bar{k}^{\prime} = \frac{d}{d \epsilon} \left[ n^{-2} \sum_{i,j=0}^{n} k\left( \frac{\|\boldsymbol{x}^{(i)}-\boldsymbol{x}^{(j)}\|^2}{\epsilon r_i r_j} \right) \right] \).  <a href="#a34c2a35faa14e4ba9d91d457193b740e">More...</a><br /></td></tr>
+<tr class="separator:a34c2a35faa14e4ba9d91d457193b740e inherit pub_methods_classspi_1_1NumericalSolvers_1_1SampleRepresentation"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aea987d298ab0da32e8c45da61a942e8d inherit pub_methods_classspi_1_1NumericalSolvers_1_1SampleRepresentation"><td class="memItemLeft" align="right" valign="top">virtual double&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classspi_1_1NumericalSolvers_1_1SampleRepresentation.html#aea987d298ab0da32e8c45da61a942e8d">KernelSecondDerivativeAverage</a> (double const eps, Eigen::VectorXd const &amp;rvec) const </td></tr>
+<tr class="memdesc:aea987d298ab0da32e8c45da61a942e8d inherit pub_methods_classspi_1_1NumericalSolvers_1_1SampleRepresentation"><td class="mdescLeft">&#160;</td><td class="mdescRight">Compute the average of the pair-wise kernel second derivative evaluations \(\bar{k}^{\prime} = \frac{d^2}{d \epsilon^2} \left[ n^{-2} \sum_{i,j=0}^{n} k\left( \frac{\|\boldsymbol{x}^{(i)}-\boldsymbol{x}^{(j)}\|^2}{\epsilon r_i r_j} \right) \right] \).  <a href="#aea987d298ab0da32e8c45da61a942e8d">More...</a><br /></td></tr>
+<tr class="separator:aea987d298ab0da32e8c45da61a942e8d inherit pub_methods_classspi_1_1NumericalSolvers_1_1SampleRepresentation"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a34f7a6dd29975239daa33945aa7f7247 inherit pub_methods_classspi_1_1NumericalSolvers_1_1SampleRepresentation"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classspi_1_1NumericalSolvers_1_1SampleRepresentation.html#a34f7a6dd29975239daa33945aa7f7247">WriteToFile</a> (std::string const &amp;filename, std::string const &amp;dataset=&quot;/&quot;) const </td></tr>
 <tr class="memdesc:a34f7a6dd29975239daa33945aa7f7247 inherit pub_methods_classspi_1_1NumericalSolvers_1_1SampleRepresentation"><td class="mdescLeft">&#160;</td><td class="mdescRight">Write the samples to file.  <a href="#a34f7a6dd29975239daa33945aa7f7247">More...</a><br /></td></tr>
 <tr class="separator:a34f7a6dd29975239daa33945aa7f7247 inherit pub_methods_classspi_1_1NumericalSolvers_1_1SampleRepresentation"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -406,6 +407,24 @@ Additional Inherited Members</h2></td></tr>
 </div>
 </div>
 <h2 class="groupheader">Member Function Documentation</h2>
+<a class="anchor" id="a612816850e104d41f613dd32b5d904b7"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">std::shared_ptr&lt; <a class="el" href="classspi_1_1NumericalSolvers_1_1DensityEstimation.html">DensityEstimation</a> &gt; KolmogorovOperator::Density </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td> const</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Get the density estimator. </p>
+<dl class="section return"><dt>Returns</dt><dd>The density estimator </dd></dl>
+
+</div>
+</div>
 <a class="anchor" id="add6416f5382319fa2d24f89de09d3c6c"></a>
 <div class="memitem">
 <div class="memproto">
@@ -421,9 +440,9 @@ Additional Inherited Members</h2></td></tr>
 </div><div class="memdoc">
 
 <p>Compute the density estimate. </p>
-<dl class="params"><dt>Parameters</dt><dd>
+<p>Compute an estimate of the underlying \(\psi\) at each sample using <a class="el" href="classspi_1_1NumericalSolvers_1_1DensityEstimation.html" title="Estimate the density of a probability distribution  given samples  such that . ">spi::NumericalSolvers::DensityEstimation</a>. </p><dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramdir">[in]</td><td class="paramname">tune</td><td><code>true</code> (default): tune the bandwidth parameters, <code>false</code>: do not tune the bandwidth parameters (use stored values) </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">tune</td><td><code>true</code> (default): tune the bandwidth parameters for the density estimation, <code>false</code>: do not tune the bandwidth parameters (use stored values) </td></tr>
   </table>
   </dd>
 </dl>
@@ -449,7 +468,7 @@ Additional Inherited Members</h2></td></tr>
 
 </div>
 </div>
-<a class="anchor" id="af66a111f3f394279a67eaa0bd214bc87"></a>
+<a class="anchor" id="a6ecac63d417b96027f7d59ab878da497"></a>
 <div class="memitem">
 <div class="memproto">
 <table class="mlabels">
@@ -457,56 +476,7 @@ Additional Inherited Members</h2></td></tr>
   <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname">double KolmogorovOperator::KernelDerivativeAverage </td>
-          <td>(</td>
-          <td class="paramtype">double const&#160;</td>
-          <td class="paramname"><em>eps</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">Eigen::VectorXd const &amp;&#160;</td>
-          <td class="paramname"><em>rvec</em>&#160;</td>
-        </tr>
-        <tr>
-          <td></td>
-          <td>)</td>
-          <td></td><td> const</td>
-        </tr>
-      </table>
-  </td>
-  <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">override</span><span class="mlabel">virtual</span></span>  </td>
-  </tr>
-</table>
-</div><div class="memdoc">
-
-<p>Compute the average of the pair-wise kernel derivative evaluations \(\bar{k}^{\prime} = \frac{d}{d \epsilon} \left[ n^{-2} \sum_{i,j=0}^{n} k\left( \frac{\|\boldsymbol{x}^{(i)}-\boldsymbol{x}^{(j)}\|^2}{\epsilon r_i r_j} \right) \right] \). </p>
-<p>We (recursively) compute the average </p><p class="formulaDsp">
-\begin{equation*} \bar{k}^{\prime} = \frac{d}{d \epsilon} \left[ n^{-2} \sum_{i,j=0}^{n} k\left( \frac{\|\boldsymbol{x}^{(i)}-\boldsymbol{x}^{(j)}\|^2}{\epsilon r_i r_j} \right) \right] = -n^{-2} \sum_{i,j=0}^{n} \left. \frac{d k}{d \theta} \right|_{\theta = \frac{\|\boldsymbol{x}^{(i)}-\boldsymbol{x}^{(j)}\|^2}{\epsilon r_i r_j}} \frac{\|\boldsymbol{x}^{(i)}-\boldsymbol{x}^{(j)}\|^2}{\epsilon^2 r_i r_j} \end{equation*}
-</p>
- <dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramdir">[in]</td><td class="paramname">eps</td><td>The bandwidth parameter \(\epsilon\) </td></tr>
-    <tr><td class="paramdir">[in]</td><td class="paramname">rvec</td><td>The vector \(\boldsymbol{r}\) </td></tr>
-  </table>
-  </dd>
-</dl>
-<dl class="section return"><dt>Returns</dt><dd>The kernel derivative average \(\bar{k}^{\prime}\). </dd></dl>
-
-<p>Reimplemented from <a class="el" href="classspi_1_1NumericalSolvers_1_1SampleRepresentation.html#a34c2a35faa14e4ba9d91d457193b740e">spi::NumericalSolvers::SampleRepresentation</a>.</p>
-
-</div>
-</div>
-<a class="anchor" id="a7b272d707bacff2b976048a4fa3a6587"></a>
-<div class="memitem">
-<div class="memproto">
-<table class="mlabels">
-  <tr>
-  <td class="mlabels-left">
-      <table class="memname">
-        <tr>
-          <td class="memname">Eigen::MatrixXd KolmogorovOperator::KernelMatrix </td>
+          <td class="memname">Eigen::VectorXd KolmogorovOperator::KernelMatrix </td>
           <td>(</td>
           <td class="paramtype">double const&#160;</td>
           <td class="paramname"><em>eps</em>, </td>
@@ -552,11 +522,11 @@ Additional Inherited Members</h2></td></tr>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>Each entry is the sum of a row in the kernel matrix \(b_i = \sum_{j=1}^{n} K_{\epsilon}^{(ij)}\) </dd></dl>
 
-<p>Reimplemented from <a class="el" href="classspi_1_1NumericalSolvers_1_1SampleRepresentation.html#a958d193b53d8f51ba5604843f57f2089">spi::NumericalSolvers::SampleRepresentation</a>.</p>
+<p>Reimplemented from <a class="el" href="classspi_1_1NumericalSolvers_1_1SampleRepresentation.html#a4863daf02896be5c43ebe0bf8b520cdf">spi::NumericalSolvers::SampleRepresentation</a>.</p>
 
 </div>
 </div>
-<a class="anchor" id="aecd56d010aabc213e9da3dc07e6a83be"></a>
+<a class="anchor" id="af6cbd47e98f1bd7c74b5a076838bbe0b"></a>
 <div class="memitem">
 <div class="memproto">
 <table class="mlabels">
@@ -564,7 +534,7 @@ Additional Inherited Members</h2></td></tr>
   <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname">Eigen::MatrixXd KolmogorovOperator::KernelMatrix </td>
+          <td class="memname">Eigen::VectorXd KolmogorovOperator::KernelMatrix </td>
           <td>(</td>
           <td class="paramtype">double const&#160;</td>
           <td class="paramname"><em>eps</em>, </td>
@@ -608,11 +578,11 @@ Additional Inherited Members</h2></td></tr>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>Each entry is the sum of a row in the kernel matrix \(b_i = \sum_{j=1}^{n} K_{\epsilon}^{(ij)}\) </dd></dl>
 
-<p>Reimplemented from <a class="el" href="classspi_1_1NumericalSolvers_1_1SampleRepresentation.html#a9d8ba41a75cb09e7f390051ff05c8f33">spi::NumericalSolvers::SampleRepresentation</a>.</p>
+<p>Reimplemented from <a class="el" href="classspi_1_1NumericalSolvers_1_1SampleRepresentation.html#a54fb52fdabb40237387a0df1bd41dbae">spi::NumericalSolvers::SampleRepresentation</a>.</p>
 
 </div>
 </div>
-<a class="anchor" id="aa2781438e2d02ff280b86f92b4eb21ec"></a>
+<a class="anchor" id="acf0ce13c1a4bbe7cd2f8a6a35e241f2e"></a>
 <div class="memitem">
 <div class="memproto">
 <table class="mlabels">
@@ -620,7 +590,7 @@ Additional Inherited Members</h2></td></tr>
   <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname">Eigen::MatrixXd KolmogorovOperator::KernelMatrix </td>
+          <td class="memname">Eigen::VectorXd KolmogorovOperator::KernelMatrix </td>
           <td>(</td>
           <td class="paramtype">double const&#160;</td>
           <td class="paramname"><em>eps</em>, </td>
@@ -666,11 +636,11 @@ Additional Inherited Members</h2></td></tr>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>Each entry is the sum of a row in the kernel matrix \(b_i = \sum_{j=1}^{n} K_{\epsilon}^{(ij)}\) </dd></dl>
 
-<p>Reimplemented from <a class="el" href="classspi_1_1NumericalSolvers_1_1SampleRepresentation.html#a62a6c7364c3b8d2950ef73b669ffc2eb">spi::NumericalSolvers::SampleRepresentation</a>.</p>
+<p>Reimplemented from <a class="el" href="classspi_1_1NumericalSolvers_1_1SampleRepresentation.html#a6aadda0269aa2097d34c59473a4496b9">spi::NumericalSolvers::SampleRepresentation</a>.</p>
 
 </div>
 </div>
-<a class="anchor" id="a7fe910787a89ff070a46d4ba096ec8f6"></a>
+<a class="anchor" id="ab72da3febd51855b21cbcc30b7ba5adc"></a>
 <div class="memitem">
 <div class="memproto">
 <table class="mlabels">
@@ -678,7 +648,7 @@ Additional Inherited Members</h2></td></tr>
   <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname">Eigen::MatrixXd KolmogorovOperator::KernelMatrix </td>
+          <td class="memname">Eigen::VectorXd KolmogorovOperator::KernelMatrix </td>
           <td>(</td>
           <td class="paramtype">double const&#160;</td>
           <td class="paramname"><em>eps</em>, </td>
@@ -722,90 +692,31 @@ Additional Inherited Members</h2></td></tr>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>Each entry is the sum of a row in the kernel matrix \(b_i = \sum_{j=1}^{n} K_{\epsilon}^{(ij)}\) </dd></dl>
 
-<p>Reimplemented from <a class="el" href="classspi_1_1NumericalSolvers_1_1SampleRepresentation.html#a2e321c60a37a27a5ebf69b1ac385f8d4">spi::NumericalSolvers::SampleRepresentation</a>.</p>
+<p>Reimplemented from <a class="el" href="classspi_1_1NumericalSolvers_1_1SampleRepresentation.html#ac32acbab45fa8691ff8791ac324cfb3a">spi::NumericalSolvers::SampleRepresentation</a>.</p>
 
 </div>
 </div>
-<a class="anchor" id="a978ca336ccf11e8fe2537d4e073615c3"></a>
-<div class="memitem">
-<div class="memproto">
-<table class="mlabels">
-  <tr>
-  <td class="mlabels-left">
-      <table class="memname">
-        <tr>
-          <td class="memname">double KolmogorovOperator::KernelSecondDerivativeAverage </td>
-          <td>(</td>
-          <td class="paramtype">double const&#160;</td>
-          <td class="paramname"><em>eps</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">Eigen::VectorXd const &amp;&#160;</td>
-          <td class="paramname"><em>rvec</em>&#160;</td>
-        </tr>
-        <tr>
-          <td></td>
-          <td>)</td>
-          <td></td><td> const</td>
-        </tr>
-      </table>
-  </td>
-  <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">override</span><span class="mlabel">virtual</span></span>  </td>
-  </tr>
-</table>
-</div><div class="memdoc">
-
-<p>Compute the average of the pair-wise kernel second derivative evaluations \(\bar{k}^{\prime} = \frac{d^2}{d \epsilon^2} \left[ n^{-2} \sum_{i,j=0}^{n} k\left( \frac{\|\boldsymbol{x}^{(i)}-\boldsymbol{x}^{(j)}\|^2}{\epsilon r_i r_j} \right) \right] \). </p>
-<p>We (recursively) compute the average </p><p class="formulaDsp">
-\begin{equation*} \bar{k}^{\prime} = \frac{d^2}{d \epsilon^2} \left[ n^{-2} \sum_{i,j=0}^{n} k\left( \frac{\|\boldsymbol{x}^{(i)}-\boldsymbol{x}^{(j)}\|^2}{\epsilon r_i r_j} \right) \right] = -n^{-2} \sum_{i,j=0}^{n} \left( -2 \left. \frac{d k}{d \theta} \right|_{\theta = \frac{\|\boldsymbol{x}^{(i)}-\boldsymbol{x}^{(j)}\|^2}{\epsilon r_i r_j}} \frac{\|\boldsymbol{x}^{(i)}-\boldsymbol{x}^{(j)}\|^2}{\epsilon^3 r_i r_j} - \left. \frac{d^2 k}{d \theta^2} \right|_{\theta = \frac{\|\boldsymbol{x}^{(i)}-\boldsymbol{x}^{(j)}\|^2}{\epsilon r_i r_j}} \left( \frac{\|\boldsymbol{x}^{(i)}-\boldsymbol{x}^{(j)}\|^2}{\epsilon^2 r_i r_j} \right)^2 \right) \end{equation*}
-</p>
- <dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramdir">[in]</td><td class="paramname">eps</td><td>The bandwidth parameter \(\epsilon\) </td></tr>
-    <tr><td class="paramdir">[in]</td><td class="paramname">rvec</td><td>The vector \(\boldsymbol{r}\) </td></tr>
-  </table>
-  </dd>
-</dl>
-<dl class="section return"><dt>Returns</dt><dd>The kernel derivative average \(\bar{k}^{\prime}\). </dd></dl>
-
-<p>Reimplemented from <a class="el" href="classspi_1_1NumericalSolvers_1_1SampleRepresentation.html#aea987d298ab0da32e8c45da61a942e8d">spi::NumericalSolvers::SampleRepresentation</a>.</p>
-
-</div>
-</div>
-<a class="anchor" id="aa1c58c4ff49c2f6194a8c120b70276e2"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">Eigen::VectorXd spi::NumericalSolvers::KolmogorovOperator::SquaredBandwidth </td>
-          <td>(</td>
-          <td class="paramname"></td><td>)</td>
-          <td> const</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-<p>Compute the squared bandwidth \(r_i^2 = \frac{1}{k} \sum_{j=1}^{k} \| \boldsymbol{x}^{(i)}-\boldsymbol{x}^{(I(i,j))} \|^2\). </p>
-<p>This function does NOT compute the kd trees. It assumes that <a class="el" href="classspi_1_1NumericalSolvers_1_1SampleRepresentation.html#a5ae60ef9b8bb97a45448a6823ee3187c" title="Build the kd trees for the nearest neighbor computation. ">spi::NumericalSolvers::SampleRepresentation::BuildKDTrees</a> has already been called.</p>
-<dl class="section return"><dt>Returns</dt><dd>The squared bandwidth \(r_i^2 = \frac{1}{k} \sum_{j=1}^{k} \| \boldsymbol{x}^{(i)}-\boldsymbol{x}^{(I(i,j))} \|^2\) </dd></dl>
-
-</div>
-</div>
-<a class="anchor" id="a65ebad9de33f4c4dedc0e233924cc379"></a>
+<a class="anchor" id="a9b0f112c2dbb2bf0608152b8a536ead5"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
           <td class="memname">void KolmogorovOperator::TuneBandwidthParameter </td>
           <td>(</td>
-          <td class="paramname"></td><td>)</td>
+          <td class="paramtype">bool const&#160;</td>
+          <td class="paramname"><em>tuneDens</em> = <code>true</code></td><td>)</td>
           <td></td>
         </tr>
       </table>
 </div><div class="memdoc">
+
+<p>Tune the bandwidth parameter for the Kolmogorov operator. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">tuneDens</td><td>Also tune the bandwidth for the underlying density estimation (defaults to <code>true</code>) </td></tr>
+  </table>
+  </dd>
+</dl>
 
 </div>
 </div>
