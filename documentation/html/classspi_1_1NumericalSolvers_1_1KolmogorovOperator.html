@@ -95,10 +95,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 </div><!-- top -->
 <div class="header">
   <div class="summary">
-<a href="#nested-classes">Classes</a> &#124;
 <a href="#pub-methods">Public Member Functions</a> &#124;
-<a href="#pri-attribs">Private Attributes</a> &#124;
-<a href="#pri-static-attribs">Static Private Attributes</a> &#124;
 <a href="classspi_1_1NumericalSolvers_1_1KolmogorovOperator-members.html">List of all members</a>  </div>
   <div class="headertitle">
 <div class="title">spi::NumericalSolvers::KolmogorovOperator Class Reference</div>  </div>
@@ -119,12 +116,6 @@ Inheritance diagram for spi::NumericalSolvers::KolmogorovOperator:</div>
 </map>
  </div></div>
 <table class="memberdecls">
-<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="nested-classes"></a>
-Classes</h2></td></tr>
-<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structspi_1_1NumericalSolvers_1_1KolmogorovOperator_1_1DefaultParameters.html">DefaultParameters</a></td></tr>
-<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">The default values for the <a class="el" href="classspi_1_1NumericalSolvers_1_1DensityEstimation.html" title="Estimate the density of a probability distribution  given samples  such that . ">spi::NumericalSolvers::DensityEstimation</a> class.  <a href="structspi_1_1NumericalSolvers_1_1KolmogorovOperator_1_1DefaultParameters.html#details">More...</a><br /></td></tr>
-<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
-</table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-methods"></a>
 Public Member Functions</h2></td></tr>
 <tr class="memitem:a040223723c3866febc7b77403a8be465"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classspi_1_1NumericalSolvers_1_1KolmogorovOperator.html#a040223723c3866febc7b77403a8be465">KolmogorovOperator</a> (std::shared_ptr&lt; muq::Modeling::RandomVariable &gt; const &amp;rv, YAML::Node const &amp;options)</td></tr>
@@ -141,30 +132,9 @@ Public Member Functions</h2></td></tr>
 <tr class="memitem:add6416f5382319fa2d24f89de09d3c6c"><td class="memItemLeft" align="right" valign="top">Eigen::VectorXd&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classspi_1_1NumericalSolvers_1_1KolmogorovOperator.html#add6416f5382319fa2d24f89de09d3c6c">EstimateDensity</a> (bool const tune=true) const </td></tr>
 <tr class="memdesc:add6416f5382319fa2d24f89de09d3c6c"><td class="mdescLeft">&#160;</td><td class="mdescRight">Compute the density estimate.  <a href="#add6416f5382319fa2d24f89de09d3c6c">More...</a><br /></td></tr>
 <tr class="separator:add6416f5382319fa2d24f89de09d3c6c"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a6ecac63d417b96027f7d59ab878da497"><td class="memItemLeft" align="right" valign="top">virtual Eigen::VectorXd&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classspi_1_1NumericalSolvers_1_1KolmogorovOperator.html#a6ecac63d417b96027f7d59ab878da497">KernelMatrix</a> (double const eps, Eigen::Ref&lt; Eigen::MatrixXd &gt; kmat, const void *tune=&amp;<a class="el" href="classspi_1_1NumericalSolvers_1_1KolmogorovOperator.html#a583eb3e4b0823f5bea55004868f9b2bd">tuneDefault</a>) const override</td></tr>
-<tr class="memdesc:a6ecac63d417b96027f7d59ab878da497"><td class="mdescLeft">&#160;</td><td class="mdescRight">Construct the (dense) kernel matrix \(\boldsymbol{K}_{\epsilon}\).  <a href="#a6ecac63d417b96027f7d59ab878da497">More...</a><br /></td></tr>
+<tr class="memitem:a6ecac63d417b96027f7d59ab878da497"><td class="memItemLeft" align="right" valign="top">virtual Eigen::VectorXd&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classspi_1_1NumericalSolvers_1_1KolmogorovOperator.html#a6ecac63d417b96027f7d59ab878da497">KernelMatrix</a> (double const eps, Eigen::Ref&lt; Eigen::MatrixXd &gt; kmat, const void *tune=&amp;tuneDefault) const override</td></tr>
+<tr class="memdesc:a6ecac63d417b96027f7d59ab878da497"><td class="mdescLeft">&#160;</td><td class="mdescRight">Construct the kernel matrix \(\boldsymbol{K}_{\epsilon}\).  <a href="#a6ecac63d417b96027f7d59ab878da497">More...</a><br /></td></tr>
 <tr class="separator:a6ecac63d417b96027f7d59ab878da497"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:af6cbd47e98f1bd7c74b5a076838bbe0b"><td class="memItemLeft" align="right" valign="top">virtual Eigen::VectorXd&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classspi_1_1NumericalSolvers_1_1KolmogorovOperator.html#af6cbd47e98f1bd7c74b5a076838bbe0b">KernelMatrix</a> (double const eps, Eigen::Ref&lt; const Eigen::VectorXd &gt; const &amp;dens, Eigen::Ref&lt; Eigen::MatrixXd &gt; kmat) const override</td></tr>
-<tr class="memdesc:af6cbd47e98f1bd7c74b5a076838bbe0b"><td class="mdescLeft">&#160;</td><td class="mdescRight">Construct the (dense) kernel matrix \(\boldsymbol{K}_{\epsilon}\).  <a href="#af6cbd47e98f1bd7c74b5a076838bbe0b">More...</a><br /></td></tr>
-<tr class="separator:af6cbd47e98f1bd7c74b5a076838bbe0b"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:acf0ce13c1a4bbe7cd2f8a6a35e241f2e"><td class="memItemLeft" align="right" valign="top">virtual Eigen::VectorXd&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classspi_1_1NumericalSolvers_1_1KolmogorovOperator.html#acf0ce13c1a4bbe7cd2f8a6a35e241f2e">KernelMatrix</a> (double const eps, Eigen::SparseMatrix&lt; double &gt; &amp;kmat, const void *tune=&amp;<a class="el" href="classspi_1_1NumericalSolvers_1_1KolmogorovOperator.html#a583eb3e4b0823f5bea55004868f9b2bd">tuneDefault</a>) const override</td></tr>
-<tr class="memdesc:acf0ce13c1a4bbe7cd2f8a6a35e241f2e"><td class="mdescLeft">&#160;</td><td class="mdescRight">Construct the kernel matrix \(\boldsymbol{K}_{\epsilon}\).  <a href="#acf0ce13c1a4bbe7cd2f8a6a35e241f2e">More...</a><br /></td></tr>
-<tr class="separator:acf0ce13c1a4bbe7cd2f8a6a35e241f2e"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ab72da3febd51855b21cbcc30b7ba5adc"><td class="memItemLeft" align="right" valign="top">virtual Eigen::VectorXd&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classspi_1_1NumericalSolvers_1_1KolmogorovOperator.html#ab72da3febd51855b21cbcc30b7ba5adc">KernelMatrix</a> (double const eps, Eigen::Ref&lt; const Eigen::VectorXd &gt; const &amp;dens, Eigen::SparseMatrix&lt; double &gt; &amp;kmat) const override</td></tr>
-<tr class="memdesc:ab72da3febd51855b21cbcc30b7ba5adc"><td class="mdescLeft">&#160;</td><td class="mdescRight">Construct the kernel matrix \(\boldsymbol{K}_{\epsilon}\).  <a href="#ab72da3febd51855b21cbcc30b7ba5adc">More...</a><br /></td></tr>
-<tr class="separator:ab72da3febd51855b21cbcc30b7ba5adc"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a9b0f112c2dbb2bf0608152b8a536ead5"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classspi_1_1NumericalSolvers_1_1KolmogorovOperator.html#a9b0f112c2dbb2bf0608152b8a536ead5">TuneBandwidthParameter</a> (bool const tuneDens=true)</td></tr>
-<tr class="memdesc:a9b0f112c2dbb2bf0608152b8a536ead5"><td class="mdescLeft">&#160;</td><td class="mdescRight">Tune the bandwidth parameter for the Kolmogorov operator.  <a href="#a9b0f112c2dbb2bf0608152b8a536ead5">More...</a><br /></td></tr>
-<tr class="separator:a9b0f112c2dbb2bf0608152b8a536ead5"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a34d8ba032526eb8e9f08ff18496b389c"><td class="memItemLeft" align="right" valign="top">double&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classspi_1_1NumericalSolvers_1_1KolmogorovOperator.html#a34d8ba032526eb8e9f08ff18496b389c">VariableBandwidthExponent</a> () const </td></tr>
-<tr class="memdesc:a34d8ba032526eb8e9f08ff18496b389c"><td class="mdescLeft">&#160;</td><td class="mdescRight">Get the parameter used as the variable bandwidth exponent.  <a href="#a34d8ba032526eb8e9f08ff18496b389c">More...</a><br /></td></tr>
-<tr class="separator:a34d8ba032526eb8e9f08ff18496b389c"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a578c9d8538a754b9b5a1d8a77d23931b"><td class="memItemLeft" align="right" valign="top">double&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classspi_1_1NumericalSolvers_1_1KolmogorovOperator.html#a578c9d8538a754b9b5a1d8a77d23931b">ExponentParameter</a> () const </td></tr>
-<tr class="memdesc:a578c9d8538a754b9b5a1d8a77d23931b"><td class="mdescLeft">&#160;</td><td class="mdescRight">Get the exponent parameter \(\beta\).  <a href="#a578c9d8538a754b9b5a1d8a77d23931b">More...</a><br /></td></tr>
-<tr class="separator:a578c9d8538a754b9b5a1d8a77d23931b"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a612816850e104d41f613dd32b5d904b7"><td class="memItemLeft" align="right" valign="top">std::shared_ptr&lt; <a class="el" href="classspi_1_1NumericalSolvers_1_1DensityEstimation.html">DensityEstimation</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classspi_1_1NumericalSolvers_1_1KolmogorovOperator.html#a612816850e104d41f613dd32b5d904b7">Density</a> () const </td></tr>
-<tr class="memdesc:a612816850e104d41f613dd32b5d904b7"><td class="mdescLeft">&#160;</td><td class="mdescRight">Get the density estimator.  <a href="#a612816850e104d41f613dd32b5d904b7">More...</a><br /></td></tr>
-<tr class="separator:a612816850e104d41f613dd32b5d904b7"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="inherit_header pub_methods_classspi_1_1NumericalSolvers_1_1SampleRepresentation"><td colspan="2" onclick="javascript:toggleInherit('pub_methods_classspi_1_1NumericalSolvers_1_1SampleRepresentation')"><img src="closed.png" alt="-"/>&#160;Public Member Functions inherited from <a class="el" href="classspi_1_1NumericalSolvers_1_1SampleRepresentation.html">spi::NumericalSolvers::SampleRepresentation</a></td></tr>
 <tr class="memitem:a10425f4a35ee78bfe75d9eaf9c9e3aff inherit pub_methods_classspi_1_1NumericalSolvers_1_1SampleRepresentation"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classspi_1_1NumericalSolvers_1_1SampleRepresentation.html#a10425f4a35ee78bfe75d9eaf9c9e3aff">SampleRepresentation</a> (std::shared_ptr&lt; muq::Modeling::RandomVariable &gt; const &amp;rv, YAML::Node const &amp;options)</td></tr>
 <tr class="memdesc:a10425f4a35ee78bfe75d9eaf9c9e3aff inherit pub_methods_classspi_1_1NumericalSolvers_1_1SampleRepresentation"><td class="mdescLeft">&#160;</td><td class="mdescRight">Construct the sample representation by sampling a random variable from \(\psi\).  <a href="#a10425f4a35ee78bfe75d9eaf9c9e3aff">More...</a><br /></td></tr>
@@ -192,6 +162,15 @@ Public Member Functions</h2></td></tr>
 <tr class="memitem:a4b5c66dc379ab9910d43e691d93747f9 inherit pub_methods_classspi_1_1NumericalSolvers_1_1SampleRepresentation"><td class="memItemLeft" align="right" valign="top">Eigen::Ref&lt; Eigen::VectorXd const  &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classspi_1_1NumericalSolvers_1_1SampleRepresentation.html#a4b5c66dc379ab9910d43e691d93747f9">Point</a> (std::size_t const i) const </td></tr>
 <tr class="memdesc:a4b5c66dc379ab9910d43e691d93747f9 inherit pub_methods_classspi_1_1NumericalSolvers_1_1SampleRepresentation"><td class="mdescLeft">&#160;</td><td class="mdescRight">Get the \(i^{th}\) point \(\boldsymbol{x}^{(i)}\) from the point cloud.  <a href="#a4b5c66dc379ab9910d43e691d93747f9">More...</a><br /></td></tr>
 <tr class="separator:a4b5c66dc379ab9910d43e691d93747f9 inherit pub_methods_classspi_1_1NumericalSolvers_1_1SampleRepresentation"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a54fb52fdabb40237387a0df1bd41dbae inherit pub_methods_classspi_1_1NumericalSolvers_1_1SampleRepresentation"><td class="memItemLeft" align="right" valign="top">virtual Eigen::VectorXd&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classspi_1_1NumericalSolvers_1_1SampleRepresentation.html#a54fb52fdabb40237387a0df1bd41dbae">KernelMatrix</a> (double const eps, Eigen::Ref&lt; const Eigen::VectorXd &gt; const &amp;rvec, Eigen::Ref&lt; Eigen::MatrixXd &gt; kmat) const </td></tr>
+<tr class="memdesc:a54fb52fdabb40237387a0df1bd41dbae inherit pub_methods_classspi_1_1NumericalSolvers_1_1SampleRepresentation"><td class="mdescLeft">&#160;</td><td class="mdescRight">Construct the (dense) kernel matrix \(\boldsymbol{K}_{\epsilon}\).  <a href="#a54fb52fdabb40237387a0df1bd41dbae">More...</a><br /></td></tr>
+<tr class="separator:a54fb52fdabb40237387a0df1bd41dbae inherit pub_methods_classspi_1_1NumericalSolvers_1_1SampleRepresentation"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a6aadda0269aa2097d34c59473a4496b9 inherit pub_methods_classspi_1_1NumericalSolvers_1_1SampleRepresentation"><td class="memItemLeft" align="right" valign="top">virtual Eigen::VectorXd&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classspi_1_1NumericalSolvers_1_1SampleRepresentation.html#a6aadda0269aa2097d34c59473a4496b9">KernelMatrix</a> (double const eps, Eigen::SparseMatrix&lt; double &gt; &amp;kmat, const void *options=nullptr) const </td></tr>
+<tr class="memdesc:a6aadda0269aa2097d34c59473a4496b9 inherit pub_methods_classspi_1_1NumericalSolvers_1_1SampleRepresentation"><td class="mdescLeft">&#160;</td><td class="mdescRight">Construct the kernel matrix \(\boldsymbol{K}_{\epsilon}\).  <a href="#a6aadda0269aa2097d34c59473a4496b9">More...</a><br /></td></tr>
+<tr class="separator:a6aadda0269aa2097d34c59473a4496b9 inherit pub_methods_classspi_1_1NumericalSolvers_1_1SampleRepresentation"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ac32acbab45fa8691ff8791ac324cfb3a inherit pub_methods_classspi_1_1NumericalSolvers_1_1SampleRepresentation"><td class="memItemLeft" align="right" valign="top">virtual Eigen::VectorXd&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classspi_1_1NumericalSolvers_1_1SampleRepresentation.html#ac32acbab45fa8691ff8791ac324cfb3a">KernelMatrix</a> (double const eps, Eigen::Ref&lt; const Eigen::VectorXd &gt; const &amp;rvec, Eigen::SparseMatrix&lt; double &gt; &amp;kmat) const </td></tr>
+<tr class="memdesc:ac32acbab45fa8691ff8791ac324cfb3a inherit pub_methods_classspi_1_1NumericalSolvers_1_1SampleRepresentation"><td class="mdescLeft">&#160;</td><td class="mdescRight">Construct the kernel matrix \(\boldsymbol{K}_{\epsilon}\).  <a href="#ac32acbab45fa8691ff8791ac324cfb3a">More...</a><br /></td></tr>
+<tr class="separator:ac32acbab45fa8691ff8791ac324cfb3a inherit pub_methods_classspi_1_1NumericalSolvers_1_1SampleRepresentation"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a5ae60ef9b8bb97a45448a6823ee3187c inherit pub_methods_classspi_1_1NumericalSolvers_1_1SampleRepresentation"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classspi_1_1NumericalSolvers_1_1SampleRepresentation.html#a5ae60ef9b8bb97a45448a6823ee3187c">BuildKDTrees</a> () const </td></tr>
 <tr class="memdesc:a5ae60ef9b8bb97a45448a6823ee3187c inherit pub_methods_classspi_1_1NumericalSolvers_1_1SampleRepresentation"><td class="mdescLeft">&#160;</td><td class="mdescRight">Build the kd trees for the nearest neighbor computation.  <a href="#a5ae60ef9b8bb97a45448a6823ee3187c">More...</a><br /></td></tr>
 <tr class="separator:a5ae60ef9b8bb97a45448a6823ee3187c inherit pub_methods_classspi_1_1NumericalSolvers_1_1SampleRepresentation"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -210,27 +189,6 @@ Public Member Functions</h2></td></tr>
 <tr class="memitem:adce354e8d0eea8a553faa842f7da4d28 inherit pub_methods_classspi_1_1NumericalSolvers_1_1SampleRepresentation"><td class="memItemLeft" align="right" valign="top">double&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classspi_1_1NumericalSolvers_1_1SampleRepresentation.html#adce354e8d0eea8a553faa842f7da4d28">ManifoldDimension</a> () const </td></tr>
 <tr class="memdesc:adce354e8d0eea8a553faa842f7da4d28 inherit pub_methods_classspi_1_1NumericalSolvers_1_1SampleRepresentation"><td class="mdescLeft">&#160;</td><td class="mdescRight">Get the manifold dimension.  <a href="#adce354e8d0eea8a553faa842f7da4d28">More...</a><br /></td></tr>
 <tr class="separator:adce354e8d0eea8a553faa842f7da4d28 inherit pub_methods_classspi_1_1NumericalSolvers_1_1SampleRepresentation"><td class="memSeparator" colspan="2">&#160;</td></tr>
-</table><table class="memberdecls">
-<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pri-attribs"></a>
-Private Attributes</h2></td></tr>
-<tr class="memitem:a551133fd43abff4a69e017f36529e229"><td class="memItemLeft" align="right" valign="top">std::shared_ptr&lt; <a class="el" href="classspi_1_1NumericalSolvers_1_1DensityEstimation.html">DensityEstimation</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classspi_1_1NumericalSolvers_1_1KolmogorovOperator.html#a551133fd43abff4a69e017f36529e229">density</a></td></tr>
-<tr class="memdesc:a551133fd43abff4a69e017f36529e229"><td class="mdescLeft">&#160;</td><td class="mdescRight">Estimate the density of the underlying distribution.  <a href="#a551133fd43abff4a69e017f36529e229">More...</a><br /></td></tr>
-<tr class="separator:a551133fd43abff4a69e017f36529e229"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ae97f38bc206c1b40ace39cff6ec858fa"><td class="memItemLeft" align="right" valign="top">const double&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classspi_1_1NumericalSolvers_1_1KolmogorovOperator.html#ae97f38bc206c1b40ace39cff6ec858fa">operatorConstant</a></td></tr>
-<tr class="memdesc:ae97f38bc206c1b40ace39cff6ec858fa"><td class="mdescLeft">&#160;</td><td class="mdescRight">The operator parameter \(c\).  <a href="#ae97f38bc206c1b40ace39cff6ec858fa">More...</a><br /></td></tr>
-<tr class="separator:ae97f38bc206c1b40ace39cff6ec858fa"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:af1f6f4e4d25a0a859231cbf191c1c57d"><td class="memItemLeft" align="right" valign="top">const double&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classspi_1_1NumericalSolvers_1_1KolmogorovOperator.html#af1f6f4e4d25a0a859231cbf191c1c57d">exponentPara</a></td></tr>
-<tr class="memdesc:af1f6f4e4d25a0a859231cbf191c1c57d"><td class="mdescLeft">&#160;</td><td class="mdescRight">The exponent parameter \(\beta\).  <a href="#af1f6f4e4d25a0a859231cbf191c1c57d">More...</a><br /></td></tr>
-<tr class="separator:af1f6f4e4d25a0a859231cbf191c1c57d"><td class="memSeparator" colspan="2">&#160;</td></tr>
-</table><table class="memberdecls">
-<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pri-static-attribs"></a>
-Static Private Attributes</h2></td></tr>
-<tr class="memitem:a583eb3e4b0823f5bea55004868f9b2bd"><td class="memItemLeft" align="right" valign="top">static const bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classspi_1_1NumericalSolvers_1_1KolmogorovOperator.html#a583eb3e4b0823f5bea55004868f9b2bd">tuneDefault</a> = true</td></tr>
-<tr class="memdesc:a583eb3e4b0823f5bea55004868f9b2bd"><td class="mdescLeft">&#160;</td><td class="mdescRight">By default, do we want to tune the bandwidth parameter values?  <a href="#a583eb3e4b0823f5bea55004868f9b2bd">More...</a><br /></td></tr>
-<tr class="separator:a583eb3e4b0823f5bea55004868f9b2bd"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a3c9b1aaf24a02995693c6e21c26a3fbc"><td class="memItemLeft" align="right" valign="top">static const <a class="el" href="structspi_1_1NumericalSolvers_1_1KolmogorovOperator_1_1DefaultParameters.html">DefaultParameters</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classspi_1_1NumericalSolvers_1_1KolmogorovOperator.html#a3c9b1aaf24a02995693c6e21c26a3fbc">defaults</a></td></tr>
-<tr class="memdesc:a3c9b1aaf24a02995693c6e21c26a3fbc"><td class="mdescLeft">&#160;</td><td class="mdescRight">Store the default parameter values.  <a href="#a3c9b1aaf24a02995693c6e21c26a3fbc">More...</a><br /></td></tr>
-<tr class="separator:a3c9b1aaf24a02995693c6e21c26a3fbc"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="inherited"></a>
 Additional Inherited Members</h2></td></tr>
@@ -407,24 +365,6 @@ Additional Inherited Members</h2></td></tr>
 </div>
 </div>
 <h2 class="groupheader">Member Function Documentation</h2>
-<a class="anchor" id="a612816850e104d41f613dd32b5d904b7"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">std::shared_ptr&lt; <a class="el" href="classspi_1_1NumericalSolvers_1_1DensityEstimation.html">DensityEstimation</a> &gt; KolmogorovOperator::Density </td>
-          <td>(</td>
-          <td class="paramname"></td><td>)</td>
-          <td> const</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-<p>Get the density estimator. </p>
-<dl class="section return"><dt>Returns</dt><dd>The density estimator </dd></dl>
-
-</div>
-</div>
 <a class="anchor" id="add6416f5382319fa2d24f89de09d3c6c"></a>
 <div class="memitem">
 <div class="memproto">
@@ -447,24 +387,6 @@ Additional Inherited Members</h2></td></tr>
   </dd>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>The density estimation at each sample </dd></dl>
-
-</div>
-</div>
-<a class="anchor" id="a578c9d8538a754b9b5a1d8a77d23931b"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">double KolmogorovOperator::ExponentParameter </td>
-          <td>(</td>
-          <td class="paramname"></td><td>)</td>
-          <td> const</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-<p>Get the exponent parameter \(\beta\). </p>
-<dl class="section return"><dt>Returns</dt><dd>The exponent parameter \(\beta\). </dd></dl>
 
 </div>
 </div>
@@ -491,7 +413,7 @@ Additional Inherited Members</h2></td></tr>
           <td class="paramkey"></td>
           <td></td>
           <td class="paramtype">const void *&#160;</td>
-          <td class="paramname"><em>options</em> = <code>&amp;<a class="el" href="classspi_1_1NumericalSolvers_1_1KolmogorovOperator.html#a583eb3e4b0823f5bea55004868f9b2bd">tuneDefault</a></code>&#160;</td>
+          <td class="paramname"><em>tune</em> = <code>&amp;tuneDefault</code>&#160;</td>
         </tr>
         <tr>
           <td></td>
@@ -506,347 +428,20 @@ Additional Inherited Members</h2></td></tr>
 </table>
 </div><div class="memdoc">
 
-<p>Construct the (dense) kernel matrix \(\boldsymbol{K}_{\epsilon}\). </p>
-<p>Let \(r_i^2 = \frac{1}{k} \sum_{j=1}^{k} \| \boldsymbol{x}^{(i)}-\boldsymbol{x}^{(I(i,j))} \|^2\) be the squared bandwidth associated with each sample such that \(I(i,j)\) is the index of the \(j^{th}\) furthest index from the point \(\boldsymbol{x}^{(i)}\). By default, this function defines the kernel matrix \(\boldsymbol{K}_{\epsilon}\) such that the \((i,j)\) component is </p><p class="formulaDsp">
-\begin{equation*} K_{\epsilon}^{(ij)} = k_{\epsilon}(\boldsymbol{x}^{(i)}, \boldsymbol{x}^{(j)}) = k\left( \frac{\| \boldsymbol{x}^{(i)} - \boldsymbol{x}^{(j)} \|^2}{\epsilon r_i r_j} \right). \end{equation*}
-</p>
-<p> Recall that \(k(\theta)\) is the kernel function.</p>
-<p>This function does NOT compute the kd trees. It assumes that <a class="el" href="classspi_1_1NumericalSolvers_1_1SampleRepresentation.html#a5ae60ef9b8bb97a45448a6823ee3187c" title="Build the kd trees for the nearest neighbor computation. ">spi::NumericalSolvers::SampleRepresentation::BuildKDTrees</a> has already been called.</p>
+<p>Construct the kernel matrix \(\boldsymbol{K}_{\epsilon}\). </p>
+<p>This function first estimates the density function \(\psi_i\) at each sample \(\boldsymbol{x}^{(i)}\).</p>
+<p>Given this density function, call another KernelMatrix function to fill the kernel matrix.</p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramdir">[in]</td><td class="paramname">eps</td><td>The parameter \(\epsilon&gt;0\) </td></tr>
-    <tr><td class="paramdir">[out]</td><td class="paramname">kmat</td><td>The kernel matrix \(\boldsymbol{K}_{\epsilon}\) </td></tr>
-    <tr><td class="paramdir">[in]</td><td class="paramname">options</td><td>This parameter is not used in this default implementation, but is used by implementations in its children (defaults to <code>nullptr</code>) </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">eps</td><td>The bandwidth parameer \(\epsilon\) </td></tr>
+    <tr><td class="paramdir">[out]</td><td class="paramname">kmat</td><td>The kernel matrix \(\boldsymbol{K}\) </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">tune</td><td><code>true</code>: Tune the parameter used to estimate the density \(\psi\); <code>false</code>: Do not tune the parameter used to estimate \(\psi\) </td></tr>
   </table>
   </dd>
 </dl>
-<dl class="section return"><dt>Returns</dt><dd>Each entry is the sum of a row in the kernel matrix \(b_i = \sum_{j=1}^{n} K_{\epsilon}^{(ij)}\) </dd></dl>
+<dl class="section return"><dt>Returns</dt><dd>The row sum of the kernel matrix </dd></dl>
 
 <p>Reimplemented from <a class="el" href="classspi_1_1NumericalSolvers_1_1SampleRepresentation.html#a4863daf02896be5c43ebe0bf8b520cdf">spi::NumericalSolvers::SampleRepresentation</a>.</p>
-
-</div>
-</div>
-<a class="anchor" id="af6cbd47e98f1bd7c74b5a076838bbe0b"></a>
-<div class="memitem">
-<div class="memproto">
-<table class="mlabels">
-  <tr>
-  <td class="mlabels-left">
-      <table class="memname">
-        <tr>
-          <td class="memname">Eigen::VectorXd KolmogorovOperator::KernelMatrix </td>
-          <td>(</td>
-          <td class="paramtype">double const&#160;</td>
-          <td class="paramname"><em>eps</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">Eigen::Ref&lt; const Eigen::VectorXd &gt; const &amp;&#160;</td>
-          <td class="paramname"><em>rvec</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">Eigen::Ref&lt; Eigen::MatrixXd &gt;&#160;</td>
-          <td class="paramname"><em>kmat</em>&#160;</td>
-        </tr>
-        <tr>
-          <td></td>
-          <td>)</td>
-          <td></td><td> const</td>
-        </tr>
-      </table>
-  </td>
-  <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">override</span><span class="mlabel">virtual</span></span>  </td>
-  </tr>
-</table>
-</div><div class="memdoc">
-
-<p>Construct the (dense) kernel matrix \(\boldsymbol{K}_{\epsilon}\). </p>
-<p>This function computes the kernel matrix \(\boldsymbol{K}_{\epsilon}\) such that the \((i,j)\) component is </p><p class="formulaDsp">
-\begin{equation*} K_{\epsilon}^{(ij)} = k_{\epsilon}(\boldsymbol{x}^{(i)}, \boldsymbol{x}^{(j)}) = k\left( \frac{\| \boldsymbol{x}^{(i)} - \boldsymbol{x}^{(j)} \|^2}{\epsilon r_i r_j} \right). \end{equation*}
-</p>
-<p> Recall that \(k(\theta)\) is the kernel function. </p><dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramdir">[in]</td><td class="paramname">eps</td><td>The parameter \(\epsilon&gt;0\) </td></tr>
-    <tr><td class="paramdir">[in]</td><td class="paramname">rvec</td><td>The vector of parameters \(r_i\). </td></tr>
-    <tr><td class="paramdir">[out]</td><td class="paramname">kmat</td><td>The kernel matrix \(\boldsymbol{K}_{\epsilon}\) </td></tr>
-  </table>
-  </dd>
-</dl>
-<dl class="section return"><dt>Returns</dt><dd>Each entry is the sum of a row in the kernel matrix \(b_i = \sum_{j=1}^{n} K_{\epsilon}^{(ij)}\) </dd></dl>
-
-<p>Reimplemented from <a class="el" href="classspi_1_1NumericalSolvers_1_1SampleRepresentation.html#a54fb52fdabb40237387a0df1bd41dbae">spi::NumericalSolvers::SampleRepresentation</a>.</p>
-
-</div>
-</div>
-<a class="anchor" id="acf0ce13c1a4bbe7cd2f8a6a35e241f2e"></a>
-<div class="memitem">
-<div class="memproto">
-<table class="mlabels">
-  <tr>
-  <td class="mlabels-left">
-      <table class="memname">
-        <tr>
-          <td class="memname">Eigen::VectorXd KolmogorovOperator::KernelMatrix </td>
-          <td>(</td>
-          <td class="paramtype">double const&#160;</td>
-          <td class="paramname"><em>eps</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">Eigen::SparseMatrix&lt; double &gt; &amp;&#160;</td>
-          <td class="paramname"><em>kmat</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">const void *&#160;</td>
-          <td class="paramname"><em>options</em> = <code>&amp;<a class="el" href="classspi_1_1NumericalSolvers_1_1KolmogorovOperator.html#a583eb3e4b0823f5bea55004868f9b2bd">tuneDefault</a></code>&#160;</td>
-        </tr>
-        <tr>
-          <td></td>
-          <td>)</td>
-          <td></td><td> const</td>
-        </tr>
-      </table>
-  </td>
-  <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">override</span><span class="mlabel">virtual</span></span>  </td>
-  </tr>
-</table>
-</div><div class="memdoc">
-
-<p>Construct the kernel matrix \(\boldsymbol{K}_{\epsilon}\). </p>
-<p>Let \(r_i^2 = \frac{1}{k} \sum_{j=1}^{k} \| \boldsymbol{x}^{(i)}-\boldsymbol{x}^{(I(i,j))} \|^2\) be the squared bandwidth associated with each sample such that \(I(i,j)\) is the index of the \(j^{th}\) furthest index from the point \(\boldsymbol{x}^{(i)}\). By default, this function defines the kernel matrix \(\boldsymbol{K}_{\epsilon}\) such that the \((i,j)\) component is </p><p class="formulaDsp">
-\begin{equation*} K_{\epsilon}^{(ij)} = k_{\epsilon}(\boldsymbol{x}^{(i)}, \boldsymbol{x}^{(j)}) = k\left( \frac{\| \boldsymbol{x}^{(i)} - \boldsymbol{x}^{(j)} \|^2}{\epsilon r_i r_j} \right). \end{equation*}
-</p>
-<p> Recall that \(k(\theta)\) is the kernel function.</p>
-<p>This function does NOT compute the kd trees. It assumes that <a class="el" href="classspi_1_1NumericalSolvers_1_1SampleRepresentation.html#a5ae60ef9b8bb97a45448a6823ee3187c" title="Build the kd trees for the nearest neighbor computation. ">spi::NumericalSolvers::SampleRepresentation::BuildKDTrees</a> has already been called.</p>
-<dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramdir">[in]</td><td class="paramname">eps</td><td>The parameter \(\epsilon&gt;0\) </td></tr>
-    <tr><td class="paramdir">[out]</td><td class="paramname">kmat</td><td>The kernel matrix \(\boldsymbol{K}_{\epsilon}\) </td></tr>
-    <tr><td class="paramdir">[in]</td><td class="paramname">options</td><td>This parameter is not used in this default implementation, but is used by implementations in its children (defaults to <code>nullptr</code>) </td></tr>
-  </table>
-  </dd>
-</dl>
-<dl class="section return"><dt>Returns</dt><dd>Each entry is the sum of a row in the kernel matrix \(b_i = \sum_{j=1}^{n} K_{\epsilon}^{(ij)}\) </dd></dl>
-
-<p>Reimplemented from <a class="el" href="classspi_1_1NumericalSolvers_1_1SampleRepresentation.html#a6aadda0269aa2097d34c59473a4496b9">spi::NumericalSolvers::SampleRepresentation</a>.</p>
-
-</div>
-</div>
-<a class="anchor" id="ab72da3febd51855b21cbcc30b7ba5adc"></a>
-<div class="memitem">
-<div class="memproto">
-<table class="mlabels">
-  <tr>
-  <td class="mlabels-left">
-      <table class="memname">
-        <tr>
-          <td class="memname">Eigen::VectorXd KolmogorovOperator::KernelMatrix </td>
-          <td>(</td>
-          <td class="paramtype">double const&#160;</td>
-          <td class="paramname"><em>eps</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">Eigen::Ref&lt; const Eigen::VectorXd &gt; const &amp;&#160;</td>
-          <td class="paramname"><em>rvec</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">Eigen::SparseMatrix&lt; double &gt; &amp;&#160;</td>
-          <td class="paramname"><em>kmat</em>&#160;</td>
-        </tr>
-        <tr>
-          <td></td>
-          <td>)</td>
-          <td></td><td> const</td>
-        </tr>
-      </table>
-  </td>
-  <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">override</span><span class="mlabel">virtual</span></span>  </td>
-  </tr>
-</table>
-</div><div class="memdoc">
-
-<p>Construct the kernel matrix \(\boldsymbol{K}_{\epsilon}\). </p>
-<p>This function computes the kernel matrix \(\boldsymbol{K}_{\epsilon}\) such that the \((i,j)\) component is </p><p class="formulaDsp">
-\begin{equation*} K_{\epsilon}^{(ij)} = k_{\epsilon}(\boldsymbol{x}^{(i)}, \boldsymbol{x}^{(j)}) = k\left( \frac{\| \boldsymbol{x}^{(i)} - \boldsymbol{x}^{(j)} \|^2}{\epsilon r_i r_j} \right). \end{equation*}
-</p>
-<p> Recall that \(k(\theta)\) is the kernel function. </p><dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramdir">[in]</td><td class="paramname">eps</td><td>The parameter \(\epsilon&gt;0\) </td></tr>
-    <tr><td class="paramdir">[in]</td><td class="paramname">rvec</td><td>The vector of parameters \(r_i\). </td></tr>
-    <tr><td class="paramdir">[out]</td><td class="paramname">kmat</td><td>The kernel matrix \(\boldsymbol{K}_{\epsilon}\) </td></tr>
-  </table>
-  </dd>
-</dl>
-<dl class="section return"><dt>Returns</dt><dd>Each entry is the sum of a row in the kernel matrix \(b_i = \sum_{j=1}^{n} K_{\epsilon}^{(ij)}\) </dd></dl>
-
-<p>Reimplemented from <a class="el" href="classspi_1_1NumericalSolvers_1_1SampleRepresentation.html#ac32acbab45fa8691ff8791ac324cfb3a">spi::NumericalSolvers::SampleRepresentation</a>.</p>
-
-</div>
-</div>
-<a class="anchor" id="a9b0f112c2dbb2bf0608152b8a536ead5"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">void KolmogorovOperator::TuneBandwidthParameter </td>
-          <td>(</td>
-          <td class="paramtype">bool const&#160;</td>
-          <td class="paramname"><em>tuneDens</em> = <code>true</code></td><td>)</td>
-          <td></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-<p>Tune the bandwidth parameter for the Kolmogorov operator. </p>
-<dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramname">tuneDens</td><td>Also tune the bandwidth for the underlying density estimation (defaults to <code>true</code>) </td></tr>
-  </table>
-  </dd>
-</dl>
-
-</div>
-</div>
-<a class="anchor" id="a34d8ba032526eb8e9f08ff18496b389c"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">double KolmogorovOperator::VariableBandwidthExponent </td>
-          <td>(</td>
-          <td class="paramname"></td><td>)</td>
-          <td> const</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-<p>Get the parameter used as the variable bandwidth exponent. </p>
-<dl class="section return"><dt>Returns</dt><dd>The variable bandwidth exponent \(\alpha\). </dd></dl>
-
-</div>
-</div>
-<h2 class="groupheader">Member Data Documentation</h2>
-<a class="anchor" id="a3c9b1aaf24a02995693c6e21c26a3fbc"></a>
-<div class="memitem">
-<div class="memproto">
-<table class="mlabels">
-  <tr>
-  <td class="mlabels-left">
-      <table class="memname">
-        <tr>
-          <td class="memname">const <a class="el" href="structspi_1_1NumericalSolvers_1_1KolmogorovOperator_1_1DefaultParameters.html">DefaultParameters</a> spi::NumericalSolvers::KolmogorovOperator::defaults</td>
-        </tr>
-      </table>
-  </td>
-  <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">static</span><span class="mlabel">private</span></span>  </td>
-  </tr>
-</table>
-</div><div class="memdoc">
-
-<p>Store the default parameter values. </p>
-
-</div>
-</div>
-<a class="anchor" id="a551133fd43abff4a69e017f36529e229"></a>
-<div class="memitem">
-<div class="memproto">
-<table class="mlabels">
-  <tr>
-  <td class="mlabels-left">
-      <table class="memname">
-        <tr>
-          <td class="memname">std::shared_ptr&lt;<a class="el" href="classspi_1_1NumericalSolvers_1_1DensityEstimation.html">DensityEstimation</a>&gt; spi::NumericalSolvers::KolmogorovOperator::density</td>
-        </tr>
-      </table>
-  </td>
-  <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">private</span></span>  </td>
-  </tr>
-</table>
-</div><div class="memdoc">
-
-<p>Estimate the density of the underlying distribution. </p>
-
-</div>
-</div>
-<a class="anchor" id="af1f6f4e4d25a0a859231cbf191c1c57d"></a>
-<div class="memitem">
-<div class="memproto">
-<table class="mlabels">
-  <tr>
-  <td class="mlabels-left">
-      <table class="memname">
-        <tr>
-          <td class="memname">const double spi::NumericalSolvers::KolmogorovOperator::exponentPara</td>
-        </tr>
-      </table>
-  </td>
-  <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">private</span></span>  </td>
-  </tr>
-</table>
-</div><div class="memdoc">
-
-<p>The exponent parameter \(\beta\). </p>
-
-</div>
-</div>
-<a class="anchor" id="ae97f38bc206c1b40ace39cff6ec858fa"></a>
-<div class="memitem">
-<div class="memproto">
-<table class="mlabels">
-  <tr>
-  <td class="mlabels-left">
-      <table class="memname">
-        <tr>
-          <td class="memname">const double spi::NumericalSolvers::KolmogorovOperator::operatorConstant</td>
-        </tr>
-      </table>
-  </td>
-  <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">private</span></span>  </td>
-  </tr>
-</table>
-</div><div class="memdoc">
-
-<p>The operator parameter \(c\). </p>
-
-</div>
-</div>
-<a class="anchor" id="a583eb3e4b0823f5bea55004868f9b2bd"></a>
-<div class="memitem">
-<div class="memproto">
-<table class="mlabels">
-  <tr>
-  <td class="mlabels-left">
-      <table class="memname">
-        <tr>
-          <td class="memname">const bool spi::NumericalSolvers::KolmogorovOperator::tuneDefault = true</td>
-        </tr>
-      </table>
-  </td>
-  <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">static</span><span class="mlabel">private</span></span>  </td>
-  </tr>
-</table>
-</div><div class="memdoc">
-
-<p>By default, do we want to tune the bandwidth parameter values? </p>
-<p>The default value is <code>true</code>. </p>
 
 </div>
 </div>

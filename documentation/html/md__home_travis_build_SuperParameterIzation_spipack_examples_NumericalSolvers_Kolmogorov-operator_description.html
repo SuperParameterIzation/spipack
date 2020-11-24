@@ -97,26 +97,26 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <li>$c=1$: The weighted Laplacian operator ${L}_{,1} f =  f +  f  { }{} = ^{-1}   (  f)$</li>
 </ul>
 <h2>Density estimation phase</h2>
-<p>See the ../density-estimation/description.md "density estimation" example for details.</p>
+<p>We use the same procedure as in the ../density-estimation/description.md "density estimation example" to compute an estimate of $^{(i)}  ({x}^{(i)})$ at each sample ${x}^{(i)}$.</p>
 <p>&lt;figure&gt; &lt;figcaption&gt;The estimated density $^{(i)}  ({x}^{(i)})$ at each sample.&lt;/figcaption&gt; &lt;embed src="figures/DensityEstimation.pdf" width="500" height="375" type="application/pdf"&gt; &lt;/figure&gt;</p>
-<p>Importantly: we have an estimate an $^{(i)}$ of the density at each sample.</p>
 <h2>Discretize the operator</h2>
 <p>Parameters:</p><ul>
-<li>The operator constant $c$ (defines the operator)</li>
+<li>The operator constant $c=1$ (defines the operator)</li>
 <li>The exponent $$ (user-prescribed, typically we choose $ = -0.5$)</li>
 <li>The bandwidth $$ (user-prescribed or tuned using the procedure shown below)</li>
 <li>The manifold dimension $d$ (estimated in the density estimation phase, if not know already)</li>
 </ul>
 <p>Let $k() = {( -    )}$ and define the kernel</p>
 <p>$$ {equation} k_{,}({x}^{(i)}, {x}^{(j)}) = k( { | {x}^{(i)} - {x}^{(j)} |^2 }{  ^{ }({x}^{(i)}) ^{ }({x}^{(j)}) } ). {equation}. $$</p>
+<p>which corresponds to the unnormalized kernel matrix ${{K}}$ such that ${K}^{(ij)} = k_{,}({x}^{(i)}, {x}^{(j)})$.</p>
 <h3>Parameter tuning</h3>
-<p>Following the same procedure in the ../density-estimation/description.md "density estimation" example.</p>
+<p>(Following the same procedure in the ../density-estimation/description.md "density estimation example".)</p>
 <p>Let $  [{(l_{min})}, {(l_{max})}]$ be candidate bandwidth parameters. Define the parameter</p>
-<p>$$ {equation}  = {i,j=1}^{N} k_{,}({x}^{(i)}, {x}^{(j)}). {equation} $$</p>
+<p>$$ {equation}  = {i,j=1}^{N} {K}^{(ij)} = k_{,}({x}^{(i)}, {x}^{(j)}). {equation} $$</p>
 <p>and an approximation of how it changes with respect to $$</p>
 <p>$$ {equation} ^{} = {{({l+1})} - {({l})}}{{({l+1})} - {({l})}} {equation}. $$</p>
-<p>Let $${}_l^{}={l}{(^{})}$$ (with corresponding index ${l}$ and optimal bandwidth parameter ${}$).</p>
-<p>&lt;figure&gt; &lt;figcaption&gt;The value of $^{}$ for candidate bandwidth parameters $$; the optimal bandwidth parameter is ${}  0.28$.&lt;/figcaption&gt; &lt;embed src="figures/LogKernelAvgDerivative.pdf" width="500" height="375" type="application/pdf"&gt; &lt;/figure&gt;</p>
+<p>Let $${}_l^{}={l}{(^{})}$$ (with corresponding optimal bandwidth parameter ${}$).</p>
+<p>&lt;figure&gt; &lt;figcaption&gt;The value of $^{}$ for candidate bandwidth parameters $$; the optimal bandwidth parameter is ${}  7  10^{-4}$.&lt;/figcaption&gt; &lt;embed src="figures/LogKernelAvgDerivative.pdf" width="500" height="375" type="application/pdf"&gt; &lt;/figure&gt;</p>
 <p>We continue to discretize the operator by defining the normalization</p>
 <p>$$ {equation} q_{,} ({x}^{(i)}) = ^{-d }({x}^{(i)}) {j=1}^{n} k_{,}({x}^{(i)}, {x}^{(j)}) {equation} $$</p>
 <p>and the augmented kernel</p>
@@ -124,12 +124,14 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <p>where $ = 1 + {1}{2} d  +  - {1}{2} c$ defines the normalization. Finally, define a second normalization</p>
 <p>$$ {equation} q_{,,} ({x}^{(i)}) = {j=1}^{n} k_{,, }({x}^{(i)}, {x}^{(j)}) {equation} $$</p>
 <p>Denote the symmetric kernel matrix ${K}$ such that $K^{(ij)} = k_{,,}({x}^{(i)}, {x}^{(j)})$ and the diagonal matrices ${D}$ and ${P}$ such that $D^{(ii)} = q_{,,} ({x}^{(i)})$ and $P^{(ii)} = ^{}({x}^{(i)})$. The discrete Kolmogorov operator is</p>
-<p>$$ {equation} {L}_{,c}  {L} = ^{-1} {P}^{-2} ({D}^{-1} {K} - {I}) = ^{-1} {P}^{-2} {{L}}. {equation} $$</p>
+<p>$$ {equation} {L}_{,c}  {L} = ^{-1} {P}^{-2} ({D}^{-1} {K} - {I}). {equation} $$</p>
+<p>Additionally, define the diagonal matrix ${S} = {P} {D}^{1/2}$ and the symmetric matrix ${{L}} = ^{-1} ({S}^{-1} {K} {S}^{-1} - {P}^{-2})$. We note that ${L}$ and ${{L}}$ are related by a similarity transformation ${S} {L} {S}^{-1} = {{L}}$.</p>
 <h2>Eigen decomposition</h2>
-<p>Let's take the eigendecomposition of ${{L}} {{Q}} = {{Q}} {}$.</p>
-<p>&lt;figure&gt; &lt;figcaption&gt;The smallest eigenvalues of ${{L}}$ and their corresponding eigenfunctions.&lt;/figcaption&gt; &lt;embed src="figures/Eigenfunctions_L.pdf" width="500" height="375" type="application/pdf"&gt; &lt;/figure&gt;</p>
-<p>This allows us to define the pseudo-inverse ${{L}}^{-} = {{Q}} {}^{-} {{Q}}^T$. Therefore, we can approximate the action of the discrete Kolmogorov operator and its pseudo-inverse as ${L} = ^{-1} {P}^{-2} {{L}} = {{Q}} {} {{Q}}^T$ and ${L}^{-} =  {{L}}^{-} {P}^{2} =  {{Q}} {}^{-} {{Q}}^T {P}^{2}$, respectively.</p>
-<p>&lt;figure&gt; &lt;figcaption&gt;The smallest eigenvalues of ${{L}}$ and their corresponding eigenfunctions.&lt;/figcaption&gt; &lt;embed src="figures/AppliedKolmogorovOperator.pdf" width="500" height="375" type="application/pdf"&gt; &lt;/figure&gt;</p>
+<p>Let's take the eigendecomposition of ${{L}} {{Q}} = {{Q}} {}$&mdash;the corresponding eigendecomposition of ${L}$ is ${L} {Q} = {Q} {}$, where ${Q} = {S}^{-1} {{Q}}$. Note that because ${{L}}$ is symmetric that ${{Q}} {{Q}}^T = {I}$.</p>
+<p>&lt;figure&gt; &lt;figcaption&gt;The smallest eigenvalues of ${{L}}$ and their corresponding eigenfunctions (columns of ${{Q}}$).&lt;/figcaption&gt; &lt;embed src="figures/Eigenfunctions_L.pdf" width="500" height="375" type="application/pdf"&gt; &lt;/figure&gt;</p>
+<p>&lt;figure&gt; &lt;figcaption&gt;The smallest eigenvalues of ${L}$ and their corresponding eigenfunctions (columns of ${Q}$).&lt;/figcaption&gt; &lt;embed src="figures/Eigenfunctions_Lhat.pdf" width="500" height="375" type="application/pdf"&gt; &lt;/figure&gt;</p>
+<p>This allows us to define the pseudo-inverse ${{L}}^{-} = {{Q}} {}^{-} {{Q}}^T$. Therefore, we can approximate the pseudo-inverse the discrete Kolmogorov operator as ${L}^{-} = {S}^{-1} {{L}}^{-} {S} = {S}^{-1} {{Q}} {}^{-} {{Q}}^T {S}$, respectively.</p>
+<p>&lt;figure&gt; &lt;figcaption&gt;The action of ${L}$, ${{L}}^{-}$, and ${L}^{-}$ on example functions.&lt;/figcaption&gt; &lt;embed src="figures/AppliedKolmogorovOperator.pdf" width="500" height="375" type="application/pdf"&gt; &lt;/figure&gt;</p>
 <h2>References</h2>
 <ul>
 <li><a href="https://www.sciencedirect.com/science/article/pii/S1063520315000020">"Variable bandwidth diffusion kernels" by T. Berry &amp; J. Harlim</a></li>
