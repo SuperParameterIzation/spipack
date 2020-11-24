@@ -54,13 +54,80 @@ public:
   */
   Eigen::VectorXd EstimateDensity(bool const tune = true) const;
 
-  ///
+  /// Construct the kernel matrix \f$\boldsymbol{K}_{\epsilon}\f$
+  /**
+  This function first estimates the density function \f$\psi_i\f$ at each sample \f$\boldsymbol{x}^{(i)}\f$.
+
+  Given this density function, call another KernelMatrix function to fill the kernel matrix.
+
+  @param[in] eps The bandwidth parameer \f$\epsilon\f$
+  @param[out] kmat The kernel matrix \f$\boldsymbol{K}\f$
+  @param[in] tune <tt>true</tt>: Tune the parameter used to estimate the density \f$\psi\f$; <tt>false</tt>: Do not tune the parameter used to estimate \f$\psi\f$
+  \return The row sum of the kernel matrix
+  */
   virtual Eigen::VectorXd KernelMatrix(double const eps, Eigen::Ref<Eigen::MatrixXd> kmat, const void* tune = &tuneDefault) const override;
 
+  /// Construct the kernel matrix \f$\boldsymbol{K}_{\epsilon}\f$
+  /**
+  This function first computes the kernel matrix \f$\boldsymbol{K}_{\epsilon}\f$ such that the \f$(i,j)\f$ component is
+  \f{equation*}{
+    \widetilde{K}_{\epsilon}^{(ij)} = k_{\epsilon}(\boldsymbol{x}^{(i)}, \boldsymbol{x}^{(j)}) = k\left( \frac{\| \boldsymbol{x}^{(i)} - \boldsymbol{x}^{(j)} \|^2}{\epsilon \psi_i^{\beta} \psi_j^{\beta}} \right).
+  \f}
+  It then computes the normalization
+  \f{equation*}{
+  \tilde{\rho}^{(i)} = \frac{1}{\psi_i^{\beta \alpha d}} \sum_{j=1}^{n} \widetilde{K}_{\epsilon}^{(ij)},
+  \f}
+  where \f$\alpha = 1 + \frac{1}{2} d \beta + \beta - \frac{1}{2} c\f$. We finally fill the kernel matrix with
+  \f{equation*}{
+    K_{\epsilon}^{(ij)} = \frac{\widetilde{K}_{\epsilon}^{(ij)}}{\tilde{\rho}^{(i)} \tilde{\rho}^{(j)}}.
+  \f}
+  and return the row sum vector
+  \f{equation*}{
+  \rho^{(i)} = \sum_{j=1}^{n} K_{\epsilon}^{(ij)},
+  \f}
+  @param[in] eps The bandwidth parameer \f$\epsilon\f$
+  @param[in] dens An estimate of the density function \f$\psi|f$
+  @param[out] kmat The kernel matrix \f$\boldsymbol{K}\f$
+  \return The row sum of the kernel matrix
+  */
   virtual Eigen::VectorXd KernelMatrix(double const eps, Eigen::Ref<const Eigen::VectorXd> const& dens, Eigen::Ref<Eigen::MatrixXd> kmat) const override;
 
+  /// Construct the kernel matrix \f$\boldsymbol{K}_{\epsilon}\f$
+  /**
+  This function first estimates the density function \f$\psi_i\f$ at each sample \f$\boldsymbol{x}^{(i)}\f$.
+
+  Given this density function, call another KernelMatrix function to fill the kernel matrix.
+
+  @param[in] eps The bandwidth parameer \f$\epsilon\f$
+  @param[out] kmat The kernel matrix \f$\boldsymbol{K}\f$
+  @param[in] tune <tt>true</tt>: Tune the parameter used to estimate the density \f$\psi\f$; <tt>false</tt>: Do not tune the parameter used to estimate \f$\psi\f$
+  \return The row sum of the kernel matrix
+  */
   virtual Eigen::VectorXd KernelMatrix(double const eps, Eigen::SparseMatrix<double>& kmat, const void* tune = &tuneDefault) const override;
 
+  /// Construct the kernel matrix \f$\boldsymbol{K}_{\epsilon}\f$
+  /**
+  This function first computes the kernel matrix \f$\boldsymbol{K}_{\epsilon}\f$ such that the \f$(i,j)\f$ component is
+  \f{equation*}{
+    \widetilde{K}_{\epsilon}^{(ij)} = k_{\epsilon}(\boldsymbol{x}^{(i)}, \boldsymbol{x}^{(j)}) = k\left( \frac{\| \boldsymbol{x}^{(i)} - \boldsymbol{x}^{(j)} \|^2}{\epsilon \psi_i^{\beta} \psi_j^{\beta}} \right).
+  \f}
+  It then computes the normalization
+  \f{equation*}{
+  \tilde{\rho}^{(i)} = \frac{1}{\psi_i^{\beta \alpha d}} \sum_{j=1}^{n} \widetilde{K}_{\epsilon}^{(ij)},
+  \f}
+  where \f$\alpha = 1 + \frac{1}{2} d \beta + \beta - \frac{1}{2} c\f$. We finally fill the kernel matrix with
+  \f{equation*}{
+    K_{\epsilon}^{(ij)} = \frac{\widetilde{K}_{\epsilon}^{(ij)}}{\tilde{\rho}^{(i)} \tilde{\rho}^{(j)}}.
+  \f}
+  and return the row sum vector
+  \f{equation*}{
+  \rho^{(i)} = \sum_{j=1}^{n} K_{\epsilon}^{(ij)},
+  \f}
+  @param[in] eps The bandwidth parameer \f$\epsilon\f$
+  @param[in] dens An estimate of the density function \f$\psi|f$
+  @param[out] kmat The kernel matrix \f$\boldsymbol{K}\f$
+  \return The row sum of the kernel matrix
+  */
   virtual Eigen::VectorXd KernelMatrix(double const eps, Eigen::Ref<const Eigen::VectorXd> const& dens, Eigen::SparseMatrix<double>& kmat) const override;
 
   /// Tune the bandwidth parameter for the Kolmogorov operator
@@ -69,9 +136,9 @@ public:
   */
   void TuneBandwidthParameter(bool const tuneDens = true);
 
-  /// Get the parameter used as the variable bandwidth exponent
+  /// Get the parameter used as the variable bandwidth exponent \f$\alpha\f$
   /**
-  \return The variable bandwidth exponent \f$\alpha\f$.
+  \return The variable bandwidth exponent \f$\alpha = 1 + \frac{1}{2} d \beta + \beta - \frac{1}{2} c\f$.
   */
   double VariableBandwidthExponent() const;
 
