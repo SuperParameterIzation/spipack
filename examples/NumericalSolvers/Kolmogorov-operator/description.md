@@ -111,7 +111,7 @@ Additionally, define the diagonal matrix $\boldsymbol{S} = \boldsymbol{P} \bolds
 
 ## Eigen decomposition
 
-Let's take the eigendecomposition of $\boldsymbol{\hat{L}} \boldsymbol{\hat{Q}} = \boldsymbol{\hat{Q}} \boldsymbol{\Lambda}$---the corresponding eigendecomposition of $\boldsymbol{L}$ is $\boldsymbol{L} \boldsymbol{Q} = \boldsymbol{Q} \boldsymbol{\Lambda}$, where $\boldsymbol{Q} = \boldsymbol{S}^{-1} \boldsymbol{\hat{Q}}$. Note that because $boldsymbol{\hat{L}}$ is symmetric that $\boldsymbol{\hat{Q}} \boldsymbol{\hat{Q}}^T = \boldsymbol{I}$.
+Let's take the eigendecomposition of $\boldsymbol{\hat{L}} \boldsymbol{\hat{Q}} = \boldsymbol{\hat{Q}} \boldsymbol{\Lambda}$---the corresponding eigendecomposition of $\boldsymbol{L}$ is $\boldsymbol{L} \boldsymbol{Q} = \boldsymbol{Q} \boldsymbol{\Lambda}$, where $\boldsymbol{Q} = \boldsymbol{S}^{-1} \boldsymbol{\hat{Q}}$. Note that because $\boldsymbol{\hat{L}}$ is symmetric that $\boldsymbol{\hat{Q}} \boldsymbol{\hat{Q}}^T = \boldsymbol{I}$.
 
 <figure>
 <figcaption>The smallest eigenvalues of $\boldsymbol{\hat{L}}$ and their corresponding eigenfunctions.</figcaption>
