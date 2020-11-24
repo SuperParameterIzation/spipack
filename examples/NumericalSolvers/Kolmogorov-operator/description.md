@@ -107,11 +107,11 @@ $$
 \end{equation}
 $$
 
-Additionally, define the diagonal matrix $\boldsymbol{S} = \boldsymbol{P} \boldsymbol{D}^{1/2}$ and let $\boldsymbol{\hat{L}} = \epsilon^{-1} (\boldsymbol{S}^{-1} \boldsymbol{K} \boldsymbol{S}^{-1} - \boldsymbol{P}^{-2})$.
+Additionally, define the diagonal matrix $\boldsymbol{S} = \boldsymbol{P} \boldsymbol{D}^{1/2}$ and let $\boldsymbol{\hat{L}} = \epsilon^{-1} (\boldsymbol{S}^{-1} \boldsymbol{K} \boldsymbol{S}^{-1} - \boldsymbol{P}^{-2})$. We note that $\boldsymbol{L}$ and $\boldsymbol{\hat{L}}$ are related by a similarity transformation $\boldsymbol{S} \boldsymbol{L} \boldsymbol{S}^{-1} = \boldsymbol{\hat{L}}$.
 
 ## Eigen decomposition
 
-Let's take the eigendecomposition of $\boldsymbol{\hat{L}} \boldsymbol{\hat{Q}} = \boldsymbol{\hat{Q}} \boldsymbol{\Lambda}$.
+Let's take the eigendecomposition of $\boldsymbol{\hat{L}} \boldsymbol{\hat{Q}} = \boldsymbol{\hat{Q}} \boldsymbol{\Lambda}$---the corresponding eigendecomposition of $\boldsymbol{L}$ is $\boldsymbol{L} \boldsymbol{Q} = \boldsymbol{Q} \boldsymbol{\Lambda}$, where $\boldsymbol{Q} = \boldsymbol{S}^{-1} \boldsymbol{\hat{Q}}$.
 
 <figure>
 <figcaption>The smallest eigenvalues of $\boldsymbol{\hat{L}}$ and their corresponding eigenfunctions.</figcaption>
