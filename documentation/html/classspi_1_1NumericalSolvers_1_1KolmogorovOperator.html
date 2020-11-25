@@ -174,8 +174,9 @@ Public Member Functions</h2></td></tr>
 <tr class="memitem:a16b843f1d36bee25d1af56051bf9d10e"><td class="memItemLeft" align="right" valign="top">double&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classspi_1_1NumericalSolvers_1_1KolmogorovOperator.html#a16b843f1d36bee25d1af56051bf9d10e">EigensolverMaxIterations</a> () const </td></tr>
 <tr class="memdesc:a16b843f1d36bee25d1af56051bf9d10e"><td class="mdescLeft">&#160;</td><td class="mdescRight">Get the maximum number of iterations for the eigensolver.  <a href="#a16b843f1d36bee25d1af56051bf9d10e">More...</a><br /></td></tr>
 <tr class="separator:a16b843f1d36bee25d1af56051bf9d10e"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ad5eaebc0b8d50d41ef4d2ffff24f14ac"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classspi_1_1NumericalSolvers_1_1KolmogorovOperator.html#ad5eaebc0b8d50d41ef4d2ffff24f14ac">UpdateEigendecomposition</a> ()</td></tr>
-<tr class="separator:ad5eaebc0b8d50d41ef4d2ffff24f14ac"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a11c09b77df8323084aa4a3ccf86a47ef"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classspi_1_1NumericalSolvers_1_1KolmogorovOperator.html#a11c09b77df8323084aa4a3ccf86a47ef">ComputeEigendecomposition</a> (Eigen::Ref&lt; Eigen::VectorXd &gt; Sinv, Eigen::Ref&lt; Eigen::VectorXd &gt; eigenvalues, Eigen::Ref&lt; Eigen::MatrixXd &gt; eigenvectors)</td></tr>
+<tr class="memdesc:a11c09b77df8323084aa4a3ccf86a47ef"><td class="mdescLeft">&#160;</td><td class="mdescRight">Compute the eigendecomposition of the matrix \(\boldsymbol{\hat{L}}\).  <a href="#a11c09b77df8323084aa4a3ccf86a47ef">More...</a><br /></td></tr>
+<tr class="separator:a11c09b77df8323084aa4a3ccf86a47ef"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="inherit_header pub_methods_classspi_1_1NumericalSolvers_1_1SampleRepresentation"><td colspan="2" onclick="javascript:toggleInherit('pub_methods_classspi_1_1NumericalSolvers_1_1SampleRepresentation')"><img src="closed.png" alt="-"/>&#160;Public Member Functions inherited from <a class="el" href="classspi_1_1NumericalSolvers_1_1SampleRepresentation.html">spi::NumericalSolvers::SampleRepresentation</a></td></tr>
 <tr class="memitem:a10425f4a35ee78bfe75d9eaf9c9e3aff inherit pub_methods_classspi_1_1NumericalSolvers_1_1SampleRepresentation"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classspi_1_1NumericalSolvers_1_1SampleRepresentation.html#a10425f4a35ee78bfe75d9eaf9c9e3aff">SampleRepresentation</a> (std::shared_ptr&lt; muq::Modeling::RandomVariable &gt; const &amp;rv, YAML::Node const &amp;options)</td></tr>
 <tr class="memdesc:a10425f4a35ee78bfe75d9eaf9c9e3aff inherit pub_methods_classspi_1_1NumericalSolvers_1_1SampleRepresentation"><td class="mdescLeft">&#160;</td><td class="mdescRight">Construct the sample representation by sampling a random variable from \(\psi\).  <a href="#a10425f4a35ee78bfe75d9eaf9c9e3aff">More...</a><br /></td></tr>
@@ -447,6 +448,48 @@ Additional Inherited Members</h2></td></tr>
 </div>
 </div>
 <h2 class="groupheader">Member Function Documentation</h2>
+<a class="anchor" id="a11c09b77df8323084aa4a3ccf86a47ef"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void KolmogorovOperator::ComputeEigendecomposition </td>
+          <td>(</td>
+          <td class="paramtype">Eigen::Ref&lt; Eigen::VectorXd &gt;&#160;</td>
+          <td class="paramname"><em>Sinv</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">Eigen::Ref&lt; Eigen::VectorXd &gt;&#160;</td>
+          <td class="paramname"><em>eigenvalues</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">Eigen::Ref&lt; Eigen::MatrixXd &gt;&#160;</td>
+          <td class="paramname"><em>eigenvectors</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Compute the eigendecomposition of the matrix \(\boldsymbol{\hat{L}}\). </p>
+<p>The matrix \(\boldsymbol{\hat{L}}\) is related to the discrete Kolmogorov operator \(\boldsymbol{L}\) by a similarity transformation such that \(\boldsymbol{S} \boldsymbol{L} \boldsymbol{S}^{-1} = \boldsymbol{\hat{L}}\), where \(\boldsymbol{S}\) is a (full rank) diagonal matrix. </p><dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[out]</td><td class="paramname">Sinv</td><td>The inverse diagonal matrix \(\boldsymbol{S}^{-1}\) </td></tr>
+    <tr><td class="paramdir">[out]</td><td class="paramname">eigenvalues</td><td>The eigenvalues of \(\boldsymbol{\hat{L}}\) </td></tr>
+    <tr><td class="paramdir">[out]</td><td class="paramname">eigenvectors</td><td>The eigenvectors of \(\boldsymbol{\hat{L}}\) </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
 <a class="anchor" id="a612816850e104d41f613dd32b5d904b7"></a>
 <div class="memitem">
 <div class="memproto">
@@ -823,21 +866,6 @@ Additional Inherited Members</h2></td></tr>
   </table>
   </dd>
 </dl>
-
-</div>
-</div>
-<a class="anchor" id="ad5eaebc0b8d50d41ef4d2ffff24f14ac"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">void KolmogorovOperator::UpdateEigendecomposition </td>
-          <td>(</td>
-          <td class="paramname"></td><td>)</td>
-          <td></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
 
 </div>
 </div>
