@@ -29,7 +29,6 @@ std::shared_ptr<Kernel> Kernel::Construct(YAML::Node const& options) {
   return iter->second(options);
 }
 
-
 std::shared_ptr<Kernel::ConstructKernelMap> Kernel::KernelMap() {
   // define a static map from type to constructor
   static std::shared_ptr<ConstructKernelMap> map;

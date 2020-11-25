@@ -54,6 +54,19 @@ public:
   */
   double EvaluateCompactKernel(double const theta) const;
 
+  /// Numerically compute the integral of the kernel
+  /**
+  Compute the integral
+  \f{equation*}{
+  m_n = \int_{\mathbb{R}^d} x_1^n k(\|\boldsymbol{x}\|^2) \, d\boldsymbol{x}
+  \f}
+  This default implementation does this numerically using Gauss-Legendre quadrature and a full tensor product.
+  @param[in] dim The dimension of the problem \f$d\f$
+  @param[in] n The parameter \f$n\f$ that defines \f$m_n\f$
+  \return The numerically computed integral
+  */
+  virtual double NumericallyIntegrate(std::size_t const dim, std::size_t const n) const override;
+
 protected:
 
   /// Evaluate the kernel function \f$k(\theta)\f$

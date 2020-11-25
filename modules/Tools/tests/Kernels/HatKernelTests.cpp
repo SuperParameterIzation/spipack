@@ -153,6 +153,25 @@ TEST(HatKernelTests, Evaluate) {
   }
 }
 
+TEST(HatKernelTests, Integrate) {
+  const unsigned int dim = 2;
+
+  // the magnitude of the kernel
+  const double mag = 2.0;
+
+  // the options for this kernel
+  YAML::Node options;
+  //options["Magnitude"] = mag;
+  options["QuadratureOrder"] = 150;
+
+  // create an exponential kernel
+  const HatKernel kernel(options);
+
+  for( std::size_t n=0; n<2; ++n ) {
+    EXPECT_NEAR(kernel.Integrate(dim, n), kernel.NumericallyIntegrate(dim, n), 1.0e-3);
+  }
+}
+
 TEST(HatKernelTests, Serialize) {
   const unsigned int dim = 5;
 

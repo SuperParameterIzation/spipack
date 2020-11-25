@@ -91,8 +91,39 @@ public:
   */
   double operator()(double const theta) const;
 
+  /// Compute the integral of the kernel
+  /**
+  Compute the integral
+  \f{equation*}{
+  m_n = \int_{\mathbb{R}^d} x_1^n k(\|\boldsymbol{x}\|^2) \, d\boldsymbol{x}
+  \f}
+  This default implementation does this numerically using Gauss-Hermite quadrature and a full tensor product.
+  @param[in] dim The dimension of the problem \f$d\f$
+  @param[in] n The parameter \f$n\f$ that defines \f$m_n\f$
+  \return The numerically computed integral
+  */
+  virtual double Integrate(std::size_t const dim, std::size_t const n) const;
+
+  /// Numerically compute the integral of the kernel
+  /**
+  Compute the integral
+  \f{equation*}{
+  m_n = \int_{\mathbb{R}^d} x_1^n k(\|\boldsymbol{x}\|^2) \, d\boldsymbol{x}
+  \f}
+  This default implementation does this numerically using Gauss-Hermite quadrature and a full tensor product.
+  @param[in] dim The dimension of the problem \f$d\f$
+  @param[in] n The parameter \f$n\f$ that defines \f$m_n\f$
+  \return The numerically computed integral
+  */
+  virtual double NumericallyIntegrate(std::size_t const dim, std::size_t const n) const;
+
+protected:
+
   /// Private default constructor for the serialization
   IsotropicKernel() = default;
+
+  /// The order of the quadrature used to approximate integrals of this kernel
+  std::size_t order = 5;
 
 private:
 
@@ -107,7 +138,7 @@ private:
   @param[in] ar The archive/buffer
   */
   template<class Archive>
-  inline void serialize(Archive& ar) { ar(cereal::base_class<Kernel>(this), delta); }
+  inline void serialize(Archive& ar) { ar(cereal::base_class<Kernel>(this), order, delta); }
 
 };
 

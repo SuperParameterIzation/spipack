@@ -71,6 +71,18 @@ public:
   */
   double Exponent() const;
 
+  /// Compute the integral of the kernel
+  /**
+  Compute the integral
+  \f{equation*}{
+  m_n = \int_{\mathbb{R}^d} x_1^n k(\|\boldsymbol{x}\|^2) \, d\boldsymbol{x}
+  \f}
+  @param[in] dim The dimension of the problem \f$d\f$
+  @param[in] n The parameter \f$n\f$ that defines \f$m_n\f$
+  \return The numerically computed integral
+  */
+  virtual double Integrate(std::size_t const dim, std::size_t const n) const override;
+
 protected:
 
   /// Private default constructor for the serialization
