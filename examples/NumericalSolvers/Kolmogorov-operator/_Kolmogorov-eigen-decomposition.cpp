@@ -31,6 +31,10 @@ int main(int argc, char **argv) {
   // numerical parameters
   const std::size_t numNeighbors = 25;
 
+  // the number of eigenvalues
+  const std::size_t neigs = 100;
+  const double eigensolverTol = 1.0e-8;
+
   // create a standard Gaussian random variable
   auto rv = std::make_shared<Gaussian>(dim)->AsVariable();
 
@@ -66,6 +70,8 @@ int main(int argc, char **argv) {
   options["ManifoldDimension"] = (double)dim;
   options["BandwidthExponent"] = -0.5;
   options["BandwidthParameter"] = 1.0e-1;
+  options["NumEigenvalues"] = neigs;
+  options["EigensolverTolerance"] = eigensolverTol;
 
   // create the Kolmogorov operator
   auto kolOperator = std::make_shared<KolmogorovOperator>(samples, options);
@@ -107,7 +113,7 @@ int main(int argc, char **argv) {
   std::cout << "creating L and Lhat ... " << std::flush;
   const Eigen::VectorXd P = dens.array().pow(kolOperator->ExponentParameter());
   const Eigen::VectorXd S = P.array()*(D.array().sqrt());
-  const Eigen::VectorXd Sinv = S.array().inverse();
+  Eigen::VectorXd Sinv = S.array().inverse();
 
   // directly compute the discrete Kolmogorov operator
   Eigen::SparseMatrix<double> Lkol(n, n);
@@ -129,24 +135,21 @@ int main(int argc, char **argv) {
   Lhat = (P.array()*P.array()).inverse().matrix().asDiagonal();
   Lhat = (Sinv.asDiagonal()*kmat*Sinv.asDiagonal()-Lhat)/kolOperator->BandwidthParameter();
 
-  // apply the similarity trasformation operator to a function
+  // apply the similarity trasformation operator to a function (this should be exactly the same as Lf)
   const Eigen::MatrixXd SinvLhatSf = Sinv.asDiagonal()*Lhat*S.asDiagonal()*f;
   std::cout << "done." << std::endl;
 
   // compute the eigendecomposition of Lhat
   std::cout << "computing eigendecomposition of Lhat ... " << std::flush;
-  Spectra::SparseGenMatProd<double> matvec(Lhat);
-  const std::size_t neigs = 100;
-  Spectra::SymEigsSolver<double, Spectra::SMALLEST_MAGN, Spectra::SparseGenMatProd<double> > eigsolver(&matvec, neigs, std::min(10*neigs, n));
-  eigsolver.init();
-  const std::size_t ncomputed = eigsolver.compute(1000, 1.0e-5);
-  std::cout << "done (" << ncomputed << " of " << neigs << " computed)" << std::endl;
+  Eigen::VectorXd lambda(neigs);
+  Eigen::MatrixXd Uhat(n, neigs);
+  // this recomputes Lhat, which is a little redundant but okay as an example
+  kolOperator->ComputeEigendecomposition(Sinv, lambda, Uhat);
+  std::cout << "done." << std::endl;
 
-  // retrieve the eigenvalues and eigen vectors (of Lhat)
-  const Eigen::VectorXd lambda = eigsolver.eigenvalues();
-  const Eigen::MatrixXd Uhat = eigsolver.eigenvectors();
+  // compute the inverse eigenvalues
   Eigen::VectorXd lambdaInv(neigs);
-  for( std::size_t i=0; i<neigs; ++i ) { lambdaInv(i) = (std::abs(lambda(i))>1.0e-12? 1.0/lambda(i) : 0.0); }
+  for( std::size_t i=0; i<neigs; ++i ) { lambdaInv(i) = (std::abs(lambda(i))>2.0*eigensolverTol? 1.0/lambda(i) : 0.0); }
 
   // apply Lhat inverse to the function
   const Eigen::MatrixXd Lhatinvf = Uhat*lambdaInv.asDiagonal()*Uhat.transpose()*f;

@@ -251,6 +251,9 @@ for i in range(min([25, len(eigvecsL)])):
     else:
         mntk = 10**mntkx
 
+    # normalize the eigenvector to be sqrt(N)
+    eigvec = np.sqrt(len(eigvecsL[i]))*eigvecsL[i]/np.linalg.norm(eigvecsL[i])
+
     fig = MakeFigure(425, 0.9, False)
     ax = plt.gca()
     scale = 0.001*max(abs(mn), abs(mx))
@@ -263,13 +266,15 @@ for i in range(min([25, len(eigvecsL)])):
         mntkm = 0.5*mntk
     else:
         mntkm = 1.5*mntk
-    scatter = ax.scatter(samples.T[0], samples.T[1], s=3, c=eigvecsL[i], vmin=mntkm, vmax=mxtkm)
-    cbar = plt.colorbar(scatter, ticks=np.sort([mntk, 0.0, mxtk]))
+    #scatter = ax.scatter(samples.T[0], samples.T[1], s=3, c=eigvecsL[i], vmin=mntkm, vmax=mxtkm)
+    scatter = ax.scatter(samples.T[0], samples.T[1], s=3, c=eigvec, vmin=max([-5.0, min(eigvec)]), vmax=min([5.0, max(eigvec)]))
+    #cbar = plt.colorbar(scatter, ticks=np.sort([mntk, 0.0, mxtk]))
+    cbar = plt.colorbar(scatter)
     ax.spines['right'].set_visible(False)
     ax.spines['top'].set_visible(False)
     ax.yaxis.set_ticks_position('left')
     ax.xaxis.set_ticks_position('bottom')
-    cbar.ax.set_ylabel(r'Magnitude')
+    #cbar.ax.set_ylabel(r'Magnitude')
     ax.set_title(r'Eigenfunction '+str(i+1)+' ($\lambda_{'+str(i+1)+'}='+str(round(eigvals[i], 2))+'$)')
     ax.set_xlabel(r'$x_0$')
     ax.set_ylabel(r'$x_1$')
@@ -278,6 +283,7 @@ for i in range(min([25, len(eigvecsL)])):
 pdf.close()
 
 pdf = matplotlib.backends.backend_pdf.PdfPages("figures/Eigenfunctions_Lhat.pdf")
+
 fig = MakeFigure(425, 0.9, False)
 ax = plt.gca()
 ax.plot(range(1, len(eigvals)+1), eigvals, color='#525252')
@@ -313,6 +319,9 @@ for i in range(min([25, len(eigvecsLhat)])):
     else:
         mntk = 10**mntkx
 
+    # normalize the eigenvector to be sqrt(N)
+    eigvec = np.sqrt(len(eigvecsLhat[i]))*eigvecsLhat[i]/np.linalg.norm(eigvecsLhat[i])
+
     fig = MakeFigure(425, 0.9, False)
     ax = plt.gca()
     scale = 0.001*max(abs(mn), abs(mx))
@@ -325,7 +334,8 @@ for i in range(min([25, len(eigvecsLhat)])):
         mntkm = 0.6*mntk
     else:
         mntkm = 1.4*mntk
-    scatter = ax.scatter(samples.T[0], samples.T[1], s=3, c=eigvecsLhat[i], vmin=mntkm, vmax=mxtkm)
+    #scatter = ax.scatter(samples.T[0], samples.T[1], s=3, c=eigvecsLhat[i], vmin=mntkm, vmax=mxtkm)
+    scatter = ax.scatter(samples.T[0], samples.T[1], s=3, c=eigvec, vmin=max([-5.0, min(eigvec)]), vmax=min([5.0, max(eigvec)]))
     cbar = plt.colorbar(scatter)
     ax.spines['right'].set_visible(False)
     ax.spines['top'].set_visible(False)
