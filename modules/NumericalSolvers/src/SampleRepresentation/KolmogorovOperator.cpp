@@ -1,5 +1,9 @@
 #include "spipack/NumericalSolvers/SampleRepresentation/KolmogorovOperator.hpp"
 
+#include <Spectra/SymEigsSolver.h>
+#include <Spectra/GenEigsSolver.h>
+#include <Spectra/MatOp/SparseGenMatProd.h>
+
 #include <MUQ/Optimization/NLoptOptimizer.h>
 
 #include "spipack/NumericalSolvers/SampleRepresentation/BandwidthCost.hpp"
@@ -166,22 +170,37 @@ double KolmogorovOperator::ExponentParameter() const { return exponentPara; }
 
 std::shared_ptr<DensityEstimation> KolmogorovOperator::Density() const { return density; }
 
-void KolmogorovOperator::UpdateEigendecomposition() {
-  // this function does not tune the density estimation
-  const bool tuneDens = false;
-
+void KolmogorovOperator::ComputeEigendecomposition(Eigen::Ref<Eigen::VectorXd> Sinv, Eigen::Ref<Eigen::VectorXd> eigenvalues, Eigen::Ref<Eigen::MatrixXd> eigenvectors) {
   // the number of samples
   const std::size_t n = NumSamples();
 
+  assert(eigenvalues.size()==neig);
+  assert(eigenvectors.rows()==n);
+  assert(eigenvectors.cols()==neig);
+
+  // this function does not tune the density estimation
+  const bool tuneDens = false;
+
   // compute the kernel matrix and the diagonal matrix S^{-1}
   Eigen::SparseMatrix<double> kmat;
-  Eigen::VectorXd Sinv = KernelMatrix(BandwidthParameter(), kmat, &tuneDens);
+  Sinv = KernelMatrix(BandwidthParameter(), kmat, &tuneDens);
   Sinv = (P.array()*Sinv.array().sqrt()).inverse();
 
   // compute Lhat, which is related to the Kolmogorov operator by a similarity transformation
   Eigen::SparseMatrix<double> Lhat(n, n);
   Lhat = (P.array()*P.array()).inverse().matrix().asDiagonal();
   Lhat = (Sinv.asDiagonal()*kmat*Sinv.asDiagonal()-Lhat)/BandwidthParameter();
+
+  // compute the eigendecomposition of Lhat
+  Spectra::SparseGenMatProd<double> matvec(Lhat);
+  Spectra::SymEigsSolver<double, Spectra::SMALLEST_MAGN, Spectra::SparseGenMatProd<double> > eigsolver(&matvec, neig, std::min(10*neig, n));
+  eigsolver.init();
+  const std::size_t ncomputed = eigsolver.compute(eigensolverMaxIt, eigensolverTol);
+  assert(ncomputed==neig);
+
+  // fill the eigenvectors/values
+  eigenvalues = eigsolver.eigenvalues();
+  eigenvectors = eigsolver.eigenvectors();
 }
 
 std::size_t KolmogorovOperator::NumEigenvalues() const { return neig; }

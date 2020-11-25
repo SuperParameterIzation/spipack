@@ -557,5 +557,12 @@ TEST_F(KolmogorovOperatorTests, Eigendecomposition) {
   // construct the kd-trees
   kolOperator->BuildKDTrees();
 
+  // compute the eigendecomposition
+  Eigen::VectorXd Sinv(kolOperator->NumSamples());
+  Eigen::VectorXd eigenvalues = Eigen::VectorXd::Random(kolOperator->NumEigenvalues()); // initialize to random so we check to make sure the small (magnitude) is set to zero
+  Eigen::MatrixXd eigenvectors(kolOperator->NumSamples(), kolOperator->NumEigenvalues());
+  kolOperator->ComputeEigendecomposition(Sinv, eigenvalues, eigenvectors);
 
+  // the smallest eigenvalue is zero
+  EXPECT_NEAR(eigenvalues(0), 0.0, 1.0e-8);
 }

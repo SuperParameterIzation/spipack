@@ -184,7 +184,14 @@ public:
   */
   double EigensolverMaxIterations() const;
 
-  void UpdateEigendecomposition();
+  /// Compute the eigendecomposition of the matrix \f$\boldsymbol{\hat{L}}\f$
+  /**
+  The matrix \f$\boldsymbol{\hat{L}}\f$ is related to the discrete Kolmogorov operator \f$\boldsymbol{L}\f$  by a similarity transformation such that \f$\boldsymbol{S} \boldsymbol{L} \boldsymbol{S}^{-1} = \boldsymbol{\hat{L}}\f$, where \f$\boldsymbol{S}\f$ is a (full rank) diagonal matrix.
+  @param[out] Sinv The inverse diagonal matrix \f$\boldsymbol{S}^{-1}\f$
+  @param[out] eigenvalues The eigenvalues of \f$\boldsymbol{\hat{L}}\f$
+  @param[out] eigenvectors The eigenvectors of \f$\boldsymbol{\hat{L}}\f$
+  */
+  void ComputeEigendecomposition(Eigen::Ref<Eigen::VectorXd> Sinv, Eigen::Ref<Eigen::VectorXd> eigenvalues, Eigen::Ref<Eigen::MatrixXd> eigenvectors);
 
 private:
 

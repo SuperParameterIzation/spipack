@@ -126,7 +126,6 @@ int main(int argc, char **argv) {
 
   // compute Lhat, which is related to the Kolmogorov operator by a similarity transformation
   Eigen::SparseMatrix<double> Lhat(n, n);
-  Lhat.setIdentity();
   Lhat = (P.array()*P.array()).inverse().matrix().asDiagonal();
   Lhat = (Sinv.asDiagonal()*kmat*Sinv.asDiagonal()-Lhat)/kolOperator->BandwidthParameter();
 
@@ -138,7 +137,7 @@ int main(int argc, char **argv) {
   std::cout << "computing eigendecomposition of Lhat ... " << std::flush;
   Spectra::SparseGenMatProd<double> matvec(Lhat);
   const std::size_t neigs = 100;
-  Spectra::SymEigsSolver<double, Spectra::SMALLEST_MAGN, Spectra::SparseGenMatProd<double> > eigsolver(&matvec, neigs, std::max(10*neigs, n));
+  Spectra::SymEigsSolver<double, Spectra::SMALLEST_MAGN, Spectra::SparseGenMatProd<double> > eigsolver(&matvec, neigs, std::min(10*neigs, n));
   eigsolver.init();
   const std::size_t ncomputed = eigsolver.compute(1000, 1.0e-5);
   std::cout << "done (" << ncomputed << " of " << neigs << " computed)" << std::endl;
