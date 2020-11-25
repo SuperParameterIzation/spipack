@@ -14,21 +14,30 @@ KolmogorovOperator::KolmogorovOperator(std::shared_ptr<RandomVariable> const& rv
 SampleRepresentation(rv, options),
 density(std::make_shared<DensityEstimation>(this->samples, options["DensityOptions"].as<YAML::Node>(options))), // default to using the same parameters as the Kolmogorov operator
 operatorConstant(options["OperatorParameter"].as<double>(defaults.operatorConstant)),
-exponentPara(options["BandwidthExponent"].as<double>(defaults.exponentPara))
+exponentPara(options["BandwidthExponent"].as<double>(defaults.exponentPara)),
+neig(options["NumEigenvalues"].as<std::size_t>(defaults.neig)),
+eigensolverTol(options["EigensolverTolerance"].as<double>(defaults.eigensolverTol)),
+eigensolverMaxIt(options["EigensolverMaxIterations"].as<std::size_t>(defaults.eigensolverMaxIt))
 {}
 
 KolmogorovOperator::KolmogorovOperator(std::shared_ptr<SampleCollection> const& samples, YAML::Node const& options) :
 SampleRepresentation(samples, options),
 density(std::make_shared<DensityEstimation>(this->samples, options["DensityOptions"].as<YAML::Node>(options))), // default to using the same parameters as the Kolmogorov operator
 operatorConstant(options["OperatorParameter"].as<double>(defaults.operatorConstant)),
-exponentPara(options["BandwidthExponent"].as<double>(defaults.exponentPara))
+exponentPara(options["BandwidthExponent"].as<double>(defaults.exponentPara)),
+neig(options["NumEigenvalues"].as<std::size_t>(defaults.neig)),
+eigensolverTol(options["EigensolverTolerance"].as<double>(defaults.eigensolverTol)),
+eigensolverMaxIt(options["EigensolverMaxIterations"].as<std::size_t>(defaults.eigensolverMaxIt))
 {}
 
 KolmogorovOperator::KolmogorovOperator(std::shared_ptr<const NearestNeighbors> const& samples, YAML::Node const& options) :
 SampleRepresentation(samples, options),
 density(std::make_shared<DensityEstimation>(this->samples, options["DensityOptions"].as<YAML::Node>(options))), // default to using the same parameters as the Kolmogorov operator
 operatorConstant(options["OperatorParameter"].as<double>(defaults.operatorConstant)),
-exponentPara(options["BandwidthExponent"].as<double>(defaults.exponentPara))
+exponentPara(options["BandwidthExponent"].as<double>(defaults.exponentPara)),
+neig(options["NumEigenvalues"].as<std::size_t>(defaults.neig)),
+eigensolverTol(options["EigensolverTolerance"].as<double>(defaults.eigensolverTol)),
+eigensolverMaxIt(options["EigensolverMaxIterations"].as<std::size_t>(defaults.eigensolverMaxIt))
 {}
 
 Eigen::VectorXd KolmogorovOperator::EstimateDensity(bool const tune) const {
@@ -158,8 +167,25 @@ double KolmogorovOperator::ExponentParameter() const { return exponentPara; }
 std::shared_ptr<DensityEstimation> KolmogorovOperator::Density() const { return density; }
 
 void KolmogorovOperator::UpdateEigendecomposition() {
+  // this function does not tune the density estimation
   const bool tuneDens = false;
 
+  // the number of samples
+  const std::size_t n = NumSamples();
+
+  // compute the kernel matrix and the diagonal matrix S^{-1}
   Eigen::SparseMatrix<double> kmat;
-  Eigen::VectorXd D = KernelMatrix(BandwidthParameter(), kmat, &tuneDens);
+  Eigen::VectorXd Sinv = KernelMatrix(BandwidthParameter(), kmat, &tuneDens);
+  Sinv = (P.array()*Sinv.array().sqrt()).inverse();
+
+  // compute Lhat, which is related to the Kolmogorov operator by a similarity transformation
+  Eigen::SparseMatrix<double> Lhat(n, n);
+  Lhat = (P.array()*P.array()).inverse().matrix().asDiagonal();
+  Lhat = (Sinv.asDiagonal()*kmat*Sinv.asDiagonal()-Lhat)/BandwidthParameter();
 }
+
+std::size_t KolmogorovOperator::NumEigenvalues() const { return neig; }
+
+double KolmogorovOperator::EigensolverTolerance() const { return eigensolverTol; }
+
+double KolmogorovOperator::EigensolverMaxIterations() const { return eigensolverMaxIt; }

@@ -32,6 +32,18 @@ Parameter Key | Type | Default Value | Description |
 "TruncationTolerance"   | <tt>double</tt> | If the kernel is a compact kernel (spi::Tools::CompactKernel), the default is \f$\alpha = 1\f$. Otherwise the default is \f$\alpha = -\log{(5 \times 10^{-2})}\f$ | The parameter \f$\alpha\f$ for if we want to truncate the kernel matrix. If the kernel is compact, then this will <em>always</em> be set to one. |
 "TruncateKernelMatrix" | <tt>bool</tt> | <tt>true</tt> | <tt>true</tt>: When computing the kernel matrix \f$K_{\epsilon}^{(ij)} = k_{\epsilon}\left( \frac{\| \boldsymbol{x}^{(i)} - \boldsymbol{x}^{(j)} \|^2}{\epsilon r_i r_j} \right)\f$ only fill the matrix when \f$\frac{\| \boldsymbol{x}^{(i)} - \boldsymbol{x}^{(j)} \|^2}{\epsilon r_i r_j} < \alpha\f$; <tt>false</tt>: compute and fill every entry in the the kernel matrix (it will be a dense matrix) |
 "NumThreads"   | <tt>std::size_t</tt> | <tt>options["NearestNeighbors.NumThreads"]</tt> | The number of <tt>openMP</tt> threads available to this object. |
+"BandwidthParameter"   | <tt>double</tt> | <tt>1.0</tt> | The parmeter \f$\epsilon\f$ used to compute the kernel |
+"Optimization"   | <tt>YAML::Node</tt> | see options below | Options for the optimization method used to tune algorithm parameters. |
+
+<B>Optimization Parameters:</B>
+Parameter Key | Type | Default Value | Description |
+------------- | ------------- | ------------- | ------------- |
+"Algorithm"   | <tt>std::string</tt> | <tt>"COBYLA"</tt> | Which <a href="https://nlopt.readthedocs.io/en/latest/">NLopt</a> algorithm should we use? Default: <tt>LBFGS</tt> Options: <tt>COBYLA</tt>, <tt>BOBYQA</tt>, <tt>NEWUOA</tt>, <tt>PRAXIS</tt>, <tt>NM</tt>, <tt>SBPLX</tt>, <tt>MMA</tt>, <tt>SLSQP</tt>, <tt>LBFGS</tt>, <tt>PreTN</tt>, <tt>LMVM</tt>  |
+"Ftol.AbsoluteTolerance"   | <tt>double</tt> | <tt>1e-6</tt> | Absolute function tolerance.  |
+"Ftol.RelativeTolerance"   | <tt>double</tt> | <tt>1e-6</tt> | Relative function tolerance.  |
+"Rtol.AbsoluteTolerance"   | <tt>double</tt> | <tt>1e-6</tt> | Absolute state tolerance.  |
+"Rtol.RelativeTolerance"   | <tt>double</tt> | <tt>1e-6</tt> | Relative state tolerance.  |
+"MaxEvaluations"   | <tt>std::size_t</tt> | <tt>1000</tt> | The maximum number of cost function evaluations.  |
 */
 class SampleRepresentation {
 public:

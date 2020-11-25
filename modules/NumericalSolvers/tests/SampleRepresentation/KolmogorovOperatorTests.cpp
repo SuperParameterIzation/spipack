@@ -528,7 +528,6 @@ TEST_F(KolmogorovOperatorTests, KernelSecondDerivativeAverage_Truncated) {
   EXPECT_NEAR(expectedAvg, avg, 1.0e-10);
 }
 
-
 TEST_F(KolmogorovOperatorTests, Tuning) {
   // create the graph laplacian from samples
   auto samples = CreateFromSamples();
@@ -542,10 +541,21 @@ TEST_F(KolmogorovOperatorTests, Tuning) {
 }
 
 TEST_F(KolmogorovOperatorTests, Eigendecomposition) {
+  options["NumEigenvalues"] = 15;
+  options["EigensolverTolerance"] = 1.0e-8;
+  options["EigensolverMaxIterations"] = 1e5;
+
   // create the graph laplacian from samples
   auto samples = CreateFromSamples();
   EXPECT_EQ(samples->size(), n);
 
+  // check the eigendecomposition parameters
+  EXPECT_EQ(kolOperator->NumEigenvalues(), 15);
+  EXPECT_DOUBLE_EQ(kolOperator->EigensolverTolerance(), 1.0e-8);
+  EXPECT_EQ(kolOperator->EigensolverMaxIterations(), 1e5);
+
   // construct the kd-trees
   kolOperator->BuildKDTrees();
+
+
 }

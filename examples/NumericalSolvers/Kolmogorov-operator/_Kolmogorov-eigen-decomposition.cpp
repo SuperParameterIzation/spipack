@@ -100,7 +100,7 @@ int main(int argc, char **argv) {
   // estimate the symmetric kernel matrix K
   std::cout << "estimating the kernel matrix K ... " << std::flush;
   Eigen::SparseMatrix<double> kmat;
-  Eigen::VectorXd D = kolOperator->KernelMatrix(kolOperator->BandwidthParameter(), dens, kmat);
+  const Eigen::VectorXd D = kolOperator->KernelMatrix(kolOperator->BandwidthParameter(), dens, kmat);
   std::cout << "done." << std::endl;
 
   // compute the diagonal matrices P=\psi^{beta} and S = P D^{1/2}

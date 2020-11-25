@@ -16,6 +16,18 @@ Special cases:
 - \f$c=0\f$: The Laplacian operator \f$\mathcal{L}_{\psi,0} f = \Delta f\f$
 - \f$c=1\f$: The weighted Laplacian operator \f$\mathcal{L}_{\psi,1} f = \Delta f + \nabla f \cdot \frac{\nabla \psi}{\psi} = \psi^{-1} \nabla \cdot (\psi \nabla f) = \Delta_{\psi} f\f$
 
+In addition to the parameters/options below, this class has the same parameters/options as spi::NumericalSolvers::SampleRepresentation.
+
+<B>Configuration Parameters:</B>
+Parameter Key | Type | Default Value | Description |
+------------- | ------------- | ------------- | ------------- |
+"DensityOptions"   | <tt>YAML::Node</tt> | Same options as for the Kolmogorov operator | The options for the density estimation (see spi::NumericalSolvers::DensityEstimation) |
+"OperatorParameter"   | <tt>double</tt> | <tt>1.0</tt> | The constant \f$c\f$ that defines the Kolmogorov operator |
+"BandwidthExponent"   | <tt>double</tt> | <tt>-0.5</tt> | The numerical parameter \f$\beta\f$ used to discretize the Kolmogorov operator |
+"NumEigenvalues"   | <tt>std::size_t</tt> | <tt>10</tt> | Store the smallest \f$n\f$ eigenvalues of the (symmetric) matrix \f$\boldsymbol{\hat{L}}\f$ (and their corresponding eigenvectors) |
+"EigensolverTolerance"   | <tt>double</tt> | <tt>10^{-6}</tt> | The tolerance for the eigensolver |
+"EigensolverMaxIterations"   | <tt>std::size_t</tt> | <tt>10^{3}</tt> | The maximum number of iterations for the eigensolver |
+
 References:
 - <a href="https://www.sciencedirect.com/science/article/pii/S1063520315000020">"Variable bandwidth diffusion kernels" by T. Berry & J. Harlim</a>
 - <a href="https://www.sciencedirect.com/science/article/pii/S1063520317300982">"Data-driven spectral decomposition and forecasting of ergodic dynamical systems" by D. Giannakis</a>
@@ -154,6 +166,24 @@ public:
   */
   std::shared_ptr<DensityEstimation> Density() const;
 
+  /// Get the number of eigenvalues/vectors of the (symmetric) matrix \f$\boldsymbol{\hat{L}}\f$ that we are storing
+  /**
+  \return The number of eigenvalues that we are storing
+  */
+  std::size_t NumEigenvalues() const;
+
+  /// Get the tolerance for the eigensolver
+  /**
+  \return The eigensolver tolerance
+  */
+  double EigensolverTolerance() const;
+
+  /// Get the maximum number of iterations for the eigensolver
+  /**
+  \return The eigensolver maximum number of iterations
+  */
+  double EigensolverMaxIterations() const;
+
   void UpdateEigendecomposition();
 
 private:
@@ -179,6 +209,15 @@ private:
   /// The exponent parameter \f$\beta\f$
   const double exponentPara;
 
+  /// The number of eigenvalues (and eigenvectors) of the (symmetric) matrix \f$\boldsymbol{\hat{L}}\f$ to store
+  const std::size_t neig;
+
+  /// The tolerance for the eigensolver
+  const double eigensolverTol;
+
+  /// The number of iterations for the eigensolver
+  const std::size_t eigensolverMaxIt;
+
   /// The default values for the spi::NumericalSolvers::DensityEstimation class.
   struct DefaultParameters {
     /// The default operator parameter is \f$c=1\f$
@@ -186,6 +225,16 @@ private:
 
     /// The exponent parameter defaults to \f$\beta=-0.5\f$
     inline static const double exponentPara = -0.5;
+
+    /// The default number of stored eigenvalues/vectors is \f$10\f$.
+    inline static const std::size_t neig = 10;
+
+    /// The default tolerance for the eigensolver is \f$10^{-6}\f$
+    inline static const double eigensolverTol = 1.0e-6;
+
+    /// The default number of iterations for the eigensolver is \f$10^{3}\f$
+    inline static const std::size_t eigensolverMaxIt = 1e3;
+
   };
 
   /// Store the default parameter values
