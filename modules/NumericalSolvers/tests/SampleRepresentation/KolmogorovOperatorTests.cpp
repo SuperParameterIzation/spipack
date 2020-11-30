@@ -23,21 +23,15 @@ protected:
     nnOptions["Stride"] = n/5;
     nnOptions["NumThreads"] = omp_get_max_threads();
 
-    // set the kernel options
-    YAML::Node kernelOptions;
-    kernelOptions["Kernel"] = "ExponentialKernel";
-
     // set the options for the density estimation
     YAML::Node densityOptions;
     densityOptions["NearestNeighbors"] = nnOptions;
     densityOptions["NumNearestNeighbors"] = nneighs;
-    densityOptions["KernelOptions"] = kernelOptions;
     densityOptions["ManifoldDimension"] = (double)dim;
 
     // set the options for the Kolmogorov operator
     options["NearestNeighbors"] = nnOptions;
     options["NumNearestNeighbors"] = nneighs;
-    options["KernelOptions"] = kernelOptions;
     options["DensityOptions"] = densityOptions;
     options["BandwidthParameter"] = eps;
     options["BandwidthExponent"] =  bandwidthExponent;

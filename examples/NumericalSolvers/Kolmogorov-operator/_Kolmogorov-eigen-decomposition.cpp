@@ -160,7 +160,7 @@ int main(int argc, char **argv) {
   // write the samples to file
   kolOperator->WriteToFile(filename);
 
-    // open the file and write data to file
+  // open the file and write data to file
   HDF5File hdf5file(filename);
   hdf5file.WriteMatrix("/density estimate", dens);
   hdf5file.WriteMatrix("/eigenvalues", lambda);

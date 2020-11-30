@@ -94,7 +94,6 @@ SinvLhatSf = hdf5file['/applied Kolmogorov operator (Sinv Lhat S)'] [()].T
 Lhatinvf = hdf5file['/applied inverse transfromed Kolmogorov operator'] [()].T
 Linvf = hdf5file['/applied inverse Kolmogorov operator'] [()].T
 
-
 # find the point that is farthest from 0 (to identify the tails)
 dist = 0.0
 tailind = -1
@@ -216,6 +215,7 @@ for i in range(len(f)):
 pdf.close()
 
 pdf = matplotlib.backends.backend_pdf.PdfPages("figures/Eigenfunctions_L.pdf")
+
 fig = MakeFigure(425, 0.9, False)
 ax = plt.gca()
 ax.plot(range(1, len(eigvals)+1), eigvals, color='#525252')

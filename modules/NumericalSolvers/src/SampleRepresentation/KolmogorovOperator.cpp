@@ -201,12 +201,6 @@ void KolmogorovOperator::ComputeEigendecomposition(Eigen::Ref<Eigen::VectorXd> S
   // fill the eigenvectors/values
   eigenvalues = eigsolver.eigenvalues();
   eigenvectors = eigsolver.eigenvectors();
-
-  // need to rescale the eigenvalues
-  const double m0 = kernel->Integrate(Point(0).size(), 0);
-  const double m2 = kernel->Integrate(Point(0).size(), 2);
-
-  eigenvalues *= m0/m2;
 }
 
 std::size_t KolmogorovOperator::NumEigenvalues() const { return neig; }

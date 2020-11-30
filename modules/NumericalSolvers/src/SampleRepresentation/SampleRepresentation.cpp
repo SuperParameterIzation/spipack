@@ -3,6 +3,7 @@
 #include <MUQ/Utilities/HDF5/HDF5File.h>
 
 #include "spipack/Tools/Kernels/CompactKernel.hpp"
+#include "spipack/Tools/Kernels/ExponentialKernel.hpp"
 
 using namespace muq::Utilities;
 using namespace muq::Modeling;
@@ -47,7 +48,7 @@ double SampleRepresentation::BandwidthParameter() const { return bandwidthPara; 
 
 void SampleRepresentation::Initialize(YAML::Node const& options) {
   // create the kernel
-  kernel = IsotropicKernel::Construct(options["KernelOptions"]);
+  kernel = std::make_shared<ExponentialKernel>();
   assert(kernel);
   auto compactKernelPtr = std::dynamic_pointer_cast<CompactKernel>(kernel);
   compactKernel = (compactKernelPtr!=nullptr);

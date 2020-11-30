@@ -23,14 +23,10 @@ protected:
     nnOptions["Stride"] = n/5;
     nnOptions["NumThreads"] = omp_get_max_threads();
 
-    // set the kernel options
-    YAML::Node kernelOptions;
-    kernelOptions["Kernel"] = "ExponentialKernel";
 
     // set the options for the sample representation
     options["NearestNeighbors"] = nnOptions;
     options["NumNearestNeighbors"] = nneighs;
-    options["KernelOptions"] = kernelOptions;
   }
 
   /// Make sure everything is what we expect

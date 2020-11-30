@@ -31,7 +31,7 @@ public:
   /**
     @param[in] options Options for this kernel function
   */
-  HatKernel(YAML::Node const& options);
+  HatKernel(YAML::Node const& options = YAML::Node());
 
   virtual ~HatKernel() = default;
 
@@ -76,9 +76,6 @@ protected:
     \return The kernel evaluation \f$k(\theta)\f$
   */
   virtual double EvaluateCompactKernelImpl(double const theta) const override;
-
-  /// Private default constructor for the serialization
-  HatKernel() = default;
 
 private:
 

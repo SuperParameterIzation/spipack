@@ -28,7 +28,7 @@ public:
   /**
     @param[in] options Options for this kernel function
   */
-  ExponentialKernel(YAML::Node const& options);
+  ExponentialKernel(YAML::Node const& options = YAML::Node());
 
   virtual ~ExponentialKernel() = default;
 
@@ -82,11 +82,6 @@ public:
   \return The numerically computed integral
   */
   virtual double Integrate(std::size_t const dim, std::size_t const n) const override;
-
-protected:
-
-  /// Private default constructor for the serialization
-  ExponentialKernel() = default;
 
 private:
 

@@ -27,7 +27,6 @@ Parameter Key | Type | Default Value | Description |
 ------------- | ------------- | ------------- | ------------- |
 "NearestNeighbors"   | <tt>YAML::Node</tt> | - | Options for the spi::Tools::NearestNeighbors object.   |
 "NumNearestNeighbors"   | <tt>std::size_t</tt> | <tt>10</tt> | The number of nearest neighbors used to compute the bandwidth. |
-"KernelOptions"   | <tt>YAML::Node</tt> | - | The options for the spi::Tools::CompactKernel object |
 "ManifoldDimension"   | <tt>double</tt> | <tt>2.0</tt> | The manifold dimension \f$m\f$. |
 "TruncationTolerance"   | <tt>double</tt> | If the kernel is a compact kernel (spi::Tools::CompactKernel), the default is \f$\alpha = 1\f$. Otherwise the default is \f$\alpha = -\log{(5 \times 10^{-2})}\f$ | The parameter \f$\alpha\f$ for if we want to truncate the kernel matrix. If the kernel is compact, then this will <em>always</em> be set to one. |
 "TruncateKernelMatrix" | <tt>bool</tt> | <tt>true</tt> | <tt>true</tt>: When computing the kernel matrix \f$K_{\epsilon}^{(ij)} = k_{\epsilon}\left( \frac{\| \boldsymbol{x}^{(i)} - \boldsymbol{x}^{(j)} \|^2}{\epsilon r_i r_j} \right)\f$ only fill the matrix when \f$\frac{\| \boldsymbol{x}^{(i)} - \boldsymbol{x}^{(j)} \|^2}{\epsilon r_i r_j} < \alpha\f$; <tt>false</tt>: compute and fill every entry in the the kernel matrix (it will be a dense matrix) |
