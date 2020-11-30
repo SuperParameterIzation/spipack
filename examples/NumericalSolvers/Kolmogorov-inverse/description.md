@@ -22,8 +22,10 @@ The goal of this example is to find a function $h$ such that
 
 $$
 \begin{equation}
-\mathcal{L}_{\psi, c} h = f
+\begin{array}{ccc}
+  \mathcal{L}_{\psi, c} h = f & \mbox{and} & \mathbb{E}_{\psi}[h]=0.
+\end{array}
 \end{equation}
 $$
 
-$\mathbb{E}_{\psi}[h] = 0$---this constraint is necessary because the constant function is on the null space of $\mathcal{L}_{\psi}$.
+Setting the expected value of $h$ to zero is necessary because the constant function is on the null space of $\mathcal{L}_{\psi}$.
