@@ -26,6 +26,4 @@ $$
 \end{equation}
 $$
 
-$\mathbb{E}$ gh
-
-and $\mathbb{E}_{\psi}[h] = 0$. The requirement that $\mathbb{E}_{\psi}[h] = 0$ is necessary because the constant function is on the null space of $\mathcal{L}_{\psi}$.
+$\mathbb{E}_{\psi}[h] = 0$---this constraint is necessary because the constant function is on the null space of $\mathcal{L}_{\psi}$.
