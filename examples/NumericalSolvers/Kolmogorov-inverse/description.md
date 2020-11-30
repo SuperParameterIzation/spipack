@@ -28,4 +28,4 @@ $$
 \end{equation}
 $$
 
-Setting the expected value of $h$ to zero is necessary because the constant function is on the null space of $\mathcal{L}_{\psi}$.
+Setting the expected value of $h$ to zero is necessary because the constant function is in the null space of $\mathcal{L}_{\psi}$.

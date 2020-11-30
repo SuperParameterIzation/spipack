@@ -187,23 +187,24 @@ public:
   /// Compute the eigendecomposition of the matrix \f$\boldsymbol{\hat{L}}\f$
   /**
   The matrix \f$\boldsymbol{\hat{L}}\f$ is related to the discrete Kolmogorov operator \f$\boldsymbol{L}\f$  by a similarity transformation such that \f$\boldsymbol{S} \boldsymbol{L} \boldsymbol{S}^{-1} = \boldsymbol{\hat{L}}\f$, where \f$\boldsymbol{S}\f$ is a (full rank) diagonal matrix.
+  @param[out] S The diagonal matrix \f$\boldsymbol{S}^{-1}\f$
   @param[out] Sinv The inverse diagonal matrix \f$\boldsymbol{S}^{-1}\f$
   @param[out] eigenvalues The eigenvalues of \f$\boldsymbol{\hat{L}}\f$
   @param[out] eigenvectors The eigenvectors of \f$\boldsymbol{\hat{L}}\f$
   */
-  void ComputeEigendecomposition(Eigen::Ref<Eigen::VectorXd> Sinv, Eigen::Ref<Eigen::VectorXd> eigenvalues, Eigen::Ref<Eigen::MatrixXd> eigenvectors);
+  void ComputeEigendecomposition(Eigen::Ref<Eigen::VectorXd> S, Eigen::Ref<Eigen::VectorXd> Sinv, Eigen::Ref<Eigen::VectorXd> eigenvalues, Eigen::Ref<Eigen::MatrixXd> eigenvectors);
 
   /// Compute the coefficients for the expansion of a function \f$f\f$ using the eigenvectors as a basis
   /**
   We are given the eigendecomposition of the symmetric matrix \f$\boldsymbol{\hat{L}} = \boldsymbol{\hat{Q}} \boldsymbol{\Lambda} \boldsymbol{\hat{Q}}^T\f$ such that the discrete Kolmogorov operator is \f$\boldsymbol{L} = \boldsymbol{S}^{-1} \boldsymbol{\hat{L}} \boldsymbol{S}\f$. The corresponding eigendecomposition of \f$\boldsymbol{L}\f$ is \f$\boldsymbol{L} = \boldsymbol{S}^{-1} \boldsymbol{\hat{Q}} \boldsymbol{\Lambda} \boldsymbol{\hat{Q}}^T \boldsymbol{S}\f$
 
   Given a function \f$f\f$, this function computes the coefficients \f$\boldsymbol{c} = \boldsymbol{\hat{Q}}^T \boldsymbol{S} \boldsymbol{f}\f$, where \f$f^{(i)} = f(\boldsymbol{x}^{(i)})\f$.
-  @param[in] Sinv The inverse diagonal matrix \f$\boldsymbol{S}^{-1}\f$
+  @param[in] S The diagonal matrix \f$\boldsymbol{S}\f$
   @param[in] eigenvectors The eigenvectors \f$\boldsymbol{\hat{Q}}\f$ of \f$\boldsymbol{\hat{L}}\f$.
   @param[in] f We will compute the coefficients such that \f$\boldsymbol{f} = \boldsymbol{S}^{-1} \boldsymbol{\hat{Q}} \boldsymbol{c}\f$ and \f$f(\boldsymbol{x}^{(i)}) \approx f^{(i)}\f$
   \return The coefficients \f$\boldsymbol{c}\f$
   */
-  Eigen::VectorXd FunctionRepresentation(Eigen::Ref<const Eigen::VectorXd> const& Sinv, Eigen::Ref<const Eigen::MatrixXd> const& eigenvectors, double (*f)(Eigen::VectorXd const& x)) const;
+  Eigen::VectorXd FunctionRepresentation(Eigen::Ref<const Eigen::VectorXd> const& S, Eigen::Ref<const Eigen::MatrixXd> const& eigenvectors, double (*f)(Eigen::VectorXd const& x)) const;
 
   /// Compute the coefficients for the expansion of a function \f$f\f$ using the eigenvectors as a basis
   /**
@@ -215,6 +216,36 @@ public:
   \return The coefficients \f$\boldsymbol{c}\f$
   */
   Eigen::VectorXd FunctionRepresentation(Eigen::Ref<const Eigen::MatrixXd> const& eigenvectorsRight, double (*f)(Eigen::VectorXd const& x)) const;
+
+  /// Compute the pseudo-inverse of the Kolmogorov operator given its eigendecomposition
+  /**
+  We are given the eigendecomposition of the symmetric matrix \f$\boldsymbol{\hat{L}} = \boldsymbol{\hat{Q}} \boldsymbol{\Lambda} \boldsymbol{\hat{Q}}^T\f$ such that the discrete Kolmogorov operator is \f$\boldsymbol{L} = \boldsymbol{S}^{-1} \boldsymbol{\hat{L}} \boldsymbol{S}\f$. The corresponding eigendecomposition of \f$\boldsymbol{L}\f$ is \f$\boldsymbol{L} = \boldsymbol{S}^{-1} \boldsymbol{\hat{Q}} \boldsymbol{\Lambda} \boldsymbol{\hat{Q}}^T \boldsymbol{S}\f$.
+
+  The smallest eigenvalue is \f$0\f$, so this function applies the pseudo-inverse to the right hand side function. We then translate the result so that its expected value is \f$0\f$.
+  @param[in] rhs The right hand side function \f$\boldsymbol{r}\f$
+  @param[in] S The diagonal matrix \f$\boldsymbol{S}\f$
+  @param[in] Sinv The inverse diagonal matrix \f$\boldsymbol{S}^{-1}\f$
+  @param[in] eigenvalues The eigenvalues \f$\boldsymbol{\Lambda}\f$ OR the inverse eigenvalues \f$\boldsymbol{\Lambda}^{-1}\f$
+  @param[in] eigenvectors The eigenvectors \f$\boldsymbol{\hat{Q}}\f$
+  @param[in] inv <tt>true</tt>: The eigenvalue vector stores in the inverse eigenvalues, <tt>false</tt> (default): the eigenvalue vector stores the eigenvalues
+  */
+  Eigen::VectorXd PseudoInverse(Eigen::Ref<const Eigen::VectorXd> const& rhs, Eigen::Ref<const Eigen::VectorXd> const& S, Eigen::Ref<const Eigen::VectorXd> const& Sinv, Eigen::Ref<const Eigen::VectorXd> const& eigenvalues, Eigen::Ref<const Eigen::MatrixXd> const& eigenvectors, bool const inv = false) const;
+
+  /// Compute the pseudo-inverse of the Kolmogorov operator given its eigendecomposition
+  /**
+  We are given the eigendecomposition of the symmetric matrix \f$\boldsymbol{\hat{L}} = \boldsymbol{\hat{Q}} \boldsymbol{\Lambda} \boldsymbol{\hat{Q}}^T\f$ such that the discrete Kolmogorov operator is \f$\boldsymbol{L} = \boldsymbol{S}^{-1} \boldsymbol{\hat{L}} \boldsymbol{S}\f$. The corresponding eigendecomposition of \f$\boldsymbol{L}\f$ is \f$\boldsymbol{L} = \boldsymbol{S}^{-1} \boldsymbol{\hat{Q}} \boldsymbol{\Lambda} \boldsymbol{\hat{Q}}^T \boldsymbol{S}\f$.
+
+  The smallest eigenvalue is \f$0\f$, so this function applies the pseudo-inverse to the right hand side function. We then translate the result so that its expected value is \f$0\f$.
+
+  This function also returns the pseudo-inverse of the diagonal matrix with the eigenvalues as the diagonal. Storing this could save us the trouble of inverting the eigenvalues in the future.
+  @param[in] rhs The right hand side function \f$\boldsymbol{r}\f$
+  @param[in] S The diagonal matrix \f$\boldsymbol{S}\f$
+  @param[in] Sinv The inverse diagonal matrix \f$\boldsymbol{S}^{-1}\f$
+  @param[in] eigenvalues The eigenvalues \f$\boldsymbol{\Lambda}\f$
+  @param[in] eigenvectors The eigenvectors \f$\boldsymbol{\hat{Q}}\f$
+  @param[out] eigenvaluesInv The pseudo-inverse eigenvalues \f$\boldsymbol{\Lambda}^{-1}\f$ (if the eigenvalues are zero, the pseudo-inverse eigenvalues are also zero)
+  */
+  Eigen::VectorXd PseudoInverse(Eigen::Ref<const Eigen::VectorXd> const& rhs, Eigen::Ref<const Eigen::VectorXd> const& S, Eigen::Ref<const Eigen::VectorXd> const& Sinv, Eigen::Ref<const Eigen::VectorXd> const& eigenvalues, Eigen::Ref<const Eigen::MatrixXd> const& eigenvectors, Eigen::Ref<Eigen::VectorXd> eigenvaluesInv) const;
 
 private:
 

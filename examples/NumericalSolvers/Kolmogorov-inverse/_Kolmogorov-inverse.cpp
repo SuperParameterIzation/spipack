@@ -74,8 +74,28 @@ int main(int argc, char **argv) {
 
   // compute the eigendecomposition of Lhat
   std::cout << "computing eigendecomposition of Lhat ... " << std::flush;
-  Eigen::VectorXd Sinv(n), lambda(neigs);
-  Eigen::MatrixXd Uhat(n, neigs);
-  kolOperator->ComputeEigendecomposition(Sinv, lambda, Uhat);
+  Eigen::VectorXd S(n), Sinv(n), lambda(neigs);
+  Eigen::MatrixXd Qhat(n, neigs);
+  kolOperator->ComputeEigendecomposition(S, Sinv, lambda, Qhat);
   std::cout << "done." << std::endl;
+
+  // solve the linear system using the eigendecomposition
+  std::cout << "computing solution to the inverse problem ... " << std::flush;
+  Eigen::VectorXd direction = Eigen::VectorXd::Random(dim);
+  Eigen::VectorXd rhs(n);
+  for( std::size_t i=0; i<n; ++i ) { rhs(i) = direction.dot(kolOperator->Point(i)); }
+
+  // apply the pseudo-inverse to the rhs
+  const Eigen::VectorXd inverse = kolOperator->PseudoInverse(rhs, S, Sinv, lambda, Qhat);
+
+  std::cout << "done." << std::endl;
+
+  // write the samples to file
+  kolOperator->WriteToFile(filename);
+
+  // open the file and write data to file
+  HDF5File hdf5file(filename);
+  hdf5file.WriteMatrix("/right hand side", rhs);
+  hdf5file.WriteMatrix("/weighted Poisson solution", inverse);
+  hdf5file.Close();
 }

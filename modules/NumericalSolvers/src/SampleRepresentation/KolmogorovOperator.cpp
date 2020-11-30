@@ -170,7 +170,7 @@ double KolmogorovOperator::ExponentParameter() const { return exponentPara; }
 
 std::shared_ptr<DensityEstimation> KolmogorovOperator::Density() const { return density; }
 
-void KolmogorovOperator::ComputeEigendecomposition(Eigen::Ref<Eigen::VectorXd> Sinv, Eigen::Ref<Eigen::VectorXd> eigenvalues, Eigen::Ref<Eigen::MatrixXd> eigenvectors) {
+void KolmogorovOperator::ComputeEigendecomposition(Eigen::Ref<Eigen::VectorXd> S, Eigen::Ref<Eigen::VectorXd> Sinv, Eigen::Ref<Eigen::VectorXd> eigenvalues, Eigen::Ref<Eigen::MatrixXd> eigenvectors) {
   // the number of samples
   const std::size_t n = NumSamples();
 
@@ -183,8 +183,9 @@ void KolmogorovOperator::ComputeEigendecomposition(Eigen::Ref<Eigen::VectorXd> S
 
   // compute the kernel matrix and the diagonal matrix S^{-1}
   Eigen::SparseMatrix<double> kmat;
-  Sinv = KernelMatrix(BandwidthParameter(), kmat, &tuneDens);
-  Sinv = (P.array()*Sinv.array().sqrt()).inverse();
+  S = KernelMatrix(BandwidthParameter(), kmat, &tuneDens);
+  S = P.array()*S.array().sqrt();
+  Sinv = S.array().inverse();
 
   // compute Lhat, which is related to the Kolmogorov operator by a similarity transformation
   Eigen::SparseMatrix<double> Lhat(n, n);
@@ -209,7 +210,7 @@ double KolmogorovOperator::EigensolverTolerance() const { return eigensolverTol;
 
 double KolmogorovOperator::EigensolverMaxIterations() const { return eigensolverMaxIt; }
 
-Eigen::VectorXd KolmogorovOperator::FunctionRepresentation(Eigen::Ref<const Eigen::VectorXd> const& Sinv, Eigen::Ref<const Eigen::MatrixXd> const& eigenvectors, double (*f)(Eigen::VectorXd const& x)) const { return FunctionRepresentation(Sinv.array().inverse().matrix().asDiagonal()*eigenvectors, f); }
+Eigen::VectorXd KolmogorovOperator::FunctionRepresentation(Eigen::Ref<const Eigen::VectorXd> const& S, Eigen::Ref<const Eigen::MatrixXd> const& eigenvectors, double (*f)(Eigen::VectorXd const& x)) const { return FunctionRepresentation(S.asDiagonal()*eigenvectors, f); }
 
 Eigen::VectorXd KolmogorovOperator::FunctionRepresentation(Eigen::Ref<const Eigen::MatrixXd> const& eigenvectorsRight, double (*f)(Eigen::VectorXd const& x)) const {
   // the number of samples
@@ -220,4 +221,32 @@ Eigen::VectorXd KolmogorovOperator::FunctionRepresentation(Eigen::Ref<const Eige
   for( std::size_t i=0; i<n; ++i ) { feval(i) = (*f) (Point(i)); }
 
   return eigenvectorsRight.transpose()*feval;
+}
+
+Eigen::VectorXd KolmogorovOperator::PseudoInverse(Eigen::Ref<const Eigen::VectorXd> const& rhs, Eigen::Ref<const Eigen::VectorXd> const& S, Eigen::Ref<const Eigen::VectorXd> const& Sinv, Eigen::Ref<const Eigen::VectorXd> const& eigenvalues, Eigen::Ref<const Eigen::MatrixXd> const& eigenvectors, Eigen::Ref<Eigen::VectorXd> eigenvaluesInv) const {
+  // compute the eigenvalue inverse
+  assert(eigenvaluesInv.size()==eigenvalues.size());
+  for( std::size_t i=0; i<eigenvalues.size(); ++i ) {
+    eigenvaluesInv(i) = (std::abs(eigenvalues(i))>2.0*eigensolverTol? 1.0/eigenvalues(i) : 0.0);
+  }
+
+  return PseudoInverse(rhs, S, Sinv, eigenvaluesInv, eigenvectors, true);
+}
+
+Eigen::VectorXd KolmogorovOperator::PseudoInverse(Eigen::Ref<const Eigen::VectorXd> const& rhs, Eigen::Ref<const Eigen::VectorXd> const& S, Eigen::Ref<const Eigen::VectorXd> const& Sinv, Eigen::Ref<const Eigen::VectorXd> const& eigenvalues, Eigen::Ref<const Eigen::MatrixXd> const& eigenvectors, bool const inv) const {
+  if( !inv ) {
+    // compute the eigenvalue inverse
+    Eigen::VectorXd eigenvaluesInv(eigenvalues.size());
+    return PseudoInverse(rhs, S, Sinv, eigenvalues, eigenvectors, eigenvaluesInv);
+  }
+
+  // compute the pseudo inverse
+  Eigen::VectorXd Linv_rhs = Sinv.asDiagonal()*eigenvectors*eigenvalues.asDiagonal()*eigenvectors.transpose()*S.asDiagonal()*rhs;
+  assert(Linv_rhs.size()==NumSamples());
+
+  // make the expected value zero
+  const double expected = Linv_rhs.sum()/Linv_rhs.size();
+  Linv_rhs -= Eigen::VectorXd::Constant(Linv_rhs.size(), expected);
+
+  return Linv_rhs;
 }

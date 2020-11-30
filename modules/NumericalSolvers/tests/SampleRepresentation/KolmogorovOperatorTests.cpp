@@ -552,10 +552,10 @@ TEST_F(KolmogorovOperatorTests, Eigendecomposition) {
   kolOperator->BuildKDTrees();
 
   // compute the eigendecomposition
-  Eigen::VectorXd Sinv(kolOperator->NumSamples());
+  Eigen::VectorXd S(kolOperator->NumSamples()), Sinv(kolOperator->NumSamples());
   Eigen::VectorXd eigenvalues = Eigen::VectorXd::Random(kolOperator->NumEigenvalues()); // initialize to random so we check to make sure the small (magnitude) is set to zero
   Eigen::MatrixXd eigenvectors(kolOperator->NumSamples(), kolOperator->NumEigenvalues());
-  kolOperator->ComputeEigendecomposition(Sinv, eigenvalues, eigenvectors);
+  kolOperator->ComputeEigendecomposition(S, Sinv, eigenvalues, eigenvectors);
 
   // the smallest eigenvalue is zero
   EXPECT_NEAR(eigenvalues(0), 0.0, 1.0e-8);
@@ -574,13 +574,13 @@ TEST_F(KolmogorovOperatorTests, FunctionRepresentation) {
   kolOperator->BuildKDTrees();
 
   // compute the eigendecomposition
-  Eigen::VectorXd Sinv(kolOperator->NumSamples());
+  Eigen::VectorXd S(kolOperator->NumSamples()), Sinv(kolOperator->NumSamples());
   Eigen::VectorXd eigenvalues = Eigen::VectorXd::Random(kolOperator->NumEigenvalues()); // initialize to random so we check to make sure the small (magnitude) is set to zero
   Eigen::MatrixXd eigenvectors(kolOperator->NumSamples(), kolOperator->NumEigenvalues());
-  kolOperator->ComputeEigendecomposition(Sinv, eigenvalues, eigenvectors);
+  kolOperator->ComputeEigendecomposition(S, Sinv, eigenvalues, eigenvectors);
 
   // compute the right eigenvectors
-  Eigen::MatrixXd eigenvectorsRight = Sinv.array().inverse().matrix().asDiagonal()*eigenvectors;
+  Eigen::MatrixXd eigenvectorsRight = S.asDiagonal()*eigenvectors;
   EXPECT_EQ(eigenvectorsRight.rows(), kolOperator->NumSamples());
   EXPECT_EQ(eigenvectorsRight.cols(), kolOperator->NumEigenvalues());
 
@@ -588,7 +588,7 @@ TEST_F(KolmogorovOperatorTests, FunctionRepresentation) {
   const auto f = [](Eigen::VectorXd const& x) -> double { return x.sum(); };
 
   // compute the function representation
-  const Eigen::VectorXd coeff0 = kolOperator->FunctionRepresentation(Sinv, eigenvectors, f);
+  const Eigen::VectorXd coeff0 = kolOperator->FunctionRepresentation(S, eigenvectors, f);
   EXPECT_EQ(coeff0.size(), kolOperator->NumEigenvalues());
   const Eigen::VectorXd coeff1 = kolOperator->FunctionRepresentation(eigenvectorsRight, f);
   EXPECT_EQ(coeff1.size(), kolOperator->NumEigenvalues());
@@ -600,6 +600,53 @@ TEST_F(KolmogorovOperatorTests, FunctionRepresentation) {
   const Eigen::VectorXd feval = Sinv.asDiagonal()*eigenvectors*coeff0;
 
   for( std::size_t i=0; i<kolOperator->NumSamples(); ++i ) {
-    EXPECT_NEAR(feval(i), f(kolOperator->Point(i)), 1.0e-2);
+    EXPECT_NEAR(feval(i), f(kolOperator->Point(i)), 5.0e-2);
+  }
+}
+
+TEST_F(KolmogorovOperatorTests, PseudoInverse) {
+  options["NumEigenvalues"] = n-1;
+  options["EigensolverTolerance"] = 1.0e-8;
+  options["EigensolverMaxIterations"] = 1e5;
+
+  // create the graph laplacian from samples
+  auto samples = CreateFromSamples();
+  EXPECT_EQ(samples->size(), n);
+
+  // construct the kd-trees
+  kolOperator->BuildKDTrees();
+
+  // compute the eigendecomposition
+  Eigen::VectorXd S(kolOperator->NumSamples()), Sinv(kolOperator->NumSamples());
+  Eigen::VectorXd eigenvalues = Eigen::VectorXd::Random(kolOperator->NumEigenvalues()); // initialize to random so we check to make sure the small (magnitude) is set to zero
+  Eigen::MatrixXd eigenvectors(kolOperator->NumSamples(), kolOperator->NumEigenvalues());
+  kolOperator->ComputeEigendecomposition(S, Sinv, eigenvalues, eigenvectors);
+
+  // randomly choose the right hand side
+  const Eigen::VectorXd rhs = Eigen::VectorXd::Random(n);
+
+  // compute the pseudo inverse
+  Eigen::VectorXd eigenvaluesInv(kolOperator->NumEigenvalues());
+  const Eigen::VectorXd pseudo0 = kolOperator->PseudoInverse(rhs, S, Sinv, eigenvalues, eigenvectors, eigenvaluesInv);
+  EXPECT_EQ(pseudo0.size(), n);
+  EXPECT_NEAR(pseudo0.sum(), 0.0, 1.0e-12);
+  const Eigen::VectorXd pseudo1 = kolOperator->PseudoInverse(rhs, S, Sinv, eigenvaluesInv, eigenvectors, true);
+  EXPECT_EQ(pseudo1.size(), n);
+  EXPECT_NEAR(pseudo1.sum(), 0.0, 1.0e-12);
+  const Eigen::VectorXd pseudo2 = kolOperator->PseudoInverse(rhs, S, Sinv, eigenvalues, eigenvectors, false);
+  EXPECT_EQ(pseudo2.size(), n);
+  EXPECT_NEAR(pseudo2.sum(), 0.0, 1.0e-12);
+  const Eigen::VectorXd pseudo3 = kolOperator->PseudoInverse(rhs, S, Sinv, eigenvalues, eigenvectors);
+  EXPECT_EQ(pseudo3.size(), n);
+  EXPECT_NEAR(pseudo3.sum(), 0.0, 1.0e-12);
+
+  // they should all be the same
+  for( std::size_t i=0; i<n; ++i ) {
+    EXPECT_NEAR(pseudo0(i), pseudo1(i), 1.0e-12);
+    EXPECT_NEAR(pseudo0(i), pseudo2(i), 1.0e-12);
+    EXPECT_NEAR(pseudo0(i), pseudo3(i), 1.0e-12);
+    EXPECT_NEAR(pseudo1(i), pseudo2(i), 1.0e-12);
+    EXPECT_NEAR(pseudo1(i), pseudo3(i), 1.0e-12);
+    EXPECT_NEAR(pseudo2(i), pseudo3(i), 1.0e-12);
   }
 }

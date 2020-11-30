@@ -112,7 +112,7 @@ int main(int argc, char **argv) {
   // compute the diagonal matrices P=\psi^{beta} and S = P D^{1/2}
   std::cout << "creating L and Lhat ... " << std::flush;
   const Eigen::VectorXd P = dens.array().pow(kolOperator->ExponentParameter());
-  const Eigen::VectorXd S = P.array()*(D.array().sqrt());
+  Eigen::VectorXd S = P.array()*(D.array().sqrt());
   Eigen::VectorXd Sinv = S.array().inverse();
 
   // directly compute the discrete Kolmogorov operator
@@ -144,7 +144,7 @@ int main(int argc, char **argv) {
   Eigen::VectorXd lambda(neigs);
   Eigen::MatrixXd Uhat(n, neigs);
   // this recomputes Lhat, which is a little redundant but okay as an example
-  kolOperator->ComputeEigendecomposition(Sinv, lambda, Uhat);
+  kolOperator->ComputeEigendecomposition(S, Sinv, lambda, Uhat);
   std::cout << "done." << std::endl;
 
   // compute the inverse eigenvalues
