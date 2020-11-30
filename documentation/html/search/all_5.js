@@ -5,6 +5,7 @@ var searchData=
   ['eigensolvertol',['eigensolverTol',['../classspi_1_1NumericalSolvers_1_1KolmogorovOperator.html#a3859485fbee8935c41163e3ec6f70753',1,'spi::NumericalSolvers::KolmogorovOperator::eigensolverTol()'],['../structspi_1_1NumericalSolvers_1_1KolmogorovOperator_1_1DefaultParameters.html#af47045ea29528c9f1dfe4a34a7736741',1,'spi::NumericalSolvers::KolmogorovOperator::DefaultParameters::eigensolverTol()']]],
   ['eigensolvertolerance',['EigensolverTolerance',['../classspi_1_1NumericalSolvers_1_1KolmogorovOperator.html#a4f6b806824e8a64f92df54b9c264af04',1,'spi::NumericalSolvers::KolmogorovOperator']]],
   ['eigvals',['eigvals',['../namespace__plot__result.html#aadb0541029c391d80ecd8948bca03801',1,'_plot_result']]],
+  ['eigvec',['eigvec',['../namespace__plot__result.html#a72973ace2de4479dd2f795234d95dd2e',1,'_plot_result']]],
   ['eigvecsl',['eigvecsL',['../namespace__plot__result.html#acc38fc8ce01153786c7738fbd2bdadbd',1,'_plot_result']]],
   ['eigvecslhat',['eigvecsLhat',['../namespace__plot__result.html#a70bdf58cb890ac36baa3d3f90c374448',1,'_plot_result']]],
   ['endif',['endif',['../modules_2NumericalSolvers_2src_2CMakeLists_8txt.html#a2638519a92c90e8884950e66085b7b0a',1,'endif() install(TARGETS spiNS EXPORT $:&#160;CMakeLists.txt'],['../modules_2Tools_2src_2CMakeLists_8txt.html#a7fb05bd384b619b1656fa9441e2a6624',1,'endif() install(TARGETS spiTS EXPORT $:&#160;CMakeLists.txt']]],
