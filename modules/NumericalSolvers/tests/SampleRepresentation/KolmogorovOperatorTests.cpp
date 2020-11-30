@@ -560,3 +560,46 @@ TEST_F(KolmogorovOperatorTests, Eigendecomposition) {
   // the smallest eigenvalue is zero
   EXPECT_NEAR(eigenvalues(0), 0.0, 1.0e-8);
 }
+
+TEST_F(KolmogorovOperatorTests, FunctionRepresentation) {
+  options["NumEigenvalues"] = n-1;
+  options["EigensolverTolerance"] = 1.0e-8;
+  options["EigensolverMaxIterations"] = 1e5;
+
+  // create the graph laplacian from samples
+  auto samples = CreateFromSamples();
+  EXPECT_EQ(samples->size(), n);
+
+  // construct the kd-trees
+  kolOperator->BuildKDTrees();
+
+  // compute the eigendecomposition
+  Eigen::VectorXd Sinv(kolOperator->NumSamples());
+  Eigen::VectorXd eigenvalues = Eigen::VectorXd::Random(kolOperator->NumEigenvalues()); // initialize to random so we check to make sure the small (magnitude) is set to zero
+  Eigen::MatrixXd eigenvectors(kolOperator->NumSamples(), kolOperator->NumEigenvalues());
+  kolOperator->ComputeEigendecomposition(Sinv, eigenvalues, eigenvectors);
+
+  // compute the right eigenvectors
+  Eigen::MatrixXd eigenvectorsRight = Sinv.array().inverse().matrix().asDiagonal()*eigenvectors;
+  EXPECT_EQ(eigenvectorsRight.rows(), kolOperator->NumSamples());
+  EXPECT_EQ(eigenvectorsRight.cols(), kolOperator->NumEigenvalues());
+
+  // we will compute the expansion of this function
+  const auto f = [](Eigen::VectorXd const& x) -> double { return x.sum(); };
+
+  // compute the function representation
+  const Eigen::VectorXd coeff0 = kolOperator->FunctionRepresentation(Sinv, eigenvectors, f);
+  EXPECT_EQ(coeff0.size(), kolOperator->NumEigenvalues());
+  const Eigen::VectorXd coeff1 = kolOperator->FunctionRepresentation(eigenvectorsRight, f);
+  EXPECT_EQ(coeff1.size(), kolOperator->NumEigenvalues());
+
+  // should produce the same result
+  for( std::size_t i=0; i<kolOperator->NumEigenvalues(); ++i ) { EXPECT_NEAR(coeff0(i), coeff1(i), 1.0e-12); }
+
+  // evaluate the function using the expansion
+  const Eigen::VectorXd feval = Sinv.asDiagonal()*eigenvectors*coeff0;
+
+  for( std::size_t i=0; i<kolOperator->NumSamples(); ++i ) {
+    EXPECT_NEAR(feval(i), f(kolOperator->Point(i)), 1.0e-4);
+  }
+}

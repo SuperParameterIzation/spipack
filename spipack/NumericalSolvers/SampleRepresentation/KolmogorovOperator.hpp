@@ -193,6 +193,15 @@ public:
   */
   void ComputeEigendecomposition(Eigen::Ref<Eigen::VectorXd> Sinv, Eigen::Ref<Eigen::VectorXd> eigenvalues, Eigen::Ref<Eigen::MatrixXd> eigenvectors);
 
+  /// Compute the coefficients for the expansion of a function \f$f\f$ using the eigenvectors as a basis
+  /**
+  @param[out] Sinv The inverse diagonal matrix \f$\boldsymbol{S}^{-1}\f$
+  @param[out] eigenvectors The eigenvectors of \f$\boldsymbol{\hat{L}}\f$
+  */
+  Eigen::VectorXd FunctionRepresentation(Eigen::Ref<const Eigen::VectorXd> const& Sinv, Eigen::Ref<const Eigen::MatrixXd> const& eigenvectors, double (*f)(Eigen::VectorXd const& x)) const;
+
+  Eigen::VectorXd FunctionRepresentation(Eigen::Ref<const Eigen::MatrixXd> const& eigenvectorsRight, double (*f)(Eigen::VectorXd const& x)) const;
+
 private:
 
   /// The diagonal of the matrix \f$\boldsymbol{P}\f$, where \f$P^{(ii)} = \psi^{\beta}(\boldsymbol{x}^{(i)})\f$

@@ -208,3 +208,16 @@ std::size_t KolmogorovOperator::NumEigenvalues() const { return neig; }
 double KolmogorovOperator::EigensolverTolerance() const { return eigensolverTol; }
 
 double KolmogorovOperator::EigensolverMaxIterations() const { return eigensolverMaxIt; }
+
+Eigen::VectorXd KolmogorovOperator::FunctionRepresentation(Eigen::Ref<const Eigen::VectorXd> const& Sinv, Eigen::Ref<const Eigen::MatrixXd> const& eigenvectors, double (*f)(Eigen::VectorXd const& x)) const { return FunctionRepresentation(Sinv.array().inverse().matrix().asDiagonal()*eigenvectors, f); }
+
+Eigen::VectorXd KolmogorovOperator::FunctionRepresentation(Eigen::Ref<const Eigen::MatrixXd> const& eigenvectorsRight, double (*f)(Eigen::VectorXd const& x)) const {
+  // the number of samples
+  const std::size_t n = NumSamples();
+
+  // evaluate the function at each sample
+  Eigen::VectorXd feval(n);
+  for( std::size_t i=0; i<n; ++i ) { feval(i) = (*f) (Point(i)); }
+
+  return eigenvectorsRight.transpose()*feval;
+}
