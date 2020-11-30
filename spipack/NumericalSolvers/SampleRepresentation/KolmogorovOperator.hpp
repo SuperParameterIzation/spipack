@@ -195,11 +195,25 @@ public:
 
   /// Compute the coefficients for the expansion of a function \f$f\f$ using the eigenvectors as a basis
   /**
-  @param[out] Sinv The inverse diagonal matrix \f$\boldsymbol{S}^{-1}\f$
-  @param[out] eigenvectors The eigenvectors of \f$\boldsymbol{\hat{L}}\f$
+  We are given the eigendecomposition of the symmetric matrix \f$\boldsymbol{\hat{L}} = \boldsymbol{\hat{Q}} \boldsymbol{\Lambda} \boldsymbol{\hat{Q}}^T\f$ such that the discrete Kolmogorov operator is \f$\boldsymbol{L} = \boldsymbol{S}^{-1} \boldsymbol{\hat{L}} \boldsymbol{S}\f$. The corresponding eigendecomposition of \f$\boldsymbol{L}\f$ is \f$\boldsymbol{L} = \boldsymbol{S}^{-1} \boldsymbol{\hat{Q}} \boldsymbol{\Lambda} \boldsymbol{\hat{Q}}^T \boldsymbol{S}\f$
+
+  Given a function \f$f\f$, this function computes the coefficients \f$\boldsymbol{c} = \boldsymbol{\hat{Q}}^T \boldsymbol{S} \boldsymbol{f}\f$, where \f$f^{(i)} = f(\boldsymbol{x}^{(i)})\f$.
+  @param[in] Sinv The inverse diagonal matrix \f$\boldsymbol{S}^{-1}\f$
+  @param[in] eigenvectors The eigenvectors \f$\boldsymbol{\hat{Q}}\f$ of \f$\boldsymbol{\hat{L}}\f$.
+  @param[in] f We will compute the coefficients such that \f$\boldsymbol{f} = \boldsymbol{S}^{-1} \boldsymbol{\hat{Q}} \boldsymbol{c}\f$ and \f$f(\boldsymbol{x}^{(i)}) \approx f^{(i)}\f$
+  \return The coefficients \f$\boldsymbol{c}\f$
   */
   Eigen::VectorXd FunctionRepresentation(Eigen::Ref<const Eigen::VectorXd> const& Sinv, Eigen::Ref<const Eigen::MatrixXd> const& eigenvectors, double (*f)(Eigen::VectorXd const& x)) const;
 
+  /// Compute the coefficients for the expansion of a function \f$f\f$ using the eigenvectors as a basis
+  /**
+  We are given the eigendecomposition of the discrete Kolmogorov operator \f$\boldsymbol{L} = \boldsymbol{Q}_l \boldsymbol{\Lambda} \boldsymbol{Q}_r\f$, where \f$\boldsymbol{Q}_l\f$ and \f$\boldsymbol{Q}_r\f$ are the left and right eigenvectors.
+
+  Given a function \f$f\f$, this function computes the coefficients \f$\boldsymbol{c} = \boldsymbol{Q}_r \boldsymbol{f}\f$, where \f$f^{(i)} = f(\boldsymbol{x}^{(i)})\f$.
+  @param[in] eigenvectors The right eigenvectors \f$\boldsymbol{Q}_r\f$ of \f$\boldsymbol{L}\f$.
+  @param[in] f We will compute the coefficients such that \f$\boldsymbol{f} = \boldsymbol{Q}_l \boldsymbol{c}\f$ and \f$f(\boldsymbol{x}^{(i)}) \approx f^{(i)}\f$
+  \return The coefficients \f$\boldsymbol{c}\f$
+  */
   Eigen::VectorXd FunctionRepresentation(Eigen::Ref<const Eigen::MatrixXd> const& eigenvectorsRight, double (*f)(Eigen::VectorXd const& x)) const;
 
 private:

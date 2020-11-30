@@ -600,6 +600,6 @@ TEST_F(KolmogorovOperatorTests, FunctionRepresentation) {
   const Eigen::VectorXd feval = Sinv.asDiagonal()*eigenvectors*coeff0;
 
   for( std::size_t i=0; i<kolOperator->NumSamples(); ++i ) {
-    EXPECT_NEAR(feval(i), f(kolOperator->Point(i)), 1.0e-3);
+    EXPECT_NEAR(feval(i), f(kolOperator->Point(i)), 1.0e-2);
   }
 }
