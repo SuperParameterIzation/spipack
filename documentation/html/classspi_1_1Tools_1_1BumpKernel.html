@@ -124,9 +124,9 @@ Inheritance diagram for spi::Tools::BumpKernel:</div>
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-methods"></a>
 Public Member Functions</h2></td></tr>
-<tr class="memitem:a17f93a9b3a0146e3ff9aedaa6f387bb9"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classspi_1_1Tools_1_1BumpKernel.html#a17f93a9b3a0146e3ff9aedaa6f387bb9">BumpKernel</a> (YAML::Node const &amp;options)</td></tr>
-<tr class="memdesc:a17f93a9b3a0146e3ff9aedaa6f387bb9"><td class="mdescLeft">&#160;</td><td class="mdescRight">Construct a bump kernel.  <a href="#a17f93a9b3a0146e3ff9aedaa6f387bb9">More...</a><br /></td></tr>
-<tr class="separator:a17f93a9b3a0146e3ff9aedaa6f387bb9"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:abf0f326896e2e55c50d693ad7bd69e62"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classspi_1_1Tools_1_1BumpKernel.html#abf0f326896e2e55c50d693ad7bd69e62">BumpKernel</a> (YAML::Node const &amp;options=YAML::Node())</td></tr>
+<tr class="memdesc:abf0f326896e2e55c50d693ad7bd69e62"><td class="mdescLeft">&#160;</td><td class="mdescRight">Construct a bump kernel.  <a href="#abf0f326896e2e55c50d693ad7bd69e62">More...</a><br /></td></tr>
+<tr class="separator:abf0f326896e2e55c50d693ad7bd69e62"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:afd045fb11c9fd9dd47e4ecac5190a170"><td class="memItemLeft" align="right" valign="top">virtual&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classspi_1_1Tools_1_1BumpKernel.html#afd045fb11c9fd9dd47e4ecac5190a170">~BumpKernel</a> ()=default</td></tr>
 <tr class="separator:afd045fb11c9fd9dd47e4ecac5190a170"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a3b303476b96dbf9a284779ac0e0664ea"><td class="memItemLeft" align="right" valign="top">double&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classspi_1_1Tools_1_1BumpKernel.html#a3b303476b96dbf9a284779ac0e0664ea">Magnitude</a> () const </td></tr>
@@ -195,9 +195,6 @@ Protected Member Functions</h2></td></tr>
 <tr class="memitem:afac699dc9429bf50a5788bceed9fe46b"><td class="memItemLeft" align="right" valign="top">virtual double&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classspi_1_1Tools_1_1BumpKernel.html#afac699dc9429bf50a5788bceed9fe46b">EvaluateCompactKernelImpl</a> (double const theta) const override</td></tr>
 <tr class="memdesc:afac699dc9429bf50a5788bceed9fe46b"><td class="mdescLeft">&#160;</td><td class="mdescRight">Evaluate the hat kernel function \(k(\theta)\).  <a href="#afac699dc9429bf50a5788bceed9fe46b">More...</a><br /></td></tr>
 <tr class="separator:afac699dc9429bf50a5788bceed9fe46b"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a4f8ff2e8d15eb8ae280d8d6796d47fe3"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classspi_1_1Tools_1_1BumpKernel.html#a4f8ff2e8d15eb8ae280d8d6796d47fe3">BumpKernel</a> ()=default</td></tr>
-<tr class="memdesc:a4f8ff2e8d15eb8ae280d8d6796d47fe3"><td class="mdescLeft">&#160;</td><td class="mdescRight">Private default constructor for the serialization.  <a href="#a4f8ff2e8d15eb8ae280d8d6796d47fe3">More...</a><br /></td></tr>
-<tr class="separator:a4f8ff2e8d15eb8ae280d8d6796d47fe3"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="inherit_header pro_methods_classspi_1_1Tools_1_1CompactKernel"><td colspan="2" onclick="javascript:toggleInherit('pro_methods_classspi_1_1Tools_1_1CompactKernel')"><img src="closed.png" alt="-"/>&#160;Protected Member Functions inherited from <a class="el" href="classspi_1_1Tools_1_1CompactKernel.html">spi::Tools::CompactKernel</a></td></tr>
 <tr class="memitem:a3e59ee0950a3b6fdc58a691aefd222b2 inherit pro_methods_classspi_1_1Tools_1_1CompactKernel"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classspi_1_1Tools_1_1CompactKernel.html#a3e59ee0950a3b6fdc58a691aefd222b2">CompactKernel</a> ()=default</td></tr>
 <tr class="memdesc:a3e59ee0950a3b6fdc58a691aefd222b2 inherit pro_methods_classspi_1_1Tools_1_1CompactKernel"><td class="mdescLeft">&#160;</td><td class="mdescRight">Private default constructor for the serialization.  <a href="#a3e59ee0950a3b6fdc58a691aefd222b2">More...</a><br /></td></tr>
@@ -301,7 +298,7 @@ Additional Inherited Members</h2></td></tr>
 <td>"Exponent" </td><td><code>double</code> </td><td><code>1.0</code> </td><td>The exponent of the kernel (the parameter \(p\)). </td></tr>
 </table>
 </div><h2 class="groupheader">Constructor &amp; Destructor Documentation</h2>
-<a class="anchor" id="a17f93a9b3a0146e3ff9aedaa6f387bb9"></a>
+<a class="anchor" id="abf0f326896e2e55c50d693ad7bd69e62"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
@@ -309,7 +306,7 @@ Additional Inherited Members</h2></td></tr>
           <td class="memname">BumpKernel::BumpKernel </td>
           <td>(</td>
           <td class="paramtype">YAML::Node const &amp;&#160;</td>
-          <td class="paramname"><em>options</em></td><td>)</td>
+          <td class="paramname"><em>options</em> = <code>YAML::Node()</code></td><td>)</td>
           <td></td>
         </tr>
       </table>
@@ -345,31 +342,6 @@ Additional Inherited Members</h2></td></tr>
   </tr>
 </table>
 </div><div class="memdoc">
-
-</div>
-</div>
-<a class="anchor" id="a4f8ff2e8d15eb8ae280d8d6796d47fe3"></a>
-<div class="memitem">
-<div class="memproto">
-<table class="mlabels">
-  <tr>
-  <td class="mlabels-left">
-      <table class="memname">
-        <tr>
-          <td class="memname">spi::Tools::BumpKernel::BumpKernel </td>
-          <td>(</td>
-          <td class="paramname"></td><td>)</td>
-          <td></td>
-        </tr>
-      </table>
-  </td>
-  <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">protected</span><span class="mlabel">default</span></span>  </td>
-  </tr>
-</table>
-</div><div class="memdoc">
-
-<p>Private default constructor for the serialization. </p>
 
 </div>
 </div>

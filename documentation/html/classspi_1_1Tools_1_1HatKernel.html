@@ -124,9 +124,9 @@ Inheritance diagram for spi::Tools::HatKernel:</div>
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-methods"></a>
 Public Member Functions</h2></td></tr>
-<tr class="memitem:a132f20e40774fa349c4b6bd3803c3b7a"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classspi_1_1Tools_1_1HatKernel.html#a132f20e40774fa349c4b6bd3803c3b7a">HatKernel</a> (YAML::Node const &amp;options)</td></tr>
-<tr class="memdesc:a132f20e40774fa349c4b6bd3803c3b7a"><td class="mdescLeft">&#160;</td><td class="mdescRight">Construct a hat kernel.  <a href="#a132f20e40774fa349c4b6bd3803c3b7a">More...</a><br /></td></tr>
-<tr class="separator:a132f20e40774fa349c4b6bd3803c3b7a"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:abae3af8215396c22a784308cf7716c66"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classspi_1_1Tools_1_1HatKernel.html#abae3af8215396c22a784308cf7716c66">HatKernel</a> (YAML::Node const &amp;options=YAML::Node())</td></tr>
+<tr class="memdesc:abae3af8215396c22a784308cf7716c66"><td class="mdescLeft">&#160;</td><td class="mdescRight">Construct a hat kernel.  <a href="#abae3af8215396c22a784308cf7716c66">More...</a><br /></td></tr>
+<tr class="separator:abae3af8215396c22a784308cf7716c66"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:aa57771dd8a0c498fa54a47b9b73f0903"><td class="memItemLeft" align="right" valign="top">virtual&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classspi_1_1Tools_1_1HatKernel.html#aa57771dd8a0c498fa54a47b9b73f0903">~HatKernel</a> ()=default</td></tr>
 <tr class="separator:aa57771dd8a0c498fa54a47b9b73f0903"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a8191cd1e2782bd7cdaa4bd2ea5c0bcbe"><td class="memItemLeft" align="right" valign="top">virtual double&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classspi_1_1Tools_1_1HatKernel.html#a8191cd1e2782bd7cdaa4bd2ea5c0bcbe">IsotropicKernelDerivative</a> (double const theta) const override</td></tr>
@@ -189,9 +189,6 @@ Protected Member Functions</h2></td></tr>
 <tr class="memitem:a16e542c0b45c40e210750e6f30dd21d6"><td class="memItemLeft" align="right" valign="top">virtual double&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classspi_1_1Tools_1_1HatKernel.html#a16e542c0b45c40e210750e6f30dd21d6">EvaluateCompactKernelImpl</a> (double const theta) const override</td></tr>
 <tr class="memdesc:a16e542c0b45c40e210750e6f30dd21d6"><td class="mdescLeft">&#160;</td><td class="mdescRight">Evaluate the hat kernel function \(k(\theta)\).  <a href="#a16e542c0b45c40e210750e6f30dd21d6">More...</a><br /></td></tr>
 <tr class="separator:a16e542c0b45c40e210750e6f30dd21d6"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a7a66223959aa23c4fe33a6e645c9feeb"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classspi_1_1Tools_1_1HatKernel.html#a7a66223959aa23c4fe33a6e645c9feeb">HatKernel</a> ()=default</td></tr>
-<tr class="memdesc:a7a66223959aa23c4fe33a6e645c9feeb"><td class="mdescLeft">&#160;</td><td class="mdescRight">Private default constructor for the serialization.  <a href="#a7a66223959aa23c4fe33a6e645c9feeb">More...</a><br /></td></tr>
-<tr class="separator:a7a66223959aa23c4fe33a6e645c9feeb"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="inherit_header pro_methods_classspi_1_1Tools_1_1CompactKernel"><td colspan="2" onclick="javascript:toggleInherit('pro_methods_classspi_1_1Tools_1_1CompactKernel')"><img src="closed.png" alt="-"/>&#160;Protected Member Functions inherited from <a class="el" href="classspi_1_1Tools_1_1CompactKernel.html">spi::Tools::CompactKernel</a></td></tr>
 <tr class="memitem:a3e59ee0950a3b6fdc58a691aefd222b2 inherit pro_methods_classspi_1_1Tools_1_1CompactKernel"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classspi_1_1Tools_1_1CompactKernel.html#a3e59ee0950a3b6fdc58a691aefd222b2">CompactKernel</a> ()=default</td></tr>
 <tr class="memdesc:a3e59ee0950a3b6fdc58a691aefd222b2 inherit pro_methods_classspi_1_1Tools_1_1CompactKernel"><td class="mdescLeft">&#160;</td><td class="mdescRight">Private default constructor for the serialization.  <a href="#a3e59ee0950a3b6fdc58a691aefd222b2">More...</a><br /></td></tr>
@@ -285,7 +282,7 @@ Additional Inherited Members</h2></td></tr>
 <td>"Magnitude" </td><td><code>double</code> </td><td><code>1.0</code> </td><td>The magnitude of the kernel (the parameter \(a\)). </td></tr>
 </table>
 </div><h2 class="groupheader">Constructor &amp; Destructor Documentation</h2>
-<a class="anchor" id="a132f20e40774fa349c4b6bd3803c3b7a"></a>
+<a class="anchor" id="abae3af8215396c22a784308cf7716c66"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
@@ -293,7 +290,7 @@ Additional Inherited Members</h2></td></tr>
           <td class="memname">HatKernel::HatKernel </td>
           <td>(</td>
           <td class="paramtype">YAML::Node const &amp;&#160;</td>
-          <td class="paramname"><em>options</em></td><td>)</td>
+          <td class="paramname"><em>options</em> = <code>YAML::Node()</code></td><td>)</td>
           <td></td>
         </tr>
       </table>
@@ -329,31 +326,6 @@ Additional Inherited Members</h2></td></tr>
   </tr>
 </table>
 </div><div class="memdoc">
-
-</div>
-</div>
-<a class="anchor" id="a7a66223959aa23c4fe33a6e645c9feeb"></a>
-<div class="memitem">
-<div class="memproto">
-<table class="mlabels">
-  <tr>
-  <td class="mlabels-left">
-      <table class="memname">
-        <tr>
-          <td class="memname">spi::Tools::HatKernel::HatKernel </td>
-          <td>(</td>
-          <td class="paramname"></td><td>)</td>
-          <td></td>
-        </tr>
-      </table>
-  </td>
-  <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">protected</span><span class="mlabel">default</span></span>  </td>
-  </tr>
-</table>
-</div><div class="memdoc">
-
-<p>Private default constructor for the serialization. </p>
 
 </div>
 </div>
