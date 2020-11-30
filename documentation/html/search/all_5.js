@@ -19,7 +19,7 @@ var searchData=
   ['expon',['expon',['../classspi_1_1Tools_1_1BumpKernel.html#ae3eb15b5b30650b95aed9bfa497281cb',1,'spi::Tools::BumpKernel::expon()'],['../classspi_1_1Tools_1_1ExponentialKernel.html#aba088c82e3893165c6f63417faa56f69',1,'spi::Tools::ExponentialKernel::expon()']]],
   ['exponent',['Exponent',['../classspi_1_1Tools_1_1BumpKernel.html#a0656d20a90b166449f45e6782f81b6e2',1,'spi::Tools::BumpKernel::Exponent()'],['../classspi_1_1Tools_1_1ExponentialKernel.html#a751e95e5294f6028660ea18780131256',1,'spi::Tools::ExponentialKernel::Exponent()']]],
   ['exponentialkernel',['ExponentialKernel',['../classspi_1_1Tools_1_1ExponentialKernel.html',1,'spi::Tools']]],
-  ['exponentialkernel',['ExponentialKernel',['../classspi_1_1Tools_1_1ExponentialKernel.html#ac1b6d7ca4fa7217ff9a5d0008de63c06',1,'spi::Tools::ExponentialKernel::ExponentialKernel(YAML::Node const &amp;options)'],['../classspi_1_1Tools_1_1ExponentialKernel.html#aeb3c021b23fecafef8298e110d768681',1,'spi::Tools::ExponentialKernel::ExponentialKernel()=default']]],
+  ['exponentialkernel',['ExponentialKernel',['../classspi_1_1Tools_1_1ExponentialKernel.html#a496ea03b5e5d22e9612430f58e932148',1,'spi::Tools::ExponentialKernel']]],
   ['exponentialkernel_2ecpp',['ExponentialKernel.cpp',['../ExponentialKernel_8cpp.html',1,'']]],
   ['exponentialkernel_2ehpp',['ExponentialKernel.hpp',['../ExponentialKernel_8hpp.html',1,'']]],
   ['exponentialkerneltests_2ecpp',['ExponentialKernelTests.cpp',['../ExponentialKernelTests_8cpp.html',1,'']]],

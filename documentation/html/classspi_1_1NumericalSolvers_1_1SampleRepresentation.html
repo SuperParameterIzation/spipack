@@ -266,8 +266,6 @@ Static Private Attributes</h2></td></tr>
 <tr>
 <td>"NumNearestNeighbors" </td><td><code>std::size_t</code> </td><td><code>10</code> </td><td>The number of nearest neighbors used to compute the bandwidth. </td></tr>
 <tr>
-<td>"KernelOptions" </td><td><code>YAML::Node</code> </td><td>- </td><td>The options for the <a class="el" href="classspi_1_1Tools_1_1CompactKernel.html" title="An implementation of a compact kernel. ">spi::Tools::CompactKernel</a> object </td></tr>
-<tr>
 <td>"ManifoldDimension" </td><td><code>double</code> </td><td><code>2.0</code> </td><td>The manifold dimension \(m\). </td></tr>
 <tr>
 <td>"TruncationTolerance" </td><td><code>double</code> </td><td>If the kernel is a compact kernel (<a class="el" href="classspi_1_1Tools_1_1CompactKernel.html" title="An implementation of a compact kernel. ">spi::Tools::CompactKernel</a>), the default is \(\alpha = 1\). Otherwise the default is \(\alpha = -\log{(5 \times 10^{-2})}\) </td><td>The parameter \(\alpha\) for if we want to truncate the kernel matrix. If the kernel is compact, then this will <em>always</em> be set to one. </td></tr>
