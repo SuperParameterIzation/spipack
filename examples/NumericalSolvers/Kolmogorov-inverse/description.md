@@ -2,9 +2,9 @@
 layout: default
 ---
 
-# Kolmogorov operator
+# Inverse Kolmogorov operator
 
-For more information on the Kolmogorov operator see [the Kolmogorov eigendecomposition example](../Kolmogorov-eigendecomposition/description.md)
+For more information on the Kolmogorov operator see [the Kolmogorov eigendecomposition example](../Kolmogorov-eigendecomposition/description.md).
 
 Let $\psi$ be a probability density function and let $\left[ \boldsymbol{x}^{(i)} \right]_{i=1}^{n}$ be samples from $\psi$. Given constant $c$ and function f, define the Kolmogorov operator
 
@@ -17,3 +17,13 @@ $$
 Note the special cases:
 - $c=0$: The Laplacian operator $\mathcal{L}_{\psi,0} f = \Delta f$
 - $c=1$: The weighted Laplacian operator $\mathcal{L}_{\psi,1} f = \Delta f + \nabla f \cdot \frac{\nabla \psi}{\psi} = \psi^{-1} \nabla \cdot (\psi \nabla f)$
+
+The goal of this example is to find a function $h$ such that
+
+$$
+\begin{equation}
+\mathcal{L}_{\psi} h = f
+\end{equation}
+$$
+
+and $\mathbb{E}_{\psi}[h] = 0$. The requirement that $\mathbb{E}_{\psi}[h] = 0$ is necessary because the constant function is on the null space of $\mathcal{L}_{\psi}$.
