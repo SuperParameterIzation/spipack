@@ -22,8 +22,10 @@ The goal of this example is to find a function $h$ such that
 
 $$
 \begin{equation}
-\mathcal{L}_{\psi} h = f
+\mathcal{L}_{\psi, c} h = f
 \end{equation}
 $$
+
+$\mathbb{E}$ gh
 
 and $\mathbb{E}_{\psi}[h] = 0$. The requirement that $\mathbb{E}_{\psi}[h] = 0$ is necessary because the constant function is on the null space of $\mathcal{L}_{\psi}$.
