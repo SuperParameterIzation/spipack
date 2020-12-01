@@ -177,18 +177,33 @@ Public Member Functions</h2></td></tr>
 <tr class="memitem:a3967a319a05ce6e75b352af8e57c7063"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classspi_1_1NumericalSolvers_1_1KolmogorovOperator.html#a3967a319a05ce6e75b352af8e57c7063">ComputeEigendecomposition</a> (Eigen::Ref&lt; Eigen::VectorXd &gt; S, Eigen::Ref&lt; Eigen::VectorXd &gt; Sinv, Eigen::Ref&lt; Eigen::VectorXd &gt; eigenvalues, Eigen::Ref&lt; Eigen::MatrixXd &gt; eigenvectors)</td></tr>
 <tr class="memdesc:a3967a319a05ce6e75b352af8e57c7063"><td class="mdescLeft">&#160;</td><td class="mdescRight">Compute the eigendecomposition of the matrix \(\boldsymbol{\hat{L}}\).  <a href="#a3967a319a05ce6e75b352af8e57c7063">More...</a><br /></td></tr>
 <tr class="separator:a3967a319a05ce6e75b352af8e57c7063"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a5d4e89c475f73883a759e7f0020c4ad6"><td class="memItemLeft" align="right" valign="top">Eigen::VectorXd&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classspi_1_1NumericalSolvers_1_1KolmogorovOperator.html#a5d4e89c475f73883a759e7f0020c4ad6">FunctionRepresentation</a> (Eigen::Ref&lt; const Eigen::VectorXd &gt; const &amp;S, Eigen::Ref&lt; const Eigen::MatrixXd &gt; const &amp;eigenvectors, double(*f)(Eigen::VectorXd const &amp;x)) const </td></tr>
-<tr class="memdesc:a5d4e89c475f73883a759e7f0020c4ad6"><td class="mdescLeft">&#160;</td><td class="mdescRight">Compute the coefficients for the expansion of a function \(f\) using the eigenvectors as a basis.  <a href="#a5d4e89c475f73883a759e7f0020c4ad6">More...</a><br /></td></tr>
-<tr class="separator:a5d4e89c475f73883a759e7f0020c4ad6"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a670288c14531551729fde11224465126"><td class="memItemLeft" align="right" valign="top">Eigen::VectorXd&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classspi_1_1NumericalSolvers_1_1KolmogorovOperator.html#a670288c14531551729fde11224465126">FunctionRepresentation</a> (Eigen::Ref&lt; const Eigen::MatrixXd &gt; const &amp;eigenvectorsRight, double(*f)(Eigen::VectorXd const &amp;x)) const </td></tr>
-<tr class="memdesc:a670288c14531551729fde11224465126"><td class="mdescLeft">&#160;</td><td class="mdescRight">Compute the coefficients for the expansion of a function \(f\) using the eigenvectors as a basis.  <a href="#a670288c14531551729fde11224465126">More...</a><br /></td></tr>
-<tr class="separator:a670288c14531551729fde11224465126"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a142f7ccd0af2100fdb3f3d7ca19703b0"><td class="memItemLeft" align="right" valign="top">Eigen::VectorXd&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classspi_1_1NumericalSolvers_1_1KolmogorovOperator.html#a142f7ccd0af2100fdb3f3d7ca19703b0">FunctionRepresentation</a> (Eigen::Ref&lt; const Eigen::VectorXd &gt; const &amp;S, Eigen::Ref&lt; const Eigen::MatrixXd &gt; const &amp;eigenvectors, std::function&lt; double(Eigen::VectorXd const &amp;)&gt; f) const </td></tr>
+<tr class="memdesc:a142f7ccd0af2100fdb3f3d7ca19703b0"><td class="mdescLeft">&#160;</td><td class="mdescRight">Compute the coefficients for the expansion of a function \(f\) using the eigenvectors as a basis.  <a href="#a142f7ccd0af2100fdb3f3d7ca19703b0">More...</a><br /></td></tr>
+<tr class="separator:a142f7ccd0af2100fdb3f3d7ca19703b0"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a8ac6196db6cb24bb018266144154e61b"><td class="memItemLeft" align="right" valign="top">Eigen::VectorXd&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classspi_1_1NumericalSolvers_1_1KolmogorovOperator.html#a8ac6196db6cb24bb018266144154e61b">FunctionRepresentation</a> (Eigen::Ref&lt; const Eigen::VectorXd &gt; const &amp;S, Eigen::Ref&lt; const Eigen::MatrixXd &gt; const &amp;eigenvectors, Eigen::Ref&lt; const Eigen::VectorXd &gt; const &amp;feval) const </td></tr>
+<tr class="memdesc:a8ac6196db6cb24bb018266144154e61b"><td class="mdescLeft">&#160;</td><td class="mdescRight">Compute the coefficients for the expansion of a function \(f\) using the eigenvectors as a basis.  <a href="#a8ac6196db6cb24bb018266144154e61b">More...</a><br /></td></tr>
+<tr class="separator:a8ac6196db6cb24bb018266144154e61b"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a4d4bd5bb015c1c2277dd74dec30b16ee"><td class="memItemLeft" align="right" valign="top">Eigen::VectorXd&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classspi_1_1NumericalSolvers_1_1KolmogorovOperator.html#a4d4bd5bb015c1c2277dd74dec30b16ee">FunctionRepresentation</a> (Eigen::Ref&lt; const Eigen::MatrixXd &gt; const &amp;eigenvectorsRight, std::function&lt; double(Eigen::VectorXd const &amp;)&gt; f) const </td></tr>
+<tr class="memdesc:a4d4bd5bb015c1c2277dd74dec30b16ee"><td class="mdescLeft">&#160;</td><td class="mdescRight">Compute the coefficients for the expansion of a function \(f\) using the eigenvectors as a basis.  <a href="#a4d4bd5bb015c1c2277dd74dec30b16ee">More...</a><br /></td></tr>
+<tr class="separator:a4d4bd5bb015c1c2277dd74dec30b16ee"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a61e35593e28e6cc2519271b795ad7e42"><td class="memItemLeft" align="right" valign="top">Eigen::VectorXd&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classspi_1_1NumericalSolvers_1_1KolmogorovOperator.html#a61e35593e28e6cc2519271b795ad7e42">FunctionRepresentation</a> (Eigen::Ref&lt; const Eigen::MatrixXd &gt; const &amp;eigenvectorsRight, Eigen::Ref&lt; const Eigen::VectorXd &gt; const &amp;feval) const </td></tr>
+<tr class="memdesc:a61e35593e28e6cc2519271b795ad7e42"><td class="mdescLeft">&#160;</td><td class="mdescRight">Compute the coefficients for the expansion of a function \(f\) using the eigenvectors as a basis.  <a href="#a61e35593e28e6cc2519271b795ad7e42">More...</a><br /></td></tr>
+<tr class="separator:a61e35593e28e6cc2519271b795ad7e42"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a2ab484334a4879078541a1454af4152d"><td class="memItemLeft" align="right" valign="top">Eigen::VectorXd&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classspi_1_1NumericalSolvers_1_1KolmogorovOperator.html#a2ab484334a4879078541a1454af4152d">PseudoInverse</a> (Eigen::Ref&lt; const Eigen::VectorXd &gt; const &amp;rhs, Eigen::Ref&lt; const Eigen::VectorXd &gt; const &amp;S, Eigen::Ref&lt; const Eigen::VectorXd &gt; const &amp;Sinv, Eigen::Ref&lt; const Eigen::VectorXd &gt; const &amp;eigenvalues, Eigen::Ref&lt; const Eigen::MatrixXd &gt; const &amp;eigenvectors, bool const inv=false) const </td></tr>
 <tr class="memdesc:a2ab484334a4879078541a1454af4152d"><td class="mdescLeft">&#160;</td><td class="mdescRight">Compute the pseudo-inverse of the Kolmogorov operator given its eigendecomposition.  <a href="#a2ab484334a4879078541a1454af4152d">More...</a><br /></td></tr>
 <tr class="separator:a2ab484334a4879078541a1454af4152d"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:afc6b2ee21ddcaccb87aa7e1aabae2f27"><td class="memItemLeft" align="right" valign="top">Eigen::VectorXd&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classspi_1_1NumericalSolvers_1_1KolmogorovOperator.html#afc6b2ee21ddcaccb87aa7e1aabae2f27">PseudoInverse</a> (Eigen::Ref&lt; const Eigen::VectorXd &gt; const &amp;rhs, Eigen::Ref&lt; const Eigen::VectorXd &gt; const &amp;S, Eigen::Ref&lt; const Eigen::VectorXd &gt; const &amp;Sinv, Eigen::Ref&lt; const Eigen::VectorXd &gt; const &amp;eigenvalues, Eigen::Ref&lt; const Eigen::MatrixXd &gt; const &amp;eigenvectors, Eigen::Ref&lt; Eigen::VectorXd &gt; eigenvaluesInv) const </td></tr>
-<tr class="memdesc:afc6b2ee21ddcaccb87aa7e1aabae2f27"><td class="mdescLeft">&#160;</td><td class="mdescRight">Compute the pseudo-inverse of the Kolmogorov operator given its eigendecomposition.  <a href="#afc6b2ee21ddcaccb87aa7e1aabae2f27">More...</a><br /></td></tr>
-<tr class="separator:afc6b2ee21ddcaccb87aa7e1aabae2f27"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a41f05ca9d618aad50aa2c4372153f169"><td class="memItemLeft" align="right" valign="top">Eigen::VectorXd&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classspi_1_1NumericalSolvers_1_1KolmogorovOperator.html#a41f05ca9d618aad50aa2c4372153f169">PseudoInverse</a> (Eigen::Ref&lt; const Eigen::VectorXd &gt; const &amp;rhs, Eigen::Ref&lt; const Eigen::VectorXd &gt; const &amp;S, Eigen::Ref&lt; const Eigen::VectorXd &gt; const &amp;eigenvalues, Eigen::Ref&lt; const Eigen::MatrixXd &gt; const &amp;eigenvectors, bool const inv=false) const </td></tr>
+<tr class="memdesc:a41f05ca9d618aad50aa2c4372153f169"><td class="mdescLeft">&#160;</td><td class="mdescRight">Compute the pseudo-inverse of the Kolmogorov operator given its eigendecomposition.  <a href="#a41f05ca9d618aad50aa2c4372153f169">More...</a><br /></td></tr>
+<tr class="separator:a41f05ca9d618aad50aa2c4372153f169"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ad24021c29e7f77e74b44eaa57e80ac79"><td class="memItemLeft" align="right" valign="top">Eigen::VectorXd&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classspi_1_1NumericalSolvers_1_1KolmogorovOperator.html#ad24021c29e7f77e74b44eaa57e80ac79">PseudoInverse</a> (Eigen::Ref&lt; const Eigen::VectorXd &gt; const &amp;rhs, Eigen::Ref&lt; const Eigen::VectorXd &gt; const &amp;eigenvalues, bool const inv=false) const </td></tr>
+<tr class="memdesc:ad24021c29e7f77e74b44eaa57e80ac79"><td class="mdescLeft">&#160;</td><td class="mdescRight">Compute the pseudo-inverse of the Kolmogorov operator given its eigendecomposition.  <a href="#ad24021c29e7f77e74b44eaa57e80ac79">More...</a><br /></td></tr>
+<tr class="separator:ad24021c29e7f77e74b44eaa57e80ac79"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a2e20769bb1738fc66cff581fcf9d8ed8"><td class="memItemLeft" align="right" valign="top">Eigen::VectorXd&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classspi_1_1NumericalSolvers_1_1KolmogorovOperator.html#a2e20769bb1738fc66cff581fcf9d8ed8">PseudoInverse</a> (Eigen::Ref&lt; const Eigen::VectorXd &gt; const &amp;eigenvalues) const </td></tr>
+<tr class="memdesc:a2e20769bb1738fc66cff581fcf9d8ed8"><td class="mdescLeft">&#160;</td><td class="mdescRight">Compute the pseudo-inverse of the eigenvalues.  <a href="#a2e20769bb1738fc66cff581fcf9d8ed8">More...</a><br /></td></tr>
+<tr class="separator:a2e20769bb1738fc66cff581fcf9d8ed8"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a26ca1e96200a707b7646ea8fe74f57d6"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classspi_1_1NumericalSolvers_1_1KolmogorovOperator.html#a26ca1e96200a707b7646ea8fe74f57d6">FunctionGradient</a> (Eigen::Ref&lt; const Eigen::VectorXd &gt; const &amp;S, Eigen::Ref&lt; const Eigen::MatrixXd &gt; const &amp;eigenvectors) const </td></tr>
+<tr class="memdesc:a26ca1e96200a707b7646ea8fe74f57d6"><td class="mdescLeft">&#160;</td><td class="mdescRight">Compute the gradient of a function represented in the eigenbasis.  <a href="#a26ca1e96200a707b7646ea8fe74f57d6">More...</a><br /></td></tr>
+<tr class="separator:a26ca1e96200a707b7646ea8fe74f57d6"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="inherit_header pub_methods_classspi_1_1NumericalSolvers_1_1SampleRepresentation"><td colspan="2" onclick="javascript:toggleInherit('pub_methods_classspi_1_1NumericalSolvers_1_1SampleRepresentation')"><img src="closed.png" alt="-"/>&#160;Public Member Functions inherited from <a class="el" href="classspi_1_1NumericalSolvers_1_1SampleRepresentation.html">spi::NumericalSolvers::SampleRepresentation</a></td></tr>
 <tr class="memitem:a10425f4a35ee78bfe75d9eaf9c9e3aff inherit pub_methods_classspi_1_1NumericalSolvers_1_1SampleRepresentation"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classspi_1_1NumericalSolvers_1_1SampleRepresentation.html#a10425f4a35ee78bfe75d9eaf9c9e3aff">SampleRepresentation</a> (std::shared_ptr&lt; muq::Modeling::RandomVariable &gt; const &amp;rv, YAML::Node const &amp;options)</td></tr>
 <tr class="memdesc:a10425f4a35ee78bfe75d9eaf9c9e3aff inherit pub_methods_classspi_1_1NumericalSolvers_1_1SampleRepresentation"><td class="mdescLeft">&#160;</td><td class="mdescRight">Construct the sample representation by sampling a random variable from \(\psi\).  <a href="#a10425f4a35ee78bfe75d9eaf9c9e3aff">More...</a><br /></td></tr>
@@ -606,7 +621,35 @@ Additional Inherited Members</h2></td></tr>
 
 </div>
 </div>
-<a class="anchor" id="a5d4e89c475f73883a759e7f0020c4ad6"></a>
+<a class="anchor" id="a26ca1e96200a707b7646ea8fe74f57d6"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void KolmogorovOperator::FunctionGradient </td>
+          <td>(</td>
+          <td class="paramtype">Eigen::Ref&lt; const Eigen::VectorXd &gt; const &amp;&#160;</td>
+          <td class="paramname"><em>S</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">Eigen::Ref&lt; const Eigen::MatrixXd &gt; const &amp;&#160;</td>
+          <td class="paramname"><em>eigenvectors</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td> const</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Compute the gradient of a function represented in the eigenbasis. </p>
+
+</div>
+</div>
+<a class="anchor" id="a142f7ccd0af2100fdb3f3d7ca19703b0"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
@@ -625,7 +668,7 @@ Additional Inherited Members</h2></td></tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype">double(*)(Eigen::VectorXd const &amp;x)&#160;</td>
+          <td class="paramtype">std::function&lt; double(Eigen::VectorXd const &amp;)&gt;&#160;</td>
           <td class="paramname"><em>f</em>&#160;</td>
         </tr>
         <tr>
@@ -650,7 +693,51 @@ Additional Inherited Members</h2></td></tr>
 
 </div>
 </div>
-<a class="anchor" id="a670288c14531551729fde11224465126"></a>
+<a class="anchor" id="a8ac6196db6cb24bb018266144154e61b"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">Eigen::VectorXd KolmogorovOperator::FunctionRepresentation </td>
+          <td>(</td>
+          <td class="paramtype">Eigen::Ref&lt; const Eigen::VectorXd &gt; const &amp;&#160;</td>
+          <td class="paramname"><em>S</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">Eigen::Ref&lt; const Eigen::MatrixXd &gt; const &amp;&#160;</td>
+          <td class="paramname"><em>eigenvectors</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">Eigen::Ref&lt; const Eigen::VectorXd &gt; const &amp;&#160;</td>
+          <td class="paramname"><em>feval</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td> const</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Compute the coefficients for the expansion of a function \(f\) using the eigenvectors as a basis. </p>
+<p>We are given the eigendecomposition of the symmetric matrix \(\boldsymbol{\hat{L}} = \boldsymbol{\hat{Q}} \boldsymbol{\Lambda} \boldsymbol{\hat{Q}}^T\) such that the discrete Kolmogorov operator is \(\boldsymbol{L} = \boldsymbol{S}^{-1} \boldsymbol{\hat{L}} \boldsymbol{S}\). The corresponding eigendecomposition of \(\boldsymbol{L}\) is \(\boldsymbol{L} = \boldsymbol{S}^{-1} \boldsymbol{\hat{Q}} \boldsymbol{\Lambda} \boldsymbol{\hat{Q}}^T \boldsymbol{S}\)</p>
+<p>Given a function \(f\), this function computes the coefficients \(\boldsymbol{c} = \boldsymbol{\hat{Q}}^T \boldsymbol{S} \boldsymbol{f}\), where \(f^{(i)} = f(\boldsymbol{x}^{(i)})\). </p><dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[in]</td><td class="paramname">S</td><td>The diagonal matrix \(\boldsymbol{S}\) </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">eigenvectors</td><td>The eigenvectors \(\boldsymbol{\hat{Q}}\) of \(\boldsymbol{\hat{L}}\). </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">feval</td><td>We will compute the coefficients such that \(\boldsymbol{f} = \boldsymbol{S}^{-1} \boldsymbol{\hat{Q}} \boldsymbol{c}\) and \(f(\boldsymbol{x}^{(i)}) \approx f^{(i)}\) </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>The coefficients \(\boldsymbol{c}\) </dd></dl>
+
+</div>
+</div>
+<a class="anchor" id="a4d4bd5bb015c1c2277dd74dec30b16ee"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
@@ -663,7 +750,7 @@ Additional Inherited Members</h2></td></tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype">double(*)(Eigen::VectorXd const &amp;x)&#160;</td>
+          <td class="paramtype">std::function&lt; double(Eigen::VectorXd const &amp;)&gt;&#160;</td>
           <td class="paramname"><em>f</em>&#160;</td>
         </tr>
         <tr>
@@ -680,6 +767,43 @@ Additional Inherited Members</h2></td></tr>
   <table class="params">
     <tr><td class="paramdir">[in]</td><td class="paramname">eigenvectors</td><td>The right eigenvectors \(\boldsymbol{Q}_r\) of \(\boldsymbol{L}\). </td></tr>
     <tr><td class="paramdir">[in]</td><td class="paramname">f</td><td>We will compute the coefficients such that \(\boldsymbol{f} = \boldsymbol{Q}_l \boldsymbol{c}\) and \(f(\boldsymbol{x}^{(i)}) \approx f^{(i)}\) </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>The coefficients \(\boldsymbol{c}\) </dd></dl>
+
+</div>
+</div>
+<a class="anchor" id="a61e35593e28e6cc2519271b795ad7e42"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">Eigen::VectorXd KolmogorovOperator::FunctionRepresentation </td>
+          <td>(</td>
+          <td class="paramtype">Eigen::Ref&lt; const Eigen::MatrixXd &gt; const &amp;&#160;</td>
+          <td class="paramname"><em>eigenvectorsRight</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">Eigen::Ref&lt; const Eigen::VectorXd &gt; const &amp;&#160;</td>
+          <td class="paramname"><em>feval</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td> const</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Compute the coefficients for the expansion of a function \(f\) using the eigenvectors as a basis. </p>
+<p>We are given the eigendecomposition of the discrete Kolmogorov operator \(\boldsymbol{L} = \boldsymbol{Q}_l \boldsymbol{\Lambda} \boldsymbol{Q}_r\), where \(\boldsymbol{Q}_l\) and \(\boldsymbol{Q}_r\) are the left and right eigenvectors.</p>
+<p>Given a function \(f\), this function computes the coefficients \(\boldsymbol{c} = \boldsymbol{Q}_r \boldsymbol{f}\), where \(f^{(i)} = f(\boldsymbol{x}^{(i)})\). </p><dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[in]</td><td class="paramname">eigenvectors</td><td>The right eigenvectors \(\boldsymbol{Q}_r\) of \(\boldsymbol{L}\). </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">feval</td><td>We will compute the coefficients such that \(\boldsymbol{f} = \boldsymbol{Q}_l \boldsymbol{c}\) and \(f(\boldsymbol{x}^{(i)}) \approx f^{(i)}\) </td></tr>
   </table>
   </dd>
 </dl>
@@ -997,7 +1121,7 @@ Additional Inherited Members</h2></td></tr>
 <p>We are given the eigendecomposition of the symmetric matrix \(\boldsymbol{\hat{L}} = \boldsymbol{\hat{Q}} \boldsymbol{\Lambda} \boldsymbol{\hat{Q}}^T\) such that the discrete Kolmogorov operator is \(\boldsymbol{L} = \boldsymbol{S}^{-1} \boldsymbol{\hat{L}} \boldsymbol{S}\). The corresponding eigendecomposition of \(\boldsymbol{L}\) is \(\boldsymbol{L} = \boldsymbol{S}^{-1} \boldsymbol{\hat{Q}} \boldsymbol{\Lambda} \boldsymbol{\hat{Q}}^T \boldsymbol{S}\).</p>
 <p>The smallest eigenvalue is \(0\), so this function applies the pseudo-inverse to the right hand side function. We then translate the result so that its expected value is \(0\). </p><dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramdir">[in]</td><td class="paramname">rhs</td><td>The right hand side function \(\boldsymbol{r}\) </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">rhs</td><td>The right hand side function \(\boldsymbol{r}\) evaluated at each sample </td></tr>
     <tr><td class="paramdir">[in]</td><td class="paramname">S</td><td>The diagonal matrix \(\boldsymbol{S}\) </td></tr>
     <tr><td class="paramdir">[in]</td><td class="paramname">Sinv</td><td>The inverse diagonal matrix \(\boldsymbol{S}^{-1}\) </td></tr>
     <tr><td class="paramdir">[in]</td><td class="paramname">eigenvalues</td><td>The eigenvalues \(\boldsymbol{\Lambda}\) OR the inverse eigenvalues \(\boldsymbol{\Lambda}^{-1}\) </td></tr>
@@ -1006,10 +1130,11 @@ Additional Inherited Members</h2></td></tr>
   </table>
   </dd>
 </dl>
+<dl class="section return"><dt>Returns</dt><dd>The function after applying the pseudo-inverse operator evaluated at each sample </dd></dl>
 
 </div>
 </div>
-<a class="anchor" id="afc6b2ee21ddcaccb87aa7e1aabae2f27"></a>
+<a class="anchor" id="a41f05ca9d618aad50aa2c4372153f169"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
@@ -1029,12 +1154,6 @@ Additional Inherited Members</h2></td></tr>
           <td class="paramkey"></td>
           <td></td>
           <td class="paramtype">Eigen::Ref&lt; const Eigen::VectorXd &gt; const &amp;&#160;</td>
-          <td class="paramname"><em>Sinv</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">Eigen::Ref&lt; const Eigen::VectorXd &gt; const &amp;&#160;</td>
           <td class="paramname"><em>eigenvalues</em>, </td>
         </tr>
         <tr>
@@ -1046,8 +1165,8 @@ Additional Inherited Members</h2></td></tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype">Eigen::Ref&lt; Eigen::VectorXd &gt;&#160;</td>
-          <td class="paramname"><em>eigenvaluesInv</em>&#160;</td>
+          <td class="paramtype">bool const&#160;</td>
+          <td class="paramname"><em>inv</em> = <code>false</code>&#160;</td>
         </tr>
         <tr>
           <td></td>
@@ -1059,18 +1178,89 @@ Additional Inherited Members</h2></td></tr>
 
 <p>Compute the pseudo-inverse of the Kolmogorov operator given its eigendecomposition. </p>
 <p>We are given the eigendecomposition of the symmetric matrix \(\boldsymbol{\hat{L}} = \boldsymbol{\hat{Q}} \boldsymbol{\Lambda} \boldsymbol{\hat{Q}}^T\) such that the discrete Kolmogorov operator is \(\boldsymbol{L} = \boldsymbol{S}^{-1} \boldsymbol{\hat{L}} \boldsymbol{S}\). The corresponding eigendecomposition of \(\boldsymbol{L}\) is \(\boldsymbol{L} = \boldsymbol{S}^{-1} \boldsymbol{\hat{Q}} \boldsymbol{\Lambda} \boldsymbol{\hat{Q}}^T \boldsymbol{S}\).</p>
-<p>The smallest eigenvalue is \(0\), so this function applies the pseudo-inverse to the right hand side function. We then translate the result so that its expected value is \(0\).</p>
+<p>The smallest eigenvalue is \(0\), so this function applies the pseudo-inverse to the right hand side function. This function returns the coefficients of the expansion of the function after applying the pseudo-inverse. The function can be recovered as the weighed sum of the eigenvectors&mdash;it will not have expected value \(0\). </p><dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[in]</td><td class="paramname">rhs</td><td>The right hand side function \(\boldsymbol{r}\) evaluated at each sample </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">S</td><td>The diagonal matrix \(\boldsymbol{S}\) </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">eigenvalues</td><td>The eigenvalues \(\boldsymbol{\Lambda}\) OR the inverse eigenvalues \(\boldsymbol{\Lambda}^{-1}\) </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">eigenvectors</td><td>The eigenvectors \(\boldsymbol{\hat{Q}}\) </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">inv</td><td><code>true</code>: The eigenvalue vector stores in the inverse eigenvalues, <code>false</code> (default): the eigenvalue vector stores the eigenvalues </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>The function after applying the pseudo-inverse operator evaluated at each sample </dd></dl>
+
+</div>
+</div>
+<a class="anchor" id="ad24021c29e7f77e74b44eaa57e80ac79"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">Eigen::VectorXd KolmogorovOperator::PseudoInverse </td>
+          <td>(</td>
+          <td class="paramtype">Eigen::Ref&lt; const Eigen::VectorXd &gt; const &amp;&#160;</td>
+          <td class="paramname"><em>rhs</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">Eigen::Ref&lt; const Eigen::VectorXd &gt; const &amp;&#160;</td>
+          <td class="paramname"><em>eigenvalues</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">bool const&#160;</td>
+          <td class="paramname"><em>inv</em> = <code>false</code>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td> const</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Compute the pseudo-inverse of the Kolmogorov operator given its eigendecomposition. </p>
+<p>We are given the eigendecomposition of the symmetric matrix \(\boldsymbol{\hat{L}} = \boldsymbol{\hat{Q}} \boldsymbol{\Lambda} \boldsymbol{\hat{Q}}^T\) such that the discrete Kolmogorov operator is \(\boldsymbol{L} = \boldsymbol{S}^{-1} \boldsymbol{\hat{L}} \boldsymbol{S}\). The corresponding eigendecomposition of \(\boldsymbol{L}\) is \(\boldsymbol{L} = \boldsymbol{S}^{-1} \boldsymbol{\hat{Q}} \boldsymbol{\Lambda} \boldsymbol{\hat{Q}}^T \boldsymbol{S}\).</p>
+<p>The smallest eigenvalue is \(0\), so this function applies the pseudo-inverse to the right hand side function. However, in this case we assume that instead of the right hand side function at each sample, we have the coeffients of this function for its expansion in the eigen basis. This function returns the coefficients of the expansion of the function after applying the pseudo-inverse. The function can be recovered as the weighed sum of the eigenvectors&mdash;it will not have expected value \(0\).</p>
 <p>This function also returns the pseudo-inverse of the diagonal matrix with the eigenvalues as the diagonal. Storing this could save us the trouble of inverting the eigenvalues in the future. </p><dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramdir">[in]</td><td class="paramname">rhs</td><td>The right hand side function \(\boldsymbol{r}\) </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">rhs</td><td>The coeffients of the right hand side function \(\boldsymbol{r}\) </td></tr>
     <tr><td class="paramdir">[in]</td><td class="paramname">S</td><td>The diagonal matrix \(\boldsymbol{S}\) </td></tr>
-    <tr><td class="paramdir">[in]</td><td class="paramname">Sinv</td><td>The inverse diagonal matrix \(\boldsymbol{S}^{-1}\) </td></tr>
     <tr><td class="paramdir">[in]</td><td class="paramname">eigenvalues</td><td>The eigenvalues \(\boldsymbol{\Lambda}\) </td></tr>
     <tr><td class="paramdir">[in]</td><td class="paramname">eigenvectors</td><td>The eigenvectors \(\boldsymbol{\hat{Q}}\) </td></tr>
     <tr><td class="paramdir">[out]</td><td class="paramname">eigenvaluesInv</td><td>The pseudo-inverse eigenvalues \(\boldsymbol{\Lambda}^{-1}\) (if the eigenvalues are zero, the pseudo-inverse eigenvalues are also zero) </td></tr>
   </table>
   </dd>
 </dl>
+<dl class="section return"><dt>Returns</dt><dd>The coeffients of the function after applying the pseudo-inverse operator </dd></dl>
+
+</div>
+</div>
+<a class="anchor" id="a2e20769bb1738fc66cff581fcf9d8ed8"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">Eigen::VectorXd KolmogorovOperator::PseudoInverse </td>
+          <td>(</td>
+          <td class="paramtype">Eigen::Ref&lt; const Eigen::VectorXd &gt; const &amp;&#160;</td>
+          <td class="paramname"><em>eigenvalues</em></td><td>)</td>
+          <td> const</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Compute the pseudo-inverse of the eigenvalues. </p>
+<p>The pseudo inverse of the eigenvalues is the inverse, but the zero eigenvalue remains zero. </p><dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[in]</td><td class="paramname">eigenvalues</td><td>The eigenvalues </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>The pseudo-inverse eigenvalues </dd></dl>
 
 </div>
 </div>
