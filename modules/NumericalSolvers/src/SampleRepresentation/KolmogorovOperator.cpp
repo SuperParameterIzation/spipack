@@ -311,4 +311,12 @@ Eigen::VectorXd KolmogorovOperator::PseudoInverse(Eigen::Ref<const Eigen::Vector
   return eigenvalues.asDiagonal()*rhs;
 }
 
-void KolmogorovOperator::FunctionGradient() const {}
+void KolmogorovOperator::FunctionGradient(Eigen::Ref<const Eigen::VectorXd> const& S, Eigen::Ref<const Eigen::MatrixXd> const& eigenvectors) const {
+  // the coordinate dimension
+  const std::size_t dim = Point(0).size();
+
+  // compute the right eigenvector
+  const Eigen::MatrixXd eigenvectorsRight = S.asDiagonal()*eigenvectors;
+
+  // compute the coordinate coefficients
+}

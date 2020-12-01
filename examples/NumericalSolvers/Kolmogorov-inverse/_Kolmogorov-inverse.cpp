@@ -98,7 +98,7 @@ int main(int argc, char **argv) {
   // solve the linear system using the eigendecomposition
   std::cout << "computing the solution gradient ... " << std::flush;
 
-  // compute the right eigenvectors
+  // compute the left and right eigenvectors
   Eigen::MatrixXd eigenvectorsLeft = Sinv.asDiagonal()*Qhat;
   Eigen::MatrixXd eigenvectorsRight = S.asDiagonal()*Qhat;
 

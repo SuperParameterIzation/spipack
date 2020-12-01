@@ -335,7 +335,7 @@ public:
   /// Compute the gradient of a function represented in the eigenbasis
   /**
   */
-  void FunctionGradient() const;
+  void FunctionGradient(Eigen::Ref<const Eigen::VectorXd> const& S, Eigen::Ref<const Eigen::MatrixXd> const& eigenvectors) const;
 
 private:
 

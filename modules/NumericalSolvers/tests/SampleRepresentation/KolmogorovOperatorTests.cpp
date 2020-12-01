@@ -687,3 +687,38 @@ TEST_F(KolmogorovOperatorTests, PseudoInverse) {
     EXPECT_NEAR(soln3(i), pseudo0(i), 1.0e-12);
   }
 }
+
+TEST_F(KolmogorovOperatorTests, FunctionGradient) {
+  options["NumEigenvalues"] = n-1;
+  options["EigensolverTolerance"] = 1.0e-8;
+  options["EigensolverMaxIterations"] = 1e5;
+
+  // create the graph laplacian from samples
+  auto samples = CreateFromSamples();
+  EXPECT_EQ(samples->size(), n);
+
+  // construct the kd-trees
+  kolOperator->BuildKDTrees();
+
+  // compute the eigendecomposition
+  Eigen::VectorXd S(kolOperator->NumSamples()), Sinv(kolOperator->NumSamples());
+  Eigen::VectorXd eigenvalues = Eigen::VectorXd::Random(kolOperator->NumEigenvalues()); // initialize to random so we check to make sure the small (magnitude) is set to zero
+  Eigen::MatrixXd eigenvectors(kolOperator->NumSamples(), kolOperator->NumEigenvalues());
+  kolOperator->ComputeEigendecomposition(S, Sinv, eigenvalues, eigenvectors);
+
+  // compute the right eigenvectors
+  Eigen::MatrixXd eigenvectorsRight = S.asDiagonal()*eigenvectors;
+  EXPECT_EQ(eigenvectorsRight.rows(), kolOperator->NumSamples());
+  EXPECT_EQ(eigenvectorsRight.cols(), kolOperator->NumEigenvalues());
+
+  // we will compute the expansion of this function
+  const auto f = [](Eigen::VectorXd const& x) -> double { return x.sum(); };
+
+  // compute the function representation
+  const Eigen::VectorXd coeff = kolOperator->FunctionRepresentation(S, eigenvectors, f);
+
+
+  //std::cout << coeff << std::endl;
+
+
+}
