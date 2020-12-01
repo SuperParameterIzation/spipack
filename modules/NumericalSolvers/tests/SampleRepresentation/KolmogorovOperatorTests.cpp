@@ -699,7 +699,9 @@ TEST_F(KolmogorovOperatorTests, PseudoInverse) {
 }
 
 TEST_F(KolmogorovOperatorTests, FunctionGradient) {
-  options["NumEigenvalues"] = 100;
+  n = 5000;
+  Options["NumSamples"] = n;
+  options["NumEigenvalues"] = 25;
   options["EigensolverTolerance"] = 1.0e-8;
   options["EigensolverMaxIterations"] = 1e5;
 
