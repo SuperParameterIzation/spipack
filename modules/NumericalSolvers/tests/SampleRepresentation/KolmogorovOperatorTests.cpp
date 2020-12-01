@@ -627,9 +627,11 @@ TEST_F(KolmogorovOperatorTests, PseudoInverse) {
   Eigen::VectorXd rhs(n);
   for( std::size_t i=0; i<n; ++i ) { rhs(i) = direction.dot(kolOperator->Point(i)); }
 
+  // compute the inverse eigenvalues
+  const Eigen::VectorXd eigenvaluesInv = kolOperator->PseudoInverse(eigenvalues);
+
   // compute the pseudo inverse
-  Eigen::VectorXd eigenvaluesInv(kolOperator->NumEigenvalues());
-  const Eigen::VectorXd pseudo0 = kolOperator->PseudoInverse(rhs, S, Sinv, eigenvalues, eigenvectors, eigenvaluesInv);
+  const Eigen::VectorXd pseudo0 = kolOperator->PseudoInverse(rhs, S, Sinv, eigenvalues, eigenvectors);
   EXPECT_EQ(pseudo0.size(), n);
   EXPECT_NEAR(pseudo0.sum(), 0.0, 1.0e-12);
   const Eigen::VectorXd pseudo1 = kolOperator->PseudoInverse(rhs, S, Sinv, eigenvaluesInv, eigenvectors, true);

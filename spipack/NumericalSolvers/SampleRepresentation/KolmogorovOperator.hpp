@@ -204,7 +204,7 @@ public:
   @param[in] f We will compute the coefficients such that \f$\boldsymbol{f} = \boldsymbol{S}^{-1} \boldsymbol{\hat{Q}} \boldsymbol{c}\f$ and \f$f(\boldsymbol{x}^{(i)}) \approx f^{(i)}\f$
   \return The coefficients \f$\boldsymbol{c}\f$
   */
-  Eigen::VectorXd FunctionRepresentation(Eigen::Ref<const Eigen::VectorXd> const& S, Eigen::Ref<const Eigen::MatrixXd> const& eigenvectors, double (*f)(Eigen::VectorXd const& x)) const;
+  Eigen::VectorXd FunctionRepresentation(Eigen::Ref<const Eigen::VectorXd> const& S, Eigen::Ref<const Eigen::MatrixXd> const& eigenvectors, std::function<double(Eigen::VectorXd const&)> f) const;
 
   /// Compute the coefficients for the expansion of a function \f$f\f$ using the eigenvectors as a basis
   /**
@@ -227,7 +227,7 @@ public:
   @param[in] f We will compute the coefficients such that \f$\boldsymbol{f} = \boldsymbol{Q}_l \boldsymbol{c}\f$ and \f$f(\boldsymbol{x}^{(i)}) \approx f^{(i)}\f$
   \return The coefficients \f$\boldsymbol{c}\f$
   */
-  Eigen::VectorXd FunctionRepresentation(Eigen::Ref<const Eigen::MatrixXd> const& eigenvectorsRight, double (*f)(Eigen::VectorXd const& x)) const;
+  Eigen::VectorXd FunctionRepresentation(Eigen::Ref<const Eigen::MatrixXd> const& eigenvectorsRight, std::function<double(Eigen::VectorXd const&)> f) const;
 
   /// Compute the coefficients for the expansion of a function \f$f\f$ using the eigenvectors as a basis
   /**
@@ -259,23 +259,6 @@ public:
   /**
   We are given the eigendecomposition of the symmetric matrix \f$\boldsymbol{\hat{L}} = \boldsymbol{\hat{Q}} \boldsymbol{\Lambda} \boldsymbol{\hat{Q}}^T\f$ such that the discrete Kolmogorov operator is \f$\boldsymbol{L} = \boldsymbol{S}^{-1} \boldsymbol{\hat{L}} \boldsymbol{S}\f$. The corresponding eigendecomposition of \f$\boldsymbol{L}\f$ is \f$\boldsymbol{L} = \boldsymbol{S}^{-1} \boldsymbol{\hat{Q}} \boldsymbol{\Lambda} \boldsymbol{\hat{Q}}^T \boldsymbol{S}\f$.
 
-  The smallest eigenvalue is \f$0\f$, so this function applies the pseudo-inverse to the right hand side function. We then translate the result so that its expected value is \f$0\f$.
-
-  This function also returns the pseudo-inverse of the diagonal matrix with the eigenvalues as the diagonal. Storing this could save us the trouble of inverting the eigenvalues in the future.
-  @param[in] rhs The right hand side function \f$\boldsymbol{r}\f$ evaluated at each sample
-  @param[in] S The diagonal matrix \f$\boldsymbol{S}\f$
-  @param[in] Sinv The inverse diagonal matrix \f$\boldsymbol{S}^{-1}\f$
-  @param[in] eigenvalues The eigenvalues \f$\boldsymbol{\Lambda}\f$
-  @param[in] eigenvectors The eigenvectors \f$\boldsymbol{\hat{Q}}\f$
-  @param[out] eigenvaluesInv The pseudo-inverse eigenvalues \f$\boldsymbol{\Lambda}^{-1}\f$ (if the eigenvalues are zero, the pseudo-inverse eigenvalues are also zero)
-  \return The function after applying the pseudo-inverse operator evaluated at each sample
-  */
-  Eigen::VectorXd PseudoInverse(Eigen::Ref<const Eigen::VectorXd> const& rhs, Eigen::Ref<const Eigen::VectorXd> const& S, Eigen::Ref<const Eigen::VectorXd> const& Sinv, Eigen::Ref<const Eigen::VectorXd> const& eigenvalues, Eigen::Ref<const Eigen::MatrixXd> const& eigenvectors, Eigen::Ref<Eigen::VectorXd> eigenvaluesInv) const;
-
-  /// Compute the pseudo-inverse of the Kolmogorov operator given its eigendecomposition
-  /**
-  We are given the eigendecomposition of the symmetric matrix \f$\boldsymbol{\hat{L}} = \boldsymbol{\hat{Q}} \boldsymbol{\Lambda} \boldsymbol{\hat{Q}}^T\f$ such that the discrete Kolmogorov operator is \f$\boldsymbol{L} = \boldsymbol{S}^{-1} \boldsymbol{\hat{L}} \boldsymbol{S}\f$. The corresponding eigendecomposition of \f$\boldsymbol{L}\f$ is \f$\boldsymbol{L} = \boldsymbol{S}^{-1} \boldsymbol{\hat{Q}} \boldsymbol{\Lambda} \boldsymbol{\hat{Q}}^T \boldsymbol{S}\f$.
-
   The smallest eigenvalue is \f$0\f$, so this function applies the pseudo-inverse to the right hand side function. This function returns the coefficients of the expansion of the function after applying the pseudo-inverse. The function can be recovered as the weighed sum of the eigenvectors---it will not have expected value \f$0\f$.
   @param[in] rhs The right hand side function  \f$\boldsymbol{r}\f$ evaluated at each sample
   @param[in] S The diagonal matrix \f$\boldsymbol{S}\f$
@@ -285,36 +268,6 @@ public:
   \return The function after applying the pseudo-inverse operator evaluated at each sample
   */
   Eigen::VectorXd PseudoInverse(Eigen::Ref<const Eigen::VectorXd> const& rhs, Eigen::Ref<const Eigen::VectorXd> const& S, Eigen::Ref<const Eigen::VectorXd> const& eigenvalues, Eigen::Ref<const Eigen::MatrixXd> const& eigenvectors, bool const inv = false) const;
-
-  /// Compute the pseudo-inverse of the Kolmogorov operator given its eigendecomposition
-  /**
-  We are given the eigendecomposition of the symmetric matrix \f$\boldsymbol{\hat{L}} = \boldsymbol{\hat{Q}} \boldsymbol{\Lambda} \boldsymbol{\hat{Q}}^T\f$ such that the discrete Kolmogorov operator is \f$\boldsymbol{L} = \boldsymbol{S}^{-1} \boldsymbol{\hat{L}} \boldsymbol{S}\f$. The corresponding eigendecomposition of \f$\boldsymbol{L}\f$ is \f$\boldsymbol{L} = \boldsymbol{S}^{-1} \boldsymbol{\hat{Q}} \boldsymbol{\Lambda} \boldsymbol{\hat{Q}}^T \boldsymbol{S}\f$.
-
-  The smallest eigenvalue is \f$0\f$, so this function applies the pseudo-inverse to the right hand side function. This function returns the coefficients of the expansion of the function after applying the pseudo-inverse. The function can be recovered as the weighed sum of the eigenvectors---it will not have expected value \f$0\f$.
-
-  This function also returns the pseudo-inverse of the diagonal matrix with the eigenvalues as the diagonal. Storing this could save us the trouble of inverting the eigenvalues in the future.
-  @param[in] rhs The right hand side function \f$\boldsymbol{r}\f$ evaluated at each sample
-  @param[in] S The diagonal matrix \f$\boldsymbol{S}\f$
-  @param[in] eigenvalues The eigenvalues \f$\boldsymbol{\Lambda}\f$
-  @param[in] eigenvectors The eigenvectors \f$\boldsymbol{\hat{Q}}\f$
-  @param[out] eigenvaluesInv The pseudo-inverse eigenvalues \f$\boldsymbol{\Lambda}^{-1}\f$ (if the eigenvalues are zero, the pseudo-inverse eigenvalues are also zero)
-  \return The function after applying the pseudo-inverse operator evaluated at each sample
-  */
-  Eigen::VectorXd PseudoInverse(Eigen::Ref<const Eigen::VectorXd> const& rhs, Eigen::Ref<const Eigen::VectorXd> const& S, Eigen::Ref<const Eigen::VectorXd> const& eigenvalues, Eigen::Ref<const Eigen::MatrixXd> const& eigenvectors, Eigen::Ref<Eigen::VectorXd> eigenvaluesInv) const;
-
-  /// Compute the pseudo-inverse of the Kolmogorov operator given its eigendecomposition
-  /**
-  We are given the eigendecomposition of the symmetric matrix \f$\boldsymbol{\hat{L}} = \boldsymbol{\hat{Q}} \boldsymbol{\Lambda} \boldsymbol{\hat{Q}}^T\f$ such that the discrete Kolmogorov operator is \f$\boldsymbol{L} = \boldsymbol{S}^{-1} \boldsymbol{\hat{L}} \boldsymbol{S}\f$. The corresponding eigendecomposition of \f$\boldsymbol{L}\f$ is \f$\boldsymbol{L} = \boldsymbol{S}^{-1} \boldsymbol{\hat{Q}} \boldsymbol{\Lambda} \boldsymbol{\hat{Q}}^T \boldsymbol{S}\f$.
-
-  The smallest eigenvalue is \f$0\f$, so this function applies the pseudo-inverse to the right hand side function. However, in this case we assume that instead of the right hand side function at each sample, we have the coeffients of this function for its expansion in the eigen basis. This function returns the coefficients of the expansion of the function after applying the pseudo-inverse. The function can be recovered as the weighed sum of the eigenvectors---it will not have expected value \f$0\f$.
-  @param[in] rhs The coeffients of the right hand side function \f$\boldsymbol{r}\f$
-  @param[in] S The diagonal matrix \f$\boldsymbol{S}\f$
-  @param[in] eigenvalues The eigenvalues \f$\boldsymbol{\Lambda}\f$ OR the inverse eigenvalues \f$\boldsymbol{\Lambda}^{-1}\f$
-  @param[in] eigenvectors The eigenvectors \f$\boldsymbol{\hat{Q}}\f$
-  @param[in] inv <tt>true</tt>: The eigenvalue vector stores in the inverse eigenvalues, <tt>false</tt> (default): the eigenvalue vector stores the eigenvalues
-  \return The coeffients of the function after applying the pseudo-inverse operator
-  */
-  Eigen::VectorXd PseudoInverse(Eigen::Ref<const Eigen::VectorXd> const& rhs, Eigen::Ref<const Eigen::VectorXd> const& eigenvalues, Eigen::Ref<Eigen::VectorXd> eigenvaluesInv) const;
 
   /// Compute the pseudo-inverse of the Kolmogorov operator given its eigendecomposition
   /**
@@ -332,20 +285,20 @@ public:
   */
   Eigen::VectorXd PseudoInverse(Eigen::Ref<const Eigen::VectorXd> const& rhs, Eigen::Ref<const Eigen::VectorXd> const& eigenvalues, bool const inv = false) const;
 
+  /// Compute the pseudo-inverse of the eigenvalues
+  /**
+  The pseudo inverse of the eigenvalues is the inverse, but the zero eigenvalue remains zero.
+  @param[in] eigenvalues The eigenvalues
+  \return The pseudo-inverse eigenvalues
+  */
+  Eigen::VectorXd PseudoInverse(Eigen::Ref<const Eigen::VectorXd> const& eigenvalues) const;
+
   /// Compute the gradient of a function represented in the eigenbasis
   /**
   */
   void FunctionGradient(Eigen::Ref<const Eigen::VectorXd> const& S, Eigen::Ref<const Eigen::MatrixXd> const& eigenvectors) const;
 
 private:
-
-  /// Compute the pseudo-inverse of the eigenvalues
-  /**
-  The pseduo inverse of the eigenvalues is the inverse, but the zero eigenvalue remains zero.
-  @param[in] eigenvalues The eigenvalues
-  \return The pseudo-inverse eigenvalues
-  */
-  Eigen::VectorXd PseudoInverse(Eigen::Ref<const Eigen::VectorXd> const& eigenvalues) const;
 
   /// The diagonal of the matrix \f$\boldsymbol{P}\f$, where \f$P^{(ii)} = \psi^{\beta}(\boldsymbol{x}^{(i)})\f$
   /**
