@@ -98,29 +98,7 @@ int main(int argc, char **argv) {
   // solve the linear system using the eigendecomposition
   std::cout << "computing the solution gradient ... " << std::flush;
 
-  // compute the left and right eigenvectors
-  Eigen::MatrixXd eigenvectorsLeft = Sinv.asDiagonal()*Qhat;
-  Eigen::MatrixXd eigenvectorsRight = S.asDiagonal()*Qhat;
-
-  // compute coefficients for the function f(x) = x0 and f(x) = x1
-  const Eigen::VectorXd x0coeff = kolOperator->FunctionRepresentation(eigenvectorsRight, [](Eigen::VectorXd const& x) -> double { return x(0); });
-  const Eigen::VectorXd x1coeff = kolOperator->FunctionRepresentation(eigenvectorsRight, [](Eigen::VectorXd const& x) -> double { return x(1); });
-
-  Eigen::MatrixXd gradient = Eigen::MatrixXd::Zero(n, 2);
-
-  for( std::size_t l=0; l<neigs; ++l ) {
-    for( std::size_t k=0; k<neigs; ++k ) {
-      const Eigen::VectorXd phikl = eigenvectorsLeft.col(k).array()*eigenvectorsLeft.col(l).array();
-      assert(phikl.size()==n);
-
-      for( std::size_t j=0; j<neigs; ++j ) {
-        const double Cjkl = phikl.dot(eigenvectorsLeft.col(j))/n;
-
-        gradient.col(0) += inverseCoeff(j)*x0coeff(k)*Cjkl/2.0*(lambda(l)-lambda(k)-lambda(j))*eigenvectorsLeft.col(l);
-        gradient.col(1) += inverseCoeff(j)*x1coeff(k)*Cjkl/2.0*(lambda(l)-lambda(k)-lambda(j))*eigenvectorsLeft.col(l);
-      }
-    }
-  }
+  Eigen::MatrixXd gradient = kolOperator->FunctionGradient(inverseCoeff, S, Sinv, lambda, Qhat);
 
   std::cout << "done." << std::endl;
 

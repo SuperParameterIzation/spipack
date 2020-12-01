@@ -283,19 +283,46 @@ Eigen::VectorXd KolmogorovOperator::PseudoInverse(Eigen::Ref<const Eigen::Vector
   return eigenvalues.asDiagonal()*rhs;
 }
 
-void KolmogorovOperator::FunctionGradient(Eigen::Ref<const Eigen::VectorXd> const& S, Eigen::Ref<const Eigen::MatrixXd> const& eigenvectors) const {
+Eigen::MatrixXd KolmogorovOperator::FunctionGradient(Eigen::Ref<const Eigen::VectorXd> const& coeff, Eigen::Ref<const Eigen::VectorXd> const& S, Eigen::Ref<const Eigen::VectorXd> const& Sinv, Eigen::Ref<const Eigen::VectorXd> const& eigenvalues, Eigen::Ref<const Eigen::MatrixXd> const& eigenvectors) const {
   // the coordinate dimension and the number of samples
   const std::size_t dim = Point(0).size();
   const std::size_t n = NumSamples();
 
-  // compute the right eigenvector
+  // compute the left and right eigenvectors
+  const Eigen::MatrixXd eigenvectorsLeft = Sinv.asDiagonal()*eigenvectors;
   const Eigen::MatrixXd eigenvectorsRight = S.asDiagonal()*eigenvectors;
 
-  // compute the coordinate coefficients
-  Eigen::MatrixXd xcoeff(n, dim);
-  for( std::size_t i=0; i<dim; ++i ) {
-    xcoeff.col(i) = FunctionRepresentation(eigenvectorsRight, [i](Eigen::VectorXd const& x) -> double { return x(i); });
+  // precompute the coeffients for each dimension
+  Eigen::MatrixXd xcoeff(neig, dim);
+  for( std::size_t d=0; d<dim; ++d ) {
+    xcoeff.col(d) = FunctionRepresentation(eigenvectorsRight, [d](Eigen::VectorXd const& x) -> double { return x(d); });
   }
 
-  std::cout << xcoeff << std::endl;
+  // compute the coordinate coefficients
+  Eigen::MatrixXd gradient = Eigen::MatrixXd::Zero(n, dim);
+  for( std::size_t j=0; j<neig; ++j ) {
+    for( std::size_t k=j; k<neig; ++k ) {
+      const Eigen::VectorXd phijk = eigenvectorsLeft.col(j).array()*eigenvectorsLeft.col(k).array();
+      assert(phijk.size()==n);
+
+      for( std::size_t l=0; l<neig; ++l ) {
+        const double Cjkl = phijk.dot(eigenvectorsRight.col(l))/2.0;
+        const double scale = Cjkl*(eigenvalues(l)-eigenvalues(k)-eigenvalues(j));
+        const double scalej = coeff(j)*scale;
+
+        for( std::size_t d=0; d<dim; ++d ) {
+          gradient.col(d) += (scalej*xcoeff.col(d)(k))*eigenvectorsLeft.col(l);
+        }
+
+        if( j!=k ) {
+          const double scalek = coeff(k)*scale;
+          for( std::size_t d=0; d<dim; ++d ) {
+            gradient.col(d) += (scalek*xcoeff.col(d)(j))*eigenvectorsLeft.col(l);
+          }
+        }
+      }
+    }
+  }
+
+  return gradient;
 }

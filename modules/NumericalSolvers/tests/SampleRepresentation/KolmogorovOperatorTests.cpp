@@ -599,8 +599,16 @@ TEST_F(KolmogorovOperatorTests, FunctionRepresentation) {
   // evaluate the function using the expansion
   const Eigen::VectorXd feval = Sinv.asDiagonal()*eigenvectors*coeff0;
 
+  // we know what the solution shoudl be
+  Eigen::VectorXd fvec(n);
+  for( std::size_t i=0; i<n; ++i ) {
+    fvec(i) = f(kolOperator->Point(i));
+  }
+  const Eigen::VectorXd fevaltest = Sinv.asDiagonal()*eigenvectors*(S.asDiagonal()*eigenvectors).transpose()*fvec;
+
   for( std::size_t i=0; i<kolOperator->NumSamples(); ++i ) {
     EXPECT_NEAR(feval(i), f(kolOperator->Point(i)), 5.0e-2);
+    EXPECT_NEAR(feval(i), fevaltest(i), 1.0e-8);
   }
 }
 
@@ -691,7 +699,7 @@ TEST_F(KolmogorovOperatorTests, PseudoInverse) {
 }
 
 TEST_F(KolmogorovOperatorTests, FunctionGradient) {
-  options["NumEigenvalues"] = n-1;
+  options["NumEigenvalues"] = 100;
   options["EigensolverTolerance"] = 1.0e-8;
   options["EigensolverMaxIterations"] = 1e5;
 
@@ -713,14 +721,33 @@ TEST_F(KolmogorovOperatorTests, FunctionGradient) {
   EXPECT_EQ(eigenvectorsRight.rows(), kolOperator->NumSamples());
   EXPECT_EQ(eigenvectorsRight.cols(), kolOperator->NumEigenvalues());
 
-  // we will compute the expansion of this function
-  const auto f = [](Eigen::VectorXd const& x) -> double { return x.sum(); };
+  { // the gradient of a constant function is zero
+    // we will compute the expansion of this function
+    const auto f = [](Eigen::VectorXd const& x) -> double { return 0; };
 
-  // compute the function representation
-  const Eigen::VectorXd coeff = kolOperator->FunctionRepresentation(S, eigenvectors, f);
+    // compute the function representation
+    const Eigen::VectorXd coeff = kolOperator->FunctionRepresentation(S, eigenvectors, f);
+
+    // compute the gradient of the function given the coefficients
+    const Eigen::MatrixXd gradient = kolOperator->FunctionGradient(coeff, S, Sinv, eigenvalues, eigenvectors);
+
+    for( std::size_t i=0; i<n; ++i ) {
+      EXPECT_NEAR(gradient.row(i).norm(), 0.0, 1.0e-10);
+    }
+  }
 
 
-  //std::cout << coeff << std::endl;
+  { // the gradient of a linear function is constant
+    // we will compute the expansion of this function
+    const auto f = [](Eigen::VectorXd const& x) -> double { return x.sum(); };
 
+    // compute the function representation
+    const Eigen::VectorXd coeff = kolOperator->FunctionRepresentation(S, eigenvectors, f);
 
+    // compute the gradient of the function given the coefficients
+    const Eigen::MatrixXd gradient = kolOperator->FunctionGradient(coeff, S, Sinv, eigenvalues, eigenvectors);
+
+    // the gradient is constant so let's make sure the average is okay
+    EXPECT_NEAR((gradient.colwise().sum()/n).sum(), dim, 1.0e-1);
+  }
 }
