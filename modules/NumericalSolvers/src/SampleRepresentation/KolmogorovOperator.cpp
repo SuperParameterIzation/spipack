@@ -223,6 +223,11 @@ Eigen::VectorXd KolmogorovOperator::FunctionRepresentation(Eigen::Ref<const Eige
   return eigenvectorsRight.transpose()*feval;
 }
 
+Eigen::VectorXd KolmogorovOperator::FunctionRepresentation(Eigen::Ref<const Eigen::MatrixXd> const& eigenvectorsRight, Eigen::Ref<const Eigen::VectorXd> const& feval) const {
+  assert(feval.size()==n);
+  return eigenvectorsRight.transpose()*feval;
+}
+
 Eigen::VectorXd KolmogorovOperator::PseudoInverse(Eigen::Ref<const Eigen::VectorXd> const& rhs, Eigen::Ref<const Eigen::VectorXd> const& S, Eigen::Ref<const Eigen::VectorXd> const& Sinv, Eigen::Ref<const Eigen::VectorXd> const& eigenvalues, Eigen::Ref<const Eigen::MatrixXd> const& eigenvectors, Eigen::Ref<Eigen::VectorXd> eigenvaluesInv) const {
   // compute the eigenvalue inverse
   assert(eigenvaluesInv.size()==eigenvalues.size());
