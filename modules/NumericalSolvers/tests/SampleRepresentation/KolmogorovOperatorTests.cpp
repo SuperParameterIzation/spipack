@@ -605,7 +605,7 @@ TEST_F(KolmogorovOperatorTests, FunctionRepresentation) {
 }
 
 TEST_F(KolmogorovOperatorTests, PseudoInverse) {
-  options["NumEigenvalues"] = n-1;
+  options["NumEigenvalues"] = 50;
   options["EigensolverTolerance"] = 1.0e-8;
   options["EigensolverMaxIterations"] = 1e5;
 
@@ -623,7 +623,9 @@ TEST_F(KolmogorovOperatorTests, PseudoInverse) {
   kolOperator->ComputeEigendecomposition(S, Sinv, eigenvalues, eigenvectors);
 
   // randomly choose the right hand side
-  const Eigen::VectorXd rhs = Eigen::VectorXd::Random(n);
+  Eigen::VectorXd direction = Eigen::VectorXd::Random(dim);
+  Eigen::VectorXd rhs(n);
+  for( std::size_t i=0; i<n; ++i ) { rhs(i) = direction.dot(kolOperator->Point(i)); }
 
   // compute the pseudo inverse
   Eigen::VectorXd eigenvaluesInv(kolOperator->NumEigenvalues());
@@ -648,5 +650,40 @@ TEST_F(KolmogorovOperatorTests, PseudoInverse) {
     EXPECT_NEAR(pseudo1(i), pseudo2(i), 1.0e-12);
     EXPECT_NEAR(pseudo1(i), pseudo3(i), 1.0e-12);
     EXPECT_NEAR(pseudo2(i), pseudo3(i), 1.0e-12);
+  }
+
+  // compute the function representation of the rhs
+  const Eigen::VectorXd rhsCoeff = kolOperator->FunctionRepresentation(S, eigenvectors, rhs);
+
+  // compute the coefficients of the solution
+  const Eigen::VectorXd solnCoeff0 = kolOperator->PseudoInverse(rhsCoeff, eigenvalues);
+  EXPECT_EQ(solnCoeff0.size(), kolOperator->NumEigenvalues());
+  const Eigen::VectorXd solnCoeff1 = kolOperator->PseudoInverse(rhsCoeff, eigenvaluesInv, true);
+  EXPECT_EQ(solnCoeff1.size(), kolOperator->NumEigenvalues());
+  const Eigen::VectorXd solnCoeff2 = kolOperator->PseudoInverse(rhs, S, eigenvalues, eigenvectors);
+  EXPECT_EQ(solnCoeff2.size(), kolOperator->NumEigenvalues());
+  const Eigen::VectorXd solnCoeff3 = kolOperator->PseudoInverse(rhs, S, eigenvaluesInv, eigenvectors, true);
+  EXPECT_EQ(solnCoeff3.size(), kolOperator->NumEigenvalues());
+
+  // compute the solutions using the expansion and normalize to zero
+  Eigen::VectorXd soln0 = Sinv.asDiagonal()*eigenvectors*solnCoeff0;
+  soln0 -= Eigen::VectorXd::Constant(n, soln0.sum()/n);
+  EXPECT_EQ(soln0.size(), n);
+  Eigen::VectorXd soln1 = Sinv.asDiagonal()*eigenvectors*solnCoeff1;
+  soln1 -= Eigen::VectorXd::Constant(n, soln1.sum()/n);
+  EXPECT_EQ(soln1.size(), n);
+  Eigen::VectorXd soln2 = Sinv.asDiagonal()*eigenvectors*solnCoeff2;
+  soln2 -= Eigen::VectorXd::Constant(n, soln2.sum()/n);
+  EXPECT_EQ(soln2.size(), n);
+  Eigen::VectorXd soln3 = Sinv.asDiagonal()*eigenvectors*solnCoeff2;
+  soln3 -= Eigen::VectorXd::Constant(n, soln3.sum()/n);
+  EXPECT_EQ(soln3.size(), n);
+
+  // the solutions should be the same
+  for( std::size_t i=0; i<n; ++i ) {
+    EXPECT_NEAR(soln0(i), pseudo0(i), 1.0e-12);
+    EXPECT_NEAR(soln1(i), pseudo0(i), 1.0e-12);
+    EXPECT_NEAR(soln2(i), pseudo0(i), 1.0e-12);
+    EXPECT_NEAR(soln3(i), pseudo0(i), 1.0e-12);
   }
 }

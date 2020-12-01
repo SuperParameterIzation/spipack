@@ -16,7 +16,7 @@ int main(int argc, char **argv) {
   const std::string filename = "outputData.h5";
 
   // the number of samples
-  const std::size_t n = 2500;
+  const std::size_t n = 1000;
 
   // numerical parameters
   const std::size_t numNeighbors = 25;
@@ -81,12 +81,17 @@ int main(int argc, char **argv) {
 
   // solve the linear system using the eigendecomposition
   std::cout << "computing solution to the inverse problem ... " << std::flush;
-  Eigen::VectorXd direction = Eigen::VectorXd::Random(dim);
+  //const Eigen::VectorXd direction = Eigen::VectorXd::Random(dim);
+  Eigen::VectorXd direction = Eigen::VectorXd::Zero(dim);
+  direction(0) = 1.0;
   Eigen::VectorXd rhs(n);
   for( std::size_t i=0; i<n; ++i ) { rhs(i) = direction.dot(kolOperator->Point(i)); }
 
-  // apply the pseudo-inverse to the rhs
-  const Eigen::VectorXd inverse = kolOperator->PseudoInverse(rhs, S, Sinv, lambda, Qhat);
+  // apply the pseudo-inverse to the rhs (we will need the coeffients of the solution)
+  const Eigen::VectorXd inverseCoeff = kolOperator->PseudoInverse(rhs, S, lambda, Qhat);
+  assert(inverseCoeff.size()==kolOperator->NumEigenvalues());
+  Eigen::VectorXd inverse = Sinv.asDiagonal()*Qhat*inverseCoeff;
+  inverse -= Eigen::VectorXd::Constant(n, inverse.sum()/n);
 
   std::cout << "done." << std::endl;
 
@@ -101,24 +106,21 @@ int main(int argc, char **argv) {
   const Eigen::VectorXd x0coeff = kolOperator->FunctionRepresentation(eigenvectorsRight, [](Eigen::VectorXd const& x) -> double { return x(0); });
   const Eigen::VectorXd x1coeff = kolOperator->FunctionRepresentation(eigenvectorsRight, [](Eigen::VectorXd const& x) -> double { return x(1); });
 
-  for( std::size_t l=0; l<neigs; ++l ) {
-    std::cout << "l: " << l << std::endl;
+  Eigen::MatrixXd gradient = Eigen::MatrixXd::Zero(n, 2);
 
+  for( std::size_t l=0; l<neigs; ++l ) {
     for( std::size_t k=0; k<neigs; ++k ) {
       const Eigen::VectorXd phikl = eigenvectorsLeft.col(k).array()*eigenvectorsLeft.col(l).array();
       assert(phikl.size()==n);
 
-      //std::cout << phikl.transpose() << std::endl;
-
       for( std::size_t j=0; j<neigs; ++j ) {
         const double Cjkl = phikl.dot(eigenvectorsLeft.col(j))/n;
 
-        std::cout << Cjkl/2.0*(lambda(k)+lambda(j)-lambda(l)) << std::endl;
-
+        gradient.col(0) += inverseCoeff(j)*x0coeff(k)*Cjkl/2.0*(lambda(l)-lambda(k)-lambda(j))*eigenvectorsLeft.col(l);
+        gradient.col(1) += inverseCoeff(j)*x1coeff(k)*Cjkl/2.0*(lambda(l)-lambda(k)-lambda(j))*eigenvectorsLeft.col(l);
       }
     }
   }
-
 
   std::cout << "done." << std::endl;
 
@@ -129,5 +131,6 @@ int main(int argc, char **argv) {
   HDF5File hdf5file(filename);
   hdf5file.WriteMatrix("/right hand side", rhs);
   hdf5file.WriteMatrix("/weighted Poisson solution", inverse);
+  hdf5file.WriteMatrix("/weighted Poisson solution gradient", gradient);
   hdf5file.Close();
 }

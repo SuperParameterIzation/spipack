@@ -220,20 +220,29 @@ Eigen::VectorXd KolmogorovOperator::FunctionRepresentation(Eigen::Ref<const Eige
   Eigen::VectorXd feval(n);
   for( std::size_t i=0; i<n; ++i ) { feval(i) = (*f) (Point(i)); }
 
+  return FunctionRepresentation(eigenvectorsRight, feval);
+}
+
+Eigen::VectorXd KolmogorovOperator::FunctionRepresentation(Eigen::Ref<const Eigen::VectorXd> const& S, Eigen::Ref<const Eigen::MatrixXd> const& eigenvectors, Eigen::Ref<const Eigen::VectorXd> const& feval) const { return FunctionRepresentation(S.asDiagonal()*eigenvectors, feval); }
+
+Eigen::VectorXd KolmogorovOperator::FunctionRepresentation(Eigen::Ref<const Eigen::MatrixXd> const& eigenvectorsRight, Eigen::Ref<const Eigen::VectorXd> const& feval) const {
+  assert(feval.size()==NumSamples());
   return eigenvectorsRight.transpose()*feval;
 }
 
-Eigen::VectorXd KolmogorovOperator::FunctionRepresentation(Eigen::Ref<const Eigen::MatrixXd> const& eigenvectorsRight, Eigen::Ref<const Eigen::VectorXd> const& feval) const {
-  assert(feval.size()==n);
-  return eigenvectorsRight.transpose()*feval;
+Eigen::VectorXd KolmogorovOperator::PseudoInverse(Eigen::Ref<const Eigen::VectorXd> const& eigenvalues) const {
+  Eigen::VectorXd eigenvaluesInv(eigenvalues.size());
+  for( std::size_t i=0; i<eigenvalues.size(); ++i ) {
+    eigenvaluesInv(i) = (std::abs(eigenvalues(i))>2.0*eigensolverTol? 1.0/eigenvalues(i) : 0.0);
+  }
+
+  return eigenvaluesInv;
 }
 
 Eigen::VectorXd KolmogorovOperator::PseudoInverse(Eigen::Ref<const Eigen::VectorXd> const& rhs, Eigen::Ref<const Eigen::VectorXd> const& S, Eigen::Ref<const Eigen::VectorXd> const& Sinv, Eigen::Ref<const Eigen::VectorXd> const& eigenvalues, Eigen::Ref<const Eigen::MatrixXd> const& eigenvectors, Eigen::Ref<Eigen::VectorXd> eigenvaluesInv) const {
   // compute the eigenvalue inverse
   assert(eigenvaluesInv.size()==eigenvalues.size());
-  for( std::size_t i=0; i<eigenvalues.size(); ++i ) {
-    eigenvaluesInv(i) = (std::abs(eigenvalues(i))>2.0*eigensolverTol? 1.0/eigenvalues(i) : 0.0);
-  }
+  eigenvaluesInv = PseudoInverse(eigenvalues);
 
   return PseudoInverse(rhs, S, Sinv, eigenvaluesInv, eigenvectors, true);
 }
@@ -246,12 +255,60 @@ Eigen::VectorXd KolmogorovOperator::PseudoInverse(Eigen::Ref<const Eigen::Vector
   }
 
   // compute the pseudo inverse
-  Eigen::VectorXd Linv_rhs = Sinv.asDiagonal()*eigenvectors*eigenvalues.asDiagonal()*eigenvectors.transpose()*S.asDiagonal()*rhs;
+  Eigen::VectorXd Linv_rhs = Sinv.asDiagonal()*eigenvectors*PseudoInverse(rhs, S, eigenvalues, eigenvectors, true);
   assert(Linv_rhs.size()==NumSamples());
 
   // make the expected value zero
-  const double expected = Linv_rhs.sum()/Linv_rhs.size();
-  Linv_rhs -= Eigen::VectorXd::Constant(Linv_rhs.size(), expected);
+  Linv_rhs -= Eigen::VectorXd::Constant(Linv_rhs.size(), Linv_rhs.sum()/Linv_rhs.size());
 
   return Linv_rhs;
 }
+
+Eigen::VectorXd KolmogorovOperator::PseudoInverse(Eigen::Ref<const Eigen::VectorXd> const& rhs, Eigen::Ref<const Eigen::VectorXd> const& S, Eigen::Ref<const Eigen::VectorXd> const& eigenvalues, Eigen::Ref<const Eigen::MatrixXd> const& eigenvectors, bool const inv) const {
+  assert(rhs.size()==NumSamples());
+
+  if( !inv ) {
+    // compute the eigenvalue inverse
+    Eigen::VectorXd eigenvaluesInv(eigenvalues.size());
+    return PseudoInverse(rhs, S, eigenvalues, eigenvectors, eigenvaluesInv);
+  }
+
+  // compute the function representation of the rhs
+  const Eigen::VectorXd rhsCoeff = FunctionRepresentation(S, eigenvectors, rhs);
+
+  return PseudoInverse(rhsCoeff, eigenvalues, true);
+}
+
+Eigen::VectorXd KolmogorovOperator::PseudoInverse(Eigen::Ref<const Eigen::VectorXd> const& rhs, Eigen::Ref<const Eigen::VectorXd> const& S, Eigen::Ref<const Eigen::VectorXd> const& eigenvalues, Eigen::Ref<const Eigen::MatrixXd> const& eigenvectors, Eigen::Ref<Eigen::VectorXd> eigenvaluesInv) const {
+  assert(rhs.size()==NumSamples());
+
+  // compute the eigenvalue inverse
+  assert(eigenvaluesInv.size()==eigenvalues.size());
+  eigenvaluesInv = PseudoInverse(eigenvalues);
+
+  return PseudoInverse(rhs, S, eigenvaluesInv, eigenvectors, true);
+}
+
+Eigen::VectorXd KolmogorovOperator::PseudoInverse(Eigen::Ref<const Eigen::VectorXd> const& rhs, Eigen::Ref<const Eigen::VectorXd> const& eigenvalues, Eigen::Ref<Eigen::VectorXd> eigenvaluesInv) const {
+  assert(rhs.size()==eigenvalues.size());
+
+  // compute the eigenvalue inverse
+  assert(eigenvaluesInv.size()==eigenvalues.size());
+  eigenvaluesInv = PseudoInverse(eigenvalues);
+
+  return PseudoInverse(rhs, eigenvaluesInv, true);
+}
+
+Eigen::VectorXd KolmogorovOperator::PseudoInverse(Eigen::Ref<const Eigen::VectorXd> const& rhs, Eigen::Ref<const Eigen::VectorXd> const& eigenvalues, bool const inv) const {
+  assert(rhs.size()==eigenvalues.size());
+
+  if( !inv ) {
+    // compute the eigenvalue inverse
+    Eigen::VectorXd eigenvaluesInv(eigenvalues.size());
+    return PseudoInverse(rhs, eigenvalues, eigenvaluesInv);
+  }
+
+  return eigenvalues.asDiagonal()*rhs;
+}
+
+void KolmogorovOperator::FunctionGradient() const {}
