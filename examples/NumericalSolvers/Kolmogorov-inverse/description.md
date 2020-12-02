@@ -73,6 +73,18 @@ $$
 Given evaluations of the right hand side at each sample, we compute the coefficients $\boldsymbol{\widetilde{f}}$ and then solutions to the problem are defined by the coefficients $\boldsymbol{\widetilde{h}} = \boldsymbol{\Lambda}^{-\dagger} \boldsymbol{\widetilde{f}}$, where $\boldsymbol{\Lambda}^{-\dagger}$ denotes the pseudo-inverse of the diagonal matrix $\boldsymbol{\Lambda}$. We recover the solution at each sample by expanding using the eigenvectors $\boldsymbol{h} = \boldsymbol{S}^{-1} \boldsymbol{\hat{Q}} \boldsymbol{\widetilde{h}}$ and shifting the solution so that $\sum_{i=1}^{n} h^{(i)} = 0$.
 
 Given the coefficients and the eigendecomposition we must also compute the unweighted gradient $\nabla_{\boldsymbol{x}} h$. Let $v$ be an additional scalar function. The product rule for the weighted Laplace operator is
+
+$$
 \begin{equation}
     \Delta_{\psi} (v h) = v \Delta_{\psi} h + h \Delta_{\psi} v + 2 \nabla_{\boldsymbol{x}} h \cdot \nabla_{\boldsymbol{x}} v.
 \end{equation}
+$$
+
+Let $(\lambda_j, q_j)$ be eigenvalue/eigenfunction pairs such that $\Delta_{\psi} q_j = \lambda_j q_j$. The product rule implies that
+
+$$
+\begin{eqnarray}
+    \nabla_{\boldsymbol{x}} q_j \cdot \nabla_{\boldsymbol{x}} q_k &=& \frac{1}{2} ( \Delta_{\psi} (q_j q_k) - q_j \Delta_{\psi} q_k - q_k \Delta_{\psi} q_j ) \\
+    &=& \frac{1}{2} ( \Delta_{\psi} (q_j q_k) - (\lambda_j + \lambda_k) q_j q_k ) 
+\end{eqnarray}
+$$
