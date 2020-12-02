@@ -121,7 +121,7 @@ $$
     &=& \sum_{l,j,k=1}^{\infty} \widetilde{h}^{(j)} \widetilde{x}_{s}^{(k)} \frac{C_{ljk}}{2} (\lambda_l - \lambda_j - \lambda_k) q_l.
 \end{eqnarray}
 $$
-Replacing the eigenfunction $q_l$ with the eigenvector $\boldsymbol{Q}\_l$ and truncating after $n_{eig}$ eigenvalue/eigenvector pairs approximates the $s^{th}$ component of $\nabla_{\boldsymbol{x}} h$ at each sample.
 
+Replacing the eigenfunction $q_l$ with the eigenvector $\boldsymbol{Q}\_l$ and truncating after $n_{eig}$ eigenvalue/eigenvector pairs approximates the $s^{th}$ component of $\nabla_{\boldsymbol{x}} h$ at each sample.
 
 FIGURE shows the solution $h$ and its gradient $\nabla_{\boldsymbol{x}} h$ for the weighted Poisson problem with right hand side function $f(\boldsymbol{x}) = x_0$.
