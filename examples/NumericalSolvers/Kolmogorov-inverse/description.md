@@ -30,16 +30,16 @@ $$
 
 Setting the expected value of $h$ to zero is necessary because the constant function is in the null space of $\mathcal{L}_{\psi}$.
 
-Given the discrete Kolmogorov operator $\boldsymbol{L}_{\psi}$, the discrete version of the problem is
+Given the discrete Kolmogorov operator $\boldsymbol{L}_{\psi, c}$, the discrete version of the problem is
 
 $$
 \begin{equation}
     \begin{array}{ccc}
-       \boldsymbol{L}_{\psi} \boldsymbol{h} = \boldsymbol{f} & \mbox{and} & \sum_{i=1}^{n} h^{(i)} = 0.
+       \boldsymbol{L}_{\psi, c} \boldsymbol{h} = \boldsymbol{f} & \mbox{and} & \sum_{i=1}^{n} h^{(i)} = 0.
     \end{array}
 \end{equation}
 $$
 
-Nationally, $\boldsymbol{h}$ and $\boldsymbol{f}$ are vectors such that the $i^{th}$ components $h^{(i)}$ and $f^{(i)}$ are the function evaluations $h^{(i)} = h(\boldsymbol{x}^{(i)})$ and $f^{(i)} = f(\boldsymbol{x}^{(i)})$ at each sample. Recall from [the Kolmogorov eigendecomposition example](../Kolmogorov-eigendecomposition/description.md) that $\boldsymbol{L} = \boldsymbol{S}^{-1} \boldsymbol{\hat{L}} \boldsymbol{S}$, where $\boldsymbol{S}$ is a diagonal matrix and that $\boldsymbol{\hat{L}} \boldsymbol{Q} = \boldsymbol{Q} \boldsymbol{\Lambda}$ is the eigendecomposition of the symmetric matrix $\boldsymbol{\hat{L}}$.
+Nationally, $\boldsymbol{h}$ and $\boldsymbol{f}$ are vectors such that the $i^{th}$ components $h^{(i)}$ and $f^{(i)}$ are the function evaluations $h^{(i)} = h(\boldsymbol{x}^{(i)})$ and $f^{(i)} = f(\boldsymbol{x}^{(i)})$ at each sample. Recall from [the Kolmogorov eigendecomposition example](../Kolmogorov-eigendecomposition/description.md) that $\boldsymbol{L}_{\psi, c} = \boldsymbol{S}^{-1} \boldsymbol{\hat{L}}_{\psi, c} \boldsymbol{S}$, where $\boldsymbol{S}$ is a diagonal matrix and that $\boldsymbol{\hat{L}}_{\psi, c} \boldsymbol{Q} = \boldsymbol{Q} \boldsymbol{\Lambda}$ is the eigendecomposition of the symmetric matrix $\boldsymbol{\hat{L}}_{\psi, c}$.
 
 Define coefficients
