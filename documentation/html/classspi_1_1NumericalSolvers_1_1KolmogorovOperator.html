@@ -201,9 +201,9 @@ Public Member Functions</h2></td></tr>
 <tr class="memitem:a2e20769bb1738fc66cff581fcf9d8ed8"><td class="memItemLeft" align="right" valign="top">Eigen::VectorXd&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classspi_1_1NumericalSolvers_1_1KolmogorovOperator.html#a2e20769bb1738fc66cff581fcf9d8ed8">PseudoInverse</a> (Eigen::Ref&lt; const Eigen::VectorXd &gt; const &amp;eigenvalues) const </td></tr>
 <tr class="memdesc:a2e20769bb1738fc66cff581fcf9d8ed8"><td class="mdescLeft">&#160;</td><td class="mdescRight">Compute the pseudo-inverse of the eigenvalues.  <a href="#a2e20769bb1738fc66cff581fcf9d8ed8">More...</a><br /></td></tr>
 <tr class="separator:a2e20769bb1738fc66cff581fcf9d8ed8"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a26ca1e96200a707b7646ea8fe74f57d6"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classspi_1_1NumericalSolvers_1_1KolmogorovOperator.html#a26ca1e96200a707b7646ea8fe74f57d6">FunctionGradient</a> (Eigen::Ref&lt; const Eigen::VectorXd &gt; const &amp;S, Eigen::Ref&lt; const Eigen::MatrixXd &gt; const &amp;eigenvectors) const </td></tr>
-<tr class="memdesc:a26ca1e96200a707b7646ea8fe74f57d6"><td class="mdescLeft">&#160;</td><td class="mdescRight">Compute the gradient of a function represented in the eigenbasis.  <a href="#a26ca1e96200a707b7646ea8fe74f57d6">More...</a><br /></td></tr>
-<tr class="separator:a26ca1e96200a707b7646ea8fe74f57d6"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aff6659e036772e8adefafcd3612fc8e8"><td class="memItemLeft" align="right" valign="top">Eigen::MatrixXd&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classspi_1_1NumericalSolvers_1_1KolmogorovOperator.html#aff6659e036772e8adefafcd3612fc8e8">FunctionGradient</a> (Eigen::Ref&lt; const Eigen::VectorXd &gt; const &amp;coeff, Eigen::Ref&lt; const Eigen::VectorXd &gt; const &amp;S, Eigen::Ref&lt; const Eigen::VectorXd &gt; const &amp;Sinv, Eigen::Ref&lt; const Eigen::VectorXd &gt; const &amp;eigenvalues, Eigen::Ref&lt; const Eigen::MatrixXd &gt; const &amp;eigenvectors) const </td></tr>
+<tr class="memdesc:aff6659e036772e8adefafcd3612fc8e8"><td class="mdescLeft">&#160;</td><td class="mdescRight">Compute the gradient of a function represented in the eigenbasis.  <a href="#aff6659e036772e8adefafcd3612fc8e8">More...</a><br /></td></tr>
+<tr class="separator:aff6659e036772e8adefafcd3612fc8e8"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="inherit_header pub_methods_classspi_1_1NumericalSolvers_1_1SampleRepresentation"><td colspan="2" onclick="javascript:toggleInherit('pub_methods_classspi_1_1NumericalSolvers_1_1SampleRepresentation')"><img src="closed.png" alt="-"/>&#160;Public Member Functions inherited from <a class="el" href="classspi_1_1NumericalSolvers_1_1SampleRepresentation.html">spi::NumericalSolvers::SampleRepresentation</a></td></tr>
 <tr class="memitem:a10425f4a35ee78bfe75d9eaf9c9e3aff inherit pub_methods_classspi_1_1NumericalSolvers_1_1SampleRepresentation"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classspi_1_1NumericalSolvers_1_1SampleRepresentation.html#a10425f4a35ee78bfe75d9eaf9c9e3aff">SampleRepresentation</a> (std::shared_ptr&lt; muq::Modeling::RandomVariable &gt; const &amp;rv, YAML::Node const &amp;options)</td></tr>
 <tr class="memdesc:a10425f4a35ee78bfe75d9eaf9c9e3aff inherit pub_methods_classspi_1_1NumericalSolvers_1_1SampleRepresentation"><td class="mdescLeft">&#160;</td><td class="mdescRight">Construct the sample representation by sampling a random variable from \(\psi\).  <a href="#a10425f4a35ee78bfe75d9eaf9c9e3aff">More...</a><br /></td></tr>
@@ -621,15 +621,33 @@ Additional Inherited Members</h2></td></tr>
 
 </div>
 </div>
-<a class="anchor" id="a26ca1e96200a707b7646ea8fe74f57d6"></a>
+<a class="anchor" id="aff6659e036772e8adefafcd3612fc8e8"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">void KolmogorovOperator::FunctionGradient </td>
+          <td class="memname">Eigen::MatrixXd KolmogorovOperator::FunctionGradient </td>
           <td>(</td>
           <td class="paramtype">Eigen::Ref&lt; const Eigen::VectorXd &gt; const &amp;&#160;</td>
+          <td class="paramname"><em>coeff</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">Eigen::Ref&lt; const Eigen::VectorXd &gt; const &amp;&#160;</td>
           <td class="paramname"><em>S</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">Eigen::Ref&lt; const Eigen::VectorXd &gt; const &amp;&#160;</td>
+          <td class="paramname"><em>Sinv</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">Eigen::Ref&lt; const Eigen::VectorXd &gt; const &amp;&#160;</td>
+          <td class="paramname"><em>eigenvalues</em>, </td>
         </tr>
         <tr>
           <td class="paramkey"></td>
