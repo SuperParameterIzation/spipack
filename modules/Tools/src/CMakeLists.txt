@@ -9,8 +9,6 @@ set(SOURCE
   NearestNeighbors.cpp
 )
 
-message(STATUS ${SPIPACK_EXTERNAL_LIBRARIES})
-
 add_library(spiTS SHARED ${SOURCE})
 target_link_libraries(spiTS ${SPIPACK_EXTERNAL_LIBRARIES})
 if( DEFINED SPIPACK_BUILT_DEPENDENCIES )
