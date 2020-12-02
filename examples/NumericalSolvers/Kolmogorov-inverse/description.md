@@ -69,3 +69,5 @@ $$
     \boldsymbol{\Lambda} \boldsymbol{\widetilde{h}} = \boldsymbol{\widetilde{f}}.
 \end{equation}
 $$
+
+Given evaluations of the right hand side at each sample, we compute the coefficients $\boldsymbol{\widetilde{f}}$ and then solutions to the problem are defined by the coefficients $\boldsymbol{\widetilde{h}} = \boldsymbol{\Lambda}^{-\dagger} \boldsymbol{\widetilde{f}}$, where $\boldsymbol{\Lambda}^{-\dagger}$ denotes the pseudo-inverse of the diagonal matrix $\boldsymbol{\Lambda}$. We recover the solution at each sample by expanding using the eigenvectors $\boldsymbol{h} = \boldsymbol{S}^{-1} \boldsymbol{\hat{Q}} \boldsymbol{\widetilde{h}}$ and shifting the solution so that $\sum_{i=1}^{n} h^{(i)} = 0$.
