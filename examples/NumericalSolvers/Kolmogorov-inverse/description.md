@@ -40,6 +40,16 @@ $$
 \end{equation}
 $$
 
-Nationally, $\boldsymbol{h}$ and $\boldsymbol{f}$ are vectors such that the $i^{th}$ components $h^{(i)}$ and $f^{(i)}$ are the function evaluations $h^{(i)} = h(\boldsymbol{x}^{(i)})$ and $f^{(i)} = f(\boldsymbol{x}^{(i)})$ at each sample. Recall from [the Kolmogorov eigendecomposition example](../Kolmogorov-eigendecomposition/description.md) that $\boldsymbol{L}_{\psi, c} = \boldsymbol{S}^{-1} \boldsymbol{\hat{L}}_{\psi, c} \boldsymbol{S}$, where $\boldsymbol{S}$ is a diagonal matrix and that $\boldsymbol{\hat{L}}_{\psi, c} \boldsymbol{Q} = \boldsymbol{Q} \boldsymbol{\Lambda}$ is the eigendecomposition of the symmetric matrix $\boldsymbol{\hat{L}}_{\psi, c}$.
+Nationally, $\boldsymbol{h}$ and $\boldsymbol{f}$ are vectors such that the $i^{th}$ components $h^{(i)}$ and $f^{(i)}$ are the function evaluations $h^{(i)} = h(\boldsymbol{x}^{(i)})$ and $f^{(i)} = f(\boldsymbol{x}^{(i)})$ at each sample. Recall from [the Kolmogorov eigendecomposition example](../Kolmogorov-eigendecomposition/description.md) the similarity transformation and eigendecomposition
+
+$$
+\begin{equation}
+    \begin{array}{ccc}
+        \boldsymbol{L}_{\psi, c} = \boldsymbol{S}^{-1} \boldsymbol{\hat{L}}_{\psi, c} \boldsymbol{S} & \mbox{and} & \boldsymbol{\hat{L}}_{\psi, c} \boldsymbol{Q} = \boldsymbol{Q} \boldsymbol{\Lambda}
+    \end{array}
+\end{equation}
+$$
+
+where $\boldsymbol{S}$ is a diagonal matrix.
 
 Define coefficients
