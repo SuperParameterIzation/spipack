@@ -85,6 +85,18 @@ Let $(\lambda_j, q_j)$ be eigenvalue/eigenfunction pairs such that $\Delta_{\psi
 $$
 \begin{eqnarray}
     \nabla_{\boldsymbol{x}} q_j \cdot \nabla_{\boldsymbol{x}} q_k &=& \frac{1}{2} ( \Delta_{\psi} (q_j q_k) - q_j \Delta_{\psi} q_k - q_k \Delta_{\psi} q_j ) \\
-    &=& \frac{1}{2} ( \Delta_{\psi} (q_j q_k) - (\lambda_j + \lambda_k) q_j q_k ) 
+    &=& \frac{1}{2} ( \Delta_{\psi} (q_j q_k) - (\lambda_j + \lambda_k) q_j q_k )
 \end{eqnarray}
+$$
+
+Define the coefficient
+\begin{equation}
+    C_{ljk} = \langle q_l, q_j q_k \rangle_{\psi} = \int_{\mathbb{R}^{2}} q_l^{\prime} q_j q_k \psi \, d\boldsymbol{x} \approx (\boldsymbol{q}_l^{-1})^T (\boldsymbol{q}_j * \boldsymbol{q}_k),
+\end{equation}
+where $*$ is the component-wise product operator between vectors, $\boldsymbol{q}_{j}$ is the $j^{th}$ eigenvector of the discrete Laplace operator $\boldsymbol{L}_{\psi, c}$ (i.e., the $j^{th}$ column of $\boldsymbol{Q} = \boldsymbol{S}^{-1} \boldsymbol{\hat{Q}}$), and $(\boldsymbol{Q}_l^{-1})^T$ is the $l^{th}$ row of $\boldsymbol{Q}^{-1} = \boldsymbol{\hat{Q}}^T \boldsymbol{S}$. This implies that
+
+$$
+\begin{equation}
+    Q_j Q_k = \sum_{i=1}^{\infty} C_{ljk} Q_l.
+\end{equation}
 $$
