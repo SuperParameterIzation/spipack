@@ -16,7 +16,7 @@ int main(int argc, char **argv) {
   const std::string filename = "outputData.h5";
 
   // the number of samples
-  const std::size_t n = 100;
+  const std::size_t n = 1000;
 
   // numerical parameters
   const std::size_t numNeighbors = 25;
