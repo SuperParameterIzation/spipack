@@ -110,3 +110,14 @@ $$
 $$
 
 Finally, choose the function $v(\boldsymbol{x}) = x_s$ that picks the $s^{th}$ coordinate index. Let $\boldsymbol{x}\_s$ be the vector such that each entry $V_s^{(i)}$ is the $s^{th}$ coordinate of the $i^{th}$ sample. Define the coefficients $\boldsymbol{\widetilde{x}}\_s = \boldsymbol{\hat{Q}}^T \boldsymbol{S} \boldsymbol{x}\_s$. Using the product rule, we write the $s^{th}$ component of the unweighted gradient $\nabla_{\boldsymbol{x}} h$ as
+
+$$
+\begin{eqnarray}
+    \nabla_{\boldsymbol{x}} h \cdot \nabla_{\boldsymbol{x}} v &=& \sum_{j,k=1}^{\infty} \widetilde{h}^{(j)} \widetilde{x}_{s}^{(k)} \nabla_{\boldsymbol{x}} q_j \cdot \nabla_{\boldsymbol{V}} q_k \\
+    &=& \sum_{l,j,k=1}^{\infty} \widetilde{h}^{(j)} \widetilde{x}_{s}^{(k)} \frac{C_{ljk}}{2} (\lambda_l - \lambda_j - \lambda_k) q_l.
+\end{eqnarray}
+$$
+Replacing the eigenfunction $q_l$ with the eigenvector $\boldsymbol{Q}\_l$ and truncating after $n_{eig}$ eigenvalue/eigenvector pairs approximates the $s^{th}$ component of $\nabla_{\boldsymbol{x}} h$ at each sample.
+
+
+FIGURE shows the solution $h$ and its gradient $\nabla_{\boldsymbol{x}} h$ for the weighted Poisson problem with right hand side function $f(\boldsymbol{x}) = x_0$.
