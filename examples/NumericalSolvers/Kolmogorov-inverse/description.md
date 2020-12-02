@@ -62,7 +62,7 @@ $$
 \end{equation}
 $$
 
-allowing us to express $\boldsymbol{h}$ and $\boldsymbol{f}$ as an expansion using the eigenvectors $\boldsymbol{\hat{Q}}$ of $\boldsymbol{\hat{L}}$ as a basis. Substituting these coefficients and the eigendecomposition of $\boldsymbol{L}_{\psi}$ into the discretize problem derives
+allowing us to express $\boldsymbol{h}$ and $\boldsymbol{f}$ as an expansion using the eigenvectors $\boldsymbol{\hat{Q}}$ of $\boldsymbol{\hat{L}}_{\psi, c}$ as a basis. Substituting these coefficients and the eigendecomposition of $\boldsymbol{L}_{\psi, c}$ into the discretize problem derives
 
 $$
 \begin{equation}
