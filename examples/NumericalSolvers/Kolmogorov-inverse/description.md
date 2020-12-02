@@ -124,4 +124,10 @@ $$
 
 Replacing the eigenfunction $q_l$ with the eigenvector $\boldsymbol{Q}\_l$ and truncating after $n_{eig}$ eigenvalue/eigenvector pairs approximates the $s^{th}$ component of $\nabla_{\boldsymbol{x}} h$ at each sample.
 
-FIGURE shows the solution $h$ and its gradient $\nabla_{\boldsymbol{x}} h$ for the weighted Poisson problem with right hand side function $f(\boldsymbol{x}) = x_0$.
+The figure below shows the solution $h$ and its gradient $\nabla_{\boldsymbol{x}} h$ for the problem with right hand side function $f(\boldsymbol{x}) = x_0$.
+
+<figure>
+<figcaption>The solution $h$ and its gradient $\nabla_{\boldsymbol{x}} h$ for the problem with right hand side function $f(\boldsymbol{x}) = x_0$. Here, we use $n=10^3$ samples from a standard Gaussian distribution $\mathcal{N}(\boldsymbol{0}, \boldsymbol{I})$.</figcaption>
+<embed src="figures/Kolmogorov_inverse.pdf" width="500" height="375"
+type="application/pdf">
+</figure>
