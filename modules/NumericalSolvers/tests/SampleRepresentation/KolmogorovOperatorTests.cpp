@@ -699,9 +699,9 @@ TEST_F(KolmogorovOperatorTests, PseudoInverse) {
 }
 
 TEST_F(KolmogorovOperatorTests, FunctionGradient) {
-  n = 5000;
-  options["NumSamples"] = n;
-  options["NumEigenvalues"] = 25;
+  //n = 200;
+  //options["NumSamples"] = n;
+  options["NumEigenvalues"] = 100;
   options["EigensolverTolerance"] = 1.0e-8;
   options["EigensolverMaxIterations"] = 1e5;
 
@@ -725,7 +725,7 @@ TEST_F(KolmogorovOperatorTests, FunctionGradient) {
 
   { // the gradient of a constant function is zero
     // we will compute the expansion of this function
-    const auto f = [](Eigen::VectorXd const& x) -> double { return 0; };
+    const auto f = [](Eigen::VectorXd const& x) -> double { return 1.0; };
 
     // compute the function representation
     const Eigen::VectorXd coeff = kolOperator->FunctionRepresentation(S, eigenvectors, f);
@@ -737,7 +737,6 @@ TEST_F(KolmogorovOperatorTests, FunctionGradient) {
       EXPECT_NEAR(gradient.row(i).norm(), 0.0, 1.0e-10);
     }
   }
-
 
   { // the gradient of a linear function is constant
     // we will compute the expansion of this function

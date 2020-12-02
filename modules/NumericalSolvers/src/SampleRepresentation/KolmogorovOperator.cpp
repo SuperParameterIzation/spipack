@@ -301,7 +301,7 @@ Eigen::MatrixXd KolmogorovOperator::FunctionGradient(Eigen::Ref<const Eigen::Vec
   // compute the coordinate coefficients
   Eigen::MatrixXd gradient = Eigen::MatrixXd::Zero(n, dim);
   for( std::size_t j=0; j<neig; ++j ) {
-    for( std::size_t k=j; k<neig; ++k ) {
+    for( std::size_t k=0; k<neig; ++k ) {
       const Eigen::VectorXd phijk = eigenvectorsLeft.col(j).array()*eigenvectorsLeft.col(k).array();
       assert(phijk.size()==n);
 
@@ -312,13 +312,13 @@ Eigen::MatrixXd KolmogorovOperator::FunctionGradient(Eigen::Ref<const Eigen::Vec
 
         for( std::size_t d=0; d<dim; ++d ) {
           gradient.col(d) += (scalej*xcoeff.col(d)(k))*eigenvectorsLeft.col(l);
-        }
 
-        if( j!=k ) {
-          const double scalek = coeff(k)*scale;
-          for( std::size_t d=0; d<dim; ++d ) {
-            gradient.col(d) += (scalek*xcoeff.col(d)(j))*eigenvectorsLeft.col(l);
-          }
+          /*if( j!=k ) {
+            const double scalek = coeff(k)*scale;
+            for( std::size_t d=0; d<dim; ++d ) {
+              gradient.col(d) += (scalek*xcoeff.col(d)(j))*eigenvectorsLeft.col(l);
+            }
+          }*/
         }
       }
     }

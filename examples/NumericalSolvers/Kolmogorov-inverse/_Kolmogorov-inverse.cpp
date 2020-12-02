@@ -16,13 +16,13 @@ int main(int argc, char **argv) {
   const std::string filename = "outputData.h5";
 
   // the number of samples
-  const std::size_t n = 1000;
+  const std::size_t n = 100;
 
   // numerical parameters
   const std::size_t numNeighbors = 25;
 
   // the number of eigenvalues
-  const std::size_t neigs = 100;
+  const std::size_t neigs = std::min((std::size_t)100, n-1);
   const double eigensolverTol = 1.0e-8;
 
   // create a standard Gaussian random variable
