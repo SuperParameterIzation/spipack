@@ -1,9 +1,11 @@
 var searchData=
 [
-  ['n',['n',['../classDensityEstimationTests.html#adb645b6f56f159cf79d38aefd06af2b5',1,'DensityEstimationTests::n()'],['../classKolmogorovOperatorTests.html#a61328525e099195fb1956b764334ecdc',1,'KolmogorovOperatorTests::n()'],['../classSampleRepresentationTests.html#a2978261afebbe9e4b2d9034fdb3598d1',1,'SampleRepresentationTests::n()'],['../classNearestNeighborsTests.html#a8453ef17b972f72fa4fd5b85c9e00f2e',1,'NearestNeighborsTests::n()']]],
-  ['neig',['neig',['../classspi_1_1NumericalSolvers_1_1KolmogorovOperator.html#a74fbfd22163cddcd73a2208b329c5ce9',1,'spi::NumericalSolvers::KolmogorovOperator::neig()'],['../structspi_1_1NumericalSolvers_1_1KolmogorovOperator_1_1DefaultParameters.html#a1322fb7c57b26433bf627b4bd0593257',1,'spi::NumericalSolvers::KolmogorovOperator::DefaultParameters::neig()']]],
-  ['nn',['nn',['../classNearestNeighborsTests.html#a9c35c3ba9a9a40d3bd4290d473aa0442',1,'NearestNeighborsTests']]],
-  ['nneighs',['nneighs',['../classDensityEstimationTests.html#a34c455757128518ad506c6fa00356fda',1,'DensityEstimationTests::nneighs()'],['../classKolmogorovOperatorTests.html#a5823facc490aa88a70bc0bacadff5dd7',1,'KolmogorovOperatorTests::nneighs()'],['../classSampleRepresentationTests.html#a0a57efdf0752ed710ebf7be4bd6f2b19',1,'SampleRepresentationTests::nneighs()']]],
-  ['numnearestneighbors',['numNearestNeighbors',['../classspi_1_1NumericalSolvers_1_1SampleRepresentation.html#ae2c7d66d4bcf30604b01ba4a28b6634a',1,'spi::NumericalSolvers::SampleRepresentation::numNearestNeighbors()'],['../structspi_1_1NumericalSolvers_1_1SampleRepresentation_1_1DefaultParameters.html#a8702db93bd2c6f96a9c8500de718c769',1,'spi::NumericalSolvers::SampleRepresentation::DefaultParameters::numNearestNeighbors()']]],
-  ['numthreads',['numThreads',['../classspi_1_1NumericalSolvers_1_1SampleRepresentation.html#ab18b24f7a0699e16acc2f9e33e46ba9b',1,'spi::NumericalSolvers::SampleRepresentation::numThreads()'],['../classspi_1_1Tools_1_1NearestNeighbors.html#a76c5e462d8c590b9373b8dab468a6b3a',1,'spi::Tools::NearestNeighbors::numThreads()'],['../structspi_1_1Tools_1_1NearestNeighbors_1_1DefaultParameters.html#a5cee1794e99c11dd73990864b649ccb6',1,'spi::Tools::NearestNeighbors::DefaultParameters::numThreads()']]]
+  ['lag',['lag',['../classspi_1_1Tools_1_1NearestNeighbors_1_1Cloud.html#a6f942189c98a2d113951f6cb794f3e4b',1,'spi::Tools::NearestNeighbors::Cloud']]],
+  ['lf',['Lf',['../namespace__plot__result.html#a9ee3e7a34435e0816bba548392bbc669',1,'_plot_result']]],
+  ['lftitle',['Lftitle',['../namespace__plot__result.html#ac562c3c10908e130da6867502f052f50',1,'_plot_result']]],
+  ['lhatinvf',['Lhatinvf',['../namespace__plot__result.html#a9e0d209357781ec67d85652812195d73',1,'_plot_result']]],
+  ['lhatinvftitle',['Lhatinvftitle',['../namespace__plot__result.html#a32a4d57071b6c8ef3f09bcdcf18e251e',1,'_plot_result']]],
+  ['linvf',['Linvf',['../namespace__plot__result.html#a7013e40a5c2ae58e539983095a930ed4',1,'_plot_result']]],
+  ['linvftitle',['Linvftitle',['../namespace__plot__result.html#a42f96e3528ca7a5a826b923829126135',1,'_plot_result']]],
+  ['logkernelavgderivative',['logKernelAvgDerivative',['../namespace__plot__result.html#adefd081c2f61d54315586f3a524fc04c',1,'_plot_result']]]
 ];

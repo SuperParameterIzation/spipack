@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['hdf5file',['hdf5file',['../namespace__plot__result.html#ac07d28d72ab82f66f56614340ab3edba',1,'_plot_result']]]
+  ['gradient',['gradient',['../namespace__plot-results.html#a39ceb8a1c5f664655e47f4ab8deb7cb7',1,'_plot-results']]]
 ];

@@ -1,8 +1,8 @@
 var searchData=
 [
   ['access',['access',['../classspi_1_1Tools_1_1BumpKernel.html#ab2f44cbb59a08132f4c843e5225bba0e',1,'spi::Tools::BumpKernel::access()'],['../classspi_1_1Tools_1_1CompactKernel.html#ab2f44cbb59a08132f4c843e5225bba0e',1,'spi::Tools::CompactKernel::access()'],['../classspi_1_1Tools_1_1ExponentialKernel.html#ab2f44cbb59a08132f4c843e5225bba0e',1,'spi::Tools::ExponentialKernel::access()'],['../classspi_1_1Tools_1_1HatKernel.html#ab2f44cbb59a08132f4c843e5225bba0e',1,'spi::Tools::HatKernel::access()'],['../classspi_1_1Tools_1_1IsotropicKernel.html#ab2f44cbb59a08132f4c843e5225bba0e',1,'spi::Tools::IsotropicKernel::access()'],['../classspi_1_1Tools_1_1Kernel.html#ab2f44cbb59a08132f4c843e5225bba0e',1,'spi::Tools::Kernel::access()']]],
-  ['category',['category',['../namespace__plot__result.html#a42596ccac6d2f13ecd3393bda9a20082',1,'_plot_result']]],
-  ['cbar',['cbar',['../namespace__plot__result.html#a9eeb198989340f0153ea245da1028646',1,'_plot_result']]],
+  ['category',['category',['../namespace__plot__result.html#a42596ccac6d2f13ecd3393bda9a20082',1,'_plot_result.category()'],['../namespace__plot-results.html#a648d3662602c703b178a099d26df5e6f',1,'_plot-results.category()']]],
+  ['cbar',['cbar',['../namespace__plot__result.html#a9eeb198989340f0153ea245da1028646',1,'_plot_result.cbar()'],['../namespace__plot-results.html#a9eb420be70f3a54c7d76daf43c3f1f68',1,'_plot-results.cbar()']]],
   ['cloud',['Cloud',['../classspi_1_1Tools_1_1NearestNeighbors_1_1Cloud.html',1,'spi::Tools::NearestNeighbors']]],
   ['cloud',['Cloud',['../classspi_1_1Tools_1_1NearestNeighbors_1_1Cloud.html#ab57e057f5ce43d1f4d44e4faee97ac08',1,'spi::Tools::NearestNeighbors::Cloud']]],
   ['clouds',['clouds',['../classspi_1_1Tools_1_1NearestNeighbors.html#aa08878638aa19d0dc249a64832a54d50',1,'spi::Tools::NearestNeighbors']]],
@@ -20,7 +20,7 @@ var searchData=
   ['cmakelists_2etxt',['CMakeLists.txt',['../modules_2Tools_2tests_2CMakeLists_8txt.html',1,'']]],
   ['cmakelists_2etxt',['CMakeLists.txt',['../modules_2Tools_2src_2CMakeLists_8txt.html',1,'']]],
   ['cmakelists_2etxt',['CMakeLists.txt',['../examples_2NumericalSolvers_2Kolmogorov-eigendecomposition_2CMakeLists_8txt.html',1,'']]],
-  ['color',['color',['../namespace__plot__result.html#a97d0836b0df1e40c525f03b0ebc23654',1,'_plot_result']]],
+  ['color',['color',['../namespace__plot__result.html#a97d0836b0df1e40c525f03b0ebc23654',1,'_plot_result.color()'],['../namespace__plot-results.html#a4faf28de958e9daf1546b77e8e15657f',1,'_plot-results.color()']]],
   ['compactkernel',['CompactKernel',['../classspi_1_1Tools_1_1CompactKernel.html',1,'spi::Tools']]],
   ['compactkernel',['compactKernel',['../classspi_1_1NumericalSolvers_1_1SampleRepresentation.html#a9b4b7f77c7a9898114a89bd4aaae67a8',1,'spi::NumericalSolvers::SampleRepresentation::compactKernel()'],['../classspi_1_1Tools_1_1CompactKernel.html#abfb14fc1dbd560d73617ecb9f6097171',1,'spi::Tools::CompactKernel::CompactKernel(YAML::Node const &amp;options)'],['../classspi_1_1Tools_1_1CompactKernel.html#a3e59ee0950a3b6fdc58a691aefd222b2',1,'spi::Tools::CompactKernel::CompactKernel()=default']]],
   ['compactkernel_2ecpp',['CompactKernel.cpp',['../CompactKernel_8cpp.html',1,'']]],
