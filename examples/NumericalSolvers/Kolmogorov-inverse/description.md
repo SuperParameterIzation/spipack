@@ -100,3 +100,13 @@ $$
     Q_j Q_k = \sum_{i=1}^{\infty} C_{ljk} Q_l.
 \end{equation}
 $$
+
+This derives
+
+$$
+\begin{equation}
+    \nabla_{\boldsymbol{x}} q_j \cdot \nabla_{\boldsymbol{x}} q_k = \sum_{l=1}^{\infty} \frac{C_{ljk}}{2} (\lambda_l - \lambda_j - \lambda_k) q_l.
+\end{equation}
+$$
+
+Finally, choose the function $v(\boldsymbol{x}) = x_s$ that picks the $s^{th}$ coordinate index. Let $\boldsymbol{x}_s$ be the vector such that each entry $V_s^{(i)}$ is the $s^{th}$ coordinate of the $i^{th}$ sample. Define the coefficients $\boldsymbol{\widetilde{x}}_s = \boldsymbol{\hat{Q}}^T \boldsymbol{S} \boldsymbol{x}_s$. Using the product rule, we write the $s^{th}$ component of the unweighted gradient $\nabla_{\boldsymbol{x}} h$ as 
