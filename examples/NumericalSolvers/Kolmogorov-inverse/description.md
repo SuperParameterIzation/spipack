@@ -45,7 +45,7 @@ Nationally, $\boldsymbol{h}$ and $\boldsymbol{f}$ are vectors such that the $i^{
 $$
 \begin{equation}
     \begin{array}{ccc}
-        \boldsymbol{L}_{\psi, c} = \boldsymbol{S}^{-1} \boldsymbol{\hat{L}}_{\psi, c} \boldsymbol{S} & \mbox{and} & \boldsymbol{\hat{L}}_{\psi, c} \boldsymbol{Q} = \boldsymbol{Q} \boldsymbol{\Lambda}
+        \boldsymbol{L}_{\psi, c} = \boldsymbol{S}^{-1} \boldsymbol{\hat{L}}_{\psi, c} \boldsymbol{S} & \mbox{and} & \boldsymbol{\hat{L}}_{\psi, c} \boldsymbol{\hat{Q}} = \boldsymbol{\hat{Q}} \boldsymbol{\Lambda}
     \end{array}
 \end{equation}
 $$
@@ -53,3 +53,19 @@ $$
 where $\boldsymbol{S}$ is a diagonal matrix.
 
 Define coefficients
+
+$$
+\begin{equation}
+    \begin{array}{ccc}
+        \boldsymbol{\widetilde{h}} = \boldsymbol{\hat{Q}}^T \boldsymbol{S} \boldsymbol{h} & \mbox{and} & \boldsymbol{\widetilde{f}} = \boldsymbol{\hat{Q}}^T \boldsymbol{S} \boldsymbol{f},
+    \end{array}
+\end{equation}
+$$
+
+allowing us to express $\boldsymbol{h}$ and $\boldsymbol{f}$ as an expansion using the eigenvectors $\boldsymbol{\hat{Q}}$ of $\boldsymbol{\hat{L}}$ as a basis. Substituting these coefficients and the eigendecomposition of $\boldsymbol{L}_{\psi}$ into the discretize problem derives
+
+$$
+\begin{equation}
+    \boldsymbol{\Lambda} \boldsymbol{\widetilde{h}} = \boldsymbol{\widetilde{f}}.
+\end{equation}
+$$
