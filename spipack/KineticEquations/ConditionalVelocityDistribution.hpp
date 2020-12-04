@@ -114,6 +114,13 @@ public:
   */
   double NormalizingConstant() const;
 
+  /// Write the samples to file
+  /**
+  @param[in] file The file where we want to store the data.
+  @param[in] dataset The data set where we put the data (defaults to <tt>"/"</tt>)
+  */
+  void WriteToFile(std::string const& file, std::string const& dataset = "/") const;
+
 private:
 
   /// The macro-scale information at this point (in the micro-scale coordinate system)
@@ -191,6 +198,9 @@ private:
   /// The normalizing constant
   double normalizingConstant;
 
+  /// The output filename
+  const std::string filename;
+
   /// The default parameter values for spi::KineticEquations::ConditionalVelocityDistribution
   struct DefaultParameters {
     /// The default current time is \f$0\f$.
@@ -207,6 +217,9 @@ private:
 
     /// The default value for the initial normalizing constant is \f$1.0\f$.
     inline static const double initialNormalizingConstant = 1.0;
+
+    /// The default output filename is empty
+    inline static const std::string filename = "";
   };
 
   /// Store the default parameter values

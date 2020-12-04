@@ -15,8 +15,6 @@ set(SOURCE
   _Kolmogorov-eigen-decomposition.cpp
 )
 
-message(STATUS ${SPIPACK_LIBRARIES})
-
 add_executable(run-Kolmogorov-eigen-decomposition ${SOURCE})
 target_link_libraries(run-Kolmogorov-eigen-decomposition ${SPIPACK_EXTERNAL_LIBRARIES} ${SPIPACK_LIBRARIES})
 if(NOT CMAKE_SOURCE_DIR STREQUAL CMAKE_CURRENT_SOURCE_DIR) # add dependencies if this is not a stand alone project

@@ -1,5 +1,8 @@
 #include "spipack/KineticEquations/ConditionalVelocityDistribution.hpp"
 
+#include <sstream>
+#include <iomanip>
+
 using namespace muq::Modeling;
 using namespace muq::SamplingAlgorithms;
 using namespace spi::Tools;
@@ -14,7 +17,8 @@ alpha(options["ExternalAccelerationRescaling"].as<double>(defaults.alpha)),
 theta(options["TimestepParameter"].as<double>(defaults.theta)),
 numTimesteps(options["NumTimesteps"].as<std::size_t>(defaults.numTimesteps)),
 prevMacroInfo(std::make_shared<RescaledMacroscaleInformation>(initMacroInfo, alpha)),
-normalizingConstant(options["InitialNormalizingConstant"].as<double>(defaults.initialNormalizingConstant))
+normalizingConstant(options["InitialNormalizingConstant"].as<double>(defaults.initialNormalizingConstant)),
+filename(options["OutputFilename"].as<std::string>(defaults.filename))
 {
   assert(theta>-1.0e-10); assert(theta<1.0+1.0e-10);
 }
@@ -27,7 +31,8 @@ alpha(options["ExternalAccelerationRescaling"].as<double>(defaults.alpha)),
 theta(options["TimestepParameter"].as<double>(defaults.theta)),
 numTimesteps(options["NumTimesteps"].as<std::size_t>(defaults.numTimesteps)),
 prevMacroInfo(std::make_shared<RescaledMacroscaleInformation>(initMacroInfo, alpha)),
-normalizingConstant(options["InitialNormalizingConstant"].as<double>(defaults.initialNormalizingConstant))
+normalizingConstant(options["InitialNormalizingConstant"].as<double>(defaults.initialNormalizingConstant)),
+filename(options["OutputFilename"].as<std::string>(defaults.filename))
 {
   assert(theta>-1.0e-10); assert(theta<1.0+1.0e-10);
 }
@@ -40,7 +45,8 @@ alpha(options["ExternalAccelerationRescaling"].as<double>(defaults.alpha)),
 theta(options["TimestepParameter"].as<double>(defaults.theta)),
 numTimesteps(options["NumTimesteps"].as<std::size_t>(defaults.numTimesteps)),
 prevMacroInfo(std::make_shared<RescaledMacroscaleInformation>(initMacroInfo, alpha)),
-normalizingConstant(options["InitialNormalizingConstant"].as<double>(defaults.initialNormalizingConstant))
+normalizingConstant(options["InitialNormalizingConstant"].as<double>(defaults.initialNormalizingConstant)),
+filename(options["OutputFilename"].as<std::string>(defaults.filename))
 {
   assert(theta>-1.0e-10); assert(theta<1.0+1.0e-10);
 }
@@ -85,6 +91,11 @@ void ConditionalVelocityDistribution::Run(double const nextTime, std::shared_ptr
   std::cout << "macro delta: " << macroDelta << std::endl;
   std::cout << "micro delta: " << microDelta << std::endl;
 
+  // write the initial conditions to file
+  std::stringstream ss;
+  ss << std::setw((std::size_t)log10(numTimesteps)+1) << std::setfill('0') << 0;
+  WriteToFile(filename+"-"+ss.str()+".h5");
+
   for( std::size_t t=0; t<numTimesteps; ++t ) {
     std::cout << std::endl;
 
@@ -104,6 +115,11 @@ void ConditionalVelocityDistribution::Run(double const nextTime, std::shared_ptr
 
     // reset the previous macro-scale information
     prevInfo = currInfo;
+
+    // write the current state to file
+    std::stringstream ss;
+    ss << std::setw((std::size_t)log10(numTimesteps)+1) << std::setfill('0') << t+1;
+    WriteToFile(filename+"-"+ss.str()+".h5");
   }
 
   // update the current time
@@ -147,3 +163,9 @@ MacroscaleInformation(macroInfo->velocityDivergence)
 ConditionalVelocityDistribution::RescaledMacroscaleInformation::RescaledMacroscaleInformation() :
 MacroscaleInformation()
 {}
+
+void ConditionalVelocityDistribution::WriteToFile(std::string const& file, std::string const& dataset) const {
+  // output the collection to file
+  const std::string dataset_ = (dataset.at(0)=='/'? dataset : "/"+dataset);
+  samples->Samples()->WriteToFile(file, dataset_);
+}

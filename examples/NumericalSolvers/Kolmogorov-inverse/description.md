@@ -97,7 +97,7 @@ $$
 \end{equation}
 $$
 
-where $*$ is the component-wise product operator between vectors, $\boldsymbol{q}\_{j}$ is the $j^{th}$ eigenvector of the discrete Laplace operator $\boldsymbol{L}_{\psi, c}$ (i.e., the $j^{th}$ column of $\boldsymbol{Q} = \boldsymbol{S}^{-1} \boldsymbol{\hat{Q}}$), and $(\boldsymbol{Q}_l^{-1})^T$ is the $l^{th}$ row of $\boldsymbol{Q}^{-1} = \boldsymbol{\hat{Q}}^T \boldsymbol{S}$. This implies that
+where $*$ is the component-wise product operator between vectors, $\boldsymbol{q}\_{j}$ is the $j^{th}$ eigenvector of the discrete Laplace operator $\boldsymbol{L}_{\psi, c}$ (i.e., the $j^{th}$ column of $\boldsymbol{Q} = \boldsymbol{S}^{-1} \boldsymbol{\hat{Q}}$), and $(\boldsymbol{q}_l^{-1})^T$ is the $l^{th}$ row of $\boldsymbol{Q}^{-1} = \boldsymbol{\hat{Q}}^T \boldsymbol{S}$. This implies that
 
 $$
 \begin{equation}
