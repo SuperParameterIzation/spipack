@@ -67,6 +67,8 @@ void SampleRepresentation::Initialize(YAML::Node const& options) {
 
 std::size_t SampleRepresentation::NumSamples() const { return samples->NumSamples(); }
 
+std::size_t SampleRepresentation::StateDim() const { return samples->StateDim(); }
+
 std::size_t SampleRepresentation::NumNearestNeighbors() const { return numNearestNeighbors; }
 
 Eigen::Ref<Eigen::VectorXd const> SampleRepresentation::Point(std::size_t const i) const {

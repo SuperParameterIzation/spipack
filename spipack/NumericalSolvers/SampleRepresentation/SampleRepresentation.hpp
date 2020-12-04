@@ -82,6 +82,12 @@ public:
   */
   std::size_t NumSamples() const;
 
+  /// The state dimension
+  /**
+  \return The state dimension
+  */
+  std::size_t StateDim() const;
+
   /// Get the number of nearest neighbors used to compute the bandwidth parameter
   /**
   \return The number of nearest neighbors used to compute the bandwidth parameter
