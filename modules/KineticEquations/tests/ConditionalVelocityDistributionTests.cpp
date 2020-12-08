@@ -28,7 +28,7 @@ protected:
     options["NumTimesteps"] = numTimesteps;
 
     // construct the initial macro-scale information
-    macroInfo = std::make_shared<ConditionalVelocityDistribution::MacroscaleInformation>(expectedVelDiv);
+    macroInfo = std::make_shared<ConditionalVelocityDistribution::MacroscaleInformation>(massDensity, expectedVel, expectedVelDiv, logMassDensityGrad);
   }
 
   /// Make sure everything is what we expect
@@ -54,7 +54,7 @@ protected:
     for( std::size_t i=0; i<n; ++i ) { samples->Add(std::make_shared<SamplingState>(rv->Sample())); }
 
     // create the sample representation
-    distribution = std::make_shared<ConditionalVelocityDistribution>(samples, macroInfo, options);
+    distribution = std::make_shared<ConditionalVelocityDistribution>(macroLoc, samples, macroInfo, options);
 
     // return the samples
     return samples;
@@ -69,8 +69,20 @@ protected:
   /// The number of timesteps
   const std::size_t numTimesteps = 100;
 
+  /// The mass density
+  double massDensity = 1.0;
+
+  /// The expected velocity
+  Eigen::VectorXd expectedVel = Eigen::VectorXd::Zero(dim);
+
   /// The expected velocity divergence
   double expectedVelDiv = 0.0;
+
+  /// The gradient of the log-mass density
+  Eigen::VectorXd logMassDensityGrad = Eigen::VectorXd::Zero(dim);
+
+  /// The macroscale location
+  Eigen::VectorXd macroLoc = Eigen::VectorXd::Zero(dim);
 
   /// The random variable that we sample for the initial conditions
   std::shared_ptr<RandomVariable> rv;
@@ -87,11 +99,14 @@ protected:
 
 TEST_F(ConditionalVelocityDistributionTests, RandomVariableConstruction) {
   // create the conditional velocity distribution
-  distribution = std::make_shared<ConditionalVelocityDistribution>(rv, macroInfo, options);
+  distribution = std::make_shared<ConditionalVelocityDistribution>(macroLoc, rv, macroInfo, options);
 
   // check the macro-scale information
   auto macro = distribution->MacroscaleInfo();
+  EXPECT_DOUBLE_EQ(macro->massDensity, macroInfo->massDensity);
+  EXPECT_NEAR((macro->velocity-expectedVel).norm(), 0.0, 1.0e-10);
   EXPECT_DOUBLE_EQ(macro->velocityDivergence, macroInfo->velocityDivergence);
+  EXPECT_NEAR((macro->logMassDensityGrad-logMassDensityGrad).norm(), 0.0, 1.0e-10);
 
   // check the normalizing constant
   EXPECT_DOUBLE_EQ(distribution->NormalizingConstant(), 1.0);
@@ -108,7 +123,10 @@ TEST_F(ConditionalVelocityDistributionTests, SampleCollectionConstruction) {
 
   // check the macro-scale information
   auto macro = distribution->MacroscaleInfo();
+  EXPECT_DOUBLE_EQ(macro->massDensity, macroInfo->massDensity);
+  EXPECT_NEAR((macro->velocity-expectedVel).norm(), 0.0, 1.0e-10);
   EXPECT_DOUBLE_EQ(macro->velocityDivergence, macroInfo->velocityDivergence);
+  EXPECT_NEAR((macro->logMassDensityGrad-logMassDensityGrad).norm(), 0.0, 1.0e-10);
 
   // check the normalizing constant
   EXPECT_DOUBLE_EQ(distribution->NormalizingConstant(), 1.0);
@@ -122,7 +140,7 @@ TEST_F(ConditionalVelocityDistributionTests, NearestNeighborsConstruction) {
   auto neighbors = std::make_shared<NearestNeighbors>(samples, options["NearestNeighbors"]);
 
   // create the sample representation
-  distribution = std::make_shared<ConditionalVelocityDistribution>(neighbors, macroInfo, options);
+  distribution = std::make_shared<ConditionalVelocityDistribution>(macroLoc, neighbors, macroInfo, options);
 
   // check to make sure the samples match
   for( std::size_t i=0; i<n; ++i ) {
@@ -131,7 +149,10 @@ TEST_F(ConditionalVelocityDistributionTests, NearestNeighborsConstruction) {
 
   // check the macro-scale information
   auto macro = distribution->MacroscaleInfo();
+  EXPECT_DOUBLE_EQ(macro->massDensity, macroInfo->massDensity);
+  EXPECT_NEAR((macro->velocity-expectedVel).norm(), 0.0, 1.0e-10);
   EXPECT_DOUBLE_EQ(macro->velocityDivergence, macroInfo->velocityDivergence);
+  EXPECT_NEAR((macro->logMassDensityGrad-logMassDensityGrad).norm(), 0.0, 1.0e-10);
 
   // check the normalizing constant
   EXPECT_DOUBLE_EQ(distribution->NormalizingConstant(), 1.0);
@@ -139,14 +160,19 @@ TEST_F(ConditionalVelocityDistributionTests, NearestNeighborsConstruction) {
 
 TEST_F(ConditionalVelocityDistributionTests, RunTest) {
   // create the conditional velocity distribution
-  distribution = std::make_shared<ConditionalVelocityDistribution>(rv, macroInfo, options);
+  distribution = std::make_shared<ConditionalVelocityDistribution>(macroLoc, rv, macroInfo, options);
 
   // the current time is (by default) set to zero
   EXPECT_NEAR(distribution->CurrentTime(), 0.0, 1.0e-12);
 
   // construct the macro-scale information
+  massDensity = 1.25;
+  expectedVel = Eigen::VectorXd::Zero(dim);
+  expectedVel(0) = 1.0;
   expectedVelDiv = 1.0;
-  auto nextMacroInfo = std::make_shared<ConditionalVelocityDistribution::MacroscaleInformation>(expectedVelDiv);
+  logMassDensityGrad = Eigen::VectorXd::Zero(dim);
+  logMassDensityGrad(0) = 1.0;
+  auto nextMacroInfo = std::make_shared<ConditionalVelocityDistribution::MacroscaleInformation>(massDensity, expectedVel, expectedVelDiv, logMassDensityGrad);
 
   // run the micro-scale model
   const double nextTime = 0.1;

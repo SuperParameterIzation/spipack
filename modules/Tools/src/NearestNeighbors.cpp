@@ -55,6 +55,13 @@ Eigen::Ref<Eigen::VectorXd const> NearestNeighbors::Point(std::size_t const i) c
   return samples->at(i)->state[0];
 }
 
+Eigen::Ref<Eigen::VectorXd> NearestNeighbors::Point(std::size_t const i) {
+  assert(samples);
+  assert(i<samples->size());
+  return samples->at(i)->state[0];
+}
+
+
 std::size_t NearestNeighbors::NumSamples() const {
   assert(samples);
   return samples->size();
@@ -161,6 +168,21 @@ Eigen::VectorXd NearestNeighbors::SquaredBandwidth(std::size_t const k, std::vec
   }
 
   return bandwidth;
+}
+
+Eigen::VectorXd NearestNeighbors::Mean() const {
+  assert(samples);
+  return samples->Mean(0);
+}
+
+Eigen::MatrixXd NearestNeighbors::Covariance() const {
+  assert(samples);
+  return samples->Covariance(0);
+}
+
+Eigen::MatrixXd NearestNeighbors::Covariance(Eigen::Ref<const Eigen::VectorXd> const& mean) const {
+  assert(samples);
+  return samples->Covariance(mean, 0);
 }
 
 NearestNeighbors::Cloud::Cloud(std::shared_ptr<const muq::SamplingAlgorithms::SampleCollection> const& samples, std::size_t const lag) :

@@ -78,22 +78,57 @@ baseFilename = 'output'
 outputDir = './output/'
 filenames = [name for name in os.listdir(outputDir) if os.path.isfile(os.path.join(outputDir, name))]
 
+time = list()
+energy = list()
 for filename in filenames:
-    figname = 'figures/'+filename[:-3]+'.pdf'
+    figname = 'figures/'+filename[:-3]+'.png'
 
     # load the data file
     hdf5file = h5py.File(outputDir+filename, 'r')
 
+    time = time + hdf5file['/time'] [()] [0].tolist()
     samples = hdf5file['/samples'] [()].T
+    acceleration = hdf5file['/acceleration'] [()]
+    energy = energy + hdf5file['/expected energy'] [()] [0].tolist()
+    sampleMean = hdf5file['/sample mean'] [()].T [0]
+    vel = hdf5file['/expected velocity'] [()].T [0]
+    acc = hdf5file['/expected acceleration'] [()].T [0]
+    cov = hdf5file['/covariance'] [()]
+
+    eigvals, eigvecs = np.linalg.eig(cov)
 
     fig = MakeFigure(425, 0.9, False)
     ax = plt.gca()
-    scatter = ax.scatter(samples.T[0], samples.T[1], s=3)
+    ax.arrow(vel[0], vel[1], eigvals[0]*eigvecs[0, 0], eigvals[0]*eigvecs[1, 0])
+    ax.arrow(vel[0], vel[1], eigvals[1]*eigvecs[0, 1], eigvals[1]*eigvecs[1, 1])
+    ax.arrow(vel[0], vel[1], acc[0], acc[1], color='#08519c')
+    scatter = ax.scatter(samples.T[0], samples.T[1], s=3, color='#525252')
+    scale = 0.1 # scale the acceleration for plotting purposes
+    #for samp, acc in zip(samples, acceleration):
+    #    ax.arrow(samp[0], samp[1], scale*acc[0], scale*acc[1], color='#252525', alpha=0.8)
+    ax.plot(sampleMean[0], sampleMean[1], 'o', color='#a50f15', markersize=3)
     ax.spines['right'].set_visible(False)
     ax.spines['top'].set_visible(False)
     ax.yaxis.set_ticks_position('left')
     ax.xaxis.set_ticks_position('bottom')
     ax.set_xlabel(r'$x_0$')
     ax.set_ylabel(r'$x_1$')
-    plt.savefig(figname, format='pdf', bbox_inches='tight')
+    plt.savefig(figname, format='png', bbox_inches='tight', dpi=300)
     plt.close(fig)
+
+
+sortIndex = np.argsort(time)
+time = [time[i] for i in sortIndex]
+energy = [energy[i] for i in sortIndex]
+
+fig = MakeFigure(425, 0.9, False)
+ax = plt.gca()
+ax.plot(time, energy, color='#737373')
+ax.set_xlabel(r'$\epsilon$')
+ax.set_ylabel(r'$\Sigma_l^{\prime}$')
+ax.spines['right'].set_visible(False)
+ax.spines['top'].set_visible(False)
+ax.yaxis.set_ticks_position('left')
+ax.xaxis.set_ticks_position('bottom')
+plt.savefig('figures/ExpectedEnergy.pdf', format='pdf', bbox_inches='tight')
+plt.close(fig)

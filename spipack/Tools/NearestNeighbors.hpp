@@ -50,6 +50,13 @@ public:
   */
   Eigen::Ref<Eigen::VectorXd const> Point(std::size_t const i) const;
 
+  /// Get the \f$i^{th}\f$ sample
+  /**
+  @param[in] i We want this sample
+  \return Get the \f$i^{th}\f$ sample
+  */
+  Eigen::Ref<Eigen::VectorXd> Point(std::size_t const i);
+
   /// The total number of samples
   /**
   \return The number of samples
@@ -109,6 +116,25 @@ public:
   \return A vector such that the \f$i^{th}\f$ entry is the bandwidth \f$r_i\f$
   */
   Eigen::VectorXd SquaredBandwidth(std::size_t const k) const;
+
+  /// Compute the sample mean
+  /**
+  \return The sample mean
+  */
+  Eigen::VectorXd Mean() const;
+
+  /// Compute the sample covariance
+  /**
+  \return The sample covariance
+  */
+  Eigen::MatrixXd Covariance() const;
+
+  /// Compute the sample covariance given the mean
+  /**
+  @param[in] mean The mean
+  \return The sample covariance
+  */
+  Eigen::MatrixXd Covariance(Eigen::Ref<const Eigen::VectorXd> const& mean) const;
 
 private:
 

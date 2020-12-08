@@ -98,7 +98,7 @@ int main(int argc, char **argv) {
   // solve the linear system using the eigendecomposition
   std::cout << "computing the solution gradient ... " << std::flush;
 
-  Eigen::MatrixXd gradient = kolOperator->FunctionGradient(inverseCoeff, S, Sinv, lambda, Qhat);
+  const Eigen::MatrixXd gradient = kolOperator->FunctionGradient(inverseCoeff, S, Sinv, lambda, Qhat);
 
   std::cout << "done." << std::endl;
 
