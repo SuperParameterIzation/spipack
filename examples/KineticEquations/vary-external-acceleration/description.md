@@ -17,7 +17,7 @@ $$
 
 $$
 \begin{equation}
-  \boldsymbol{A} = A_0 (\boldsymbol{U}_{f}-\boldsymbol{V})
+  \boldsymbol{A}(\boldsymbol{X}, T) = A_0 (\boldsymbol{U}_{f}(\boldsymbol{X}, T)-\boldsymbol{V})
 \end{equation}
 $$
 
@@ -25,7 +25,7 @@ $$
 
 $$
 \begin{equation}
-  \boldsymbol{A} = A_0 \| \boldsymbol{U}_{f} - \boldsymbol{V} \| (\boldsymbol{U}_{f}-\boldsymbol{V})
+  \boldsymbol{A}(\boldsymbol{X}, T) = A_0 \| \boldsymbol{U}_{f}(\boldsymbol{X}, T) - \boldsymbol{V} \| (\boldsymbol{U}_{f}(\boldsymbol{X}, T)-\boldsymbol{V})
 \end{equation}
 $$
 
@@ -33,7 +33,7 @@ $$
 
 $$
 \begin{equation}
-  \boldsymbol{A} = A_0 \vert \boldsymbol{U}_f - \boldsymbol{V} \vert * (\boldsymbol{U}_{f}-\boldsymbol{V}),
+  \boldsymbol{A}(\boldsymbol{X}, T) = A_0 \vert \boldsymbol{U}_f(\boldsymbol{X}, T) - \boldsymbol{V} \vert * (\boldsymbol{U}_{f}(\boldsymbol{X}, T)-\boldsymbol{V}),
 \end{equation}
 $$
 
