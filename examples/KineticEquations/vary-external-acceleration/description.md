@@ -4,11 +4,20 @@ layout: default
 
 # Vary external acceleration
 
+Consider the homogenous advection equation
+
+$$
+\begin{equation}
+  \partial_t \psi + \nabla_{\boldsymbol{v}} \cdot (\psi \boldsymbol{A}) = 0
+\end{equation}
+$$
+
+
 ## Linear forcing
 
 $$
 \begin{equation}
-  \boldsymbol{a} = a_0 (\boldsymbol{u}_{forcing}-\boldsymbol{v})
+  \boldsymbol{A} = A_0 (\boldsymbol{U}_{f}-\boldsymbol{V})
 \end{equation}
 $$
 
@@ -16,7 +25,7 @@ $$
 
 $$
 \begin{equation}
-  \boldsymbol{a} = a_0 \| \boldsymbol{u} - \boldsymbol{v} \| (\boldsymbol{u}_{forcing}-\boldsymbol{v})
+  \boldsymbol{A} = A_0 \| \boldsymbol{U}_{f} - \boldsymbol{V} \| (\boldsymbol{U}_{f}-\boldsymbol{V})
 \end{equation}
 $$
 
@@ -24,7 +33,7 @@ $$
 
 $$
 \begin{equation}
-  \boldsymbol{a} = a_0 \vert \boldsymbol{u} - \boldsymbol{v} \vert * (\boldsymbol{u}_{forcing}-\boldsymbol{v}),
+  \boldsymbol{A} = A_0 \vert \boldsymbol{U}_f - \boldsymbol{V} \vert * (\boldsymbol{U}_{f}-\boldsymbol{V}),
 \end{equation}
 $$
 
