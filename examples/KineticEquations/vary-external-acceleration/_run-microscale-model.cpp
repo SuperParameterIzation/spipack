@@ -2,7 +2,7 @@
 
 #include <MUQ/Utilities/RandomGenerator.h>
 
-#include "spipack/KineticEquations/ConditionalVelocityDistribution.hpp"
+#include <spipack/KineticEquations/ConditionalVelocityDistribution.hpp>
 
 class VelocityDistribution : public spi::KineticEquations::ConditionalVelocityDistribution {
 public:

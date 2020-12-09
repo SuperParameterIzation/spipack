@@ -102,16 +102,18 @@ void ConditionalVelocityDistribution::Run(double const nextTime, std::shared_ptr
   const double microDelta = 1.0/numTimesteps;
   double microT = -1.0; // the micro-scale time
 
-  // tune the bandwidth parameter
-  kolmogorov->BuildKDTrees();
-  kolmogorov->TuneBandwidthParameter(true);
-
   // rescale the macro-scale information into the micro-scale coordinates
   auto finalInfo = std::make_shared<RescaledMacroscaleInformation>(finalMacroInfo, alpha, StateDim());
   auto prevInfo = prevMacroInfo;
 
   std::cout << "macro delta: " << macroDelta << std::endl;
   std::cout << "micro delta: " << microDelta << std::endl;
+
+  // tune the bandwidth parameter
+  if( prevInfo->logMassDensityGrad.norm()>1.0e-10 ) {
+    kolmogorov->BuildKDTrees();
+    kolmogorov->TuneBandwidthParameter(true);
+  }
 
   // write the initial conditions to file
   if( !filename.empty() ) {
@@ -140,13 +142,19 @@ void ConditionalVelocityDistribution::Run(double const nextTime, std::shared_ptr
     std::cout << "normalizing constant: " << normalizingConstant << std::endl;
 
     // collision step
-    //CollisionStep(macroDelta, microDelta, macroTime, currInfo);
+    std::cout << "varepsilon: " << varepsilon << std::endl;
+    if( !std::isinf(varepsilon) ) {
+      assert(!std::isnan(varepsilon));
+      CollisionStep(macroDelta, microDelta, macroTime, currInfo);
+    }
 
     // rebuild the kd tree based on the new particle configuration
-    kolmogorov->BuildKDTrees();
-    if( (t+1)%25==0 && t!=numTimesteps-1 ) {
-      std::cout << "TUNING!" << std::endl;
-      kolmogorov->TuneBandwidthParameter(true);
+    if( currInfo->logMassDensityGrad.norm()>1.0e-10 ) {
+      kolmogorov->BuildKDTrees();
+      if( (t+1)%25==0 && t!=numTimesteps-1 ) {
+        std::cout << "TUNING!" << std::endl;
+        kolmogorov->TuneBandwidthParameter(true);
+      }
     }
 
     // update the particle velocities
@@ -235,26 +243,32 @@ Eigen::VectorXd ConditionalVelocityDistribution::ExternalAcceleration(Eigen::Ref
 
 void ConditionalVelocityDistribution::ComputeAcceleration(double const macroTime, std::shared_ptr<RescaledMacroscaleInformation> const& currInfo) {
   const std::size_t n = NumSamples();
-  const std::size_t neigs = kolmogorov->NumEigenvalues();
 
-  // compute the eigendecomposition of the kolmogorov operator
-  Eigen::VectorXd S(n), Sinv(n), lambda(neigs);
-  Eigen::MatrixXd Qhat(n, neigs);
-  kolmogorov->ComputeEigendecomposition(S, Sinv, lambda, Qhat);
+  // is the forcing nonzero---if it is zero, we don't need to compute the augmented acceleration
+  if( currInfo->logMassDensityGrad.norm()>1.0e-10 ) {
+    const std::size_t neigs = kolmogorov->NumEigenvalues();
 
-  // compte the right hand side for the weighted Poisson problem
-  Eigen::VectorXd rhs(n);
-  for( std::size_t i=0; i<n; ++i ) {
-    // the relative velocity: V+Uhat-U(T)=(v/alpha - Uhat) + Uhat - U(T) dotted with the gradient of the log mass density
-    rhs(i) = (Point(i)/alpha - currInfo->velocity).dot(currInfo->logMassDensityGrad);
+    // compute the eigendecomposition of the kolmogorov operator
+    Eigen::VectorXd S(n), Sinv(n), lambda(neigs);
+    Eigen::MatrixXd Qhat(n, neigs);
+    kolmogorov->ComputeEigendecomposition(S, Sinv, lambda, Qhat);
+
+    // compte the right hand side for the weighted Poisson problem
+    Eigen::VectorXd rhs(n);
+    for( std::size_t i=0; i<n; ++i ) {
+      // the relative velocity: V+Uhat-U(T)=(v/alpha - Uhat) + Uhat - U(T) dotted with the gradient of the log mass density
+      rhs(i) = (Point(i)/alpha - currInfo->velocity).dot(currInfo->logMassDensityGrad);
+    }
+
+    // apply the pseudo-inverse to the rhs (we will need the coeffients of the solution)
+    Eigen::VectorXd coeff = kolmogorov->PseudoInverse(rhs, S, lambda, Qhat);
+    assert(coeff.size()==neigs);
+
+    // compute the gradient of the solution to the weighted Poisson problem
+    currInfo->acceleration = kolmogorov->FunctionGradient(coeff, S, Sinv, lambda, Qhat);
+  } else {
+    currInfo->acceleration = Eigen::MatrixXd(n, StateDim());
   }
-
-  // apply the pseudo-inverse to the rhs (we will need the coeffients of the solution)
-  Eigen::VectorXd coeff = kolmogorov->PseudoInverse(rhs, S, lambda, Qhat);
-  assert(coeff.size()==neigs);
-
-  // compute the gradient of the solution to the weighted Poisson problem
-  currInfo->acceleration = kolmogorov->FunctionGradient(coeff, S, Sinv, lambda, Qhat);
 
   auto gauss = std::make_shared<Gaussian>(StateDim());
 

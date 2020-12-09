@@ -33,10 +33,7 @@ public:
     Eigen::VectorXd velocity;
 
     /// The velocity divergence \f$\nabla_{\boldsymbol{x}} \cdot \boldsymbol{u}\f$
-    /**
-    Defaults to \f$0\f$.
-    */
-    double velocityDivergence = std::numeric_limits<double>::quiet_NaN();
+    double velocityDivergence;
 
     // The gradient of the log mass density \f$\nabla_{\boldsymbol{x}} \log{(\mu)}\f$
     Eigen::VectorXd logMassDensityGrad;
@@ -356,8 +353,11 @@ private:
     /// The default current time is \f$0\f$.
     inline static const double currentTime = 0.0;
 
-    /// The default value for the non-dimensional parameter is \f$\varepsilon = 1\f$.
-    inline static const double varepsilon = 1.0;
+    /// The default value for the non-dimensional parameter is \f$\varepsilon = \infty\f$.
+    /**
+    Setting the \f$\varepsilon\f$ parameter to \f$\infty\f$ "turns off" the collision step
+    */
+    inline static const double varepsilon = std::numeric_limits<double>::infinity();
 
     /// The default external acceleration rescaling is \f$1\f$.
     inline static const double alpha = 1.0;

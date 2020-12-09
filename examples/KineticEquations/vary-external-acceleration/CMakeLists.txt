@@ -15,10 +15,49 @@ set(SOURCE
   _run-microscale-model.cpp
 )
 
-message(STATUS ${SPIPACK_LIBRARIES})
-
 add_executable(run-microscale-model ${SOURCE})
 target_link_libraries(run-microscale-model ${SPIPACK_EXTERNAL_LIBRARIES} ${SPIPACK_LIBRARIES})
 if(NOT CMAKE_SOURCE_DIR STREQUAL CMAKE_CURRENT_SOURCE_DIR) # add dependencies if this is not a stand alone project
-  add_dependencies(run-microscale-model spiNS spiTS)
+  add_dependencies(run-microscale-model spiNS spiTS spiKE)
+endif()
+
+
+
+
+
+
+set(LINEAR_SOURCE
+  LinearExternalAcceleration.cpp
+
+  _run-linear-external-acceleration.cpp
+)
+
+add_executable(run-linear-external-acceleration ${LINEAR_SOURCE})
+target_link_libraries(run-linear-external-acceleration ${SPIPACK_EXTERNAL_LIBRARIES} ${SPIPACK_LIBRARIES})
+if(NOT CMAKE_SOURCE_DIR STREQUAL CMAKE_CURRENT_SOURCE_DIR) # add dependencies if this is not a stand alone project
+  add_dependencies(run-linear-external-acceleration spiNS spiTS spiKE)
+endif()
+
+set(QUADRATIC_SOURCE
+  QuadraticExternalAcceleration.cpp
+
+  _run-quadratic-external-acceleration.cpp
+)
+
+add_executable(run-quadratic-external-acceleration ${QUADRATIC_SOURCE})
+target_link_libraries(run-quadratic-external-acceleration ${SPIPACK_EXTERNAL_LIBRARIES} ${SPIPACK_LIBRARIES})
+if(NOT CMAKE_SOURCE_DIR STREQUAL CMAKE_CURRENT_SOURCE_DIR) # add dependencies if this is not a stand alone project
+  add_dependencies(run-quadratic-external-acceleration spiNS spiTS spiKE)
+endif()
+
+set(COMPONENTWISE_QUADRATIC_SOURCE
+  ComponentwiseQuadraticExternalAcceleration.cpp
+
+  _run-componentwise-quadratic-external-acceleration.cpp
+)
+
+add_executable(run-componentwise-quadratic-external-acceleration ${COMPONENTWISE_QUADRATIC_SOURCE})
+target_link_libraries(run-componentwise-quadratic-external-acceleration ${SPIPACK_EXTERNAL_LIBRARIES} ${SPIPACK_LIBRARIES})
+if(NOT CMAKE_SOURCE_DIR STREQUAL CMAKE_CURRENT_SOURCE_DIR) # add dependencies if this is not a stand alone project
+  add_dependencies(run-componentwise-quadratic-external-acceleration spiNS spiTS spiKE)
 endif()
