@@ -29,6 +29,7 @@ normalizingConstant(options["InitialNormalizingConstant"].as<double>(defaults.in
 filename(options["OutputFilename"].as<std::string>(defaults.filename))
 {
   assert(theta>-1.0e-10); assert(theta<1.0+1.0e-10);
+  assert(alpha>0.0);
 }
 
 ConditionalVelocityDistribution::ConditionalVelocityDistribution(Eigen::VectorXd const& macroLoc, std::shared_ptr<SampleCollection> const& samples, std::shared_ptr<MacroscaleInformation> const& initMacroInfo, YAML::Node const& options) :
@@ -46,6 +47,7 @@ normalizingConstant(options["InitialNormalizingConstant"].as<double>(defaults.in
 filename(options["OutputFilename"].as<std::string>(defaults.filename))
 {
   assert(theta>-1.0e-10); assert(theta<1.0+1.0e-10);
+  assert(alpha>0.0);
 }
 
 ConditionalVelocityDistribution::ConditionalVelocityDistribution(Eigen::VectorXd const& macroLoc, std::shared_ptr<NearestNeighbors> const& samples, std::shared_ptr<MacroscaleInformation> const& initMacroInfo, YAML::Node const& options) :
@@ -63,6 +65,7 @@ normalizingConstant(options["InitialNormalizingConstant"].as<double>(defaults.in
 filename(options["OutputFilename"].as<std::string>(defaults.filename))
 {
   assert(theta>-1.0e-10); assert(theta<1.0+1.0e-10);
+  assert(alpha>0.0);
 }
 
 YAML::Node ConditionalVelocityDistribution::KolmogorovOptions(YAML::Node options, std::size_t const dim) {
@@ -279,14 +282,15 @@ void ConditionalVelocityDistribution::ComputeAcceleration(double const macroDelt
     currInfo->acceleration = Eigen::MatrixXd(n, dim);
   }
 
+  const double scale = accelerationNoiseScale*macroDelta;
+  assert(scale>-1.0e-10);
   auto gauss = std::make_shared<Gaussian>(dim);
 
   // add in the external acceleration
-  const double scale = accelerationNoiseScale*macroDelta;
   for( std::size_t i=0; i<n; ++i ) {
     Eigen::VectorXd external = ExternalAcceleration(Point(i), macroLoc, macroTime);
     assert(external.size()==dim);
-    external += scale*gauss->Sample();
+    if( std::abs(scale)>1.0e-12 ) { external += scale*gauss->Sample(); }
 
     currInfo->acceleration.row(i) = external.transpose()/alpha;
   }
