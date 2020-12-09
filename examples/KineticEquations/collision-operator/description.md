@@ -17,9 +17,17 @@ where
 $$
 \begin{equation}
   \begin{array}{ccc}
-  P[\psi] = \int_{\mathcal{V}} \int_{\mathcal{W}} \omega^{-2} K \psi_{*}^{\prime} \psi_{*} \, d\boldsymbol{W} d \boldsymbol{V^{\prime}} & \mbox{and} & L = \int_{\mathcal{V}} \psi^{\prime} \int_{\mathcal{W}} K \, d\boldsymbol{W} d \boldsymbol{V^{\prime}}
+    P[\psi] = \int_{\mathcal{V}} \int_{\mathcal{W}} \omega^{-2} K \psi_{*}^{\prime} \psi_{*} \, d\boldsymbol{W} d \boldsymbol{V^{\prime}} & \mbox{and} & L = \int_{\mathcal{V}} \psi^{\prime} \int_{\mathcal{W}} K \, d\boldsymbol{W} d \boldsymbol{V^{\prime}}
   \end{array}
 \end{equation}
 $$
 
 are the partial collision operator and the rescaled collision function, respectively. Here, $\psi_{\*}^{\prime} = \phi(\boldsymbol{V_{*}^{\prime}})$ In these examples, we choose constant $K = 1$.
+
+$$
+\begin{equation}
+  \begin{array}{ccc}
+    \boldsymbol{V}_{*} = \boldsymbol{V} + W \boldsymbol{W} & \mbox{and} & \boldsymbol{V}_{*}^{\prime} = \boldsymbol{V}^{\prime} - W \boldsymbol{W}
+  \end{array}
+\end{equation}
+$$
