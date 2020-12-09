@@ -64,7 +64,7 @@ type="application/pdf">
 
 ## Inelastic collision
 
-Choose $\gamma = 0.5$, which implies that we lose kinetic energy with each collision.
+Choose $\gamma = 0.5$, which implies that we lose kinetic energy with each collision ($\partial_t e_{\psi} < 0$).
 
 <iframe width="1076" height="704" src="https://www.youtube.com/embed/MWibkm-fnnU" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
 
@@ -76,7 +76,7 @@ type="application/pdf">
 
 ## Hyperelastic collision
 
-Choose $\gamma = 1.5$, which implies that we gain kinetic energy with each collision.
+Choose $\gamma = 1.5$, which implies that we gain kinetic energy with each collision ($\partial_t e_{\psi} > 0$).
 
 <iframe width="1076" height="704" src="https://www.youtube.com/embed/Sha36PDPED4" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
 

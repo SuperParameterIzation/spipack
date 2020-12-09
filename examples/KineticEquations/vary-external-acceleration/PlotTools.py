@@ -116,7 +116,7 @@ def PlotExpectedEnergy(figureDir, time, energy):
     ax.set_xlim([time[0], time[-1]])
     ax.set_ylim([0.0, 1.01*max(energy)])
     ax.set_xlabel(r'Time $t$')
-    ax.set_ylabel(r'Expected energy $e_{\psi}$')
+    ax.set_ylabel(r'Expected kinetic energy $e_{\psi}$')
     ax.spines['right'].set_visible(False)
     ax.spines['top'].set_visible(False)
     ax.yaxis.set_ticks_position('left')
