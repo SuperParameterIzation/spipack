@@ -48,7 +48,7 @@ type="application/pdf">
 
 $$
 \begin{equation}
-  \boldsymbol{A}(\boldsymbol{V}, \boldsymbol{X}, T) = -A_0 \| \boldsymbol{V} \| \boldsymbol{V}
+  \boldsymbol{A} = -A_0 \| \boldsymbol{V} \| \boldsymbol{V}
 \end{equation}
 $$
 
