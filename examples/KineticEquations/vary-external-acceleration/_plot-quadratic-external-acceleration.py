@@ -28,14 +28,4 @@ outputDir = './output/quadratic-external-acceleration/'
 
 time, energy = PlotFrames(figureDir, outputDir)
 
-fig = MakeFigure(425, 0.9, False)
-ax = plt.gca()
-ax.plot(time, energy, color='#737373')
-ax.set_xlabel(r'$\epsilon$')
-ax.set_ylabel(r'$\Sigma_l^{\prime}$')
-ax.spines['right'].set_visible(False)
-ax.spines['top'].set_visible(False)
-ax.yaxis.set_ticks_position('left')
-ax.xaxis.set_ticks_position('bottom')
-plt.savefig(figureDir+'ExpectedEnergy.pdf', format='pdf', bbox_inches='tight')
-plt.close(fig)
+PlotExpectedEnergy(figureDir, time, energy)

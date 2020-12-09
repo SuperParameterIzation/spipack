@@ -89,22 +89,37 @@ def PlotFrames(figureDir, outputDir):
         energy = energy + hdf5file['/expected energy'] [()] [0].tolist()
         sampleMean = hdf5file['/sample mean'] [()].T [0]
 
-        fig = MakeFigure(425, 0.9, False)
-        ax = plt.gca()
-        scatter = ax.scatter(samples.T[0], samples.T[1], s=3, color='#525252')
-        ax.spines['right'].set_visible(False)
-        ax.spines['top'].set_visible(False)
-        ax.yaxis.set_ticks_position('left')
-        ax.xaxis.set_ticks_position('bottom')
-        ax.set_ylim([-3.5, 3.5])
-        ax.set_xlim([-3.5, 3.5])
-        ax.set_xlabel(r'$V_0$')
-        ax.set_ylabel(r'$V_1$')
-        plt.savefig(figname, format='png', bbox_inches='tight', dpi=300)
-        plt.close(fig)
+        #fig = MakeFigure(425, 0.9, False)
+        #ax = plt.gca()
+        #scatter = ax.scatter(samples.T[0], samples.T[1], s=3, color='#525252')
+        #ax.spines['right'].set_visible(False)
+        #ax.spines['top'].set_visible(False)
+        #ax.yaxis.set_ticks_position('left')
+        #ax.xaxis.set_ticks_position('bottom')
+        #ax.set_ylim([-3.5, 3.5])
+        #ax.set_xlim([-3.5, 3.5])
+        #ax.set_xlabel(r'$V_0$')
+        #ax.set_ylabel(r'$V_1$')
+        #plt.savefig(figname, format='png', bbox_inches='tight', dpi=300)
+        #plt.close(fig)
 
     sortIndex = np.argsort(time)
     time = [time[i] for i in sortIndex]
     energy = [energy[i] for i in sortIndex]
 
     return time, energy
+
+def PlotExpectedEnergy(figureDir, time, energy):
+    fig = MakeFigure(425, 0.9, False)
+    ax = plt.gca()
+    ax.plot(time, energy, color='#737373')
+    ax.set_xlim([time[0], time[-1]])
+    ax.set_ylim([0.0, 1.01*max(energy)])
+    ax.set_xlabel(r'Time $t$')
+    ax.set_ylabel(r'Expected energy $e_{\psi}$')
+    ax.spines['right'].set_visible(False)
+    ax.spines['top'].set_visible(False)
+    ax.yaxis.set_ticks_position('left')
+    ax.xaxis.set_ticks_position('bottom')
+    plt.savefig(figureDir+'ExpectedEnergy.pdf', format='pdf', bbox_inches='tight')
+    plt.close(fig)

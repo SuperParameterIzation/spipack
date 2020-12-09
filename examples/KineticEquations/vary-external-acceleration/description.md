@@ -12,8 +12,21 @@ $$
 \end{equation}
 $$
 
-add suppose that we initiall draw samples from a standard Gaussian distribution, $\{\boldsymbol{V}^{(i)}\}_{i=1}^{n}$ such that $\boldsymbol{V}^{(i)} \sim \mathcal{N}(\cdot; \boldsymbol{0}, \boldsymbol{I})$.
+add suppose that we initially draw samples from a standard Gaussian distribution, $\{\boldsymbol{V}\_0^{(i)}\}_{i=1}^{n}$ such that $\boldsymbol{V}\_0^{(i)} \sim \mathcal{N}(\cdot; \boldsymbol{0}, \boldsymbol{I})$. We, therefore, update the samples according to
 
+$$
+\begin{equation}
+  \partial_t V_t = \boldsymbol{A}.
+\end{equation}
+$$
+
+Below, we show how these samples evolve for different choices of $\boldsymbol{A}$. We also plot the expected energy
+
+$$
+\begin{equation}
+  e_{\psi} = \int_{\mathcal{V}} \boldsymbol{V} \cdot \boldsymbol{V} \psi \, d \boldsymbol{V}
+\end{equation}
+$$
 
 ## Linear forcing
 
@@ -25,6 +38,12 @@ $$
 
 <iframe width="1076" height="704" src="https://www.youtube.com/embed/S34nyMxcjWk" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
 
+<figure>
+<figcaption>The estimated density $\psi^{(i)} \approx \psi(\boldsymbol{x}^{(i)})$ at each sample.</figcaption>
+<embed src="figures/linear-external-acceleration/ExpectedEnergy.pdf" width="500" height="375"
+type="application/pdf">
+</figure>
+
 ## Quadratic forcing
 
 $$
@@ -35,10 +54,17 @@ $$
 
 <iframe width="1076" height="704" src="https://www.youtube.com/embed/gIPCYvI8rXw" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
 
+<figure>
+<figcaption>The estimated density $\psi^{(i)} \approx \psi(\boldsymbol{x}^{(i)})$ at each sample.</figcaption>
+<embed src="figures/quadratic-external-acceleration/ExpectedEnergy.pdf" width="500" height="375"
+type="application/pdf">
+</figure>
+
 ## Component-wise quadratic forcing
 
 $$
 \begin{equation}
+
   \boldsymbol{A}(\boldsymbol{V}, \boldsymbol{X}, T) = A_0 \vert \boldsymbol{U}_f(\boldsymbol{X}, T) - \boldsymbol{V} \vert * (\boldsymbol{U}_{f}(\boldsymbol{X}, T)-\boldsymbol{V}),
 \end{equation}
 $$
@@ -46,3 +72,9 @@ $$
 where $*$ is the component-wise multiplication operator.
 
 <iframe width="1076" height="704" src="https://www.youtube.com/embed/KGyxZ9tOpwg" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+
+<figure>
+<figcaption>The estimated density $\psi^{(i)} \approx \psi(\boldsymbol{x}^{(i)})$ at each sample.</figcaption>
+<embed src="figures/componentwise-quadratic-external-acceleration/ExpectedEnergy.pdf" width="500" height="375"
+type="application/pdf">
+</figure>
