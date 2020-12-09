@@ -32,4 +32,10 @@ $$
 \end{equation}
 $$
 
-Here, $\boldsymbol{W}$ is a unit vector samples from $\beta_{\boldsymbol{W}}$ and $W$ is the prescribed post-collision velocity function.
+Here, $\boldsymbol{W}$ is a unit vector samples from $\beta_{\boldsymbol{W}}$ and $W$ is the prescribed post-collision velocity function. We choose
+
+$$
+\begin{equation}
+  W = \frac{1}{2} W_e + \frac{\mbox{sign}(W_e)}{2} \sqrt{ \max{( 0, W_e^2 - 4(1-\gamma) (\boldsymbol{V} \cdot \boldsymbol{V} + \boldsymbol{V^{\prime}} \cdot \boldsymbol{V^{\prime}}) )} }
+\end{equation}
+$$
