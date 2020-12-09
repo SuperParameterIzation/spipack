@@ -22,4 +22,4 @@ $$
 \end{equation}
 $$
 
-are the partial collision operator and the rescaled collision function, respectively.
+are the partial collision operator and the rescaled collision function, respectively. Here, $\psi\_{*}^{\prime} = \phi(\boldsymbol{V\_*^{\prime}})$ In these examples, we choose constant $K = 1$.
