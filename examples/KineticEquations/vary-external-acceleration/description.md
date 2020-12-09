@@ -24,7 +24,7 @@ Below, we show how these samples evolve for different choices of $\boldsymbol{A}
 
 $$
 \begin{equation}
-  e_{\psi} = \int_{\mathcal{V}} \boldsymbol{V} \cdot \boldsymbol{V} \psi \, d \boldsymbol{V}
+  e_{\psi} = \int_{\mathcal{V}} \boldsymbol{V} \cdot \boldsymbol{V} \psi \, d \boldsymbol{V}.
 \end{equation}
 $$
 
