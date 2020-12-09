@@ -32,7 +32,7 @@ $$
 \end{equation}
 $$
 
-Here, $\boldsymbol{W}$ is a unit vector samples from $\beta_{\boldsymbol{W}}$ and $W$ is the prescribed post-collision velocity function. We choose $\beta_{\boldsymbol{W}}$ to be a uniform distribution over the unit hypresphere and
+Here, $\boldsymbol{W}$ is a unit vector samples from $\beta_{\boldsymbol{W}}$, $W$ is the prescribed post-collision velocity function, and $\omega = 1 + \boldsymbol{W} \cdot \nabla_{\boldsymbol{V}} W$. We choose $\beta_{\boldsymbol{W}}$ to be a uniform distribution over the unit hypresphere and
 
 $$
 \begin{equation}
