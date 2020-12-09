@@ -39,7 +39,7 @@ $$
 <iframe width="1076" height="704" src="https://www.youtube.com/embed/S34nyMxcjWk" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
 
 <figure>
-<figcaption>The estimated density $\psi^{(i)} \approx \psi(\boldsymbol{x}^{(i)})$ at each sample.</figcaption>
+<figcaption>The expected energy $e_{\psi}$.</figcaption>
 <embed src="figures/linear-external-acceleration/ExpectedEnergy.pdf" width="500" height="375"
 type="application/pdf">
 </figure>
@@ -55,7 +55,7 @@ $$
 <iframe width="1076" height="704" src="https://www.youtube.com/embed/gIPCYvI8rXw" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
 
 <figure>
-<figcaption>The estimated density $\psi^{(i)} \approx \psi(\boldsymbol{x}^{(i)})$ at each sample.</figcaption>
+<figcaption>The expected energy $e_{\psi}$.</figcaption>
 <embed src="figures/quadratic-external-acceleration/ExpectedEnergy.pdf" width="500" height="375"
 type="application/pdf">
 </figure>
@@ -74,7 +74,7 @@ where $*$ is the component-wise multiplication operator.
 <iframe width="1076" height="704" src="https://www.youtube.com/embed/KGyxZ9tOpwg" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
 
 <figure>
-<figcaption>The estimated density $\psi^{(i)} \approx \psi(\boldsymbol{x}^{(i)})$ at each sample.</figcaption>
+<figcaption>The expected energy $e_{\psi}$.</figcaption>
 <embed src="figures/componentwise-quadratic-external-acceleration/ExpectedEnergy.pdf" width="500" height="375"
 type="application/pdf">
 </figure>
