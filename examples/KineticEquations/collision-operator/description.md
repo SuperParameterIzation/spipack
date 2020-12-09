@@ -22,12 +22,14 @@ $$
 \end{equation}
 $$
 
-are the partial collision operator and the rescaled collision function, respectively. Here, $\psi_{\*}^{\prime} = \psi(\boldsymbol{V_{*}^{\prime}})$, $\psi_{\*} = \psi(\boldsymbol{V_{*}})$, and $\psi^{\prime} = \psi(\boldsymbol{V^{\prime}})$. In these examples, we choose constant $K = 1$.
+are the partial collision operator and the rescaled collision function, respectively. In these examples, we choose constant $K = 1$. We denote $\psi_{\*}^{\prime} = \psi(\boldsymbol{V_{\*}^{\prime}})$, $\psi_{\*} = \psi(\boldsymbol{V_{*}})$, and $\psi^{\prime} = \psi(\boldsymbol{V^{\prime}})$, where the post-collision velocities are
 
 $$
 \begin{equation}
   \begin{array}{ccc}
-    \boldsymbol{V}_{*} = \boldsymbol{V} + W \boldsymbol{W} & \mbox{and} & \boldsymbol{V}_{*}^{\prime} = \boldsymbol{V}^{\prime} - W \boldsymbol{W}
+    \boldsymbol{V}_{*} = \boldsymbol{V} + W \boldsymbol{W} & \mbox{and} & \boldsymbol{V}_{*}^{\prime} = \boldsymbol{V}^{\prime} - W \boldsymbol{W}.
   \end{array}
 \end{equation}
 $$
+
+Here, $\boldsymbol{W}$ is a unit vector samples from $\beta_{\boldsymbol{W}}$ and $W$ is the prescribed post-collision velocity function.
