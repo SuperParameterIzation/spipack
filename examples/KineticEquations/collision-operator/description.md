@@ -17,7 +17,7 @@ where
 $$
 \begin{equation}
   \begin{array}{ccc}
-  P[\psi] = \int_{\mathcal{V}} \int_{\mathcal{W}} \omega^{-2} K \psi\_{*}^{\prime} \psi\_{*} \, d\boldsymbol{W} \boldsymbol{W} & \mbox{and} & L =
+  P[\psi] = \int_{\mathcal{V}} \int_{\mathcal{W}} \omega^{-2} K \psi_{*}^{\prime} \psi_{*} \, d\boldsymbol{W} d \boldsymbol{V^{\prime}} & \mbox{and} & L = \int_{\mathcal{V}} \psi^{\prime} \int_{\mathcal{W}} K \, d\boldsymbol{W} d \boldsymbol{V^{\prime}}
   \end{array}
 \end{equation}
 $$
