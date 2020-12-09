@@ -116,8 +116,9 @@ public:
   /**
   @param[in] nextTime We need to update the samples from the current time to this time
   @param[in] nextMacroInfo The macro-scale information at the updated macro-scale timestep (in the macro-scale coordinates)
+  @param[in] saveInitialConditions <tt>true</tt> (default): save the initial conditions to file (only if we are writing to file); <tt>false</tt>: do not save the initial conditions (even if we are saving the other states to file). Useful if we are repeatedly calling this function using the previous end state as the intial state.
   */
-  void Run(double const nextTime, std::shared_ptr<const MacroscaleInformation> const& finalMacroInfo);
+  void Run(double const nextTime, std::shared_ptr<const MacroscaleInformation> const& finalMacroInfo, bool const saveInitialConditions = true);
 
   /// Get the \f$i^{th}\f$ point \f$\boldsymbol{v}^{(i)}\f$ from the point cloud.
   /**
@@ -273,10 +274,18 @@ private:
 
   /// Update the particel velocities
   /**
+  @param[in] macroDelta The macro-scale timestep size
   @param[in] macroTime The macroscale time
   @param[in] currInfo The macroscale information at the current macro-scale timestep
   */
-  void ComputeAcceleration(double const macroTime, std::shared_ptr<RescaledMacroscaleInformation> const& currInfo);
+  void ComputeAcceleration(double const macroDelta, double const macroTime, std::shared_ptr<RescaledMacroscaleInformation> const& currInfo);
+
+  /// Solve the weighted Laplace problem to address source/sink term
+  /**
+   The effective acceleration due to the source/sink term at each point is stored in the rescaled macro-scale information.
+  @param[in,out] currInfo The macroscale information at the current macro-scale timestep
+  */
+  void WeightedPoissonGradient(std::shared_ptr<RescaledMacroscaleInformation> const& currInfo) const;
 
   /// Write the samples to file
   /**
@@ -333,6 +342,12 @@ private:
   */
   const double theta;
 
+  /// The noise scaling for the external acceleration
+  /**
+  Add \f$a_0 \delta \boldsymbol{\tilde{A}}\f$, where \f$\boldsymbol{tilde{A}} \sim \mathcal{N}(\cdot; \boldsymbol{0}, \boldsymbol{I})\f$.
+  */
+  const double accelerationNoiseScale;
+
   /// The number of timesteps in the micro-scale simulation
   const std::size_t numTimesteps;
 
@@ -364,6 +379,9 @@ private:
 
     /// The default numerical timestep parameter is \f$\theta=0.5\f$
     inline static const double theta = 0.5;
+
+    /// The default acceleration noise scale parameter is \f$1\f$.
+    inline static const double accelerationNoiseScale = 1.0;
 
     /// The default number of timesteps is \f$10\f$
     inline static const std::size_t numTimesteps = 10;

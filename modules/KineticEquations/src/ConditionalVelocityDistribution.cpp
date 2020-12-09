@@ -22,6 +22,7 @@ currentTime(options["CurrentTime"].as<double>(defaults.currentTime)),
 varepsilon(options["NondimensionalParameter"].as<double>(defaults.varepsilon)),
 alpha(options["ExternalAccelerationRescaling"].as<double>(defaults.alpha)),
 theta(options["TimestepParameter"].as<double>(defaults.theta)),
+accelerationNoiseScale(options["AccelerationNoiseScale"].as<double>(defaults.accelerationNoiseScale)),
 numTimesteps(options["NumTimesteps"].as<std::size_t>(defaults.numTimesteps)),
 prevMacroInfo(std::make_shared<RescaledMacroscaleInformation>(initMacroInfo, alpha, this->samples->StateDim())),
 normalizingConstant(options["InitialNormalizingConstant"].as<double>(defaults.initialNormalizingConstant)),
@@ -38,6 +39,7 @@ currentTime(options["CurrentTime"].as<double>(defaults.currentTime)),
 varepsilon(options["NondimensionalParameter"].as<double>(defaults.varepsilon)),
 alpha(options["ExternalAccelerationRescaling"].as<double>(defaults.alpha)),
 theta(options["TimestepParameter"].as<double>(defaults.theta)),
+accelerationNoiseScale(options["AccelerationNoiseScale"].as<double>(defaults.accelerationNoiseScale)),
 numTimesteps(options["NumTimesteps"].as<std::size_t>(defaults.numTimesteps)),
 prevMacroInfo(std::make_shared<RescaledMacroscaleInformation>(initMacroInfo, alpha, this->samples->StateDim())),
 normalizingConstant(options["InitialNormalizingConstant"].as<double>(defaults.initialNormalizingConstant)),
@@ -54,6 +56,7 @@ currentTime(options["CurrentTime"].as<double>(defaults.currentTime)),
 varepsilon(options["NondimensionalParameter"].as<double>(defaults.varepsilon)),
 alpha(options["ExternalAccelerationRescaling"].as<double>(defaults.alpha)),
 theta(options["TimestepParameter"].as<double>(defaults.theta)),
+accelerationNoiseScale(options["AccelerationNoiseScale"].as<double>(defaults.accelerationNoiseScale)),
 numTimesteps(options["NumTimesteps"].as<std::size_t>(defaults.numTimesteps)),
 prevMacroInfo(std::make_shared<RescaledMacroscaleInformation>(initMacroInfo, alpha, this->samples->StateDim())),
 normalizingConstant(options["InitialNormalizingConstant"].as<double>(defaults.initialNormalizingConstant)),
@@ -91,7 +94,7 @@ Eigen::Ref<Eigen::VectorXd> ConditionalVelocityDistribution::Point(std::size_t c
   return samples->Point(i);
 }
 
-void ConditionalVelocityDistribution::Run(double const nextTime, std::shared_ptr<const MacroscaleInformation> const& finalMacroInfo) {
+void ConditionalVelocityDistribution::Run(double const nextTime, std::shared_ptr<const MacroscaleInformation> const& finalMacroInfo, bool const saveInitialConditions) {
   std::cout << "current time: " << currentTime << std::endl;
 
   // compute the macro-scale time step
@@ -116,9 +119,9 @@ void ConditionalVelocityDistribution::Run(double const nextTime, std::shared_ptr
   }
 
   // write the initial conditions to file
-  if( !filename.empty() ) {
+  if( saveInitialConditions & !filename.empty() ) {
     // compute the acceleration at the initial timestep
-    ComputeAcceleration(currentTime, prevInfo);
+    ComputeAcceleration(macroDelta, currentTime, prevInfo);
 
     WriteToFile(currentTime, prevInfo);
   }
@@ -232,7 +235,7 @@ double ConditionalVelocityDistribution::PostCollisionFunction(Eigen::Ref<const E
 
 void ConditionalVelocityDistribution::ConvectionStep(double const macroDelta, double const macroTime, double const microDelta, std::shared_ptr<RescaledMacroscaleInformation> const& currInfo) {
   const std::size_t n = NumSamples();
-  ComputeAcceleration(macroTime, currInfo);
+  ComputeAcceleration(macroDelta, macroTime, currInfo);
 
   for( std::size_t i=0; i<n; ++i ) {
     Point(i) += macroDelta*microDelta*alpha*currInfo->acceleration.row(i);
@@ -241,44 +244,50 @@ void ConditionalVelocityDistribution::ConvectionStep(double const macroDelta, do
 
 Eigen::VectorXd ConditionalVelocityDistribution::ExternalAcceleration(Eigen::Ref<const Eigen::VectorXd> const& vel, Eigen::Ref<const Eigen::VectorXd> const& x, double const time) const { return Eigen::VectorXd::Zero(StateDim()); }
 
-void ConditionalVelocityDistribution::ComputeAcceleration(double const macroTime, std::shared_ptr<RescaledMacroscaleInformation> const& currInfo) {
+void ConditionalVelocityDistribution::WeightedPoissonGradient(std::shared_ptr<RescaledMacroscaleInformation> const& currInfo) const {
+  const std::size_t n = NumSamples();
+  const std::size_t neigs = kolmogorov->NumEigenvalues();
+
+  // compute the eigendecomposition of the kolmogorov operator
+  Eigen::VectorXd S(n), Sinv(n), lambda(neigs);
+  Eigen::MatrixXd Qhat(n, neigs);
+  kolmogorov->ComputeEigendecomposition(S, Sinv, lambda, Qhat);
+
+  // compte the right hand side for the weighted Poisson problem
+  Eigen::VectorXd rhs(n);
+  for( std::size_t i=0; i<n; ++i ) {
+    // the relative velocity: V+Uhat-U(T)=(v/alpha - Uhat) + Uhat - U(T) dotted with the gradient of the log mass density
+    rhs(i) = (Point(i)/alpha - currInfo->velocity).dot(currInfo->logMassDensityGrad);
+  }
+
+  // apply the pseudo-inverse to the rhs (we will need the coeffients of the solution)
+  Eigen::VectorXd coeff = kolmogorov->PseudoInverse(rhs, S, lambda, Qhat);
+  assert(coeff.size()==neigs);
+
+  // compute the gradient of the solution to the weighted Poisson problem
+  currInfo->acceleration = kolmogorov->FunctionGradient(coeff, S, Sinv, lambda, Qhat);
+}
+
+void ConditionalVelocityDistribution::ComputeAcceleration(double const macroDelta, double const macroTime, std::shared_ptr<RescaledMacroscaleInformation> const& currInfo) {
+  const std::size_t dim = StateDim();
   const std::size_t n = NumSamples();
 
   // is the forcing nonzero---if it is zero, we don't need to compute the augmented acceleration
   if( currInfo->logMassDensityGrad.norm()>1.0e-10 ) {
-    const std::size_t neigs = kolmogorov->NumEigenvalues();
-
-    // compute the eigendecomposition of the kolmogorov operator
-    Eigen::VectorXd S(n), Sinv(n), lambda(neigs);
-    Eigen::MatrixXd Qhat(n, neigs);
-    kolmogorov->ComputeEigendecomposition(S, Sinv, lambda, Qhat);
-
-    // compte the right hand side for the weighted Poisson problem
-    Eigen::VectorXd rhs(n);
-    for( std::size_t i=0; i<n; ++i ) {
-      // the relative velocity: V+Uhat-U(T)=(v/alpha - Uhat) + Uhat - U(T) dotted with the gradient of the log mass density
-      rhs(i) = (Point(i)/alpha - currInfo->velocity).dot(currInfo->logMassDensityGrad);
-    }
-
-    // apply the pseudo-inverse to the rhs (we will need the coeffients of the solution)
-    Eigen::VectorXd coeff = kolmogorov->PseudoInverse(rhs, S, lambda, Qhat);
-    assert(coeff.size()==neigs);
-
-    // compute the gradient of the solution to the weighted Poisson problem
-    currInfo->acceleration = kolmogorov->FunctionGradient(coeff, S, Sinv, lambda, Qhat);
+    WeightedPoissonGradient(currInfo);
   } else {
-    currInfo->acceleration = Eigen::MatrixXd(n, StateDim());
+    currInfo->acceleration = Eigen::MatrixXd(n, dim);
   }
 
-  auto gauss = std::make_shared<Gaussian>(StateDim());
+  auto gauss = std::make_shared<Gaussian>(dim);
 
   // add in the external acceleration
+  const double scale = accelerationNoiseScale*macroDelta;
   for( std::size_t i=0; i<n; ++i ) {
     Eigen::VectorXd external = ExternalAcceleration(Point(i), macroLoc, macroTime);
-    assert(external.size()==StateDim());
-    external += 0.01*gauss->Sample();
+    assert(external.size()==dim);
+    external += scale*gauss->Sample();
 
-    //currInfo->acceleration.row(i) = external.transpose()/alpha - currInfo->acceleration.row(i);
     currInfo->acceleration.row(i) = external.transpose()/alpha;
   }
 }

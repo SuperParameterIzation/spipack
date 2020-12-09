@@ -23,6 +23,9 @@ $$
 \end{equation}
 $$
 
+<iframe width="1126" height="704" src="https://www.youtube.com/embed/CF5_fQ-V-oI" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+
+
 ## Quadratic forcing
 
 $$
