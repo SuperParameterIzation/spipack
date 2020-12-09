@@ -53,3 +53,11 @@ $$
 ## Elastic collision
 
 Choose $\gamma = 1$, which implies energy conservation ($\partial_t e_{\psi} = 0$).
+
+<iframe width="1076" height="704" src="https://www.youtube.com/embed/gC_V_I9EuhE" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+
+<figure>
+<figcaption>The expected energy $e_{\psi}$.</figcaption>
+<embed src="figures/elastic-collision/ExpectedEnergy.pdf" width="500" height="375"
+type="application/pdf">
+</figure>
