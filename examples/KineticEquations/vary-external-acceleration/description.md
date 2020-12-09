@@ -12,7 +12,7 @@ $$
 \end{equation}
 $$
 
-add suppose that we initially draw samples from a standard Gaussian distribution, $[\boldsymbol{V}\_0^{(i)}]_{i=1}^{n}$ such that $\boldsymbol{V}\_0^{(i)} \sim \mathcal{N}(\cdot; \boldsymbol{0}, \boldsymbol{I})$. We, therefore, update the samples according to
+add suppose that we initially draw samples from a standard Gaussian distribution, $\\{\boldsymbol{V}\_0^{(i)}\\}_{i=1}^{n}$ such that $\boldsymbol{V}\_0^{(i)} \sim \mathcal{N}(\cdot; \boldsymbol{0}, \boldsymbol{I})$. We, therefore, update the samples according to
 
 $$
 \begin{equation}
