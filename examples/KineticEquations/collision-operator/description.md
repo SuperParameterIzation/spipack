@@ -58,7 +58,7 @@ Choose $\gamma = 1$, which implies energy conservation ($\partial_t e_{\psi} = 0
 
 <figure>
 <figcaption>The expected energy $e_{\psi}$.</figcaption>
-<embed src="figures/elastic-collision/ExpectedEnergy.pdf" width="500" height="375"
+<embed src="figures/elastic-collisions/ExpectedEnergy.pdf" width="500" height="375"
 type="application/pdf">
 </figure>
 
@@ -70,6 +70,18 @@ Choose $\gamma = 0.5$, which implies that we lose kinetic energy with each colli
 
 <figure>
 <figcaption>The expected energy $e_{\psi}$.</figcaption>
-<embed src="figures/inelastic-collision/ExpectedEnergy.pdf" width="500" height="375"
+<embed src="figures/inelastic-collisions/ExpectedEnergy.pdf" width="500" height="375"
+type="application/pdf">
+</figure>
+
+## Hyperelastic collision
+
+Choose $\gamma = 1.5$, which implies that we gain kinetic energy with each collision.
+
+<iframe width="1076" height="704" src="https://www.youtube.com/embed/Sha36PDPED4" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+
+<figure>
+<figcaption>The expected energy $e_{\psi}$.</figcaption>
+<embed src="figures/hyperelastic-collisions/ExpectedEnergy.pdf" width="500" height="375"
 type="application/pdf">
 </figure>
