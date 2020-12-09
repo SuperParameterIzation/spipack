@@ -23,7 +23,7 @@ $$
 \end{equation}
 $$
 
-<iframe width="1076" height="704" src="https://www.youtube.com/embed/LT8yt04oTDA" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+<iframe width="1076" height="704" src="https://www.youtube.com/embed/S34nyMxcjWk" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
 
 ## Quadratic forcing
 
@@ -33,7 +33,7 @@ $$
 \end{equation}
 $$
 
-<iframe width="1076" height="704" src="https://www.youtube.com/embed/3mFxTrk4i34" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+<iframe width="1076" height="704" src="https://www.youtube.com/embed/gIPCYvI8rXw" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
 
 ## Component-wise quadratic forcing
 
@@ -44,3 +44,5 @@ $$
 $$
 
 where $*$ is the component-wise multiplication operator.
+
+<iframe width="1076" height="704" src="https://www.youtube.com/embed/KGyxZ9tOpwg" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>

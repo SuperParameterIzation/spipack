@@ -9,7 +9,7 @@ int main(int argc, char **argv) {
 
   // run the micro-scale model
   double time = 0.0;
-  const double delta = 0.1;
+  const double delta = 0.05;
   for( std::size_t i=0; i<5; ++i ) {
     time += delta;
     distribution->Run(time, VaryExternalAcceleration::DefaultMacroscaleInformation(), i==0);
