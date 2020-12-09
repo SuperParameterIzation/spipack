@@ -17,7 +17,7 @@ where
 $$
 \begin{equation}
   \begin{array}{ccc}
-    P[\psi] = & \mbox{and} & L = 
+  P[\psi] = \int_{\boldsymbol{\matcal{V}}} \int_{\mathcal{W}}} \omega^{-2} K \, d\boldsymbol{W} \boldsymbol{W} & \mbox{and} & L = 
   \end{array}
 \end{equation}
 $$
