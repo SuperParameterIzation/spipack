@@ -41,3 +41,15 @@ $$
 $$
 
 where $W_e = -\boldsymbol{W} \cdot (\boldsymbol{V} - \boldsymbol{V^{\prime}})$.
+
+Define the expected kinetic energy
+
+$$
+\begin{equation}
+  e_{\psi} = \int_{\mathcal{V}} \boldsymbol{V} \cdot \boldsymbol{V} \psi \, d \boldsymbol{V}.
+\end{equation}
+$$
+
+## Elastic collision
+
+Choose $\gamma = 1$, which implies energy conservation ($\partial_t e_{\psi} = 0$).
