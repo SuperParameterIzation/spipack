@@ -32,7 +32,7 @@ $$
 
 $$
 \begin{equation}
-  \boldsymbol{A}(\boldsymbol{V}, \boldsymbol{X}, T) = A_0 (\boldsymbol{U}_{f}(\boldsymbol{X}, T)-\boldsymbol{V})
+  \boldsymbol{A} = - \boldsymbol{V}
 \end{equation}
 $$
 
@@ -48,7 +48,7 @@ type="application/pdf">
 
 $$
 \begin{equation}
-  \boldsymbol{A}(\boldsymbol{V}, \boldsymbol{X}, T) = A_0 \| \boldsymbol{U}_{f}(\boldsymbol{X}, T) - \boldsymbol{V} \| (\boldsymbol{U}_{f}(\boldsymbol{X}, T)-\boldsymbol{V})
+  \boldsymbol{A}(\boldsymbol{V}, \boldsymbol{X}, T) = -A_0 \| \boldsymbol{V} \| \boldsymbol{V}
 \end{equation}
 $$
 
@@ -65,7 +65,7 @@ type="application/pdf">
 $$
 \begin{equation}
 
-  \boldsymbol{A}(\boldsymbol{V}, \boldsymbol{X}, T) = A_0 \vert \boldsymbol{U}_f(\boldsymbol{X}, T) - \boldsymbol{V} \vert * (\boldsymbol{U}_{f}(\boldsymbol{X}, T)-\boldsymbol{V}),
+  \boldsymbol{A} = -A_0 \vert \boldsymbol{V} \vert * \boldsymbol{V},
 \end{equation}
 $$
 
