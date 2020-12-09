@@ -23,8 +23,8 @@ import pylab
 
 from PlotTools import *
 
-figureDir = 'figures/linear-external-acceleration/'
-outputDir = './output/linear-external-acceleration/'
+figureDir = 'figures/quadratic-external-acceleration/'
+outputDir = './output/quadratic-external-acceleration/'
 
 time, energy = PlotFrames(figureDir, outputDir)
 

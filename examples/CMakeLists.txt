@@ -6,5 +6,8 @@ add_custom_target(examples DEPENDS
                     run-density-estimation
                     run-Kolmogorov-eigen-decomposition
                     run-Kolmogorov-inverse
-                    run-microscale-model
+
+                    run-linear-external-acceleration
+                    run-quadratic-external-acceleration
+                    run-componentwise-quadratic-external-acceleration
                   )

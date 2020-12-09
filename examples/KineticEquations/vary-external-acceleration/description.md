@@ -33,6 +33,8 @@ $$
 \end{equation}
 $$
 
+<iframe width="1076" height="704" src="https://www.youtube.com/embed/3mFxTrk4i34" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+
 ## Component-wise quadratic forcing
 
 $$

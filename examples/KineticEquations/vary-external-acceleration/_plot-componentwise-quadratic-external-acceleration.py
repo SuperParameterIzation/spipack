@@ -73,15 +73,14 @@ def MakeFigure(totalWidthPts, fraction, presentationVersion = False):
 
     return fig
 
-baseFilename = 'output'
-
-outputDir = './output/'
+figureDir = 'figures/componentwise-quadratic-external-acceleration/'
+outputDir = './output/componentwise-quadratic-external-acceleration/'
 filenames = [name for name in os.listdir(outputDir) if os.path.isfile(os.path.join(outputDir, name))]
 
 time = list()
 energy = list()
 for filename in filenames:
-    figname = 'figures/'+filename[:-3]+'.png'
+    figname = figureDir+filename[:-3]+'.png'
 
     # load the data file
     hdf5file = h5py.File(outputDir+filename, 'r')
@@ -130,5 +129,5 @@ ax.spines['right'].set_visible(False)
 ax.spines['top'].set_visible(False)
 ax.yaxis.set_ticks_position('left')
 ax.xaxis.set_ticks_position('bottom')
-plt.savefig('figures/ExpectedEnergy.pdf', format='pdf', bbox_inches='tight')
+plt.savefig(figureDir+'ExpectedEnergy.pdf', format='pdf', bbox_inches='tight')
 plt.close(fig)

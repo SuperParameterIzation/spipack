@@ -11,21 +11,6 @@ if(CMAKE_SOURCE_DIR STREQUAL CMAKE_CURRENT_SOURCE_DIR) # Only look for SPIPACK w
   include_directories(${SPIPACK_INCLUDE_DIRS} ${SPIPACK_EXTERNAL_INCLUDE_DIRS})
 endif()
 
-set(SOURCE
-  _run-microscale-model.cpp
-)
-
-add_executable(run-microscale-model ${SOURCE})
-target_link_libraries(run-microscale-model ${SPIPACK_EXTERNAL_LIBRARIES} ${SPIPACK_LIBRARIES})
-if(NOT CMAKE_SOURCE_DIR STREQUAL CMAKE_CURRENT_SOURCE_DIR) # add dependencies if this is not a stand alone project
-  add_dependencies(run-microscale-model spiNS spiTS spiKE)
-endif()
-
-
-
-
-
-
 set(LINEAR_SOURCE
   LinearExternalAcceleration.cpp
 
