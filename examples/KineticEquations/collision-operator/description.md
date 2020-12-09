@@ -32,10 +32,12 @@ $$
 \end{equation}
 $$
 
-Here, $\boldsymbol{W}$ is a unit vector samples from $\beta_{\boldsymbol{W}}$ and $W$ is the prescribed post-collision velocity function. We choose
+Here, $\boldsymbol{W}$ is a unit vector samples from $\beta_{\boldsymbol{W}}$ and $W$ is the prescribed post-collision velocity function. We choose $\beta_{\boldsymbol{W}}$ to be a uniform distribution over the unit hypresphere and
 
 $$
 \begin{equation}
-  W = \frac{1}{2} W_e + \frac{\mbox{sign}(W_e)}{2} \sqrt{ \max{( 0, W_e^2 - 4(1-\gamma) (\boldsymbol{V} \cdot \boldsymbol{V} + \boldsymbol{V^{\prime}} \cdot \boldsymbol{V^{\prime}}) )} }
+  W = \frac{1}{2} W_e + \frac{\mbox{sign}(W_e)}{2} \sqrt{ \max{( 0, W_e^2 - 4(1-\gamma) (\boldsymbol{V} \cdot \boldsymbol{V} + \boldsymbol{V^{\prime}} \cdot \boldsymbol{V^{\prime}}) )} },
 \end{equation}
 $$
+
+where $W_e = -\boldsymbol{W} \cdot (\boldsymbol{V} - \boldsymbol{V^{\prime}}).
