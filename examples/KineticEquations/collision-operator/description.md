@@ -40,4 +40,4 @@ $$
 \end{equation}
 $$
 
-where $W_e = -\boldsymbol{W} \cdot (\boldsymbol{V} - \boldsymbol{V^{\prime}}).
+where $W_e = -\boldsymbol{W} \cdot (\boldsymbol{V} - \boldsymbol{V^{\prime}})$.
