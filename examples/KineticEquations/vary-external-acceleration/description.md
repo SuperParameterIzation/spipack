@@ -32,7 +32,7 @@ $$
 
 $$
 \begin{equation}
-  \boldsymbol{A} = - \boldsymbol{V}
+  \boldsymbol{A} = -\boldsymbol{V}
 \end{equation}
 $$
 
@@ -48,7 +48,7 @@ type="application/pdf">
 
 $$
 \begin{equation}
-  \boldsymbol{A} = -A_0 \| \boldsymbol{V} \| \boldsymbol{V}
+  \boldsymbol{A} = - \| \boldsymbol{V} \| \boldsymbol{V}
 \end{equation}
 $$
 
@@ -65,7 +65,7 @@ type="application/pdf">
 $$
 \begin{equation}
 
-  \boldsymbol{A} = -A_0 \vert \boldsymbol{V} \vert * \boldsymbol{V},
+  \boldsymbol{A} = - \vert \boldsymbol{V} \vert * \boldsymbol{V},
 \end{equation}
 $$
 
