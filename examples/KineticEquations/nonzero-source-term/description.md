@@ -28,4 +28,4 @@ $$
 \end{equation}
 $$
 
-and solve this equation using the same method as the [homogeneous acceleration example](../KineticEquations/vary-external-acceleration/description.md)).
+and solve this equation using the same method as the [homogeneous acceleration example](../vary-external-acceleration/description.md).
