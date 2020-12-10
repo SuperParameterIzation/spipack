@@ -6,6 +6,27 @@
 namespace spi {
 namespace KineticEquations{
 
+/// The micro-scale model for the rescaled conditional velocity distribution \f$\psi(\boldsymbol{V} \vert \boldsymbol{X}; T) = \rho \hat{\psi}(\boldsymbol{V} \vert \boldsymbol{X}; T)\f$
+/**
+\f{eqnarray*}{
+\partial_T \rho &=& \delta \rho \nabla_{\boldsymbol{X}} \cdot \boldsymbol{U} \\
+\partial_T \hat{\psi} + \delta \nabla_{\boldsymbol{V}} \cdot (\hat{\psi} \boldsymbol{A}) &=& \phi (\rho^{-1} Q[\rho \hat{\psi}] - L\hat{\psi}) - \delta (\boldsymbol{V} + \boldsymbol{\hat{U}} - \boldsymbol{U}) \cdot \nabla _{\boldsymbol{X}} \log{(\phi)}
+\f}
+<B>Configuration Parameters:</B>
+Parameter Key | Type | Default Value | Description |
+------------- | ------------- | ------------- | ------------- |
+"NearestNeighbors"   | <tt>YAML::Node</tt> | - | Options for the spi::Tools::NearestNeighbors object.   |
+"KolmogorovOptions"   | <tt>YAML::Node</tt> | - | Options for the the spi::NumericalSolvers::KolmogorovOperator object. |
+"CurrentTime" | <tt>double</tt> | <tt>0.0</tt> | The macro-scale time when this object is constructed
+"NondimensionalParameter" | <tt>double</tt> | \f$\infty\f$ | The nondimensional parameter that defines the collision rate scaling
+"ExternalAccelerationRescaling" | <tt>double</tt> | <tt>1.0</tt> | The rescaling parameter \f$\alpha\f$ for the external acceleration
+"TimestepParameter" | <tt>double</tt> | <tt>0.5</tt> | The numerical parameter to update the normalizing constant; must be if \f$[0,1]\f$.
+"AccelerationNoiseScale" | <tt>double</tt> | <tt>1.0</tt> | The amount of noise we add to the external acceleration---scaled also by the macro-scale timestep \f$\delta\f$.
+"KolmogorovRetuneFrequency" | <tt>std::size_t</tt> | \f$\infty\f$ | The number of timesteps before we retune the numerical parameters for the spi::NumericalSolvers::KolmogorovOperator.
+"NumTimesteps" | <tt>std::size_t</tt> | <tt>10</tt> | The number of timesteps for the micro-scale model
+"InitialNormalizingConstant" | <tt>double</tt> | <tt>1.0</tt> | The value of the normalizing constant at the time of construction.
+"OutputFilename" | <tt>std::string</tt> | <tt>""</tt> | The file where we output the data. If this string is empty, do not output any data.
+*/
 class ConditionalVelocityDistribution {
 public:
 
@@ -386,8 +407,8 @@ private:
     /// The default acceleration noise scale parameter is \f$1\f$.
     inline static const double accelerationNoiseScale = 1.0;
 
-    /// The default number of timesteps before we retune the Kolmogorov operator parameters is a \f$10\f$.
-    inline static const std::size_t retuneFreq = 10;
+    /// The default number of timesteps before we retune the Kolmogorov operator parameters is set to a very large number.
+    inline static const std::size_t retuneFreq = std::numeric_limits<std::size_t>::max();
 
     /// The default number of timesteps is \f$10\f$
     inline static const std::size_t numTimesteps = 10;
