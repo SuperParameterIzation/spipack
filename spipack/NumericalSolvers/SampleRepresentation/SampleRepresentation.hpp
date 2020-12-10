@@ -37,7 +37,7 @@ Parameter Key | Type | Default Value | Description |
 <B>Optimization Parameters:</B>
 Parameter Key | Type | Default Value | Description |
 ------------- | ------------- | ------------- | ------------- |
-"Algorithm"   | <tt>std::string</tt> | <tt>"COBYLA"</tt> | Which <a href="https://nlopt.readthedocs.io/en/latest/">NLopt</a> algorithm should we use? Default: <tt>LBFGS</tt> Options: <tt>COBYLA</tt>, <tt>BOBYQA</tt>, <tt>NEWUOA</tt>, <tt>PRAXIS</tt>, <tt>NM</tt>, <tt>SBPLX</tt>, <tt>MMA</tt>, <tt>SLSQP</tt>, <tt>LBFGS</tt>, <tt>PreTN</tt>, <tt>LMVM</tt>  |
+"Algorithm"   | <tt>std::string</tt> | <tt>"SBPLX"</tt> | Which <a href="https://nlopt.readthedocs.io/en/latest/">NLopt</a> algorithm should we use? Default: <tt>LBFGS</tt> Options: <tt>COBYLA</tt>, <tt>BOBYQA</tt>, <tt>NEWUOA</tt>, <tt>PRAXIS</tt>, <tt>NM</tt>, <tt>SBPLX</tt>, <tt>MMA</tt>, <tt>SLSQP</tt>, <tt>LBFGS</tt>, <tt>PreTN</tt>, <tt>LMVM</tt>  |
 "Ftol.AbsoluteTolerance"   | <tt>double</tt> | <tt>1e-6</tt> | Absolute function tolerance.  |
 "Ftol.RelativeTolerance"   | <tt>double</tt> | <tt>1e-6</tt> | Relative function tolerance.  |
 "Rtol.AbsoluteTolerance"   | <tt>double</tt> | <tt>1e-6</tt> | Absolute state tolerance.  |

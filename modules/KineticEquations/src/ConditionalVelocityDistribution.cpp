@@ -103,8 +103,6 @@ Eigen::Ref<Eigen::VectorXd> ConditionalVelocityDistribution::Point(std::size_t c
 }
 
 void ConditionalVelocityDistribution::Run(double const nextTime, std::shared_ptr<const MacroscaleInformation> const& finalMacroInfo, bool const saveInitialConditions) {
-  std::cout << "current time: " << currentTime << std::endl;
-
   // compute the macro-scale time step
   const double macroDelta = nextTime-currentTime;
   assert(macroDelta>0.0);
@@ -116,9 +114,6 @@ void ConditionalVelocityDistribution::Run(double const nextTime, std::shared_ptr
   // rescale the macro-scale information into the micro-scale coordinates
   auto finalInfo = std::make_shared<RescaledMacroscaleInformation>(finalMacroInfo, alpha, StateDim());
   auto prevInfo = prevMacroInfo;
-
-  std::cout << "macro delta: " << macroDelta << std::endl;
-  std::cout << "micro delta: " << microDelta << std::endl;
 
   // tune the bandwidth parameter
   if( prevInfo->logMassDensityGrad.norm()>1.0e-10 ) {
@@ -135,14 +130,9 @@ void ConditionalVelocityDistribution::Run(double const nextTime, std::shared_ptr
   }
 
   for( std::size_t t=0; t<numTimesteps; ++t ) {
-    std::cout << std::endl;
-
     // the next micro-scale time
     microT += microDelta;
     const double macroTime = currentTime+(t+1)*microDelta*macroDelta;
-    std::cout << "next micro time: " << microT << std::endl;
-
-    std::cout << "time step: " << t << " current time: " << macroTime << std::endl;
 
     // interpolate the macro-scale information on this this timestep
     auto currInfo = InterpolateMacroscaleInformation(microT, finalInfo);
@@ -150,10 +140,7 @@ void ConditionalVelocityDistribution::Run(double const nextTime, std::shared_ptr
     // update the normalizing constant
     UpdateNormalizingConstant(macroDelta, microDelta, prevInfo, currInfo);
 
-    std::cout << "normalizing constant: " << normalizingConstant << std::endl;
-
     // collision step
-    std::cout << "varepsilon: " << varepsilon << std::endl;
     if( !std::isinf(varepsilon) ) {
       assert(!std::isnan(varepsilon));
       CollisionStep(macroDelta, microDelta, macroTime, currInfo);
@@ -243,7 +230,6 @@ void ConditionalVelocityDistribution::ConvectionStep(double const macroDelta, do
   ComputeAcceleration(macroDelta, macroTime, currInfo);
 
   const double delta = macroDelta*microDelta;
-  std::cout << "delta: " << delta << " macroDelta: " << macroDelta << " microDelta: " << microDelta << std::endl;
   for( std::size_t i=0; i<n; ++i ) {
     Point(i) += delta*alpha*currInfo->acceleration.row(i);
   }
@@ -264,7 +250,7 @@ void ConditionalVelocityDistribution::WeightedPoissonGradient(std::shared_ptr<Re
   Eigen::VectorXd rhs(n);
   for( std::size_t i=0; i<n; ++i ) {
     // the relative velocity: V+Uhat-U(T)=(v/alpha - Uhat) + Uhat - U(T) dotted with the gradient of the log mass density
-    rhs(i) = (Point(i)/alpha - currInfo->velocity).dot(currInfo->logMassDensityGrad);
+    rhs(i) = -(Point(i)/alpha - currInfo->velocity).dot(currInfo->logMassDensityGrad);
   }
 
   // apply the pseudo-inverse to the rhs (we will need the coeffients of the solution)

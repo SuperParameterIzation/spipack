@@ -165,12 +165,8 @@ void KolmogorovOperator::TuneBandwidthParameter(bool const tuneDens) {
   assert(bandwidthPara>0.0);
   inputs[0] = Eigen::VectorXd::Constant(1, std::log2(4.0*bandwidthPara));
 
-  std::cout << "method: " << pt.get("Algorithm", "") << std::endl;
-
   // solve the optimization and update the parameters
-  std::cout << "before: " << inputs[0] << std::endl;
   std::pair<Eigen::VectorXd, double> soln = opt->Solve(inputs);
-  std::cout << "after: " << soln.first(0) << std::endl;
   bandwidthPara = std::pow(2, soln.first(0))/4.0;
 }
 

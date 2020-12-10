@@ -43,20 +43,13 @@ Eigen::VectorXd DensityEstimation::Estimate(Eigen::Ref<const Eigen::VectorXd> co
     auto cost = std::make_shared<BandwidthCost>(bandwidth, shared_from_this());
     auto opt = std::make_shared<NLoptOptimizer>(cost, pt);
 
-    std::cout << "(density) method: " << pt.get("Algorithm", "") << std::endl;
-
     // the initial condition for the optimization is the current parameter value
     std::vector<Eigen::VectorXd> inputs(1);
     inputs[0] = Eigen::VectorXd::Constant(1, std::log2(bandwidthPara));
 
-    std::cout << "(density) before: " << inputs[0] << std::endl;
-
     // solve the optimization and update the parameters
     std::pair<Eigen::VectorXd, double> soln = opt->Solve(inputs);
-    std::cout << "(density) after: " << soln.first(0) << std::endl;
-
     bandwidthPara = std::pow(2, soln.first(0));
-
     if( tuneManifoldDimension ) { manifoldDim = -2.0*soln.second; }
   }
 

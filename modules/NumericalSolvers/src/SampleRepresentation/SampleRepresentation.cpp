@@ -62,7 +62,7 @@ void SampleRepresentation::Initialize(YAML::Node const& options) {
   pt.put("Xtol.AbsoluteTolerance", opt["Xtol.AbsoluteTolerance"].as<double>(1.0e-6));
   pt.put("Xtol.RelativeTolerance", opt["Xtol.RelativeTolerance"].as<double>(1.0e-6));
   pt.put("MaxEvaluations", opt["MaxEvaluations"].as<std::size_t>(1000));
-  pt.put("Algorithm", opt["Algorithm"].as<std::string>("COBYLA"));
+  pt.put("Algorithm", opt["Algorithm"].as<std::string>("SBPLX"));
 }
 
 std::size_t SampleRepresentation::NumSamples() const { return samples->NumSamples(); }

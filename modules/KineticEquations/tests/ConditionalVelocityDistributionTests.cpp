@@ -67,7 +67,7 @@ protected:
   const std::size_t n = 1000;
 
   /// The number of timesteps
-  const std::size_t numTimesteps = 100;
+  const std::size_t numTimesteps = 5;
 
   /// The mass density
   double massDensity = 1.0;
@@ -178,4 +178,11 @@ TEST_F(ConditionalVelocityDistributionTests, RunTest) {
   const double nextTime = 0.1;
   distribution->Run(nextTime, nextMacroInfo);
   EXPECT_NEAR(distribution->CurrentTime(), nextTime, 1.0e-12);
+
+  // check the macro-scale information
+  auto macro = distribution->MacroscaleInfo();
+  EXPECT_DOUBLE_EQ(macro->massDensity, nextMacroInfo->massDensity);
+  EXPECT_NEAR((macro->velocity-expectedVel).norm(), 0.0, 1.0e-10);
+  EXPECT_DOUBLE_EQ(macro->velocityDivergence, nextMacroInfo->velocityDivergence);
+  EXPECT_NEAR((macro->logMassDensityGrad-logMassDensityGrad).norm(), 0.0, 1.0e-10);
 }
