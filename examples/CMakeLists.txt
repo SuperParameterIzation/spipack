@@ -13,4 +13,5 @@ add_custom_target(examples DEPENDS
                     run-linear-external-acceleration
                     run-quadratic-external-acceleration
                     run-componentwise-quadratic-external-acceleration
+                    run-nonzero-source-term
                   )
