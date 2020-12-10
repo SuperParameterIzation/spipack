@@ -22,7 +22,7 @@ int main(int argc, char **argv) {
   const std::size_t n = 10000;
 
   // numerical parameters
-  const std::size_t numNeighbors = 50;
+  const std::size_t numNeighbors = 25;
 
   // create a density/random variable
   auto gauss = std::make_shared<Gaussian>(dim);
@@ -39,14 +39,9 @@ int main(int argc, char **argv) {
   nnOptions["Stride"] = n/5;
   nnOptions["NumThreads"] = omp_get_max_threads();
 
-  // set the kernel options
-  YAML::Node kernelOptions;
-  kernelOptions["Kernel"] = "ExponentialKernel";
-
   // the options for the graph Laplacian
   YAML::Node options;
   options["NearestNeighbors"] = nnOptions;
-  options["KernelOptions"] = kernelOptions;
   options["NumNearestNeighbors"] = numNeighbors;
   options["TruncationTolerance"] = -std::log(1.0e-1);
   options["ManifoldDimension"] = (double)dim;

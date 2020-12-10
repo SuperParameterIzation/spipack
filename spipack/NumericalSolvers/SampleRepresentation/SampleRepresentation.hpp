@@ -27,11 +27,22 @@ Parameter Key | Type | Default Value | Description |
 ------------- | ------------- | ------------- | ------------- |
 "NearestNeighbors"   | <tt>YAML::Node</tt> | - | Options for the spi::Tools::NearestNeighbors object.   |
 "NumNearestNeighbors"   | <tt>std::size_t</tt> | <tt>10</tt> | The number of nearest neighbors used to compute the bandwidth. |
-"KernelOptions"   | <tt>YAML::Node</tt> | - | The options for the spi::Tools::CompactKernel object |
 "ManifoldDimension"   | <tt>double</tt> | <tt>2.0</tt> | The manifold dimension \f$m\f$. |
 "TruncationTolerance"   | <tt>double</tt> | If the kernel is a compact kernel (spi::Tools::CompactKernel), the default is \f$\alpha = 1\f$. Otherwise the default is \f$\alpha = -\log{(5 \times 10^{-2})}\f$ | The parameter \f$\alpha\f$ for if we want to truncate the kernel matrix. If the kernel is compact, then this will <em>always</em> be set to one. |
 "TruncateKernelMatrix" | <tt>bool</tt> | <tt>true</tt> | <tt>true</tt>: When computing the kernel matrix \f$K_{\epsilon}^{(ij)} = k_{\epsilon}\left( \frac{\| \boldsymbol{x}^{(i)} - \boldsymbol{x}^{(j)} \|^2}{\epsilon r_i r_j} \right)\f$ only fill the matrix when \f$\frac{\| \boldsymbol{x}^{(i)} - \boldsymbol{x}^{(j)} \|^2}{\epsilon r_i r_j} < \alpha\f$; <tt>false</tt>: compute and fill every entry in the the kernel matrix (it will be a dense matrix) |
 "NumThreads"   | <tt>std::size_t</tt> | <tt>options["NearestNeighbors.NumThreads"]</tt> | The number of <tt>openMP</tt> threads available to this object. |
+"BandwidthParameter"   | <tt>double</tt> | <tt>1.0</tt> | The parmeter \f$\epsilon\f$ used to compute the kernel |
+"Optimization"   | <tt>YAML::Node</tt> | see options below | Options for the optimization method used to tune algorithm parameters. |
+
+<B>Optimization Parameters:</B>
+Parameter Key | Type | Default Value | Description |
+------------- | ------------- | ------------- | ------------- |
+"Algorithm"   | <tt>std::string</tt> | <tt>"SBPLX"</tt> | Which <a href="https://nlopt.readthedocs.io/en/latest/">NLopt</a> algorithm should we use? Default: <tt>LBFGS</tt> Options: <tt>COBYLA</tt>, <tt>BOBYQA</tt>, <tt>NEWUOA</tt>, <tt>PRAXIS</tt>, <tt>NM</tt>, <tt>SBPLX</tt>, <tt>MMA</tt>, <tt>SLSQP</tt>, <tt>LBFGS</tt>, <tt>PreTN</tt>, <tt>LMVM</tt>  |
+"Ftol.AbsoluteTolerance"   | <tt>double</tt> | <tt>1e-6</tt> | Absolute function tolerance.  |
+"Ftol.RelativeTolerance"   | <tt>double</tt> | <tt>1e-6</tt> | Relative function tolerance.  |
+"Rtol.AbsoluteTolerance"   | <tt>double</tt> | <tt>1e-6</tt> | Absolute state tolerance.  |
+"Rtol.RelativeTolerance"   | <tt>double</tt> | <tt>1e-6</tt> | Relative state tolerance.  |
+"MaxEvaluations"   | <tt>std::size_t</tt> | <tt>1000</tt> | The maximum number of cost function evaluations.  |
 */
 class SampleRepresentation {
 public:
@@ -71,6 +82,12 @@ public:
   */
   std::size_t NumSamples() const;
 
+  /// The state dimension
+  /**
+  \return The state dimension
+  */
+  std::size_t StateDim() const;
+
   /// Get the number of nearest neighbors used to compute the bandwidth parameter
   /**
   \return The number of nearest neighbors used to compute the bandwidth parameter
@@ -105,7 +122,7 @@ public:
   @param[in] options This parameter is not used in this default implementation, but is used by implementations in its children (defaults to <tt>nullptr</tt>)
   \return Each entry is the sum of a row in the kernel matrix \f$b_i = \sum_{j=1}^{n} K_{\epsilon}^{(ij)}\f$
   */
-  virtual Eigen::VectorXd KernelMatrix(double const eps, Eigen::Ref<Eigen::MatrixXd> kmat, const void* options = nullptr) const;
+  virtual Eigen::VectorXd KernelMatrix(double const eps, Eigen::Ref<Eigen::MatrixXd> kmat, const void* options = nullptr);
 
   /// Construct the (dense) kernel matrix \f$\boldsymbol{K}_{\epsilon}\f$
   /**
@@ -119,7 +136,7 @@ public:
   @param[out] kmat The kernel matrix \f$\boldsymbol{K}_{\epsilon}\f$
   \return Each entry is the sum of a row in the kernel matrix \f$b_i = \sum_{j=1}^{n} K_{\epsilon}^{(ij)}\f$
   */
-  virtual Eigen::VectorXd KernelMatrix(double const eps, Eigen::Ref<const Eigen::VectorXd> const& rvec, Eigen::Ref<Eigen::MatrixXd> kmat) const;
+  virtual Eigen::VectorXd KernelMatrix(double const eps, Eigen::Ref<const Eigen::VectorXd> const& rvec, Eigen::Ref<Eigen::MatrixXd> kmat);
 
   /// Construct the kernel matrix \f$\boldsymbol{K}_{\epsilon}\f$
   /**
@@ -136,7 +153,7 @@ public:
   @param[in] options This parameter is not used in this default implementation, but is used by implementations in its children (defaults to <tt>nullptr</tt>)
   \return Each entry is the sum of a row in the kernel matrix \f$b_i = \sum_{j=1}^{n} K_{\epsilon}^{(ij)}\f$
   */
-  virtual Eigen::VectorXd KernelMatrix(double const eps, Eigen::SparseMatrix<double>& kmat, const void* options = nullptr) const;
+  virtual Eigen::VectorXd KernelMatrix(double const eps, Eigen::SparseMatrix<double>& kmat, const void* options = nullptr);
 
   /// Construct the kernel matrix \f$\boldsymbol{K}_{\epsilon}\f$
   /**
@@ -150,7 +167,7 @@ public:
   @param[out] kmat The kernel matrix \f$\boldsymbol{K}_{\epsilon}\f$
   \return Each entry is the sum of a row in the kernel matrix \f$b_i = \sum_{j=1}^{n} K_{\epsilon}^{(ij)}\f$
   */
-  virtual Eigen::VectorXd KernelMatrix(double const eps, Eigen::Ref<const Eigen::VectorXd> const& rvec, Eigen::SparseMatrix<double>& kmat) const;
+  virtual Eigen::VectorXd KernelMatrix(double const eps, Eigen::Ref<const Eigen::VectorXd> const& rvec, Eigen::SparseMatrix<double>& kmat);
 
   /// Build the kd trees for the nearest neighbor computation
   void BuildKDTrees() const;
@@ -216,7 +233,7 @@ protected:
   @param[out] entries The kernel matrix entries \f$\boldsymbol{K}_{\epsilon}\f$
   \return Each entry is the sum of a row in the kernel matrix \f$b_i = \sum_{j=1}^{n} K_{\epsilon}^{(ij)}\f$
   */
-  Eigen::VectorXd KernelMatrix(double const eps, Eigen::Ref<const Eigen::VectorXd> const& rvec, std::vector<Eigen::Triplet<double> >& entries) const;
+  Eigen::VectorXd KernelMatrix(double const eps, Eigen::Ref<const Eigen::VectorXd> const& rvec, std::vector<Eigen::Triplet<double> >& entries);
 
   /// Store the samples from \f$\psi\f$.
   const std::shared_ptr<const spi::Tools::NearestNeighbors> samples;

@@ -36,9 +36,19 @@ double ExponentialKernel::IsotropicKernelDerivative(double const theta) const {
 double ExponentialKernel::IsotropicKernelSecondDerivative(double const theta) const {
   // if theta is near 1, return zero to avoid nan
   if( std::abs(theta)<1.0e-10 ) { return 0.0; }
-  
+
   const double powtheta = std::pow(std::abs(theta), expon);
   const double dum = scale*expon*powtheta;
 
   return mag*dum*(dum-expon+1.0)*std::exp(-scale*powtheta)/(theta*theta);
+}
+
+double ExponentialKernel::Integrate(std::size_t const dim, std::size_t const n) const {
+  if( std::abs(1.0-expon)>1.0e-14 ) { return NumericallyIntegrate(dim, n); }
+
+  if( n==0 ) { return mag*std::pow(M_PI/scale, dim/2.0); }
+  if( n==1 ) { return 0.0; }
+  if( n==2 ) { return 0.5/scale*mag*std::pow(M_PI/scale, dim/2.0); }
+
+  return NumericallyIntegrate(dim, n);
 }

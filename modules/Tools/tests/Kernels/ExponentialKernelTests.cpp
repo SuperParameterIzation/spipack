@@ -101,6 +101,27 @@ TEST(ExponentialKernelTests, Evaluate) {
   EXPECT_NEAR(kernel.IsotropicKernelSecondDerivativeFD(0.1), kernel.IsotropicKernelSecondDerivative(0.1), 1.0e-4);
 }
 
+TEST(ExponentialKernelTests, Integrate) {
+  const unsigned int dim = 1;
+
+  // parameters
+  const double mag = 2.0;
+  const double scale = 3.0;
+
+  // the options for this kernel
+  YAML::Node options;
+  options["Magnitude"] = mag;
+  options["Scale"] = scale;
+  options["QuadratureOrder"] = 25;
+
+  // create an exponential kernel
+  const ExponentialKernel kernel(options);
+
+  for( std::size_t n=0; n<5; ++n ) {
+    EXPECT_NEAR(kernel.Integrate(dim, n), kernel.NumericallyIntegrate(dim, n), 1.0e-6);
+  }
+}
+
 TEST(ExponentialKernelTests, Serialize) {
   const unsigned int dim = 5;
 

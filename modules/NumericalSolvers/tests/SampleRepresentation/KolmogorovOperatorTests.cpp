@@ -23,21 +23,15 @@ protected:
     nnOptions["Stride"] = n/5;
     nnOptions["NumThreads"] = omp_get_max_threads();
 
-    // set the kernel options
-    YAML::Node kernelOptions;
-    kernelOptions["Kernel"] = "ExponentialKernel";
-
     // set the options for the density estimation
     YAML::Node densityOptions;
     densityOptions["NearestNeighbors"] = nnOptions;
     densityOptions["NumNearestNeighbors"] = nneighs;
-    densityOptions["KernelOptions"] = kernelOptions;
     densityOptions["ManifoldDimension"] = (double)dim;
 
     // set the options for the Kolmogorov operator
     options["NearestNeighbors"] = nnOptions;
     options["NumNearestNeighbors"] = nneighs;
-    options["KernelOptions"] = kernelOptions;
     options["DensityOptions"] = densityOptions;
     options["BandwidthParameter"] = eps;
     options["BandwidthExponent"] =  bandwidthExponent;
@@ -140,8 +134,10 @@ TEST_F(KolmogorovOperatorTests, UntruncatedKernelMatrix_Dense) {
 
   // the kernel matrix
   Eigen::MatrixXd kmat(n, n);
-  const Eigen::VectorXd rowsum = kolOperator->KernelMatrix(eps, kmat, &tuneDensity);
-  EXPECT_EQ(rowsum.size(), n);
+  kolOperator->KernelMatrix(eps, kmat, &tuneDensity);
+
+  const Eigen::MatrixXd rowsum = kolOperator->KernelMatrix(eps, kmat, &tuneDensity);
+  EXPECT_EQ(rowsum.rows(), n);
 
   // compute the expected kernel matrix
   Eigen::MatrixXd kernmatExpected(n, n);
@@ -162,7 +158,7 @@ TEST_F(KolmogorovOperatorTests, UntruncatedKernelMatrix_Dense) {
 
     const double para = 1.0+0.5*dim*bandwidthExponent+bandwidthExponent-0.5*operatorParameter;
     Eigen::VectorXd rowsumExpected = kernmatExpected.rowwise().sum();
-    rowsumExpected = (rowsumExpected.array()/rho.array().pow((double)dim)).pow(para);
+    rowsumExpected = rowsumExpected.array()/(rho.array().pow((double)dim)).pow(para);
 
     for( std::size_t i=0; i<n; ++i ) {
       for( std::size_t j=i; j<n; ++j ) {
@@ -201,8 +197,8 @@ TEST_F(KolmogorovOperatorTests, TruncatedKernelMatrix_Dense) {
 
   // the kernel matrix
   Eigen::MatrixXd kmat(n, n);
-  const Eigen::VectorXd rowsum = kolOperator->KernelMatrix(eps, kmat, &tuneDensity);
-  EXPECT_EQ(rowsum.size(), n);
+  const Eigen::MatrixXd rowsum = kolOperator->KernelMatrix(eps, kmat, &tuneDensity);
+  EXPECT_EQ(rowsum.rows(), n);
 
   // compute the expected kernel matrix
   Eigen::MatrixXd kernmatExpected(n, n);
@@ -224,7 +220,7 @@ TEST_F(KolmogorovOperatorTests, TruncatedKernelMatrix_Dense) {
 
     const double para = 1.0+0.5*dim*bandwidthExponent+bandwidthExponent-0.5*operatorParameter;
     Eigen::VectorXd rowsumExpected = kernmatExpected.rowwise().sum();
-    rowsumExpected = (rowsumExpected.array()/rho.array().pow((double)dim)).pow(para);
+    rowsumExpected = rowsumExpected.array()/(rho.array().pow((double)dim)).pow(para);
 
     for( std::size_t i=0; i<n; ++i ) {
       for( std::size_t j=i; j<n; ++j ) {
@@ -262,8 +258,8 @@ TEST_F(KolmogorovOperatorTests, UntruncatedKernelMatrix_Sparse) {
 
   // the kernel matrix
   Eigen::SparseMatrix<double> kmat;
-  const Eigen::VectorXd rowsum = kolOperator->KernelMatrix(eps, kmat, &tuneDensity);
-  EXPECT_EQ(rowsum.size(), n);
+  const Eigen::MatrixXd rowsum = kolOperator->KernelMatrix(eps, kmat, &tuneDensity);
+  EXPECT_EQ(rowsum.rows(), n);
 
   // compute the expected kernel matrix
   Eigen::MatrixXd kernmatExpected(n, n);
@@ -284,7 +280,7 @@ TEST_F(KolmogorovOperatorTests, UntruncatedKernelMatrix_Sparse) {
 
     const double para = 1.0+0.5*dim*bandwidthExponent+bandwidthExponent-0.5*operatorParameter;
     Eigen::VectorXd rowsumExpected = kernmatExpected.rowwise().sum();
-    rowsumExpected = (rowsumExpected.array()/rho.array().pow((double)dim)).pow(para);
+    rowsumExpected = rowsumExpected.array()/(rho.array().pow((double)dim)).pow(para);
 
     for( std::size_t i=0; i<n; ++i ) {
       for( std::size_t j=i; j<n; ++j ) {
@@ -323,8 +319,8 @@ TEST_F(KolmogorovOperatorTests, TruncatedKernelMatrix_Sparse) {
 
   // the kernel matrix
   Eigen::SparseMatrix<double> kmat;
-  const Eigen::VectorXd rowsum = kolOperator->KernelMatrix(eps, kmat, &tuneDensity);
-  EXPECT_EQ(rowsum.size(), n);
+  const Eigen::MatrixXd rowsum = kolOperator->KernelMatrix(eps, kmat, &tuneDensity);
+  EXPECT_EQ(rowsum.rows(), n);
 
   // compute the expected kernel matrix
   Eigen::MatrixXd kernmatExpected(n, n);
@@ -346,7 +342,7 @@ TEST_F(KolmogorovOperatorTests, TruncatedKernelMatrix_Sparse) {
 
     const double para = 1.0+0.5*dim*bandwidthExponent+bandwidthExponent-0.5*operatorParameter;
     Eigen::VectorXd rowsumExpected = kernmatExpected.rowwise().sum();
-    rowsumExpected = (rowsumExpected.array()/rho.array().pow((double)dim)).pow(para);
+    rowsumExpected = rowsumExpected.array()/(rho.array().pow((double)dim)).pow(para);
 
     for( std::size_t i=0; i<n; ++i ) {
       for( std::size_t j=i; j<n; ++j ) {
@@ -526,7 +522,6 @@ TEST_F(KolmogorovOperatorTests, KernelSecondDerivativeAverage_Truncated) {
   EXPECT_NEAR(expectedAvg, avg, 1.0e-10);
 }
 
-
 TEST_F(KolmogorovOperatorTests, Tuning) {
   // create the graph laplacian from samples
   auto samples = CreateFromSamples();
@@ -536,4 +531,222 @@ TEST_F(KolmogorovOperatorTests, Tuning) {
   kolOperator->BuildKDTrees();
 
   kolOperator->TuneBandwidthParameter();
+  EXPECT_TRUE(kolOperator->BandwidthParameter()>0.0);
+}
+
+TEST_F(KolmogorovOperatorTests, Eigendecomposition) {
+  options["NumEigenvalues"] = 15;
+  options["EigensolverTolerance"] = 1.0e-8;
+  options["EigensolverMaxIterations"] = 1e5;
+
+  // create the graph laplacian from samples
+  auto samples = CreateFromSamples();
+  EXPECT_EQ(samples->size(), n);
+
+  // check the eigendecomposition parameters
+  EXPECT_EQ(kolOperator->NumEigenvalues(), 15);
+  EXPECT_DOUBLE_EQ(kolOperator->EigensolverTolerance(), 1.0e-8);
+  EXPECT_EQ(kolOperator->EigensolverMaxIterations(), 1e5);
+
+  // construct the kd-trees
+  kolOperator->BuildKDTrees();
+
+  // compute the eigendecomposition
+  Eigen::VectorXd S(kolOperator->NumSamples()), Sinv(kolOperator->NumSamples());
+  Eigen::VectorXd eigenvalues = Eigen::VectorXd::Random(kolOperator->NumEigenvalues()); // initialize to random so we check to make sure the small (magnitude) is set to zero
+  Eigen::MatrixXd eigenvectors(kolOperator->NumSamples(), kolOperator->NumEigenvalues());
+  kolOperator->ComputeEigendecomposition(S, Sinv, eigenvalues, eigenvectors);
+
+  // the smallest eigenvalue is zero
+  EXPECT_NEAR(eigenvalues(0), 0.0, 1.0e-8);
+}
+
+TEST_F(KolmogorovOperatorTests, FunctionRepresentation) {
+  options["NumEigenvalues"] = n-1;
+  options["EigensolverTolerance"] = 1.0e-8;
+  options["EigensolverMaxIterations"] = 1e5;
+
+  // create the graph laplacian from samples
+  auto samples = CreateFromSamples();
+  EXPECT_EQ(samples->size(), n);
+
+  // construct the kd-trees
+  kolOperator->BuildKDTrees();
+
+  // compute the eigendecomposition
+  Eigen::VectorXd S(kolOperator->NumSamples()), Sinv(kolOperator->NumSamples());
+  Eigen::VectorXd eigenvalues = Eigen::VectorXd::Random(kolOperator->NumEigenvalues()); // initialize to random so we check to make sure the small (magnitude) is set to zero
+  Eigen::MatrixXd eigenvectors(kolOperator->NumSamples(), kolOperator->NumEigenvalues());
+  kolOperator->ComputeEigendecomposition(S, Sinv, eigenvalues, eigenvectors);
+
+  // compute the right eigenvectors
+  Eigen::MatrixXd eigenvectorsRight = S.asDiagonal()*eigenvectors;
+  EXPECT_EQ(eigenvectorsRight.rows(), kolOperator->NumSamples());
+  EXPECT_EQ(eigenvectorsRight.cols(), kolOperator->NumEigenvalues());
+
+  // we will compute the expansion of this function
+  const auto f = [](Eigen::VectorXd const& x) -> double { return x.sum(); };
+
+  // compute the function representation
+  const Eigen::VectorXd coeff0 = kolOperator->FunctionRepresentation(S, eigenvectors, f);
+  EXPECT_EQ(coeff0.size(), kolOperator->NumEigenvalues());
+  const Eigen::VectorXd coeff1 = kolOperator->FunctionRepresentation(eigenvectorsRight, f);
+  EXPECT_EQ(coeff1.size(), kolOperator->NumEigenvalues());
+
+  // should produce the same result
+  for( std::size_t i=0; i<kolOperator->NumEigenvalues(); ++i ) { EXPECT_NEAR(coeff0(i), coeff1(i), 1.0e-12); }
+
+  // evaluate the function using the expansion
+  const Eigen::VectorXd feval = Sinv.asDiagonal()*eigenvectors*coeff0;
+
+  // we know what the solution shoudl be
+  Eigen::VectorXd fvec(n);
+  for( std::size_t i=0; i<n; ++i ) {
+    fvec(i) = f(kolOperator->Point(i));
+  }
+  const Eigen::VectorXd fevaltest = Sinv.asDiagonal()*eigenvectors*(S.asDiagonal()*eigenvectors).transpose()*fvec;
+
+  for( std::size_t i=0; i<kolOperator->NumSamples(); ++i ) {
+    EXPECT_NEAR(feval(i), f(kolOperator->Point(i)), 5.0e-2);
+    EXPECT_NEAR(feval(i), fevaltest(i), 1.0e-8);
+  }
+}
+
+TEST_F(KolmogorovOperatorTests, PseudoInverse) {
+  options["NumEigenvalues"] = 50;
+  options["EigensolverTolerance"] = 1.0e-8;
+  options["EigensolverMaxIterations"] = 1e5;
+
+  // create the graph laplacian from samples
+  auto samples = CreateFromSamples();
+  EXPECT_EQ(samples->size(), n);
+
+  // construct the kd-trees
+  kolOperator->BuildKDTrees();
+
+  // compute the eigendecomposition
+  Eigen::VectorXd S(kolOperator->NumSamples()), Sinv(kolOperator->NumSamples());
+  Eigen::VectorXd eigenvalues = Eigen::VectorXd::Random(kolOperator->NumEigenvalues()); // initialize to random so we check to make sure the small (magnitude) is set to zero
+  Eigen::MatrixXd eigenvectors(kolOperator->NumSamples(), kolOperator->NumEigenvalues());
+  kolOperator->ComputeEigendecomposition(S, Sinv, eigenvalues, eigenvectors);
+
+  // randomly choose the right hand side
+  Eigen::VectorXd direction = Eigen::VectorXd::Random(dim);
+  Eigen::VectorXd rhs(n);
+  for( std::size_t i=0; i<n; ++i ) { rhs(i) = direction.dot(kolOperator->Point(i)); }
+
+  // compute the inverse eigenvalues
+  const Eigen::VectorXd eigenvaluesInv = kolOperator->PseudoInverse(eigenvalues);
+
+  // compute the pseudo inverse
+  const Eigen::VectorXd pseudo0 = kolOperator->PseudoInverse(rhs, S, Sinv, eigenvalues, eigenvectors);
+  EXPECT_EQ(pseudo0.size(), n);
+  EXPECT_NEAR(pseudo0.sum(), 0.0, 1.0e-12);
+  const Eigen::VectorXd pseudo1 = kolOperator->PseudoInverse(rhs, S, Sinv, eigenvaluesInv, eigenvectors, true);
+  EXPECT_EQ(pseudo1.size(), n);
+  EXPECT_NEAR(pseudo1.sum(), 0.0, 1.0e-12);
+  const Eigen::VectorXd pseudo2 = kolOperator->PseudoInverse(rhs, S, Sinv, eigenvalues, eigenvectors, false);
+  EXPECT_EQ(pseudo2.size(), n);
+  EXPECT_NEAR(pseudo2.sum(), 0.0, 1.0e-12);
+  const Eigen::VectorXd pseudo3 = kolOperator->PseudoInverse(rhs, S, Sinv, eigenvalues, eigenvectors);
+  EXPECT_EQ(pseudo3.size(), n);
+  EXPECT_NEAR(pseudo3.sum(), 0.0, 1.0e-12);
+
+  // they should all be the same
+  for( std::size_t i=0; i<n; ++i ) {
+    EXPECT_NEAR(pseudo0(i), pseudo1(i), 1.0e-12);
+    EXPECT_NEAR(pseudo0(i), pseudo2(i), 1.0e-12);
+    EXPECT_NEAR(pseudo0(i), pseudo3(i), 1.0e-12);
+    EXPECT_NEAR(pseudo1(i), pseudo2(i), 1.0e-12);
+    EXPECT_NEAR(pseudo1(i), pseudo3(i), 1.0e-12);
+    EXPECT_NEAR(pseudo2(i), pseudo3(i), 1.0e-12);
+  }
+
+  // compute the function representation of the rhs
+  const Eigen::VectorXd rhsCoeff = kolOperator->FunctionRepresentation(S, eigenvectors, rhs);
+
+  // compute the coefficients of the solution
+  const Eigen::VectorXd solnCoeff0 = kolOperator->PseudoInverse(rhsCoeff, eigenvalues);
+  EXPECT_EQ(solnCoeff0.size(), kolOperator->NumEigenvalues());
+  const Eigen::VectorXd solnCoeff1 = kolOperator->PseudoInverse(rhsCoeff, eigenvaluesInv, true);
+  EXPECT_EQ(solnCoeff1.size(), kolOperator->NumEigenvalues());
+  const Eigen::VectorXd solnCoeff2 = kolOperator->PseudoInverse(rhs, S, eigenvalues, eigenvectors);
+  EXPECT_EQ(solnCoeff2.size(), kolOperator->NumEigenvalues());
+  const Eigen::VectorXd solnCoeff3 = kolOperator->PseudoInverse(rhs, S, eigenvaluesInv, eigenvectors, true);
+  EXPECT_EQ(solnCoeff3.size(), kolOperator->NumEigenvalues());
+
+  // compute the solutions using the expansion and normalize to zero
+  Eigen::VectorXd soln0 = Sinv.asDiagonal()*eigenvectors*solnCoeff0;
+  soln0 -= Eigen::VectorXd::Constant(n, soln0.sum()/n);
+  EXPECT_EQ(soln0.size(), n);
+  Eigen::VectorXd soln1 = Sinv.asDiagonal()*eigenvectors*solnCoeff1;
+  soln1 -= Eigen::VectorXd::Constant(n, soln1.sum()/n);
+  EXPECT_EQ(soln1.size(), n);
+  Eigen::VectorXd soln2 = Sinv.asDiagonal()*eigenvectors*solnCoeff2;
+  soln2 -= Eigen::VectorXd::Constant(n, soln2.sum()/n);
+  EXPECT_EQ(soln2.size(), n);
+  Eigen::VectorXd soln3 = Sinv.asDiagonal()*eigenvectors*solnCoeff2;
+  soln3 -= Eigen::VectorXd::Constant(n, soln3.sum()/n);
+  EXPECT_EQ(soln3.size(), n);
+
+  // the solutions should be the same
+  for( std::size_t i=0; i<n; ++i ) {
+    EXPECT_NEAR(soln0(i), pseudo0(i), 1.0e-12);
+    EXPECT_NEAR(soln1(i), pseudo0(i), 1.0e-12);
+    EXPECT_NEAR(soln2(i), pseudo0(i), 1.0e-12);
+    EXPECT_NEAR(soln3(i), pseudo0(i), 1.0e-12);
+  }
+}
+
+TEST_F(KolmogorovOperatorTests, FunctionGradient) {
+  options["NumEigenvalues"] = 150;
+  options["EigensolverTolerance"] = 1.0e-8;
+  options["EigensolverMaxIterations"] = 1e5;
+
+  // create the graph laplacian from samples
+  auto samples = CreateFromSamples();
+  EXPECT_EQ(samples->size(), n);
+
+  // construct the kd-trees
+  kolOperator->BuildKDTrees();
+
+  // compute the eigendecomposition
+  Eigen::VectorXd S(kolOperator->NumSamples()), Sinv(kolOperator->NumSamples());
+  Eigen::VectorXd eigenvalues = Eigen::VectorXd::Random(kolOperator->NumEigenvalues()); // initialize to random so we check to make sure the small (magnitude) is set to zero
+  Eigen::MatrixXd eigenvectors(kolOperator->NumSamples(), kolOperator->NumEigenvalues());
+  kolOperator->ComputeEigendecomposition(S, Sinv, eigenvalues, eigenvectors);
+
+  // compute the right eigenvectors
+  Eigen::MatrixXd eigenvectorsRight = S.asDiagonal()*eigenvectors;
+  EXPECT_EQ(eigenvectorsRight.rows(), kolOperator->NumSamples());
+  EXPECT_EQ(eigenvectorsRight.cols(), kolOperator->NumEigenvalues());
+
+  { // the gradient of a constant function is zero
+    // we will compute the expansion of this function
+    const auto f = [](Eigen::VectorXd const& x) -> double { return 1.0; };
+
+    // compute the function representation
+    const Eigen::VectorXd coeff = kolOperator->FunctionRepresentation(S, eigenvectors, f);
+
+    // compute the gradient of the function given the coefficients
+    const Eigen::MatrixXd gradient = kolOperator->FunctionGradient(coeff, S, Sinv, eigenvalues, eigenvectors);
+
+    for( std::size_t i=0; i<n; ++i ) {
+      EXPECT_NEAR(gradient.row(i).norm(), 0.0, 1.0e-10);
+    }
+  }
+
+  { // the gradient of a linear function is constant
+    // we will compute the expansion of this function
+    const auto f = [](Eigen::VectorXd const& x) -> double { return x.sum(); };
+
+    // compute the function representation
+    const Eigen::VectorXd coeff = kolOperator->FunctionRepresentation(S, eigenvectors, f);
+
+    // compute the gradient of the function given the coefficients
+    const Eigen::MatrixXd gradient = kolOperator->FunctionGradient(coeff, S, Sinv, eigenvalues, eigenvectors);
+
+    // the gradient is constant so let's make sure the average is okay
+    EXPECT_NEAR((gradient.colwise().sum()/n).sum(), dim, 0.2); // the error is quite large, but we are also only using 1000 samples
+  }
 }

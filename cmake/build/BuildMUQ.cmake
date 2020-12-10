@@ -46,6 +46,7 @@ ExternalProject_Add(
     -DMUQ_ENABLEGROUP_MODELING_DISTRIBUTIONS=ON
     -DMUQ_ENABLEGROUP_SAMPLING_ALGORITHM=ON
     -DMUQ_ENABLEGROUP_OPTIMIZATION_CORE=ON
+    -DMUQ_ENABLEGROUP_APPROXIMATION_QUADRATURE=ON
   	BUILD_COMMAND make -j5
     INSTALL_COMMAND make -j5 install
 )
@@ -58,5 +59,6 @@ list(APPEND MUQ_LIBRARIES
   "${CMAKE_BINARY_DIR}/external/muq/lib/${library_prefix}muqUtilities${shared_library_suffix}"
   "${CMAKE_BINARY_DIR}/external/muq/lib/${library_prefix}muqModeling${shared_library_suffix}"
   "${CMAKE_BINARY_DIR}/external/muq/lib/${library_prefix}muqOptimization${shared_library_suffix}"
+  "${CMAKE_BINARY_DIR}/external/muq/lib/${library_prefix}muqApproximation${shared_library_suffix}"
   "${CMAKE_BINARY_DIR}/external/muq/lib/${library_prefix}muqSamplingAlgorithms${shared_library_suffix}"
 )

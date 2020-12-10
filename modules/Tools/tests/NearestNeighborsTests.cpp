@@ -52,7 +52,7 @@ protected:
   const std::size_t dim = 4;
 
   /// The number of samples
-  const std::size_t n = 10000;
+  const std::size_t n = 25000;
 
   /// The max leaf size for the kd tree
   const std::size_t maxLeaf = 15;
@@ -183,6 +183,19 @@ TEST_F(NearestNeighborsTests, SampleCollectionConstruction) {
       EXPECT_TRUE(neigh.first<n);
     }
   }
+}
+
+TEST_F(NearestNeighborsTests, MeanCovariance) {
+  nn = std::make_shared<NearestNeighbors>(rv, options);
+
+  // compute the mean and covariance
+  const Eigen::VectorXd mean = nn->Mean();
+  const Eigen::MatrixXd cov0 = nn->Covariance();
+  const Eigen::MatrixXd cov1 = nn->Covariance(mean);
+
+  EXPECT_NEAR(mean.norm(), 0.0, 1.0e-1);
+  EXPECT_NEAR((cov0-Eigen::MatrixXd::Identity(dim, dim)).norm(), 0.0, 1.0e-1);
+  EXPECT_NEAR((cov1-Eigen::MatrixXd::Identity(dim, dim)).norm(), 0.0, 1.0e-1);
 }
 
 TEST_F(NearestNeighborsTests, SquaredBandwidth) {

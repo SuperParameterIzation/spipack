@@ -1,5 +1,8 @@
 var searchData=
 [
-  ['representation',['representation',['../classSampleRepresentationTests.html#a45ac82ae4a4801a3f9153d76ba65376e',1,'SampleRepresentationTests']]],
-  ['rv',['rv',['../classDensityEstimationTests.html#a8e21b5d085b8250bfa597cccf8a89256',1,'DensityEstimationTests::rv()'],['../classGraphLaplacianTests.html#aa32419ad2a92d474af4e21008c5a3955',1,'GraphLaplacianTests::rv()'],['../classKolmogorovOperatorTests.html#ac84af796f7e3a136f56b11f847001399',1,'KolmogorovOperatorTests::rv()'],['../classSampleRepresentationTests.html#a0f8b2f0f4c8be33486cdd12dca5783a5',1,'SampleRepresentationTests::rv()'],['../classNearestNeighborsTests.html#a96257762d588faff7826517b72196a5a',1,'NearestNeighborsTests::rv()']]]
+  ['operatorconstant',['operatorConstant',['../classspi_1_1NumericalSolvers_1_1KolmogorovOperator.html#ae97f38bc206c1b40ace39cff6ec858fa',1,'spi::NumericalSolvers::KolmogorovOperator::operatorConstant()'],['../structspi_1_1NumericalSolvers_1_1KolmogorovOperator_1_1DefaultParameters.html#ae10cae21708bfae3037fe9666ff578c5',1,'spi::NumericalSolvers::KolmogorovOperator::DefaultParameters::operatorConstant()']]],
+  ['operatorparameter',['operatorParameter',['../classKolmogorovOperatorTests.html#ad0b3764e9830c0206e61557a2cc41e22',1,'KolmogorovOperatorTests']]],
+  ['optind',['optInd',['../namespace__plot__result.html#a8b946f31547dc5b02fbf3473975f9d3a',1,'_plot_result']]],
+  ['options',['options',['../classDensityEstimationTests.html#ad9a341caad999f1ad3ad833374e499e3',1,'DensityEstimationTests::options()'],['../classKolmogorovOperatorTests.html#a6cd5ca8d8f2b01e7122cddb58917df2a',1,'KolmogorovOperatorTests::options()'],['../classSampleRepresentationTests.html#aa5d8aa758ec7ac4ac7d79bdacb77d8f9',1,'SampleRepresentationTests::options()'],['../classNearestNeighborsTests.html#a52a6e5b39db01a1245ffaf9880056f91',1,'NearestNeighborsTests::options()']]],
+  ['order',['order',['../classspi_1_1Tools_1_1IsotropicKernel.html#aac11416372abb3067da1402e70373dba',1,'spi::Tools::IsotropicKernel']]]
 ];

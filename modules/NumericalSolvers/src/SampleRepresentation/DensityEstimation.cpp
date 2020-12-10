@@ -55,10 +55,13 @@ Eigen::VectorXd DensityEstimation::Estimate(Eigen::Ref<const Eigen::VectorXd> co
 
   // compute the kernel matrix
   Eigen::SparseMatrix<double> kmat;
-  const Eigen::VectorXd rowsum = KernelMatrix(bandwidthPara, bandwidth, kmat);
+  KernelMatrix(bandwidthPara, bandwidth, kmat);
+  assert(kmat.rows()==NumSamples());
+  assert(kmat.cols()==NumSamples());
 
   // compute the volume vector
-  const Eigen::VectorXd vol = ((NumSamples()*std::pow(M_PI*bandwidthPara, manifoldDim/2.0))*squaredBandwidth.array().pow(manifoldDim/2.0)).array().inverse();
+  Eigen::VectorXd vol = ((NumSamples()*std::pow(M_PI*bandwidthPara, manifoldDim/2.0))*squaredBandwidth.array().pow(manifoldDim/2.0)).array().inverse();
+  assert(vol.size()==NumSamples());
 
   // apply the matrix vector product to compute the density estimation
   return kmat*vol;

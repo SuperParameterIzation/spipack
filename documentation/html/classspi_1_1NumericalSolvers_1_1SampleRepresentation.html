@@ -119,8 +119,7 @@ Inheritance diagram for spi::NumericalSolvers::SampleRepresentation:</div>
   <img src="classspi_1_1NumericalSolvers_1_1SampleRepresentation.png" usemap="#spi::NumericalSolvers::SampleRepresentation_map" alt=""/>
   <map id="spi::NumericalSolvers::SampleRepresentation_map" name="spi::NumericalSolvers::SampleRepresentation_map">
 <area href="classspi_1_1NumericalSolvers_1_1DensityEstimation.html" title="Estimate the density of a probability distribution  given samples  such that . " alt="spi::NumericalSolvers::DensityEstimation" shape="rect" coords="0,56,265,80"/>
-<area href="classspi_1_1NumericalSolvers_1_1GraphLaplacian.html" title="Estimate a weighted Laplacian operator using a graph Laplacian. " alt="spi::NumericalSolvers::GraphLaplacian" shape="rect" coords="275,56,540,80"/>
-<area href="classspi_1_1NumericalSolvers_1_1KolmogorovOperator.html" title="Discretely represent the Kolmogorov operator  using samples  from the distribution ..." alt="spi::NumericalSolvers::KolmogorovOperator" shape="rect" coords="550,56,815,80"/>
+<area href="classspi_1_1NumericalSolvers_1_1KolmogorovOperator.html" title="Discretely represent the Kolmogorov operator  using samples  from the distribution ..." alt="spi::NumericalSolvers::KolmogorovOperator" shape="rect" coords="275,56,540,80"/>
 </map>
  </div></div>
 <table class="memberdecls">
@@ -158,28 +157,28 @@ Public Member Functions</h2></td></tr>
 <tr class="memitem:a4b5c66dc379ab9910d43e691d93747f9"><td class="memItemLeft" align="right" valign="top">Eigen::Ref&lt; Eigen::VectorXd const  &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classspi_1_1NumericalSolvers_1_1SampleRepresentation.html#a4b5c66dc379ab9910d43e691d93747f9">Point</a> (std::size_t const i) const </td></tr>
 <tr class="memdesc:a4b5c66dc379ab9910d43e691d93747f9"><td class="mdescLeft">&#160;</td><td class="mdescRight">Get the \(i^{th}\) point \(\boldsymbol{x}^{(i)}\) from the point cloud.  <a href="#a4b5c66dc379ab9910d43e691d93747f9">More...</a><br /></td></tr>
 <tr class="separator:a4b5c66dc379ab9910d43e691d93747f9"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a4863daf02896be5c43ebe0bf8b520cdf"><td class="memItemLeft" align="right" valign="top">virtual Eigen::VectorXd&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classspi_1_1NumericalSolvers_1_1SampleRepresentation.html#a4863daf02896be5c43ebe0bf8b520cdf">KernelMatrix</a> (double const eps, Eigen::Ref&lt; Eigen::MatrixXd &gt; kmat, const void *options=nullptr) const </td></tr>
-<tr class="memdesc:a4863daf02896be5c43ebe0bf8b520cdf"><td class="mdescLeft">&#160;</td><td class="mdescRight">Construct the (dense) kernel matrix \(\boldsymbol{K}_{\epsilon}\).  <a href="#a4863daf02896be5c43ebe0bf8b520cdf">More...</a><br /></td></tr>
-<tr class="separator:a4863daf02896be5c43ebe0bf8b520cdf"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a54fb52fdabb40237387a0df1bd41dbae"><td class="memItemLeft" align="right" valign="top">virtual Eigen::VectorXd&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classspi_1_1NumericalSolvers_1_1SampleRepresentation.html#a54fb52fdabb40237387a0df1bd41dbae">KernelMatrix</a> (double const eps, Eigen::Ref&lt; const Eigen::VectorXd &gt; const &amp;rvec, Eigen::Ref&lt; Eigen::MatrixXd &gt; kmat) const </td></tr>
-<tr class="memdesc:a54fb52fdabb40237387a0df1bd41dbae"><td class="mdescLeft">&#160;</td><td class="mdescRight">Construct the (dense) kernel matrix \(\boldsymbol{K}_{\epsilon}\).  <a href="#a54fb52fdabb40237387a0df1bd41dbae">More...</a><br /></td></tr>
-<tr class="separator:a54fb52fdabb40237387a0df1bd41dbae"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a6aadda0269aa2097d34c59473a4496b9"><td class="memItemLeft" align="right" valign="top">virtual Eigen::VectorXd&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classspi_1_1NumericalSolvers_1_1SampleRepresentation.html#a6aadda0269aa2097d34c59473a4496b9">KernelMatrix</a> (double const eps, Eigen::SparseMatrix&lt; double &gt; &amp;kmat, const void *options=nullptr) const </td></tr>
-<tr class="memdesc:a6aadda0269aa2097d34c59473a4496b9"><td class="mdescLeft">&#160;</td><td class="mdescRight">Construct the kernel matrix \(\boldsymbol{K}_{\epsilon}\).  <a href="#a6aadda0269aa2097d34c59473a4496b9">More...</a><br /></td></tr>
-<tr class="separator:a6aadda0269aa2097d34c59473a4496b9"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ac32acbab45fa8691ff8791ac324cfb3a"><td class="memItemLeft" align="right" valign="top">virtual Eigen::VectorXd&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classspi_1_1NumericalSolvers_1_1SampleRepresentation.html#ac32acbab45fa8691ff8791ac324cfb3a">KernelMatrix</a> (double const eps, Eigen::Ref&lt; const Eigen::VectorXd &gt; const &amp;rvec, Eigen::SparseMatrix&lt; double &gt; &amp;kmat) const </td></tr>
-<tr class="memdesc:ac32acbab45fa8691ff8791ac324cfb3a"><td class="mdescLeft">&#160;</td><td class="mdescRight">Construct the kernel matrix \(\boldsymbol{K}_{\epsilon}\).  <a href="#ac32acbab45fa8691ff8791ac324cfb3a">More...</a><br /></td></tr>
-<tr class="separator:ac32acbab45fa8691ff8791ac324cfb3a"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:af00ea9f74ef5df572a54bfd52f6ee103"><td class="memItemLeft" align="right" valign="top">virtual Eigen::VectorXd&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classspi_1_1NumericalSolvers_1_1SampleRepresentation.html#af00ea9f74ef5df572a54bfd52f6ee103">KernelMatrix</a> (double const eps, Eigen::Ref&lt; Eigen::MatrixXd &gt; kmat, const void *options=nullptr)</td></tr>
+<tr class="memdesc:af00ea9f74ef5df572a54bfd52f6ee103"><td class="mdescLeft">&#160;</td><td class="mdescRight">Construct the (dense) kernel matrix \(\boldsymbol{K}_{\epsilon}\).  <a href="#af00ea9f74ef5df572a54bfd52f6ee103">More...</a><br /></td></tr>
+<tr class="separator:af00ea9f74ef5df572a54bfd52f6ee103"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a675c0db71fdf455e3c9645129193caf5"><td class="memItemLeft" align="right" valign="top">virtual Eigen::VectorXd&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classspi_1_1NumericalSolvers_1_1SampleRepresentation.html#a675c0db71fdf455e3c9645129193caf5">KernelMatrix</a> (double const eps, Eigen::Ref&lt; const Eigen::VectorXd &gt; const &amp;rvec, Eigen::Ref&lt; Eigen::MatrixXd &gt; kmat)</td></tr>
+<tr class="memdesc:a675c0db71fdf455e3c9645129193caf5"><td class="mdescLeft">&#160;</td><td class="mdescRight">Construct the (dense) kernel matrix \(\boldsymbol{K}_{\epsilon}\).  <a href="#a675c0db71fdf455e3c9645129193caf5">More...</a><br /></td></tr>
+<tr class="separator:a675c0db71fdf455e3c9645129193caf5"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aabfa4e5b71232b4be1789e828e64227d"><td class="memItemLeft" align="right" valign="top">virtual Eigen::VectorXd&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classspi_1_1NumericalSolvers_1_1SampleRepresentation.html#aabfa4e5b71232b4be1789e828e64227d">KernelMatrix</a> (double const eps, Eigen::SparseMatrix&lt; double &gt; &amp;kmat, const void *options=nullptr)</td></tr>
+<tr class="memdesc:aabfa4e5b71232b4be1789e828e64227d"><td class="mdescLeft">&#160;</td><td class="mdescRight">Construct the kernel matrix \(\boldsymbol{K}_{\epsilon}\).  <a href="#aabfa4e5b71232b4be1789e828e64227d">More...</a><br /></td></tr>
+<tr class="separator:aabfa4e5b71232b4be1789e828e64227d"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a35c34c5786ebb0f81438f4e81fab77ec"><td class="memItemLeft" align="right" valign="top">virtual Eigen::VectorXd&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classspi_1_1NumericalSolvers_1_1SampleRepresentation.html#a35c34c5786ebb0f81438f4e81fab77ec">KernelMatrix</a> (double const eps, Eigen::Ref&lt; const Eigen::VectorXd &gt; const &amp;rvec, Eigen::SparseMatrix&lt; double &gt; &amp;kmat)</td></tr>
+<tr class="memdesc:a35c34c5786ebb0f81438f4e81fab77ec"><td class="mdescLeft">&#160;</td><td class="mdescRight">Construct the kernel matrix \(\boldsymbol{K}_{\epsilon}\).  <a href="#a35c34c5786ebb0f81438f4e81fab77ec">More...</a><br /></td></tr>
+<tr class="separator:a35c34c5786ebb0f81438f4e81fab77ec"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a5ae60ef9b8bb97a45448a6823ee3187c"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classspi_1_1NumericalSolvers_1_1SampleRepresentation.html#a5ae60ef9b8bb97a45448a6823ee3187c">BuildKDTrees</a> () const </td></tr>
 <tr class="memdesc:a5ae60ef9b8bb97a45448a6823ee3187c"><td class="mdescLeft">&#160;</td><td class="mdescRight">Build the kd trees for the nearest neighbor computation.  <a href="#a5ae60ef9b8bb97a45448a6823ee3187c">More...</a><br /></td></tr>
 <tr class="separator:a5ae60ef9b8bb97a45448a6823ee3187c"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ab86f869ebf77fc478803ae010b521ee8"><td class="memItemLeft" align="right" valign="top">Eigen::VectorXd&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classspi_1_1NumericalSolvers_1_1SampleRepresentation.html#ab86f869ebf77fc478803ae010b521ee8">SquaredBandwidth</a> () const </td></tr>
 <tr class="memdesc:ab86f869ebf77fc478803ae010b521ee8"><td class="mdescLeft">&#160;</td><td class="mdescRight">Compute the squared bandwidth \(r_i^2 = \frac{1}{k} \sum_{j=1}^{k} \| \boldsymbol{x}^{(i)}-\boldsymbol{x}^{(I(i,j))} \|^2\).  <a href="#ab86f869ebf77fc478803ae010b521ee8">More...</a><br /></td></tr>
 <tr class="separator:ab86f869ebf77fc478803ae010b521ee8"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a34c2a35faa14e4ba9d91d457193b740e"><td class="memItemLeft" align="right" valign="top">double&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classspi_1_1NumericalSolvers_1_1SampleRepresentation.html#a34c2a35faa14e4ba9d91d457193b740e">KernelDerivativeAverage</a> (double const eps, Eigen::VectorXd const &amp;rvec) const </td></tr>
+<tr class="memitem:a34c2a35faa14e4ba9d91d457193b740e"><td class="memItemLeft" align="right" valign="top">virtual double&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classspi_1_1NumericalSolvers_1_1SampleRepresentation.html#a34c2a35faa14e4ba9d91d457193b740e">KernelDerivativeAverage</a> (double const eps, Eigen::VectorXd const &amp;rvec) const </td></tr>
 <tr class="memdesc:a34c2a35faa14e4ba9d91d457193b740e"><td class="mdescLeft">&#160;</td><td class="mdescRight">Compute the average of the pair-wise kernel derivative evaluations \(\bar{k}^{\prime} = \frac{d}{d \epsilon} \left[ n^{-2} \sum_{i,j=0}^{n} k\left( \frac{\|\boldsymbol{x}^{(i)}-\boldsymbol{x}^{(j)}\|^2}{\epsilon r_i r_j} \right) \right] \).  <a href="#a34c2a35faa14e4ba9d91d457193b740e">More...</a><br /></td></tr>
 <tr class="separator:a34c2a35faa14e4ba9d91d457193b740e"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:aea987d298ab0da32e8c45da61a942e8d"><td class="memItemLeft" align="right" valign="top">double&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classspi_1_1NumericalSolvers_1_1SampleRepresentation.html#aea987d298ab0da32e8c45da61a942e8d">KernelSecondDerivativeAverage</a> (double const eps, Eigen::VectorXd const &amp;rvec) const </td></tr>
+<tr class="memitem:aea987d298ab0da32e8c45da61a942e8d"><td class="memItemLeft" align="right" valign="top">virtual double&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classspi_1_1NumericalSolvers_1_1SampleRepresentation.html#aea987d298ab0da32e8c45da61a942e8d">KernelSecondDerivativeAverage</a> (double const eps, Eigen::VectorXd const &amp;rvec) const </td></tr>
 <tr class="memdesc:aea987d298ab0da32e8c45da61a942e8d"><td class="mdescLeft">&#160;</td><td class="mdescRight">Compute the average of the pair-wise kernel second derivative evaluations \(\bar{k}^{\prime} = \frac{d^2}{d \epsilon^2} \left[ n^{-2} \sum_{i,j=0}^{n} k\left( \frac{\|\boldsymbol{x}^{(i)}-\boldsymbol{x}^{(j)}\|^2}{\epsilon r_i r_j} \right) \right] \).  <a href="#aea987d298ab0da32e8c45da61a942e8d">More...</a><br /></td></tr>
 <tr class="separator:aea987d298ab0da32e8c45da61a942e8d"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a34f7a6dd29975239daa33945aa7f7247"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classspi_1_1NumericalSolvers_1_1SampleRepresentation.html#a34f7a6dd29975239daa33945aa7f7247">WriteToFile</a> (std::string const &amp;filename, std::string const &amp;dataset=&quot;/&quot;) const </td></tr>
@@ -191,9 +190,9 @@ Public Member Functions</h2></td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pro-methods"></a>
 Protected Member Functions</h2></td></tr>
-<tr class="memitem:ad81663c17e5db7db8c24a21978296859"><td class="memItemLeft" align="right" valign="top">Eigen::VectorXd&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classspi_1_1NumericalSolvers_1_1SampleRepresentation.html#ad81663c17e5db7db8c24a21978296859">KernelMatrix</a> (double const eps, Eigen::Ref&lt; const Eigen::VectorXd &gt; const &amp;rvec, std::vector&lt; Eigen::Triplet&lt; double &gt; &gt; &amp;entries) const </td></tr>
-<tr class="memdesc:ad81663c17e5db7db8c24a21978296859"><td class="mdescLeft">&#160;</td><td class="mdescRight">Compute the entries of the kernel matrix \(\boldsymbol{K}_{\epsilon}\).  <a href="#ad81663c17e5db7db8c24a21978296859">More...</a><br /></td></tr>
-<tr class="separator:ad81663c17e5db7db8c24a21978296859"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a4f570d86ca92c7171c369291c9fd3387"><td class="memItemLeft" align="right" valign="top">Eigen::VectorXd&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classspi_1_1NumericalSolvers_1_1SampleRepresentation.html#a4f570d86ca92c7171c369291c9fd3387">KernelMatrix</a> (double const eps, Eigen::Ref&lt; const Eigen::VectorXd &gt; const &amp;rvec, std::vector&lt; Eigen::Triplet&lt; double &gt; &gt; &amp;entries)</td></tr>
+<tr class="memdesc:a4f570d86ca92c7171c369291c9fd3387"><td class="mdescLeft">&#160;</td><td class="mdescRight">Compute the entries of the kernel matrix \(\boldsymbol{K}_{\epsilon}\).  <a href="#a4f570d86ca92c7171c369291c9fd3387">More...</a><br /></td></tr>
+<tr class="separator:a4f570d86ca92c7171c369291c9fd3387"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pro-attribs"></a>
 Protected Attributes</h2></td></tr>
@@ -267,8 +266,6 @@ Static Private Attributes</h2></td></tr>
 <tr>
 <td>"NumNearestNeighbors" </td><td><code>std::size_t</code> </td><td><code>10</code> </td><td>The number of nearest neighbors used to compute the bandwidth. </td></tr>
 <tr>
-<td>"KernelOptions" </td><td><code>YAML::Node</code> </td><td>- </td><td>The options for the <a class="el" href="classspi_1_1Tools_1_1CompactKernel.html" title="An implementation of a compact kernel. ">spi::Tools::CompactKernel</a> object </td></tr>
-<tr>
 <td>"ManifoldDimension" </td><td><code>double</code> </td><td><code>2.0</code> </td><td>The manifold dimension \(m\). </td></tr>
 <tr>
 <td>"TruncationTolerance" </td><td><code>double</code> </td><td>If the kernel is a compact kernel (<a class="el" href="classspi_1_1Tools_1_1CompactKernel.html" title="An implementation of a compact kernel. ">spi::Tools::CompactKernel</a>), the default is \(\alpha = 1\). Otherwise the default is \(\alpha = -\log{(5 \times 10^{-2})}\) </td><td>The parameter \(\alpha\) for if we want to truncate the kernel matrix. If the kernel is compact, then this will <em>always</em> be set to one. </td></tr>
@@ -276,6 +273,26 @@ Static Private Attributes</h2></td></tr>
 <td>"TruncateKernelMatrix" </td><td><code>bool</code> </td><td><code>true</code> </td><td><code>true</code>: When computing the kernel matrix \(K_{\epsilon}^{(ij)} = k_{\epsilon}\left( \frac{\| \boldsymbol{x}^{(i)} - \boldsymbol{x}^{(j)} \|^2}{\epsilon r_i r_j} \right)\) only fill the matrix when \(\frac{\| \boldsymbol{x}^{(i)} - \boldsymbol{x}^{(j)} \|^2}{\epsilon r_i r_j} &lt; \alpha\); <code>false</code>: compute and fill every entry in the the kernel matrix (it will be a dense matrix) </td></tr>
 <tr>
 <td>"NumThreads" </td><td><code>std::size_t</code> </td><td><code>options["NearestNeighbors.NumThreads"]</code> </td><td>The number of <code>openMP</code> threads available to this object. </td></tr>
+<tr>
+<td>"BandwidthParameter" </td><td><code>double</code> </td><td><code>1.0</code> </td><td>The parmeter \(\epsilon\) used to compute the kernel </td></tr>
+<tr>
+<td>"Optimization" </td><td><code>YAML::Node</code> </td><td>see options below </td><td>Options for the optimization method used to tune algorithm parameters. </td></tr>
+</table>
+<p><b>Optimization Parameters:</b> </p><table class="doxtable">
+<tr>
+<th>Parameter Key </th><th>Type </th><th>Default Value </th><th>Description  </th></tr>
+<tr>
+<td>"Algorithm" </td><td><code>std::string</code> </td><td><code>"COBYLA"</code> </td><td>Which <a href="https://nlopt.readthedocs.io/en/latest/">NLopt</a> algorithm should we use? Default: <code>LBFGS</code> Options: <code>COBYLA</code>, <code>BOBYQA</code>, <code>NEWUOA</code>, <code>PRAXIS</code>, <code>NM</code>, <code>SBPLX</code>, <code>MMA</code>, <code>SLSQP</code>, <code>LBFGS</code>, <code>PreTN</code>, <code>LMVM</code> </td></tr>
+<tr>
+<td>"Ftol.AbsoluteTolerance" </td><td><code>double</code> </td><td><code>1e-6</code> </td><td>Absolute function tolerance. </td></tr>
+<tr>
+<td>"Ftol.RelativeTolerance" </td><td><code>double</code> </td><td><code>1e-6</code> </td><td>Relative function tolerance. </td></tr>
+<tr>
+<td>"Rtol.AbsoluteTolerance" </td><td><code>double</code> </td><td><code>1e-6</code> </td><td>Absolute state tolerance. </td></tr>
+<tr>
+<td>"Rtol.RelativeTolerance" </td><td><code>double</code> </td><td><code>1e-6</code> </td><td>Relative state tolerance. </td></tr>
+<tr>
+<td>"MaxEvaluations" </td><td><code>std::size_t</code> </td><td><code>1000</code> </td><td>The maximum number of cost function evaluations. </td></tr>
 </table>
 </div><h2 class="groupheader">Constructor &amp; Destructor Documentation</h2>
 <a class="anchor" id="a10425f4a35ee78bfe75d9eaf9c9e3aff"></a>
@@ -495,6 +512,9 @@ Static Private Attributes</h2></td></tr>
 <a class="anchor" id="a34c2a35faa14e4ba9d91d457193b740e"></a>
 <div class="memitem">
 <div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
       <table class="memname">
         <tr>
           <td class="memname">double SampleRepresentation::KernelDerivativeAverage </td>
@@ -514,6 +534,11 @@ Static Private Attributes</h2></td></tr>
           <td></td><td> const</td>
         </tr>
       </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">virtual</span></span>  </td>
+  </tr>
+</table>
 </div><div class="memdoc">
 
 <p>Compute the average of the pair-wise kernel derivative evaluations \(\bar{k}^{\prime} = \frac{d}{d \epsilon} \left[ n^{-2} \sum_{i,j=0}^{n} k\left( \frac{\|\boldsymbol{x}^{(i)}-\boldsymbol{x}^{(j)}\|^2}{\epsilon r_i r_j} \right) \right] \). </p>
@@ -598,7 +623,7 @@ Static Private Attributes</h2></td></tr>
 
 </div>
 </div>
-<a class="anchor" id="a4863daf02896be5c43ebe0bf8b520cdf"></a>
+<a class="anchor" id="af00ea9f74ef5df572a54bfd52f6ee103"></a>
 <div class="memitem">
 <div class="memproto">
 <table class="mlabels">
@@ -626,7 +651,7 @@ Static Private Attributes</h2></td></tr>
         <tr>
           <td></td>
           <td>)</td>
-          <td></td><td> const</td>
+          <td></td><td></td>
         </tr>
       </table>
   </td>
@@ -652,11 +677,11 @@ Static Private Attributes</h2></td></tr>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>Each entry is the sum of a row in the kernel matrix \(b_i = \sum_{j=1}^{n} K_{\epsilon}^{(ij)}\) </dd></dl>
 
-<p>Reimplemented in <a class="el" href="classspi_1_1NumericalSolvers_1_1KolmogorovOperator.html#a6ecac63d417b96027f7d59ab878da497">spi::NumericalSolvers::KolmogorovOperator</a>.</p>
+<p>Reimplemented in <a class="el" href="classspi_1_1NumericalSolvers_1_1KolmogorovOperator.html#aec70326566ea2055444e032fdfaf5ebd">spi::NumericalSolvers::KolmogorovOperator</a>.</p>
 
 </div>
 </div>
-<a class="anchor" id="a54fb52fdabb40237387a0df1bd41dbae"></a>
+<a class="anchor" id="a675c0db71fdf455e3c9645129193caf5"></a>
 <div class="memitem">
 <div class="memproto">
 <table class="mlabels">
@@ -684,7 +709,7 @@ Static Private Attributes</h2></td></tr>
         <tr>
           <td></td>
           <td>)</td>
-          <td></td><td> const</td>
+          <td></td><td></td>
         </tr>
       </table>
   </td>
@@ -708,11 +733,11 @@ Static Private Attributes</h2></td></tr>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>Each entry is the sum of a row in the kernel matrix \(b_i = \sum_{j=1}^{n} K_{\epsilon}^{(ij)}\) </dd></dl>
 
-<p>Reimplemented in <a class="el" href="classspi_1_1NumericalSolvers_1_1KolmogorovOperator.html#af6cbd47e98f1bd7c74b5a076838bbe0b">spi::NumericalSolvers::KolmogorovOperator</a>.</p>
+<p>Reimplemented in <a class="el" href="classspi_1_1NumericalSolvers_1_1KolmogorovOperator.html#a0acc9cedafa1731113d73ae300fddea5">spi::NumericalSolvers::KolmogorovOperator</a>.</p>
 
 </div>
 </div>
-<a class="anchor" id="a6aadda0269aa2097d34c59473a4496b9"></a>
+<a class="anchor" id="aabfa4e5b71232b4be1789e828e64227d"></a>
 <div class="memitem">
 <div class="memproto">
 <table class="mlabels">
@@ -740,7 +765,7 @@ Static Private Attributes</h2></td></tr>
         <tr>
           <td></td>
           <td>)</td>
-          <td></td><td> const</td>
+          <td></td><td></td>
         </tr>
       </table>
   </td>
@@ -766,11 +791,11 @@ Static Private Attributes</h2></td></tr>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>Each entry is the sum of a row in the kernel matrix \(b_i = \sum_{j=1}^{n} K_{\epsilon}^{(ij)}\) </dd></dl>
 
-<p>Reimplemented in <a class="el" href="classspi_1_1NumericalSolvers_1_1KolmogorovOperator.html#acf0ce13c1a4bbe7cd2f8a6a35e241f2e">spi::NumericalSolvers::KolmogorovOperator</a>.</p>
+<p>Reimplemented in <a class="el" href="classspi_1_1NumericalSolvers_1_1KolmogorovOperator.html#a5e7da06f9673e3b62e044928791cc9bf">spi::NumericalSolvers::KolmogorovOperator</a>.</p>
 
 </div>
 </div>
-<a class="anchor" id="ac32acbab45fa8691ff8791ac324cfb3a"></a>
+<a class="anchor" id="a35c34c5786ebb0f81438f4e81fab77ec"></a>
 <div class="memitem">
 <div class="memproto">
 <table class="mlabels">
@@ -798,7 +823,7 @@ Static Private Attributes</h2></td></tr>
         <tr>
           <td></td>
           <td>)</td>
-          <td></td><td> const</td>
+          <td></td><td></td>
         </tr>
       </table>
   </td>
@@ -822,11 +847,11 @@ Static Private Attributes</h2></td></tr>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>Each entry is the sum of a row in the kernel matrix \(b_i = \sum_{j=1}^{n} K_{\epsilon}^{(ij)}\) </dd></dl>
 
-<p>Reimplemented in <a class="el" href="classspi_1_1NumericalSolvers_1_1GraphLaplacian.html#a8c04436cd717507eb8b91f1745fa361d">spi::NumericalSolvers::GraphLaplacian</a>, and <a class="el" href="classspi_1_1NumericalSolvers_1_1KolmogorovOperator.html#ab72da3febd51855b21cbcc30b7ba5adc">spi::NumericalSolvers::KolmogorovOperator</a>.</p>
+<p>Reimplemented in <a class="el" href="classspi_1_1NumericalSolvers_1_1KolmogorovOperator.html#aa39bbc5ebc10f0bc89cef7db88bb888e">spi::NumericalSolvers::KolmogorovOperator</a>.</p>
 
 </div>
 </div>
-<a class="anchor" id="ad81663c17e5db7db8c24a21978296859"></a>
+<a class="anchor" id="a4f570d86ca92c7171c369291c9fd3387"></a>
 <div class="memitem">
 <div class="memproto">
 <table class="mlabels">
@@ -854,7 +879,7 @@ Static Private Attributes</h2></td></tr>
         <tr>
           <td></td>
           <td>)</td>
-          <td></td><td> const</td>
+          <td></td><td></td>
         </tr>
       </table>
   </td>
@@ -884,6 +909,9 @@ Static Private Attributes</h2></td></tr>
 <a class="anchor" id="aea987d298ab0da32e8c45da61a942e8d"></a>
 <div class="memitem">
 <div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
       <table class="memname">
         <tr>
           <td class="memname">double SampleRepresentation::KernelSecondDerivativeAverage </td>
@@ -903,6 +931,11 @@ Static Private Attributes</h2></td></tr>
           <td></td><td> const</td>
         </tr>
       </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">virtual</span></span>  </td>
+  </tr>
+</table>
 </div><div class="memdoc">
 
 <p>Compute the average of the pair-wise kernel second derivative evaluations \(\bar{k}^{\prime} = \frac{d^2}{d \epsilon^2} \left[ n^{-2} \sum_{i,j=0}^{n} k\left( \frac{\|\boldsymbol{x}^{(i)}-\boldsymbol{x}^{(j)}\|^2}{\epsilon r_i r_j} \right) \right] \). </p>

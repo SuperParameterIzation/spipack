@@ -1,5 +1,4 @@
 var searchData=
 [
-  ['graphlaplacian',['GraphLaplacian',['../classspi_1_1NumericalSolvers_1_1GraphLaplacian.html',1,'spi::NumericalSolvers']]],
-  ['graphlaplaciantests',['GraphLaplacianTests',['../classGraphLaplacianTests.html',1,'']]]
+  ['hatkernel',['HatKernel',['../classspi_1_1Tools_1_1HatKernel.html',1,'spi::Tools']]]
 ];

@@ -113,10 +113,63 @@ Static Public Attributes</h2></td></tr>
 <tr class="memitem:a71ef6ff4631bfb57b079693fc22801e2"><td class="memItemLeft" align="right" valign="top">static const double&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structspi_1_1NumericalSolvers_1_1KolmogorovOperator_1_1DefaultParameters.html#a71ef6ff4631bfb57b079693fc22801e2">exponentPara</a> = -0.5</td></tr>
 <tr class="memdesc:a71ef6ff4631bfb57b079693fc22801e2"><td class="mdescLeft">&#160;</td><td class="mdescRight">The exponent parameter defaults to \(\beta=-0.5\).  <a href="#a71ef6ff4631bfb57b079693fc22801e2">More...</a><br /></td></tr>
 <tr class="separator:a71ef6ff4631bfb57b079693fc22801e2"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a1322fb7c57b26433bf627b4bd0593257"><td class="memItemLeft" align="right" valign="top">static const std::size_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structspi_1_1NumericalSolvers_1_1KolmogorovOperator_1_1DefaultParameters.html#a1322fb7c57b26433bf627b4bd0593257">neig</a> = 10</td></tr>
+<tr class="memdesc:a1322fb7c57b26433bf627b4bd0593257"><td class="mdescLeft">&#160;</td><td class="mdescRight">The default number of stored eigenvalues/vectors is \(10\).  <a href="#a1322fb7c57b26433bf627b4bd0593257">More...</a><br /></td></tr>
+<tr class="separator:a1322fb7c57b26433bf627b4bd0593257"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:af47045ea29528c9f1dfe4a34a7736741"><td class="memItemLeft" align="right" valign="top">static const double&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structspi_1_1NumericalSolvers_1_1KolmogorovOperator_1_1DefaultParameters.html#af47045ea29528c9f1dfe4a34a7736741">eigensolverTol</a> = 1.0e-6</td></tr>
+<tr class="memdesc:af47045ea29528c9f1dfe4a34a7736741"><td class="mdescLeft">&#160;</td><td class="mdescRight">The default tolerance for the eigensolver is \(10^{-6}\).  <a href="#af47045ea29528c9f1dfe4a34a7736741">More...</a><br /></td></tr>
+<tr class="separator:af47045ea29528c9f1dfe4a34a7736741"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:afabf12b02679df3059e1cea56c7144d3"><td class="memItemLeft" align="right" valign="top">static const std::size_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structspi_1_1NumericalSolvers_1_1KolmogorovOperator_1_1DefaultParameters.html#afabf12b02679df3059e1cea56c7144d3">eigensolverMaxIt</a> = 1e3</td></tr>
+<tr class="memdesc:afabf12b02679df3059e1cea56c7144d3"><td class="mdescLeft">&#160;</td><td class="mdescRight">The default number of iterations for the eigensolver is \(10^{3}\).  <a href="#afabf12b02679df3059e1cea56c7144d3">More...</a><br /></td></tr>
+<tr class="separator:afabf12b02679df3059e1cea56c7144d3"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><p>The default values for the <a class="el" href="classspi_1_1NumericalSolvers_1_1DensityEstimation.html" title="Estimate the density of a probability distribution  given samples  such that . ">spi::NumericalSolvers::DensityEstimation</a> class. </p>
 </div><h2 class="groupheader">Member Data Documentation</h2>
+<a class="anchor" id="afabf12b02679df3059e1cea56c7144d3"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">const std::size_t spi::NumericalSolvers::KolmogorovOperator::DefaultParameters::eigensolverMaxIt = 1e3</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">static</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>The default number of iterations for the eigensolver is \(10^{3}\). </p>
+
+</div>
+</div>
+<a class="anchor" id="af47045ea29528c9f1dfe4a34a7736741"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">const double spi::NumericalSolvers::KolmogorovOperator::DefaultParameters::eigensolverTol = 1.0e-6</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">static</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>The default tolerance for the eigensolver is \(10^{-6}\). </p>
+
+</div>
+</div>
 <a class="anchor" id="a71ef6ff4631bfb57b079693fc22801e2"></a>
 <div class="memitem">
 <div class="memproto">
@@ -136,6 +189,28 @@ Static Public Attributes</h2></td></tr>
 </div><div class="memdoc">
 
 <p>The exponent parameter defaults to \(\beta=-0.5\). </p>
+
+</div>
+</div>
+<a class="anchor" id="a1322fb7c57b26433bf627b4bd0593257"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">const std::size_t spi::NumericalSolvers::KolmogorovOperator::DefaultParameters::neig = 10</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">static</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>The default number of stored eigenvalues/vectors is \(10\). </p>
 
 </div>
 </div>

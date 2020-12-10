@@ -3,6 +3,7 @@
 #include <MUQ/Utilities/HDF5/HDF5File.h>
 
 #include "spipack/Tools/Kernels/CompactKernel.hpp"
+#include "spipack/Tools/Kernels/ExponentialKernel.hpp"
 
 using namespace muq::Utilities;
 using namespace muq::Modeling;
@@ -47,7 +48,7 @@ double SampleRepresentation::BandwidthParameter() const { return bandwidthPara; 
 
 void SampleRepresentation::Initialize(YAML::Node const& options) {
   // create the kernel
-  kernel = IsotropicKernel::Construct(options["KernelOptions"]);
+  kernel = std::make_shared<ExponentialKernel>();
   assert(kernel);
   auto compactKernelPtr = std::dynamic_pointer_cast<CompactKernel>(kernel);
   compactKernel = (compactKernelPtr!=nullptr);
@@ -61,10 +62,12 @@ void SampleRepresentation::Initialize(YAML::Node const& options) {
   pt.put("Xtol.AbsoluteTolerance", opt["Xtol.AbsoluteTolerance"].as<double>(1.0e-6));
   pt.put("Xtol.RelativeTolerance", opt["Xtol.RelativeTolerance"].as<double>(1.0e-6));
   pt.put("MaxEvaluations", opt["MaxEvaluations"].as<std::size_t>(1000));
-  pt.put("Algorithm", opt["Algorithm"].as<std::string>("COBYLA"));
+  pt.put("Algorithm", opt["Algorithm"].as<std::string>("SBPLX"));
 }
 
 std::size_t SampleRepresentation::NumSamples() const { return samples->NumSamples(); }
+
+std::size_t SampleRepresentation::StateDim() const { return samples->StateDim(); }
 
 std::size_t SampleRepresentation::NumNearestNeighbors() const { return numNearestNeighbors; }
 
@@ -79,7 +82,7 @@ void SampleRepresentation::BuildKDTrees() const { samples->BuildKDTrees(); }
 
 Eigen::VectorXd SampleRepresentation::SquaredBandwidth() const { return samples->SquaredBandwidth(numNearestNeighbors); }
 
-Eigen::VectorXd SampleRepresentation::KernelMatrix(double const eps, Eigen::Ref<Eigen::MatrixXd> kmat, const void* options) const {
+Eigen::VectorXd SampleRepresentation::KernelMatrix(double const eps, Eigen::Ref<Eigen::MatrixXd> kmat, const void* options) {
   assert(eps>0.0);
 
   // compute the squared bandwidth
@@ -97,10 +100,10 @@ Eigen::VectorXd SampleRepresentation::KernelMatrix(double const eps, Eigen::Ref<
   return KernelMatrix(eps, squaredBandwidth.array().sqrt(), kmat);
 }
 
-Eigen::VectorXd SampleRepresentation::KernelMatrix(double const eps, Eigen::Ref<const Eigen::VectorXd> const& rvec, Eigen::Ref<Eigen::MatrixXd> kmat) const {
+Eigen::VectorXd SampleRepresentation::KernelMatrix(double const eps, Eigen::Ref<const Eigen::VectorXd> const& rvec, Eigen::Ref<Eigen::MatrixXd> kmat) {
   // the number of samples
   const std::size_t n = NumSamples();
-  assert(rvec.size()==n);
+  assert(rvec.rows()==n);
 
   // check the matrix size
   assert(kmat.rows()==n); assert(kmat.cols()==n);
@@ -125,7 +128,7 @@ Eigen::VectorXd SampleRepresentation::KernelMatrix(double const eps, Eigen::Ref<
   return kmat.rowwise().sum();
 }
 
-Eigen::VectorXd SampleRepresentation::KernelMatrix(double const eps, Eigen::SparseMatrix<double>& kmat, const void* options) const {
+Eigen::VectorXd SampleRepresentation::KernelMatrix(double const eps, Eigen::SparseMatrix<double>& kmat, const void* options) {
   assert(eps>0.0);
 
   // compute the squared bandwidth
@@ -143,7 +146,7 @@ Eigen::VectorXd SampleRepresentation::KernelMatrix(double const eps, Eigen::Spar
   return rowsum;
 }
 
-Eigen::VectorXd SampleRepresentation::KernelMatrix(double const eps, Eigen::Ref<const Eigen::VectorXd> const& rvec, std::vector<Eigen::Triplet<double> >& entries) const {
+Eigen::VectorXd SampleRepresentation::KernelMatrix(double const eps, Eigen::Ref<const Eigen::VectorXd> const& rvec, std::vector<Eigen::Triplet<double> >& entries) {
     // the number of samples
   const std::size_t n = NumSamples();
   assert(rvec.size()==n);
@@ -199,7 +202,7 @@ Eigen::VectorXd SampleRepresentation::KernelMatrix(double const eps, Eigen::Ref<
   return rowsum;
 }
 
-Eigen::VectorXd SampleRepresentation::KernelMatrix(double const eps, Eigen::Ref<const Eigen::VectorXd> const& rvec, Eigen::SparseMatrix<double>& kmat) const {
+Eigen::VectorXd SampleRepresentation::KernelMatrix(double const eps, Eigen::Ref<const Eigen::VectorXd> const& rvec, Eigen::SparseMatrix<double>& kmat) {
   // the number of samples
   const std::size_t n = NumSamples();
   assert(rvec.size()==n);

@@ -31,7 +31,7 @@ public:
   /**
   @param[in] options Options for this kernel function
   */
-  BumpKernel(YAML::Node const& options);
+  BumpKernel(YAML::Node const& options = YAML::Node());
 
   virtual ~BumpKernel() = default;
 
@@ -75,9 +75,6 @@ protected:
     \return The kernel evaluation \f$k(\theta)\f$
   */
   virtual double EvaluateCompactKernelImpl(double const theta) const override;
-
-  /// Private default constructor for the serialization
-  BumpKernel() = default;
 
 private:
 

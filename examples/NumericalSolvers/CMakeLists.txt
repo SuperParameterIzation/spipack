@@ -1,1 +1,3 @@
 add_subdirectory(density-estimation)
+add_subdirectory(Kolmogorov-eigendecomposition)
+add_subdirectory(Kolmogorov-inverse)
