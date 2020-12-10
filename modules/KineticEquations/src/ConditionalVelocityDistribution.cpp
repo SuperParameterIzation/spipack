@@ -23,6 +23,7 @@ varepsilon(options["NondimensionalParameter"].as<double>(defaults.varepsilon)),
 alpha(options["ExternalAccelerationRescaling"].as<double>(defaults.alpha)),
 theta(options["TimestepParameter"].as<double>(defaults.theta)),
 accelerationNoiseScale(options["AccelerationNoiseScale"].as<double>(defaults.accelerationNoiseScale)),
+retuneFreq(options["KolmogorovRetuneFrequency"].as<std::size_t>(defaults.retuneFreq)),
 numTimesteps(options["NumTimesteps"].as<std::size_t>(defaults.numTimesteps)),
 prevMacroInfo(std::make_shared<RescaledMacroscaleInformation>(initMacroInfo, alpha, this->samples->StateDim())),
 normalizingConstant(options["InitialNormalizingConstant"].as<double>(defaults.initialNormalizingConstant)),
@@ -41,6 +42,7 @@ varepsilon(options["NondimensionalParameter"].as<double>(defaults.varepsilon)),
 alpha(options["ExternalAccelerationRescaling"].as<double>(defaults.alpha)),
 theta(options["TimestepParameter"].as<double>(defaults.theta)),
 accelerationNoiseScale(options["AccelerationNoiseScale"].as<double>(defaults.accelerationNoiseScale)),
+retuneFreq(options["KolmogorovRetuneFrequency"].as<std::size_t>(defaults.retuneFreq)),
 numTimesteps(options["NumTimesteps"].as<std::size_t>(defaults.numTimesteps)),
 prevMacroInfo(std::make_shared<RescaledMacroscaleInformation>(initMacroInfo, alpha, this->samples->StateDim())),
 normalizingConstant(options["InitialNormalizingConstant"].as<double>(defaults.initialNormalizingConstant)),
@@ -59,6 +61,7 @@ varepsilon(options["NondimensionalParameter"].as<double>(defaults.varepsilon)),
 alpha(options["ExternalAccelerationRescaling"].as<double>(defaults.alpha)),
 theta(options["TimestepParameter"].as<double>(defaults.theta)),
 accelerationNoiseScale(options["AccelerationNoiseScale"].as<double>(defaults.accelerationNoiseScale)),
+retuneFreq(options["KolmogorovRetuneFrequency"].as<std::size_t>(defaults.retuneFreq)),
 numTimesteps(options["NumTimesteps"].as<std::size_t>(defaults.numTimesteps)),
 prevMacroInfo(std::make_shared<RescaledMacroscaleInformation>(initMacroInfo, alpha, this->samples->StateDim())),
 normalizingConstant(options["InitialNormalizingConstant"].as<double>(defaults.initialNormalizingConstant)),
@@ -70,6 +73,8 @@ filename(options["OutputFilename"].as<std::string>(defaults.filename))
 
 YAML::Node ConditionalVelocityDistribution::KolmogorovOptions(YAML::Node options, std::size_t const dim) {
   options["ManifoldDimension"] = (double)dim;
+  const YAML::Node& parameter = options["DensityOptions"];
+  if( !parameter ) { options["DensityOptions"] = options; }
   options["DensityOptions"]["ManifoldDimension"] = (double)dim;
 
   return options;
@@ -157,10 +162,7 @@ void ConditionalVelocityDistribution::Run(double const nextTime, std::shared_ptr
     // rebuild the kd tree based on the new particle configuration
     if( currInfo->logMassDensityGrad.norm()>1.0e-10 ) {
       kolmogorov->BuildKDTrees();
-      if( (t+1)%25==0 && t!=numTimesteps-1 ) {
-        std::cout << "TUNING!" << std::endl;
-        kolmogorov->TuneBandwidthParameter(true);
-      }
+      if( (t+1)%retuneFreq==0 & t!=numTimesteps-1 ) { kolmogorov->TuneBandwidthParameter(true); }
     }
 
     // update the particle velocities
@@ -236,12 +238,14 @@ Eigen::VectorXd ConditionalVelocityDistribution::SampleUnitHypersphere(Eigen::Re
 
 double ConditionalVelocityDistribution::PostCollisionFunction(Eigen::Ref<const Eigen::VectorXd> const& v, Eigen::Ref<const Eigen::VectorXd> const& vprime, Eigen::Ref<const Eigen::VectorXd> const& w, Eigen::Ref<const Eigen::VectorXd> const& x, double const t) const { return -(v-vprime).norm(); }
 
-void ConditionalVelocityDistribution::ConvectionStep(double const macroDelta, double const macroTime, double const microDelta, std::shared_ptr<RescaledMacroscaleInformation> const& currInfo) {
+void ConditionalVelocityDistribution::ConvectionStep(double const macroDelta, double const microDelta, double const macroTime, std::shared_ptr<RescaledMacroscaleInformation> const& currInfo) {
   const std::size_t n = NumSamples();
   ComputeAcceleration(macroDelta, macroTime, currInfo);
 
+  const double delta = macroDelta*microDelta;
+  std::cout << "delta: " << delta << " macroDelta: " << macroDelta << " microDelta: " << microDelta << std::endl;
   for( std::size_t i=0; i<n; ++i ) {
-    Point(i) += macroDelta*microDelta*alpha*currInfo->acceleration.row(i);
+    Point(i) += delta*alpha*currInfo->acceleration.row(i);
   }
 }
 
@@ -262,6 +266,7 @@ void ConditionalVelocityDistribution::WeightedPoissonGradient(std::shared_ptr<Re
     // the relative velocity: V+Uhat-U(T)=(v/alpha - Uhat) + Uhat - U(T) dotted with the gradient of the log mass density
     rhs(i) = (Point(i)/alpha - currInfo->velocity).dot(currInfo->logMassDensityGrad);
   }
+  rhs -= Eigen::VectorXd::Constant(n, rhs.sum()/(double)n);
 
   // apply the pseudo-inverse to the rhs (we will need the coeffients of the solution)
   Eigen::VectorXd coeff = kolmogorov->PseudoInverse(rhs, S, lambda, Qhat);
@@ -279,7 +284,7 @@ void ConditionalVelocityDistribution::ComputeAcceleration(double const macroDelt
   if( currInfo->logMassDensityGrad.norm()>1.0e-10 ) {
     WeightedPoissonGradient(currInfo);
   } else {
-    currInfo->acceleration = Eigen::MatrixXd(n, dim);
+    currInfo->acceleration = Eigen::MatrixXd::Zero(n, dim);
   }
 
   const double scale = accelerationNoiseScale*macroDelta;
@@ -292,7 +297,7 @@ void ConditionalVelocityDistribution::ComputeAcceleration(double const macroDelt
     assert(external.size()==dim);
     if( std::abs(scale)>1.0e-12 ) { external += scale*gauss->Sample(); }
 
-    currInfo->acceleration.row(i) = external.transpose()/alpha;
+    currInfo->acceleration.row(i) = external.transpose()/alpha - currInfo->acceleration.row(i);
   }
 }
 

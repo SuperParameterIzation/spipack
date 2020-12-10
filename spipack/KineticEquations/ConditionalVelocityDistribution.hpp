@@ -316,7 +316,7 @@ private:
   Eigen::VectorXd ExpectedExternalAcceleration(std::size_t const first, std::size_t const last, Eigen::Ref<const Eigen::VectorXd> const& x, double const time) const;
 
   /// The macroscale location \f$\boldsymbol{x}\f$.
-  Eigen::VectorXd const& macroLoc;
+  const Eigen::VectorXd macroLoc;
 
   /// The samples that we use to represent the distribution
   std::shared_ptr<spi::Tools::NearestNeighbors> samples;
@@ -347,6 +347,9 @@ private:
   Add \f$a_0 \delta \boldsymbol{\tilde{A}}\f$, where \f$\boldsymbol{tilde{A}} \sim \mathcal{N}(\cdot; \boldsymbol{0}, \boldsymbol{I})\f$.
   */
   const double accelerationNoiseScale;
+
+  /// The number of timesteps before we re-tune the Kolmogorov operator numerical parameters
+  const std::size_t retuneFreq;
 
   /// The number of timesteps in the micro-scale simulation
   const std::size_t numTimesteps;
@@ -382,6 +385,9 @@ private:
 
     /// The default acceleration noise scale parameter is \f$1\f$.
     inline static const double accelerationNoiseScale = 1.0;
+
+    /// The default number of timesteps before we retune the Kolmogorov operator parameters is a \f$10\f$.
+    inline static const std::size_t retuneFreq = 10;
 
     /// The default number of timesteps is \f$10\f$
     inline static const std::size_t numTimesteps = 10;

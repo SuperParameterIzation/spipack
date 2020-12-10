@@ -16,7 +16,7 @@ using namespace spi::NumericalSolvers;
 
 KolmogorovOperator::KolmogorovOperator(std::shared_ptr<RandomVariable> const& rv, YAML::Node const& options) :
 SampleRepresentation(rv, options),
-density(std::make_shared<DensityEstimation>(this->samples, options["DensityOptions"].as<YAML::Node>(options))), // default to using the same parameters as the Kolmogorov operator
+density(std::make_shared<DensityEstimation>(this->samples, DensityOptions(options))), // default to using the same parameters as the Kolmogorov operator
 operatorConstant(options["OperatorParameter"].as<double>(defaults.operatorConstant)),
 exponentPara(options["BandwidthExponent"].as<double>(defaults.exponentPara)),
 neig(options["NumEigenvalues"].as<std::size_t>(defaults.neig)),
@@ -26,7 +26,7 @@ eigensolverMaxIt(options["EigensolverMaxIterations"].as<std::size_t>(defaults.ei
 
 KolmogorovOperator::KolmogorovOperator(std::shared_ptr<SampleCollection> const& samples, YAML::Node const& options) :
 SampleRepresentation(samples, options),
-density(std::make_shared<DensityEstimation>(this->samples, options["DensityOptions"].as<YAML::Node>(options))), // default to using the same parameters as the Kolmogorov operator
+density(std::make_shared<DensityEstimation>(this->samples, DensityOptions(options))), // default to using the same parameters as the Kolmogorov operator
 operatorConstant(options["OperatorParameter"].as<double>(defaults.operatorConstant)),
 exponentPara(options["BandwidthExponent"].as<double>(defaults.exponentPara)),
 neig(options["NumEigenvalues"].as<std::size_t>(defaults.neig)),
@@ -36,13 +36,18 @@ eigensolverMaxIt(options["EigensolverMaxIterations"].as<std::size_t>(defaults.ei
 
 KolmogorovOperator::KolmogorovOperator(std::shared_ptr<const NearestNeighbors> const& samples, YAML::Node const& options) :
 SampleRepresentation(samples, options),
-density(std::make_shared<DensityEstimation>(this->samples, options["DensityOptions"].as<YAML::Node>(options))), // default to using the same parameters as the Kolmogorov operator
+density(std::make_shared<DensityEstimation>(this->samples, DensityOptions(options))), // default to using the same parameters as the Kolmogorov operator
 operatorConstant(options["OperatorParameter"].as<double>(defaults.operatorConstant)),
 exponentPara(options["BandwidthExponent"].as<double>(defaults.exponentPara)),
 neig(options["NumEigenvalues"].as<std::size_t>(defaults.neig)),
 eigensolverTol(options["EigensolverTolerance"].as<double>(defaults.eigensolverTol)),
 eigensolverMaxIt(options["EigensolverMaxIterations"].as<std::size_t>(defaults.eigensolverMaxIt))
 {}
+
+YAML::Node KolmogorovOperator::DensityOptions(YAML::Node const& options) {
+  if( YAML::Node parameter = options["DensityOptions"] ) { return parameter; }
+  return options;
+}
 
 Eigen::VectorXd KolmogorovOperator::EstimateDensity(bool const tune) const {
   assert(density);
@@ -149,6 +154,7 @@ Eigen::VectorXd KolmogorovOperator::KernelMatrix(double const eps, Eigen::Ref<co
 
 void KolmogorovOperator::TuneBandwidthParameter(bool const tuneDens) {
   const Eigen::VectorXd rho = EstimateDensity(tuneDens).array().pow(exponentPara);
+  manifoldDim = Density()->ManifoldDimension();
 
   // the cost function and optimizater
   auto cost = std::make_shared<BandwidthCost>(rho, Density());
@@ -157,10 +163,14 @@ void KolmogorovOperator::TuneBandwidthParameter(bool const tuneDens) {
   // the initial condition for the optimization is the current parameter value
   std::vector<Eigen::VectorXd> inputs(1);
   assert(bandwidthPara>0.0);
-  inputs[0] = Eigen::VectorXd::Constant(1, std::log2(bandwidthPara));
+  inputs[0] = Eigen::VectorXd::Constant(1, std::log2(4.0*bandwidthPara));
+
+  std::cout << "method: " << pt.get("Algorithm", "") << std::endl;
 
   // solve the optimization and update the parameters
+  std::cout << "before: " << inputs[0] << std::endl;
   std::pair<Eigen::VectorXd, double> soln = opt->Solve(inputs);
+  std::cout << "after: " << soln.first(0) << std::endl;
   bandwidthPara = std::pow(2, soln.first(0))/4.0;
 }
 

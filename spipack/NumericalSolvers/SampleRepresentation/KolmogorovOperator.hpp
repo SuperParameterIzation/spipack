@@ -300,6 +300,14 @@ public:
 
 private:
 
+  /// Get the options for the density estimator
+  /**
+  If the density estimator options are not given in <tt>"DensityOptions"</tt>, then use the Kolmogorov operator as the density estimator options.
+  @param[in] options The options to the Kolmogorov operator
+  \return The options for the density estimator
+  */
+  static YAML::Node DensityOptions(YAML::Node const& options);
+
   /// The diagonal of the matrix \f$\boldsymbol{P}\f$, where \f$P^{(ii)} = \psi^{\beta}(\boldsymbol{x}^{(i)})\f$
   /**
   \f$\beta\f$ is the numerical parameter spi::NumericalSolvers::KolmogorovOperator::exponentPara.

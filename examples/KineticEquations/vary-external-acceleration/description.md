@@ -36,7 +36,7 @@ $$
 \end{equation}
 $$
 
-<iframe width="1076" height="704" src="https://www.youtube.com/embed/S34nyMxcjWk" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+<iframe width="1076" height="704" src="https://www.youtube.com/embed/T4CW2Fq8-3k" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
 
 <figure>
 <figcaption>The expected energy $e_{\psi}$.</figcaption>
@@ -52,7 +52,7 @@ $$
 \end{equation}
 $$
 
-<iframe width="1076" height="704" src="https://www.youtube.com/embed/gIPCYvI8rXw" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+<iframe width="1076" height="704" src="https://www.youtube.com/embed/l2Ku5iP6jIE" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
 
 <figure>
 <figcaption>The expected energy $e_{\psi}$.</figcaption>
@@ -71,7 +71,7 @@ $$
 
 where $*$ is the component-wise multiplication operator.
 
-<iframe width="1076" height="704" src="https://www.youtube.com/embed/KGyxZ9tOpwg" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+<iframe width="1076" height="704" src="https://www.youtube.com/embed/JMdUp8GIrKw" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
 
 <figure>
 <figcaption>The expected energy $e_{\psi}$.</figcaption>
