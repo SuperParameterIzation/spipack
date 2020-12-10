@@ -266,7 +266,7 @@ void ConditionalVelocityDistribution::WeightedPoissonGradient(std::shared_ptr<Re
     // the relative velocity: V+Uhat-U(T)=(v/alpha - Uhat) + Uhat - U(T) dotted with the gradient of the log mass density
     rhs(i) = (Point(i)/alpha - currInfo->velocity).dot(currInfo->logMassDensityGrad);
   }
-  rhs -= Eigen::VectorXd::Constant(n, rhs.sum()/(double)n);
+  //rhs -= Eigen::VectorXd::Constant(n, rhs.sum()/(double)n);
 
   // apply the pseudo-inverse to the rhs (we will need the coeffients of the solution)
   Eigen::VectorXd coeff = kolmogorov->PseudoInverse(rhs, S, lambda, Qhat);
