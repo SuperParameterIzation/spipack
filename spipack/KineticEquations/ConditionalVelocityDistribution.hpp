@@ -256,13 +256,11 @@ private:
 
   /// Evaluated the tilted conditional density at the point parameterized by the samples
   /**
-  @param[in] currInfo The macroscale information at the current macro-scale timestep
-  @param[in] density An estimate of the density at each sample
-  @param[in] stepsize The timestep size
-  @param[in] tiltedSamples The samples that move off the \f$\boldsymbol{x} = \boldsymbol{\hat{x}}\f$ plane
+  @param[in] field The field that we want to interolate onto the samples
+  @param[in] samples The samples that corresponding to the field
   \return An estimate of the tilted density using Nystrom's method
   */
-  Eigen::VectorXd NystromMethod(std::shared_ptr<const MacroscaleInformation> const& currInfo, Eigen::VectorXd const& density, double const stepsize, std::shared_ptr<muq::SamplingAlgorithms::SampleCollection> const& tiltedSamples) const;
+  Eigen::VectorXd NystromMethod(Eigen::VectorXd const& field, std::shared_ptr<muq::SamplingAlgorithms::SampleCollection> const& samples) const;
 
   /// Initialize the directional derivative \f$ \boldsymbol{v} \cdot \nabla_{\boldsymbol{x}} \nu \f$.
   void InitializeDirectionalDerivative();

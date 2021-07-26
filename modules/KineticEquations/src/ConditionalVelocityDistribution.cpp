@@ -120,36 +120,43 @@ void ConditionalVelocityDistribution::Run(double const nextTime, std::shared_ptr
   const double delta = nextTime-currentTime;
   if( delta<1.0e-10 ) { return; } // don't need to update anything
 
-  // the collision step
-  CollisionStep(delta, finalMacroInfo);
-
   // the number of samples
   const std::size_t n = samples->NumSamples();
 
-  const double startTime = currentTime;
+  // store the location of the sample pre-collision
+  auto tiltedSamples = std::make_shared<muq::SamplingAlgorithms::SampleCollection>();
+  for( std::size_t i=0; i<n; ++i ) { tiltedSamples->Add(std::make_shared<SamplingState>(kolmogorov->Point(i))); }
+
+  // the collision step
+  CollisionStep(delta, finalMacroInfo);
+
+  directionalDerivative = NystromMethod(directionalDerivative, tiltedSamples);
+
+  //const double startTime = currentTime;
   Eigen::VectorXd density = kolmogorov->EstimateDensity();
   const double ssize = nextTime-currentTime;
   currentTime += ssize;
 
   // create the samples that move off the x=hat{x} plane
-  auto tiltedSamples = std::make_shared<muq::SamplingAlgorithms::SampleCollection>();
+  tiltedSamples = std::make_shared<muq::SamplingAlgorithms::SampleCollection>();
   for( std::size_t i=0; i<n; ++i ) { tiltedSamples->Add(std::make_shared<SamplingState>(kolmogorov->Point(i))); }
 
   // update the samples (both from the distribution and the tilted plane)
   UpdateSamples(prevMacroInfo, density, ssize, tiltedSamples);
 
+  // shift the samples so the macro scale means match
+  ShiftSamples(finalMacroInfo);
+
   // update the densities
   density = kolmogorov->EstimateDensity();
-  const Eigen::VectorXd tiltedDensity = NystromMethod(prevMacroInfo, density, ssize, tiltedSamples);
+  auto tiltedDensityPoints = std::make_shared<DensityEstimation>(tiltedSamples, densityEstimationOptions);
+  const Eigen::VectorXd tiltedDensity = NystromMethod((1.0+ssize*prevMacroInfo->velocityDiv)*(tiltedDensityPoints->EstimateDensity()), tiltedSamples);
 
   // update the directional derivative
   directionalDerivative = (tiltedDensity-density)/ssize;
   const double nrm = directionalDerivative.sum();
   if( nrm<1.0e-13 ) { directionalDerivative = Eigen::VectorXd::Zero(n); }
   directionalDerivative *= prevMacroInfo->velocityDiv/nrm;
-
-  // shift the samples so the macro scale means match
-  ShiftSamples(finalMacroInfo);
 
   // update the current time
   assert(std::abs(currentTime-nextTime)<1.0e-13);
@@ -164,13 +171,13 @@ void ConditionalVelocityDistribution::Run(double const nextTime, std::shared_ptr
   return;
 }
 
-Eigen::VectorXd ConditionalVelocityDistribution::NystromMethod(std::shared_ptr<const MacroscaleInformation> const& currInfo, Eigen::VectorXd const& density, double const stepsize, std::shared_ptr<muq::SamplingAlgorithms::SampleCollection> const& tiltedSamples) const {
-  auto tiltedDensity = std::make_shared<DensityEstimation>(tiltedSamples, densityEstimationOptions);
-  const Eigen::VectorXd tiltedConditional = (1.0+stepsize*currInfo->velocityDiv)*tiltedDensity->EstimateDensity();
+Eigen::VectorXd ConditionalVelocityDistribution::NystromMethod(Eigen::VectorXd const& field, std::shared_ptr<muq::SamplingAlgorithms::SampleCollection> const& samples) const {
+  auto density = std::make_shared<DensityEstimation>(samples, densityEstimationOptions);
+  //const Eigen::VectorXd tiltedConditional = (1.0+stepsize*currInfo->velocityDiv)*tiltedDensity->EstimateDensity();
 
   // rebuild the kd trees since the samples have moved
-  tiltedDensity->ResetIndices();
-  tiltedDensity->BuildKDTrees();
+  density->ResetIndices();
+  density->BuildKDTrees();
   kolmogorov->ResetIndices();
   kolmogorov->BuildKDTrees();
 
@@ -184,7 +191,7 @@ Eigen::VectorXd ConditionalVelocityDistribution::NystromMethod(std::shared_ptr<c
   for( std::size_t i=0; i<n; ++i ) {
     // find the points closest to xi
     std::vector<std::pair<std::size_t, double> > neighbors;
-    tiltedDensity->FindNeighbors(kolmogorov->Point(i), k, neighbors);
+    density->FindNeighbors(kolmogorov->Point(i), k, neighbors);
     assert(neighbors.size()==k);
 
     for( const auto& it : neighbors ) {
@@ -201,7 +208,7 @@ Eigen::VectorXd ConditionalVelocityDistribution::NystromMethod(std::shared_ptr<c
   Eigen::SparseMatrix<double> kernel(n, n);
   kernel.setFromTriplets(entries.begin(), entries.end());
 
-  return rowsum.array().inverse().matrix().asDiagonal()*kernel*tiltedConditional;
+  return rowsum.array().inverse().matrix().asDiagonal()*kernel*field;
 }
 
 void ConditionalVelocityDistribution::UpdateSamples(std::shared_ptr<const MacroscaleInformation> const& currInfo, Eigen::VectorXd const& density, double const stepsize, std::shared_ptr<muq::SamplingAlgorithms::SampleCollection> const& tiltedSamples) {

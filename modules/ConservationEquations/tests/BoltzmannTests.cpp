@@ -46,7 +46,7 @@ TEST_F(BoltzmannTests, BoltzmannParticleMethods) {
   //Boltzmann::Initialize();
 
   // the number of particles per micro-scale models
-  const std::size_t n = 2500;
+  const std::size_t n = 1000;
 
   // the number of timesteps per micro-scale model run
   const std::size_t numTimesteps = 5;
