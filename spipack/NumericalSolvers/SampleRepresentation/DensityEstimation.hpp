@@ -47,7 +47,7 @@ public:
   @param[in] samples Samples from the underlying distribution \f$\psi\f$
   @param[in] options Setup options
   */
-  DensityEstimation(std::shared_ptr<const spi::Tools::NearestNeighbors> const& samples, YAML::Node const& options);
+  DensityEstimation(std::shared_ptr<spi::Tools::NearestNeighbors> const& samples, YAML::Node const& options);
 
   virtual ~DensityEstimation() = default;
 

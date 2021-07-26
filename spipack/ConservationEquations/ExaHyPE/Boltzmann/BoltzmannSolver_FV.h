@@ -21,11 +21,11 @@
 #include "tarch/logging/Log.h"
 
 
-namespace Boltzmann{
+namespace spiEX_Boltzmann{
   class BoltzmannSolver_FV;
 }
 
-class Boltzmann::BoltzmannSolver_FV : public Boltzmann::AbstractBoltzmannSolver_FV {
+class spiEX_Boltzmann::BoltzmannSolver_FV : public spiEX_Boltzmann::AbstractBoltzmannSolver_FV {
   private:
     /**
      * Log device
@@ -124,7 +124,23 @@ class Boltzmann::BoltzmannSolver_FV : public Boltzmann::AbstractBoltzmannSolver_
     */
     void algebraicSource(const tarch::la::Vector<DIMENSIONS, double>& x, double t, const double *const Q, double *S) override;
 
-    /* nonConservativeProduct() function is not included, as requested in the specification file */
+    /**
+     * Compute the nonconservative term $B(Q) \nabla Q$.
+     * 
+     * This function shall return a vector BgradQ which holds the result
+     * of the full term. To do so, it gets the vector Q and the matrix
+     * gradQ which holds the derivative of Q in each spatial direction.
+     * Currently, the gradQ is a continous storage and users can use the
+     * kernels::icellSize2 class in order to compute the positions inside gradQ.
+     * 
+     * @param[in]  Q        vector of state variables (plus material 
+     *                      parameters); range: [0,nVar+nPar-1], already allocated.
+     * @param[in]    gradQ  the gradients of the vector of unknowns, stored 
+     *                      in a linearized array. (range: [0,dim*(nVar+nPar)-1].
+     * @param[inout] BgradQ the nonconservative product (extends nVar), 
+     *                      already allocated. 
+     */
+    void nonConservativeProduct(const double* const Q,const double* const gradQ,double* const BgradQ) override;
     
     /* pointSource() function not included, as requested in the specification file */
 };

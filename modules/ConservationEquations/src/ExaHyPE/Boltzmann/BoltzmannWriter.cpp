@@ -7,23 +7,23 @@
 // ========================
 #include "BoltzmannWriter.h"
 
-Boltzmann::BoltzmannWriter::BoltzmannWriter(Boltzmann::BoltzmannSolver& solver) {
+spiEX_Boltzmann::BoltzmannWriter::BoltzmannWriter(spiEX_Boltzmann::BoltzmannSolver& solver) {
   // @TODO Please insert your code here.
 }
 
-Boltzmann::BoltzmannWriter::~BoltzmannWriter() {
+spiEX_Boltzmann::BoltzmannWriter::~BoltzmannWriter() {
 }
 
-void Boltzmann::BoltzmannWriter::startPlotting( double time) {
+void spiEX_Boltzmann::BoltzmannWriter::startPlotting( double time) {
   // @TODO Please insert your code here.
 }
 
 
-void Boltzmann::BoltzmannWriter::finishPlotting() {
+void spiEX_Boltzmann::BoltzmannWriter::finishPlotting() {
   // @TODO Please insert your code here.
 }
 
-void Boltzmann::BoltzmannWriter::mapQuantities(
+void spiEX_Boltzmann::BoltzmannWriter::mapQuantities(
     const tarch::la::Vector<DIMENSIONS, double>& offsetOfPatch,
     const tarch::la::Vector<DIMENSIONS, double>& sizeOfPatch,
     const tarch::la::Vector<DIMENSIONS, double>& x,
@@ -32,7 +32,7 @@ void Boltzmann::BoltzmannWriter::mapQuantities(
     double* const outputQuantities,
     double timeStamp
 ) {
-  const int writtenUnknowns = 5;
+  const int writtenUnknowns = 6;
   for (int i=0; i<writtenUnknowns; i++){ 
     outputQuantities[i] = Q[i];
   }

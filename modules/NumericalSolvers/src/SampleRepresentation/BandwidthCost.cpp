@@ -16,10 +16,8 @@ double BandwidthCost::CostImpl(ref_vector<Eigen::VectorXd> const& input) {
 
   if( std::abs(eps-neweps)>1.0e-10 || std::isnan(eps) ) {
     eps = neweps;
-
     Eigen::SparseMatrix<double> kmat;
     Eigen::VectorXd rowsum = samples->KernelMatrix(std::pow(2.0, input[0](0)+1.0), bandwidth, kmat);
-
     ksumlp1 = rowsum.sum()/n2;
 
     rowsum = samples->KernelMatrix(eps, bandwidth, kmat);

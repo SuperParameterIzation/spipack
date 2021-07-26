@@ -9,6 +9,7 @@ if(CMAKE_SOURCE_DIR STREQUAL CMAKE_CURRENT_SOURCE_DIR) # Only look for SPIPACK w
   set(CMAKE_CXX_COMPILER ${SPIPACK_CXX_COMPILER})
 
   include_directories(${SPIPACK_INCLUDE_DIRS} ${SPIPACK_EXTERNAL_INCLUDE_DIRS})
+  link_directories(${SPIPACK_LINK_DIRS})
 endif()
 
 set(SOURCE
@@ -19,4 +20,14 @@ add_executable(run-Kolmogorov-eigen-decomposition ${SOURCE})
 target_link_libraries(run-Kolmogorov-eigen-decomposition ${SPIPACK_EXTERNAL_LIBRARIES} ${SPIPACK_LIBRARIES})
 if(NOT CMAKE_SOURCE_DIR STREQUAL CMAKE_CURRENT_SOURCE_DIR) # add dependencies if this is not a stand alone project
   add_dependencies(run-Kolmogorov-eigen-decomposition spiNS spiTS)
+endif()
+
+set(SOURCE
+  _Kolmogorov-error-analysis.cpp
+)
+
+add_executable(run-Kolmogorov-error-analysis ${SOURCE})
+target_link_libraries(run-Kolmogorov-error-analysis ${SPIPACK_EXTERNAL_LIBRARIES} ${SPIPACK_LIBRARIES})
+if(NOT CMAKE_SOURCE_DIR STREQUAL CMAKE_CURRENT_SOURCE_DIR) # add dependencies if this is not a stand alone project
+  add_dependencies(run-Kolmogorov-error-analysis spiNS spiTS)
 endif()

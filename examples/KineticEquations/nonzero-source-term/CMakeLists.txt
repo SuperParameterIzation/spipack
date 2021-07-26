@@ -15,8 +15,11 @@ set(SOURCE
   _run-nonzero-source-term.cpp
 )
 
+message(STATUS ${SPIPACK_LIBRARIES})
+message(STATUS ${SPIPACK_EXTERNAL_LIBRARIES})
+
 add_executable(run-nonzero-source-term ${SOURCE})
-target_link_libraries(run-nonzero-source-term ${SPIPACK_EXTERNAL_LIBRARIES} ${SPIPACK_LIBRARIES})
+target_link_libraries(run-nonzero-source-term ${SPIPACK_EXTERNAL_LIBRARIES} /home/andy/Software/install/spipack/lib/libspiEX_Boltzmann.so ${SPIPACK_LIBRARIES})
 if(NOT CMAKE_SOURCE_DIR STREQUAL CMAKE_CURRENT_SOURCE_DIR) # add dependencies if this is not a stand alone project
-  add_dependencies(run-nonzero-source-term spiNS spiTS spiKE)
+  add_dependencies(run-nonzero-source-term spiEX_Boltzmann spiTS spiNS spiKE)
 endif()

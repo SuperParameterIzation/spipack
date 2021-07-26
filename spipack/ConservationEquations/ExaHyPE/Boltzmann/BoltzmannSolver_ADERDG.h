@@ -20,11 +20,11 @@
  */
 #include "tarch/logging/Log.h"
 
-namespace Boltzmann{
+namespace spiEX_Boltzmann{
   class BoltzmannSolver_ADERDG;
 }
 
-class Boltzmann::BoltzmannSolver_ADERDG : public Boltzmann::AbstractBoltzmannSolver_ADERDG {
+class spiEX_Boltzmann::BoltzmannSolver_ADERDG : public spiEX_Boltzmann::AbstractBoltzmannSolver_ADERDG {
   private:
     /**
      * Log device
@@ -49,7 +49,7 @@ class Boltzmann::BoltzmannSolver_ADERDG : public Boltzmann::AbstractBoltzmannSol
      * @param[in] constants   access to the constants specified for the solver.
      */
     void init(const std::vector<std::string>& cmdlineargs,const exahype::parser::ParserView& constants) final override;
-    
+
     /**
      * Adjust the conserved variables and parameters (together: Q) at a given time t at the (quadrature) point x.
      *
@@ -59,7 +59,7 @@ class Boltzmann::BoltzmannSolver_ADERDG : public Boltzmann::AbstractBoltzmannSol
      * @param[in]    x   physical coordinate on the face.
      * @param[in]    t   start of the time interval.
      * @param[in]    dt  width of the time interval.
-     * @param[in]    Q   vector of state variables (plus parameters); 
+     * @param[in]    Q   vector of state variables (plus parameters);
      *                   range: [0,nVar+nPar-1], already allocated.
      */
     void adjustPointSolution(const double* const x,const double t,const double dt,double* const Q) final override;
@@ -67,34 +67,34 @@ class Boltzmann::BoltzmannSolver_ADERDG : public Boltzmann::AbstractBoltzmannSol
     /**
      * Compute the eigenvalues of the flux tensor per coordinate  @p direction.
      *
-     * @param[in]    Q          vector of state variables (plus parameters); 
+     * @param[in]    Q          vector of state variables (plus parameters);
      *                          range: [0,nVar+nPar-1], already allocated.
      * @param[in]    direction  normal direction of the face / column of the flux vector (range: [0,nDims-1]).
      * @param[inout] lambda     eigenvalues as C array;
      *                          range: [0,nVar-1], already allocated.
      */
     void eigenvalues(const double* const Q,const int direction,double* const lambda) final override;
-    
+
 
     /**
      * Impose boundary conditions at a point on a boundary face
      * within the time interval [t,t+dt].
      *
-     * @param[in]    x         physical coordinate on the face; 
+     * @param[in]    x         physical coordinate on the face;
      *                         range: [0,nDims-1].
      * @param[in]    t         start of the time interval.
      * @param[in]    dt        width of the time interval.
      * @param[in]    faceIndex indexing of the face (0 -- {x[0]=xmin}, 1 -- {x[1]=xmax}, 2 -- {x[1]=ymin}, 3 -- {x[2]=ymax}, and so on,
      *                         where xmin,xmax,ymin,ymax are the bounds of the cell containing point x.
      * @param[in]    direction coordinate direction the face normal is pointing to.
-     * 
+     *
      * @param[in]    QIn       the conserved variables (plus parameters) at point x from inside of the domain
      *                         and time-averaged (over [t,t+dt]);
      *                         range: [0,nVar+nPar-1], already allocated.
      * @param[in]    FIn       the normal fluxes at point x from inside of the domain
      *                         and time-averaged (over [t,t+dt]);
      *                         range: [0,nVar-1], already allocated.
-     *                         
+     *
      * @param[inout] QOut      the conserved variables at point x from outside of the domain
      *                         and time-averaged (over [t,t+dt]);
      *                         range: [0,nVar+nPar-1], already allocated.
@@ -102,7 +102,7 @@ class Boltzmann::BoltzmannSolver_ADERDG : public Boltzmann::AbstractBoltzmannSol
      *                         range: [0,nVar-1], already allocated.
      */
     void boundaryValues(const double* const x,const double t,const double dt,const int faceIndex,const int direction,const double * const fluxIn,const double* const stateIn, const double* const gradStateIn,double *fluxOut,double* stateOut) final override;
-    
+
     /**
      * Evaluate the refinement criterion within a cell.
      *
@@ -111,29 +111,29 @@ class Boltzmann::BoltzmannSolver_ADERDG : public Boltzmann::AbstractBoltzmannSol
      *
      * @note Use this function and ::adjustSolution to set initial conditions.
      *
-     * @param[in]    luh         all state variables (plus parameters) of a cell; 
-     *                           range[outer->inner]: [0,(p+1)^nDim-1]x[0,nVar+nPar-1], 
+     * @param[in]    luh         all state variables (plus parameters) of a cell;
+     *                           range[outer->inner]: [0,(p+1)^nDim-1]x[0,nVar+nPar-1],
      *                           already allocated.
-     *                      
+     *
      * @param[in]    cellCentre  cellCentre of the cell.
      * @param[in]    cellSize    extent of the cell.
      * @param[in]    t           start of the time interval.
      * @param[in]    dt          width of the time interval.
-     * 
+     *
      * @return One of exahype::solvers::Solver::RefinementControl::{Erase,Keep,Refine}.
      */
     exahype::solvers::Solver::RefinementControl refinementCriterion(const double* const luh,const tarch::la::Vector<DIMENSIONS,double>& cellCentre,const tarch::la::Vector<DIMENSIONS,double>& cellSize,double t,const int level) override;
-    
+
     //PDE
-    
+
     /**
      * Compute the flux tensor.
      *
-     * @param[in]    Q vector of state variables (plus parameters); 
+     * @param[in]    Q vector of state variables (plus parameters);
      *                 range: [0,nVar+nPar-1], already allocated.
-     *                 
+     *
      * @param[inout] F flux at that point;
-     *                 range[outer->inner]: [0,nDim-1]x[0,nVar-1], 
+     *                 range[outer->inner]: [0,nDim-1]x[0,nVar-1],
      *                 already allocated.
      */
     void flux(const double* const Q,double** const F) final override;
@@ -141,10 +141,10 @@ class Boltzmann::BoltzmannSolver_ADERDG : public Boltzmann::AbstractBoltzmannSol
 /* viscousFlux() function not included, as requested in the specification file */
 
 
-    
+
      /**
      * Compute the Algebraic Sourceterms.
-     * 
+     *
      * You may want to overwrite this with your PDE Source (algebraic RHS contributions).
      * However, in all schemes we have so far, the source-type contributions are
      * collected with non-conservative contributions into a fusedSource, see the
@@ -155,13 +155,46 @@ class Boltzmann::BoltzmannSolver_ADERDG : public Boltzmann::AbstractBoltzmannSol
      *
      * @param[in]    x physical position
      * @param[in]    t physical time
-     * @param[in]    Q vector of state variables (plus material 
+     * @param[in]    Q vector of state variables (plus material
      *                 parameters); range: [0,nVar+nPar-1], already allocated.
      * @param[inout] S source term; range: [0,nVar-1], already allocated.
      */
     void algebraicSource(const tarch::la::Vector<DIMENSIONS, double>& x, double t, const double *const Q, double *S) override;
 
-/* nonConservativeProduct() function is not included, as requested in the specification file */
+    /**
+     * Compute the nonconservative term $B(Q) \nabla Q$.
+     *
+     * This function shall return a vector BgradQ which holds the result
+     * of the full term. To do so, it gets the vector Q and the matrix
+     * gradQ which holds the derivative of Q in each spatial direction.
+     * Currently, the gradQ is a continous storage and users can use the
+     * kernels::icellSize2 class in order to compute the positions inside gradQ.
+     *
+     * @TODO: Check if the following is still right:
+     *
+     * !!! Warning: BgradQ is a vector of size NumberOfVariables if you
+     * use the ADER-DG kernels for nonlinear PDEs. If you use
+     * the kernels for linear PDEs, it is a tensor with dimensions
+     * Dim x NumberOfVariables.
+     *
+     * @param[in]    Q      vector of state variables (plus material
+     *                      parameters); range: [0,nVar+nPar-1], already allocated.
+     * @param[in]    gradQ  the gradients of the vector of unknowns, stored
+     *                      in a linearized array. (range: [0,dim*(nVar+nPar)-1].
+     * @param[inout] BgradQ the nonconservative product (extends nVar),
+     *                      already allocated.
+     */
+     virtual void nonConservativeProduct(const double* const Q,const double* const gradQ,double* const BgradQ) final override;
+
+     virtual void mapDiscreteMaximumPrincipleObservables(double* const observables, const double* const Q) const override;
+
+     virtual bool isPhysicallyAdmissible(
+        const double* const Q,
+        const double* const observablesMin,const double* const observablesMax,
+        const bool wasTroubledInPreviousTimeStep,
+        const tarch::la::Vector<DIMENSIONS,double>& center,
+        const tarch::la::Vector<DIMENSIONS,double>& dx,
+        const double t) const override;
 
 /* pointSource() function not included, as requested in the specification file */
 

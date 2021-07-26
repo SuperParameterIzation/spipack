@@ -17,15 +17,15 @@
  */
 #include "tarch/Assertions.h"
 
-namespace Boltzmann{
+namespace spiEX_Boltzmann{
   class AbstractBoltzmannSolver_FV;
   class BoltzmannSolver_FV;
 }
 
-class Boltzmann::AbstractBoltzmannSolver_FV : public exahype::solvers::FiniteVolumesSolver {
+class spiEX_Boltzmann::AbstractBoltzmannSolver_FV : public exahype::solvers::FiniteVolumesSolver {
   public:
-    static constexpr int NumberOfVariables         = 5;
-    static constexpr int NumberOfParameters        = 0;
+    static constexpr int NumberOfVariables         = 4;
+    static constexpr int NumberOfParameters        = 2;
     static constexpr int NumberOfGlobalObservables = 0;
     static constexpr int PatchSize                 = 7;
     static constexpr int GhostLayerWidth           = 2;

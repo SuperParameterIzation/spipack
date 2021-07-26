@@ -1,9 +1,5 @@
 #include "spipack/NumericalSolvers/SampleRepresentation/KolmogorovOperator.hpp"
 
-#include <Spectra/SymEigsSolver.h>
-#include <Spectra/GenEigsSolver.h>
-#include <Spectra/MatOp/SparseGenMatProd.h>
-
 #include <MUQ/Optimization/NLoptOptimizer.h>
 
 #include "spipack/NumericalSolvers/SampleRepresentation/BandwidthCost.hpp"
@@ -21,8 +17,12 @@ operatorConstant(options["OperatorParameter"].as<double>(defaults.operatorConsta
 exponentPara(options["BandwidthExponent"].as<double>(defaults.exponentPara)),
 neig(options["NumEigenvalues"].as<std::size_t>(defaults.neig)),
 eigensolverTol(options["EigensolverTolerance"].as<double>(defaults.eigensolverTol)),
-eigensolverMaxIt(options["EigensolverMaxIterations"].as<std::size_t>(defaults.eigensolverMaxIt))
-{}
+eigensolverMaxIt(options["EigensolverMaxIterations"].as<std::size_t>(defaults.eigensolverMaxIt)),
+Lhatvec(this->samples->NumSamples()),
+eigsolver(&Lhatvec, neig, std::min(10*neig+1, this->samples->NumSamples()))
+{
+  eigsolver.init();
+}
 
 KolmogorovOperator::KolmogorovOperator(std::shared_ptr<SampleCollection> const& samples, YAML::Node const& options) :
 SampleRepresentation(samples, options),
@@ -31,18 +31,26 @@ operatorConstant(options["OperatorParameter"].as<double>(defaults.operatorConsta
 exponentPara(options["BandwidthExponent"].as<double>(defaults.exponentPara)),
 neig(options["NumEigenvalues"].as<std::size_t>(defaults.neig)),
 eigensolverTol(options["EigensolverTolerance"].as<double>(defaults.eigensolverTol)),
-eigensolverMaxIt(options["EigensolverMaxIterations"].as<std::size_t>(defaults.eigensolverMaxIt))
-{}
+eigensolverMaxIt(options["EigensolverMaxIterations"].as<std::size_t>(defaults.eigensolverMaxIt)),
+Lhatvec(this->samples->NumSamples()),
+eigsolver(&Lhatvec, neig, std::min(10*neig+1, this->samples->NumSamples()))
+{
+  eigsolver.init();
+}
 
-KolmogorovOperator::KolmogorovOperator(std::shared_ptr<const NearestNeighbors> const& samples, YAML::Node const& options) :
+KolmogorovOperator::KolmogorovOperator(std::shared_ptr<NearestNeighbors> const& samples, YAML::Node const& options) :
 SampleRepresentation(samples, options),
 density(std::make_shared<DensityEstimation>(this->samples, DensityOptions(options))), // default to using the same parameters as the Kolmogorov operator
 operatorConstant(options["OperatorParameter"].as<double>(defaults.operatorConstant)),
 exponentPara(options["BandwidthExponent"].as<double>(defaults.exponentPara)),
 neig(options["NumEigenvalues"].as<std::size_t>(defaults.neig)),
 eigensolverTol(options["EigensolverTolerance"].as<double>(defaults.eigensolverTol)),
-eigensolverMaxIt(options["EigensolverMaxIterations"].as<std::size_t>(defaults.eigensolverMaxIt))
-{}
+eigensolverMaxIt(options["EigensolverMaxIterations"].as<std::size_t>(defaults.eigensolverMaxIt)),
+Lhatvec(this->samples->NumSamples()),
+eigsolver(&Lhatvec, neig, std::min(10*neig+1, this->samples->NumSamples()))
+{
+  eigsolver.init();
+}
 
 YAML::Node KolmogorovOperator::DensityOptions(YAML::Node const& options) {
   if( YAML::Node parameter = options["DensityOptions"] ) { return parameter; }
@@ -93,12 +101,12 @@ Eigen::VectorXd KolmogorovOperator::KernelMatrix(double const eps, Eigen::Ref<co
   const double para = VariableBandwidthExponent();
 
   // compute the normalization for the new kernel matrix
-  rowsum = rowsum.array()/P.array().pow(manifoldDim*para);
+  rowsum = rowsum.array()/P.array().pow(manifoldDim*exponentPara);
 
   // renormalize the kernel matrix
   #pragma omp parallel for num_threads(numThreads)
   for( std::size_t i=0; i<n; ++i ) {
-    for( std::size_t j=0; j<n; ++j ) { kmat(i, j) /= rowsum(i)*rowsum(j); }
+    for( std::size_t j=0; j<n; ++j ) { kmat(i, j) /= std::pow(rowsum(i)*rowsum(j), para); }
   }
 
   return kmat.rowwise().sum();
@@ -129,26 +137,51 @@ Eigen::VectorXd KolmogorovOperator::KernelMatrix(double const eps, Eigen::Ref<co
   // compute (and store) the diagonal matrix P
   P = dens.array().pow(exponentPara);
 
+  std::cout << "eps: " << eps << std::endl;
+
   // compute the unnormalized kernel matrix K
   std::vector<Eigen::Triplet<double> > entries;
   Eigen::MatrixXd rowsum = SampleRepresentation::KernelMatrix(4.0*eps, P, entries);
 
+  /*{
+    Eigen::SparseMatrix<double> kernel(NumSamples(), NumSamples());
+    //matrix.resize(NumSamples(), NumSamples());
+    //matrix.setZero();
+    kernel.setFromTriplets(entries.begin(), entries.end());
+
+    Eigen::MatrixXd mat(kernel);
+    std::cout << mat << std::endl;
+  }*/
+
+  //std::cout << "rowsum: " << rowsum.transpose() << std::endl;
+
   // compute the normalization for the new kernel matrix
-  rowsum = rowsum.array()/P.array().pow(manifoldDim*para);
+  rowsum = rowsum.array()/P.array().pow(manifoldDim*exponentPara);
+
+  //std::cout << "ROWSUM: " << rowsum.transpose() << std::endl;
 
   // renormalize the kernel matrix
   #pragma omp parallel for num_threads(numThreads)
   for( auto& entry : entries ) {
-    entry = Eigen::Triplet(entry.row(), entry.col(), entry.value()/(rowsum(entry.row())*rowsum(entry.col())));
+    //std::cout << entry.value() << std::endl;
+    entry = Eigen::Triplet(entry.row(), entry.col(), entry.value()/std::pow(rowsum(entry.row())*rowsum(entry.col()), para));
+    //std::cout << entry.value() << std::endl;
+    //std::cout << std::endl;
   }
 
   // resize the matrix
   kmat.resize(n, n);
   kmat.setFromTriplets(entries.begin(), entries.end());
 
+  //Eigen::MatrixXd mat(kmat);
+  //std::cout << mat << std::endl;
+
   // recompute the rowsum
   rowsum = Eigen::VectorXd::Zero(n);
   for( const auto& entry : entries ) { rowsum(entry.row()) += entry.value(); }
+
+  //std::cout << "ROWSUM: " << rowsum.transpose() << std::endl;
+
   return rowsum;
 }
 
@@ -176,7 +209,8 @@ double KolmogorovOperator::ExponentParameter() const { return exponentPara; }
 
 std::shared_ptr<DensityEstimation> KolmogorovOperator::Density() const { return density; }
 
-void KolmogorovOperator::ComputeEigendecomposition(Eigen::Ref<Eigen::VectorXd> S, Eigen::Ref<Eigen::VectorXd> Sinv, Eigen::Ref<Eigen::VectorXd> eigenvalues, Eigen::Ref<Eigen::MatrixXd> eigenvectors) {
+void KolmogorovOperator::ComputeEigendecomposition(Eigen::Ref<Eigen::VectorXd> S, Eigen::Ref<Eigen::VectorXd> Sinv, Eigen::Ref<Eigen::VectorXd> eigenvalues, Eigen::Ref<Eigen::MatrixXd> eigenvectors,
+bool const retune) {
   // the number of samples
   const std::size_t n = NumSamples();
 
@@ -190,24 +224,54 @@ void KolmogorovOperator::ComputeEigendecomposition(Eigen::Ref<Eigen::VectorXd> S
   // compute the kernel matrix and the diagonal matrix S^{-1}
   Eigen::SparseMatrix<double> kmat;
   S = KernelMatrix(BandwidthParameter(), kmat, &tuneDens);
+//  std::cout << "rowsum: " << S.transpose() << std::endl;
   S = P.array()*S.array().sqrt();
   Sinv = S.array().inverse();
 
-  // compute Lhat, which is related to the Kolmogorov operator by a similarity transformation
-  Eigen::SparseMatrix<double> Lhat(n, n);
-  Lhat = (P.array()*P.array()).inverse().matrix().asDiagonal();
-  Lhat = (Sinv.asDiagonal()*kmat*Sinv.asDiagonal()-Lhat)/BandwidthParameter();
+  //std::cout << "P: " << P.transpose() << std::endl;
 
-  // compute the eigendecomposition of Lhat
-  Spectra::SparseGenMatProd<double> matvec(Lhat);
-  Spectra::SymEigsSolver<double, Spectra::SMALLEST_MAGN, Spectra::SparseGenMatProd<double> > eigsolver(&matvec, neig, std::min(10*neig, n));
+  std::cout << "S: " << S.transpose() << std::endl;
+
+  // compute Lhat, which is related to the Kolmogorov operator by a similarity transformation
+  Lhatvec.m_mat = (P.array()*P.array()).inverse().matrix().asDiagonal();
+
+  //Eigen::MatrixXd mat(kmat);
+  //std::cout << mat << std::endl;
+  //std::cout << Sinv.transpose() << std::endl;
+
+  std::cout << "BANDWIDTH: " << BandwidthParameter() << std::endl;
+
+  Lhatvec.m_mat = (Sinv.asDiagonal()*kmat*Sinv.asDiagonal()-Lhatvec.m_mat)/BandwidthParameter();
+
+  //std::cout << "beta: " << exponentPara << std::endl;
+  //std::cout << "alpha: " << VariableBandwidthExponent() << std::endl;
+
+  std::cout << "HERE" << std::endl;
   eigsolver.init();
   const std::size_t ncomputed = eigsolver.compute(eigensolverMaxIt, eigensolverTol);
+  std::cout << "THIS" << std::endl;
+  if( ncomputed!=neig ) {
+    std::cerr << std::endl;
+    std::cerr << "ERROR: tried to compute " << neig << " eigenvalues, but only " << ncomputed << " were computed." << std::endl;
+    std::cerr << "\tEigensolver tolerance: " << eigensolverTol << std::endl;
+    std::cerr << "\tKolmogorovOperator::ComputeEigendecomposition" << std::endl << std::endl;
+
+    std::cerr << "\tComputed eigenvalues: " << eigsolver.eigenvalues().transpose() << std::endl;
+
+    std::cerr << std::endl;
+
+    if( retune ) {
+      TuneBandwidthParameter(true);
+      return ComputeEigendecomposition(S, Sinv, eigenvalues, eigenvectors, false);
+    }
+  }
   assert(ncomputed==neig);
 
   // fill the eigenvectors/values
-  eigenvalues = eigsolver.eigenvalues();
-  eigenvectors = eigsolver.eigenvectors();
+  eigenvalues = eigsolver.eigenvalues().real();
+  eigenvectors = eigsolver.eigenvectors().real();
+
+  //std::cout << Sinv.asDiagonal()*eigenvectors << std::endl;
 }
 
 std::size_t KolmogorovOperator::NumEigenvalues() const { return neig; }
@@ -237,8 +301,9 @@ Eigen::VectorXd KolmogorovOperator::FunctionRepresentation(Eigen::Ref<const Eige
 }
 
 Eigen::VectorXd KolmogorovOperator::PseudoInverse(Eigen::Ref<const Eigen::VectorXd> const& eigenvalues) const {
-  Eigen::VectorXd eigenvaluesInv(eigenvalues.size());
-  for( std::size_t i=0; i<eigenvalues.size(); ++i ) {
+  Eigen::VectorXd eigenvaluesInv = Eigen::VectorXd::Zero(eigenvalues.size());
+  // the first eigenvalue is zero
+  for( std::size_t i=1; i<eigenvalues.size(); ++i ) {
     eigenvaluesInv(i) = (std::abs(eigenvalues(i))>2.0*eigensolverTol? 1.0/eigenvalues(i) : 0.0);
   }
 
@@ -289,6 +354,42 @@ Eigen::VectorXd KolmogorovOperator::PseudoInverse(Eigen::Ref<const Eigen::Vector
   return eigenvalues.asDiagonal()*rhs;
 }
 
+Eigen::VectorXd KolmogorovOperator::WeightedGradient(std::function<double(Eigen::VectorXd const&)> const& v, Eigen::Ref<const Eigen::VectorXd> const& coeff, Eigen::Ref<const Eigen::VectorXd> const& eigenvalues, Eigen::Ref<const Eigen::MatrixXd> const& eigenvectors, Eigen::Ref<const Eigen::MatrixXd> const& eigenvectorsAdj) const {
+  // the coordinate dimension and the number of samples
+  const std::size_t n = NumSamples();
+
+  // precompute the coeffients for each dimension
+  const Eigen::VectorXd xcoeff= FunctionRepresentation(eigenvectorsAdj, v);
+
+  // compute the coordinate coefficients
+  Eigen::VectorXd gradient = Eigen::VectorXd::Zero(n);
+  for( std::size_t j=0; j<neig; ++j ) {
+    for( std::size_t k=j; k<neig; ++k ) {
+      const Eigen::VectorXd phijk = eigenvectors.col(j).array()*eigenvectors.col(k).array();
+      assert(phijk.size()==n);
+
+      for( std::size_t l=0; l<neig; ++l ) {
+        const double Cjkl = phijk.dot(eigenvectorsAdj.col(l))/2.0;
+        const double scale = Cjkl*(eigenvalues(l)-eigenvalues(k)-eigenvalues(j));
+        const double scalej = coeff(j)*scale;
+
+        gradient += (scalej*xcoeff(k))*eigenvectors.col(l);
+
+        if( j!=k ) {
+          const double scalek = coeff(k)*scale;
+          gradient += (scalek*xcoeff(j))*eigenvectors.col(l);
+        }
+      }
+    }
+  }
+
+  return gradient;
+}
+
+Eigen::VectorXd KolmogorovOperator::WeightedGradient(std::function<double(Eigen::VectorXd const&)> const& v, Eigen::Ref<const Eigen::VectorXd> const& coeff, Eigen::Ref<const Eigen::VectorXd> const& S, Eigen::Ref<const Eigen::VectorXd> const& Sinv, Eigen::Ref<const Eigen::VectorXd> const& eigenvalues, Eigen::Ref<const Eigen::MatrixXd> const& eigenvectors) const {
+  return WeightedGradient(v, coeff, eigenvalues, Sinv.asDiagonal()*eigenvectors, S.asDiagonal()*eigenvectors);
+}
+
 Eigen::MatrixXd KolmogorovOperator::FunctionGradient(Eigen::Ref<const Eigen::VectorXd> const& coeff, Eigen::Ref<const Eigen::VectorXd> const& S, Eigen::Ref<const Eigen::VectorXd> const& Sinv, Eigen::Ref<const Eigen::VectorXd> const& eigenvalues, Eigen::Ref<const Eigen::MatrixXd> const& eigenvectors) const {
   // the coordinate dimension and the number of samples
   const std::size_t dim = Point(0).size();
@@ -312,7 +413,8 @@ Eigen::MatrixXd KolmogorovOperator::FunctionGradient(Eigen::Ref<const Eigen::Vec
       assert(phijk.size()==n);
 
       for( std::size_t l=0; l<neig; ++l ) {
-        const double Cjkl = phijk.dot(eigenvectorsRight.col(l))/2.0;
+        //const double Cjkl = phijk.dot(eigenvectorsRight.col(l))/2.0;
+        const double Cjkl = ((phijk.transpose()*(S.array()*S.array()).matrix().asDiagonal()*eigenvectorsLeft.col(l)) (0))/2.0;
         const double scale = Cjkl*(eigenvalues(l)-eigenvalues(k)-eigenvalues(j));
         const double scalej = coeff(j)*scale;
 
@@ -331,4 +433,16 @@ Eigen::MatrixXd KolmogorovOperator::FunctionGradient(Eigen::Ref<const Eigen::Vec
   }
 
   return gradient;
+}
+
+KolmogorovOperator::SparseGenMatProd::SparseGenMatProd(std::size_t const n) : m_mat(n, n) {}
+
+Eigen::Index KolmogorovOperator::SparseGenMatProd::rows() const { return m_mat.rows(); }
+
+Eigen::Index KolmogorovOperator::SparseGenMatProd::cols() const { return m_mat.cols(); }
+
+void KolmogorovOperator::SparseGenMatProd::perform_op(const double* x_in, double* y_out) const {
+  Eigen::Map<const Eigen::VectorXd> x(x_in, m_mat.cols());
+  Eigen::Map<Eigen::VectorXd> y(y_out, m_mat.rows());
+  y.noalias() = m_mat * x;
 }

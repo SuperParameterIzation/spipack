@@ -1,6 +1,12 @@
 #ifndef KOLMOGOROVOPERATOR_HPP_
 #define KOLMOGOROVOPERATOR_HPP_
 
+#include <iostream>
+
+#include <Spectra/SymEigsSolver.h>
+#include <Spectra/GenEigsSolver.h>
+#include <Spectra/MatOp/SparseGenMatProd.h>
+
 #include "spipack/NumericalSolvers/SampleRepresentation/DensityEstimation.hpp"
 
 namespace spi {
@@ -54,7 +60,7 @@ public:
     @param[in] samples Samples from the underlying distribution \f$\psi\f$
     @param[in] options Setup options
   */
-  KolmogorovOperator(std::shared_ptr<const spi::Tools::NearestNeighbors> const& samples, YAML::Node const& options);
+  KolmogorovOperator(std::shared_ptr<spi::Tools::NearestNeighbors> const& samples, YAML::Node const& options);
 
   virtual ~KolmogorovOperator() = default;
 
@@ -191,8 +197,9 @@ public:
   @param[out] Sinv The inverse diagonal matrix \f$\boldsymbol{S}^{-1}\f$
   @param[out] eigenvalues The eigenvalues of \f$\boldsymbol{\hat{L}}\f$
   @param[out] eigenvectors The eigenvectors of \f$\boldsymbol{\hat{L}}\f$
+  @param[in] retune <tt>true</tt> (default): If the eigensolver fails, return the numerical bandwidth parameters and try again, <tt>false</tt>: do not retune the parameters, just fail
   */
-  void ComputeEigendecomposition(Eigen::Ref<Eigen::VectorXd> S, Eigen::Ref<Eigen::VectorXd> Sinv, Eigen::Ref<Eigen::VectorXd> eigenvalues, Eigen::Ref<Eigen::MatrixXd> eigenvectors);
+  void ComputeEigendecomposition(Eigen::Ref<Eigen::VectorXd> S, Eigen::Ref<Eigen::VectorXd> Sinv, Eigen::Ref<Eigen::VectorXd> eigenvalues, Eigen::Ref<Eigen::MatrixXd> eigenvectors, bool const retune = true);
 
   /// Compute the coefficients for the expansion of a function \f$f\f$ using the eigenvectors as a basis
   /**
@@ -293,8 +300,38 @@ public:
   */
   Eigen::VectorXd PseudoInverse(Eigen::Ref<const Eigen::VectorXd> const& eigenvalues) const;
 
+  /// Compute the weighted gradient function \f$\nabla h \cdot \nabla v\f$ at each sample
+  /**
+  @param[in] v The function \f$v\f$
+  @param[in] coeff The coefficients such that \f$\boldsymbol{h} = \boldsymbol{Q} \boldsymbol{\widetilde{h}}\f$
+  @param[in] S The eigenvectors of \f$\boldsymbol{L}\f$ are \f$\boldsymbol{Q} = \boldsymbol{S}^{-1} \boldsymbol{\hat{Q}}\f$ this is \f$\boldsymbol{S}\f$
+  @param[in] Sinv The eigenvectors of \f$\boldsymbol{L}\f$ are \f$\boldsymbol{Q} = \boldsymbol{S}^{-1} \boldsymbol{\hat{Q}}\f$ this is \f$\boldsymbol{S}^{-1}\f$
+  @param[in] eigenvalues The eigenvalues of \f$\boldsymbol{\boldsymbol{\hat{L}}} = \boldsymbol{\hat{Q}} \boldsymbol{\Lambda} \boldsymbol{\hat{Q}}^T\f$
+  @param[in] eigenvectors The eigenvectors of \f$\boldsymbol{\boldsymbol{\hat{L}}} = \boldsymbol{\hat{Q}} \boldsymbol{\Lambda} \boldsymbol{\hat{Q}}^T\f$
+  \return The dot product \f$\nabla h \cdot \nabla v\f$ at each sample
+  */
+  Eigen::VectorXd WeightedGradient(std::function<double(Eigen::VectorXd const&)> const& v, Eigen::Ref<const Eigen::VectorXd> const& coeff, Eigen::Ref<const Eigen::VectorXd> const& S, Eigen::Ref<const Eigen::VectorXd> const& Sinv, Eigen::Ref<const Eigen::VectorXd> const& eigenvalues, Eigen::Ref<const Eigen::MatrixXd> const& eigenvectors) const;
+
+  /// Compute the weighted gradient function \f$\nabla h \cdot \nabla v\f$ at each sample
+  /**
+  @param[in] v The function \f$v\f$
+  @param[in] coeff The coefficients such that \f$\boldsymbol{h} = \boldsymbol{Q} \boldsymbol{\widetilde{h}}\f$
+  @param[in] eigenvalues The eigenvalues \f$\boldsymbol{\Lambda}\f$ of \f$\boldsymbol{\boldsymbol{L}} = \boldsymbol{Q} \boldsymbol{\Lambda} \boldsymbol{Q}^{-1}\f$
+  @param[in] eigenvectors The eigenvectors \f$\boldsymbol{Q}\f$ of \f$\boldsymbol{\boldsymbol{\hat{L}}} = \boldsymbol{\hat{Q}} \boldsymbol{\Lambda} \boldsymbol{\hat{Q}}^T\f$
+  @param[in] eigenvaluesAdj The adjoint eigenvectors \f$\boldsymbol{Q}^{-1}\f$ of \f$\boldsymbol{\boldsymbol{L}} = \boldsymbol{Q} \boldsymbol{\Lambda} \boldsymbol{Q}^{-1}\f$
+  \return The dot product \f$\nabla h \cdot \nabla v\f$ at each sample
+  */
+  Eigen::VectorXd WeightedGradient(std::function<double(Eigen::VectorXd const&)> const& v, Eigen::Ref<const Eigen::VectorXd> const& coeff, Eigen::Ref<const Eigen::VectorXd> const& eigenvalues, Eigen::Ref<const Eigen::MatrixXd> const& eigenvectors, Eigen::Ref<const Eigen::MatrixXd> const& eigenvectorsAdj) const;
+
   /// Compute the gradient of a function represented in the eigenbasis
   /**
+  This function computes the unweighted gradient \f$\nabla h\f$. We do this componentwise by computing the dot product \f$\nabla h \cdot \nabla v_s\f$, where \f$v_s(\boldsymbol{x}) = x_s\f$.
+  @param[in] coeff The coefficients such that \f$\boldsymbol{h} = \boldsymbol{Q} \boldsymbol{\widetilde{h}}\f$
+  @param[in] S The eigenvectors of \f$\boldsymbol{L}\f$ are \f$\boldsymbol{Q} = \boldsymbol{S}^{-1} \boldsymbol{\hat{Q}}\f$ this is \f$\boldsymbol{S}\f$
+  @param[in] Sinv The eigenvectors of \f$\boldsymbol{L}\f$ are \f$\boldsymbol{Q} = \boldsymbol{S}^{-1} \boldsymbol{\hat{Q}}\f$ this is \f$\boldsymbol{S}^{-1}\f$
+  @param[in] eigenvalues The eigenvalues of \f$\boldsymbol{\boldsymbol{\hat{L}}} = \boldsymbol{\hat{Q}} \boldsymbol{\Lambda} \boldsymbol{\hat{Q}}^T\f$
+  @param[in] eigenvectors The eigenvectors of \f$\boldsymbol{\boldsymbol{\hat{L}}} = \boldsymbol{\hat{Q}} \boldsymbol{\Lambda} \boldsymbol{\hat{Q}}^T\f$
+  \return The gradient \f$\nabla h\f$ at each sample
   */
   Eigen::MatrixXd FunctionGradient(Eigen::Ref<const Eigen::VectorXd> const& coeff, Eigen::Ref<const Eigen::VectorXd> const& S, Eigen::Ref<const Eigen::VectorXd> const& Sinv, Eigen::Ref<const Eigen::VectorXd> const& eigenvalues, Eigen::Ref<const Eigen::MatrixXd> const& eigenvectors) const;
 
@@ -337,6 +374,36 @@ private:
 
   /// The number of iterations for the eigensolver
   const std::size_t eigensolverMaxIt;
+
+  class SparseGenMatProd {
+  public:
+
+    /// Constructor to create the matrix operation object.
+    /**
+    @param[in] n The number of samples
+    */
+    SparseGenMatProd(std::size_t const n);
+
+    /// Return the number of rows of the underlying matrix.
+    Eigen::Index rows() const;
+
+    /// Return the number of columns of the underlying matrix.
+    Eigen::Index cols() const;
+
+    /// Perform the matrix-vector multiplication operation \f$y=Ax\f$.
+    /**
+    @param[in] x_in  Pointer to the \f$x\f$ vector.
+    @param[out] y_out Pointer to the \f$y\f$ vector. y_out = A * x_in
+    */
+    void perform_op(const double* x_in, double* y_out) const;
+
+    /// Symmetric matrix \f$\boldsymbol{\hat{L}}\f$
+    Eigen::SparseMatrix<double> m_mat;
+  };
+
+  SparseGenMatProd Lhatvec;
+
+  Spectra::SymEigsSolver<double, Spectra::SMALLEST_MAGN, SparseGenMatProd> eigsolver;
 
   /// The default values for the spi::NumericalSolvers::DensityEstimation class.
   struct DefaultParameters {

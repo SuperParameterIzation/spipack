@@ -13,7 +13,7 @@
 #include "kernels/limiter/generic/Limiter.h"
 #include "kernels/LimiterProjectionMatrices.h"
 
-Boltzmann::BoltzmannSolver::BoltzmannSolver(
+spiEX_Boltzmann::BoltzmannSolver::BoltzmannSolver(
         const double maximumMeshSize,
         const int maximumMeshDepth,
         const int haloCells,
@@ -27,9 +27,9 @@ Boltzmann::BoltzmannSolver::BoltzmannSolver(
 ) :
   exahype::solvers::LimitingADERDGSolver::LimitingADERDGSolver(
       "BoltzmannSolver",
-    new Boltzmann::BoltzmannSolver_ADERDG(
+    new spiEX_Boltzmann::BoltzmannSolver_ADERDG(
       maximumMeshSize,maximumMeshDepth,haloCells,haloBufferCells,limiterBufferCells,regularisedFineGridLevels,timeStepping,DMPObservables),
-    new Boltzmann::BoltzmannSolver_FV(
+    new spiEX_Boltzmann::BoltzmannSolver_FV(
       maximumMeshSize, timeStepping),
     DMPRelaxationParameter,
     DMPDifferenceScaling) {
@@ -38,25 +38,25 @@ Boltzmann::BoltzmannSolver::BoltzmannSolver(
   kernels::computeLegendre2LobattoProjector<Order>(leg2lob);  
 }
 
-void Boltzmann::BoltzmannSolver::projectOnFVLimiterSpace(const double* const luh, double* const lim) const {
+void spiEX_Boltzmann::BoltzmannSolver::projectOnFVLimiterSpace(const double* const luh, double* const lim) const {
   kernels::limiter::generic::c::projectOnFVLimiterSpace<NumberOfVariables+NumberOfParameters, Order+1, PatchSize, GhostLayerWidth>(luh, dg2fv, lim);
 }
 
-void Boltzmann::BoltzmannSolver::projectOnDGSpace(const double* const lim, double* const luh) const {
+void spiEX_Boltzmann::BoltzmannSolver::projectOnDGSpace(const double* const lim, double* const luh) const {
   kernels::limiter::generic::c::projectOnDGSpace<NumberOfVariables+NumberOfParameters, Order+1, PatchSize, GhostLayerWidth>(lim, fv2dg, luh);
 }
 
-bool Boltzmann::BoltzmannSolver::discreteMaximumPrincipleAndMinAndMaxSearch(const double* const luh, double* const boundaryMinPerVariables, double* const boundaryMaxPerVariables) {
+bool spiEX_Boltzmann::BoltzmannSolver::discreteMaximumPrincipleAndMinAndMaxSearch(const double* const luh, double* const boundaryMinPerVariables, double* const boundaryMaxPerVariables) {
   return kernels::limiter::generic::c::discreteMaximumPrincipleAndMinAndMaxSearch<AbstractBoltzmannSolver_ADERDG, NumberOfDMPObservables, Order+1, PatchSize, GhostLayerWidth>(
     luh, *static_cast<AbstractBoltzmannSolver_ADERDG*>(_solver.get()), dg2fv, fv2dg, leg2lob, _DMPMaximumRelaxationParameter, _DMPDifferenceScaling, boundaryMinPerVariables, boundaryMaxPerVariables);
 }
 
-void Boltzmann::BoltzmannSolver::findCellLocalMinAndMax(const double* const luh, double* const localMinPerVariables, double* const localMaxPerVariable) {
+void spiEX_Boltzmann::BoltzmannSolver::findCellLocalMinAndMax(const double* const luh, double* const localMinPerVariables, double* const localMaxPerVariable) {
   kernels::limiter::generic::c::findCellLocalMinAndMax<AbstractBoltzmannSolver_ADERDG, NumberOfDMPObservables, Order+1, PatchSize>(
     luh, *static_cast<AbstractBoltzmannSolver_ADERDG*>(_solver.get()), dg2fv, fv2dg, leg2lob, localMinPerVariables, localMaxPerVariable);
 }
 
-void Boltzmann::BoltzmannSolver::findCellLocalLimiterMinAndMax(const double* const lim, double* const localMinPerObservable, double* const localMaxPerObservable) {
+void spiEX_Boltzmann::BoltzmannSolver::findCellLocalLimiterMinAndMax(const double* const lim, double* const localMinPerObservable, double* const localMaxPerObservable) {
   kernels::limiter::generic::c::findCellLocalLimiterMinAndMax<AbstractBoltzmannSolver_ADERDG, NumberOfDMPObservables, Order+1, PatchSize, GhostLayerWidth>(
     lim, *static_cast<AbstractBoltzmannSolver_ADERDG*>(_solver.get()), localMinPerObservable, localMaxPerObservable);
 }

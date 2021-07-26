@@ -43,7 +43,7 @@ int main(int argc, char **argv) {
   YAML::Node options;
   options["NearestNeighbors"] = nnOptions;
   options["NumNearestNeighbors"] = numNeighbors;
-  options["TruncationTolerance"] = -std::log(1.0e-1);
+  options["TruncationTolerance"] = -std::log(1.0e-4);
   options["ManifoldDimension"] = (double)dim;
 
   // create the density estimator

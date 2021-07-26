@@ -16,14 +16,14 @@ int main(int argc, char **argv) {
   const std::string filename = "outputData.h5";
 
   // the number of samples
-  const std::size_t n = 1000;
+  const std::size_t n = 10000;
 
   // numerical parameters
   const std::size_t numNeighbors = 25;
 
   // the number of eigenvalues
-  const std::size_t neigs = std::min((std::size_t)100, n-1);
-  const double eigensolverTol = 1.0e-8;
+  const std::size_t neigs = 3*log(n);
+  const double eigensolverTol = 1.0e-4;
 
   // create a standard Gaussian random variable
   auto rv = std::make_shared<Gaussian>(dim)->AsVariable();
@@ -31,7 +31,7 @@ int main(int argc, char **argv) {
   // options for the nearest neighbor search
   YAML::Node nnOptions;
   nnOptions["NumSamples"] = n;
-  nnOptions["Stride"] = n/5;
+  nnOptions["Stride"] = std::size_t(5*std::log((double)n));
   nnOptions["NumThreads"] = omp_get_max_threads();
 
   // set the kernel options
@@ -43,7 +43,7 @@ int main(int argc, char **argv) {
   densityOptions["NearestNeighbors"] = nnOptions;
   densityOptions["KernelOptions"] = kernelOptions;
   densityOptions["NumNearestNeighbors"] = numNeighbors;
-  densityOptions["TruncationTolerance"] = -std::log(1.0e-2);
+  densityOptions["TruncationTolerance"] = -std::log(1.0e-4);
   densityOptions["ManifoldDimension"] = (double)dim;
 
   // set the options for the Kolmogorov operator
@@ -52,12 +52,13 @@ int main(int argc, char **argv) {
   options["KernelOptions"] = kernelOptions;
   options["DensityOptions"] = densityOptions;
   options["OperatorParameter"] = 1.0;
-  options["TruncationTolerance"] = -std::log(1.0e-2);
+  options["TruncationTolerance"] = -std::log(1.0e-4);
   options["ManifoldDimension"] = (double)dim;
   options["BandwidthExponent"] = -0.5;
   options["BandwidthParameter"] = 1.0e-1;
   options["NumEigenvalues"] = neigs;
   options["EigensolverTolerance"] = eigensolverTol;
+  options["NumNearestNeighbors"] = 25;
 
   // create the Kolmogorov operator
   auto kolOperator = std::make_shared<KolmogorovOperator>(rv, options);
@@ -91,7 +92,11 @@ int main(int argc, char **argv) {
   const Eigen::VectorXd inverseCoeff = kolOperator->PseudoInverse(rhs, S, lambda, Qhat);
   assert(inverseCoeff.size()==kolOperator->NumEigenvalues());
   Eigen::VectorXd inverse = Sinv.asDiagonal()*Qhat*inverseCoeff;
-  inverse -= Eigen::VectorXd::Constant(n, inverse.sum()/n);
+  //inverse -= Eigen::VectorXd::Constant(n, inverse.sum()/n);
+
+
+  const Eigen::VectorXd rhsCoeff = kolOperator->FunctionRepresentation(S, Qhat, rhs);
+  Eigen::VectorXd rhsExpanded = Sinv.asDiagonal()*Qhat*rhsCoeff;
 
   std::cout << "done." << std::endl;
 
@@ -107,8 +112,10 @@ int main(int argc, char **argv) {
 
   // open the file and write data to file
   HDF5File hdf5file(filename);
-  hdf5file.WriteMatrix("/right hand side", rhs);
+  hdf5file.WriteMatrix("/true right hand side", rhs);
+  hdf5file.WriteMatrix("/expanded right hand side", rhsExpanded);
   hdf5file.WriteMatrix("/weighted Poisson solution", inverse);
   hdf5file.WriteMatrix("/weighted Poisson solution gradient", gradient);
+  hdf5file.WriteMatrix("/eigenvectors Qhat", Qhat);
   hdf5file.Close();
 }

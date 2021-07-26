@@ -575,7 +575,8 @@ TEST_F(KolmogorovOperatorTests, FunctionRepresentation) {
 
   // compute the eigendecomposition
   Eigen::VectorXd S(kolOperator->NumSamples()), Sinv(kolOperator->NumSamples());
-  Eigen::VectorXd eigenvalues = Eigen::VectorXd::Random(kolOperator->NumEigenvalues()); // initialize to random so we check to make sure the small (magnitude) is set to zero
+  Eigen::VectorXd eigenvalues = Eigen::VectorXd::Random(kolOperator->NumEigenvalues());
+   // initialize to random so we check to make sure the small (magnitude) is set to zero
   Eigen::MatrixXd eigenvectors(kolOperator->NumSamples(), kolOperator->NumEigenvalues());
   kolOperator->ComputeEigendecomposition(S, Sinv, eigenvalues, eigenvectors);
 
@@ -745,6 +746,12 @@ TEST_F(KolmogorovOperatorTests, FunctionGradient) {
 
     // compute the gradient of the function given the coefficients
     const Eigen::MatrixXd gradient = kolOperator->FunctionGradient(coeff, S, Sinv, eigenvalues, eigenvectors);
+
+    const Eigen::MatrixXd weightedGrad0 = kolOperator->WeightedGradient([](Eigen::VectorXd const& x) -> double { return x(0); }, coeff, S, Sinv, eigenvalues, eigenvectors);
+
+    for( std::size_t i=0; i<n; ++i ) {
+      EXPECT_NEAR(weightedGrad0(i), gradient(i, 0), 1.0e-10);
+    }
 
     // the gradient is constant so let's make sure the average is okay
     EXPECT_NEAR((gradient.colwise().sum()/n).sum(), dim, 0.2); // the error is quite large, but we are also only using 1000 samples

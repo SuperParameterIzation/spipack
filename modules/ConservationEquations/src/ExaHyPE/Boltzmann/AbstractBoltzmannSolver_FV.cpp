@@ -20,18 +20,18 @@
 
 #include "exahype/disableOptimization.h" // we experience compiler bugs sometimes.
 
-Boltzmann::BoltzmannSolver_FV::BoltzmannSolver_FV(const double maximumMeshSize,const exahype::solvers::Solver::TimeStepping timeStepping):
+spiEX_Boltzmann::BoltzmannSolver_FV::BoltzmannSolver_FV(const double maximumMeshSize,const exahype::solvers::Solver::TimeStepping timeStepping):
   AbstractBoltzmannSolver_FV::AbstractBoltzmannSolver_FV(maximumMeshSize,timeStepping) {
 }
 
-Boltzmann::AbstractBoltzmannSolver_FV::AbstractBoltzmannSolver_FV(const double maximumMeshSize,const exahype::solvers::Solver::TimeStepping timeStepping):
+spiEX_Boltzmann::AbstractBoltzmannSolver_FV::AbstractBoltzmannSolver_FV(const double maximumMeshSize,const exahype::solvers::Solver::TimeStepping timeStepping):
 exahype::solvers::FiniteVolumesSolver("BoltzmannSolver_FV",NumberOfVariables,NumberOfParameters,NumberOfGlobalObservables, PatchSize,
                                         GhostLayerWidth,maximumMeshSize,timeStepping) {
 }
 
-void Boltzmann::AbstractBoltzmannSolver_FV::constantsToString(std::ostream& os) {
+void spiEX_Boltzmann::AbstractBoltzmannSolver_FV::constantsToString(std::ostream& os) {
 	// This string is used in the --version output to identify compile time constants
-	os << "Boltzmann::AbstractBoltzmannSolver_FV("
+	os << "spiEX_Boltzmann::AbstractBoltzmannSolver_FV("
 	   << "nVar=" << NumberOfVariables << ", "
 	   << "nParam=" << NumberOfParameters << ", "
 	   << "PatchSize=" << PatchSize << ", "
@@ -39,31 +39,31 @@ void Boltzmann::AbstractBoltzmannSolver_FV::constantsToString(std::ostream& os) 
 	   << ")";
 }
 
-void Boltzmann::AbstractBoltzmannSolver_FV::abortWithMsg(const char* const msg) {
+void spiEX_Boltzmann::AbstractBoltzmannSolver_FV::abortWithMsg(const char* const msg) {
 	// verbosily fail even without assertions turned on
 	puts(msg);
 	abort();
 }
 
-void Boltzmann::AbstractBoltzmannSolver_FV::solutionUpdate(double* luh,const tarch::la::Vector<DIMENSIONS,double>& cellCenter,const tarch::la::Vector<DIMENSIONS,double>& cellSize,const double t, const double dt,double& maxAdmissibleDt) {
+void spiEX_Boltzmann::AbstractBoltzmannSolver_FV::solutionUpdate(double* luh,const tarch::la::Vector<DIMENSIONS,double>& cellCenter,const tarch::la::Vector<DIMENSIONS,double>& cellSize,const double t, const double dt,double& maxAdmissibleDt) {
   maxAdmissibleDt = kernels::finitevolumes::musclhancock::c::solutionUpdate<
-    true, false, true, false, false,
+    true, true, true, false, false,
     kernels::finitevolumes::commons::c::minmod,
     BoltzmannSolver_FV
     >(*static_cast<BoltzmannSolver_FV*>(this),luh,cellCenter,cellSize,t,dt);
 }
 
 
-double Boltzmann::AbstractBoltzmannSolver_FV::stableTimeStepSize(const double* const luh,const tarch::la::Vector<DIMENSIONS,double>& cellSize) {
+double spiEX_Boltzmann::AbstractBoltzmannSolver_FV::stableTimeStepSize(const double* const luh,const tarch::la::Vector<DIMENSIONS,double>& cellSize) {
   double maxAdmissibleDt = kernels::finitevolumes::commons::c::stableTimeStepSize<BoltzmannSolver_FV,false>(*static_cast<BoltzmannSolver_FV*>(this),luh,cellSize);
   return maxAdmissibleDt;
 }
 
-void Boltzmann::AbstractBoltzmannSolver_FV::adjustSolution(double* const luh,const tarch::la::Vector<DIMENSIONS,double>& cellCentre,const tarch::la::Vector<DIMENSIONS,double>& cellSize,const double t,const double dt) {
+void spiEX_Boltzmann::AbstractBoltzmannSolver_FV::adjustSolution(double* const luh,const tarch::la::Vector<DIMENSIONS,double>& cellCentre,const tarch::la::Vector<DIMENSIONS,double>& cellSize,const double t,const double dt) {
   kernels::finitevolumes::commons::c::solutionAdjustment<BoltzmannSolver_FV>(*static_cast<BoltzmannSolver_FV*>(this),luh,cellCentre,cellSize,t,dt);
 }
 
-void Boltzmann::AbstractBoltzmannSolver_FV::boundaryConditions(double* const luh,const tarch::la::Vector<DIMENSIONS,double>& cellCentre,const tarch::la::Vector<DIMENSIONS,double>& cellSize,const double t,const double dt,const tarch::la::Vector<DIMENSIONS, int>& posCell,const tarch::la::Vector<DIMENSIONS, int>& posBoundary) {
+void spiEX_Boltzmann::AbstractBoltzmannSolver_FV::boundaryConditions(double* const luh,const tarch::la::Vector<DIMENSIONS,double>& cellCentre,const tarch::la::Vector<DIMENSIONS,double>& cellSize,const double t,const double dt,const tarch::la::Vector<DIMENSIONS, int>& posCell,const tarch::la::Vector<DIMENSIONS, int>& posBoundary) {
   constexpr int cellsPerFace = PatchSize*GhostLayerWidth;
   constexpr int sizeLuhbnd = (NumberOfVariables+NumberOfParameters)*cellsPerFace;
   
@@ -87,31 +87,31 @@ void Boltzmann::AbstractBoltzmannSolver_FV::boundaryConditions(double* const luh
 }
 
 
-void Boltzmann::AbstractBoltzmannSolver_FV::ghostLayerFilling(double* const luh,const double* const luhNeighbour,const tarch::la::Vector<DIMENSIONS,int>& neighbourPosition) {
+void spiEX_Boltzmann::AbstractBoltzmannSolver_FV::ghostLayerFilling(double* const luh,const double* const luhNeighbour,const tarch::la::Vector<DIMENSIONS,int>& neighbourPosition) {
   kernels::finitevolumes::commons::c::ghostLayerFilling<BoltzmannSolver_FV>(*static_cast<BoltzmannSolver_FV*>(this),luh,luhNeighbour,neighbourPosition);
 }
 
-void Boltzmann::AbstractBoltzmannSolver_FV::ghostLayerFillingAtBoundary(double* const luh,const double* const luhbnd,const tarch::la::Vector<DIMENSIONS,int>& boundaryPosition) {
+void spiEX_Boltzmann::AbstractBoltzmannSolver_FV::ghostLayerFillingAtBoundary(double* const luh,const double* const luhbnd,const tarch::la::Vector<DIMENSIONS,int>& boundaryPosition) {
   kernels::finitevolumes::commons::c::ghostLayerFillingAtBoundary<BoltzmannSolver_FV>(*static_cast<BoltzmannSolver_FV*>(this),luh,luhbnd,boundaryPosition);
 }
 
-void Boltzmann::AbstractBoltzmannSolver_FV::boundaryLayerExtraction(double* const luhbnd,const double* const luh,const tarch::la::Vector<DIMENSIONS,int>& boundaryPosition) {
+void spiEX_Boltzmann::AbstractBoltzmannSolver_FV::boundaryLayerExtraction(double* const luhbnd,const double* const luh,const tarch::la::Vector<DIMENSIONS,int>& boundaryPosition) {
   kernels::finitevolumes::commons::c::boundaryLayerExtraction<BoltzmannSolver_FV>(*static_cast<BoltzmannSolver_FV*>(this),luhbnd,luh,boundaryPosition);
 }
 
-double Boltzmann::AbstractBoltzmannSolver_FV::riemannSolver(double* fL, double *fR, const double* qL, const double* qR, const double* gradQL, const double* gradQR, const double* cellSize, int direction) {
+double spiEX_Boltzmann::AbstractBoltzmannSolver_FV::riemannSolver(double* fL, double *fR, const double* qL, const double* qR, const double* gradQL, const double* gradQR, const double* cellSize, int direction) {
   // Default FV Riemann Solver
-  return kernels::finitevolumes::riemannsolvers::c::rusanov<false, true, false, BoltzmannSolver_FV>(*static_cast<BoltzmannSolver_FV*>(this), fL,fR,qL,qR,gradQL, gradQR, cellSize, direction);
+  return kernels::finitevolumes::riemannsolvers::c::rusanov<true, true, false, BoltzmannSolver_FV>(*static_cast<BoltzmannSolver_FV*>(this), fL,fR,qL,qR,gradQL, gradQR, cellSize, direction);
 
 }
 
 //--------
 
 
-void Boltzmann::AbstractBoltzmannSolver_FV::resetGlobalObservables(double* const globalObservables) {
+void spiEX_Boltzmann::AbstractBoltzmannSolver_FV::resetGlobalObservables(double* const globalObservables) {
 }
 
-void Boltzmann::AbstractBoltzmannSolver_FV::updateGlobalObservables(
+void spiEX_Boltzmann::AbstractBoltzmannSolver_FV::updateGlobalObservables(
     double* const                               globalObservables,
     const double* const                         luh,
     const tarch::la::Vector<DIMENSIONS,double>& cellCentre,
@@ -120,20 +120,20 @@ void Boltzmann::AbstractBoltzmannSolver_FV::updateGlobalObservables(
     const double dt) {
 }
 
-void Boltzmann::AbstractBoltzmannSolver_FV::mergeGlobalObservables(double* const globalObservables,const double* const otherObservables) {
+void spiEX_Boltzmann::AbstractBoltzmannSolver_FV::mergeGlobalObservables(double* const globalObservables,const double* const otherObservables) {
 }
 
-void Boltzmann::AbstractBoltzmannSolver_FV::wrapUpGlobalObservables(double* const globalObservables) {
+void spiEX_Boltzmann::AbstractBoltzmannSolver_FV::wrapUpGlobalObservables(double* const globalObservables) {
 }
 
 //--------
 
 // user hooks
-void Boltzmann::AbstractBoltzmannSolver_FV::resetGlobalObservables(GlobalObservables& globalObservables) const {
+void spiEX_Boltzmann::AbstractBoltzmannSolver_FV::resetGlobalObservables(GlobalObservables& globalObservables) const {
   abortWithMsg("If this operation is entered (resetGlobalObservables), you have specified global observables. Then you have to re-implement this routine, too." );
 }
 
-void Boltzmann::AbstractBoltzmannSolver_FV::mapGlobalObservables(
+void spiEX_Boltzmann::AbstractBoltzmannSolver_FV::mapGlobalObservables(
     GlobalObservables&                          globalObservables,
     const double* const                         luh,
     const tarch::la::Vector<DIMENSIONS,double>& cellCentre,
@@ -143,13 +143,13 @@ void Boltzmann::AbstractBoltzmannSolver_FV::mapGlobalObservables(
   abortWithMsg("If this operation is entered (mapGlobalObservables), you have specified global observables. Then you have to re-implement this routine, too." );
 }
 
-void Boltzmann::AbstractBoltzmannSolver_FV::mergeGlobalObservables(
+void spiEX_Boltzmann::AbstractBoltzmannSolver_FV::mergeGlobalObservables(
     GlobalObservables&         globalObservables,
     ReadOnlyGlobalObservables& otherObservables) const {
   abortWithMsg("If this operation is entered (mergeGlobalObservables), you have specified global observables. Then you have to re-implement this routine, too." );
 }
 
-void Boltzmann::AbstractBoltzmannSolver_FV::wrapUpGlobalObservables(GlobalObservables& globalObservables) const {
+void spiEX_Boltzmann::AbstractBoltzmannSolver_FV::wrapUpGlobalObservables(GlobalObservables& globalObservables) const {
   // Please re-implement if required.
 }
 

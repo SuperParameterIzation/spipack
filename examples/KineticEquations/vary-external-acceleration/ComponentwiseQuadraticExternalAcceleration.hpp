@@ -15,11 +15,10 @@ public:
 
   /**
   @param[in] vel The particle velocity \$\boldsymbol{v}\f$
-  @param[in] x The macro-scale location \f$\boldsymbol{x}\f$
   @param[in] time The macro-scale time
   \return The external acceleration
   */
-  virtual Eigen::VectorXd ExternalAcceleration(Eigen::Ref<const Eigen::VectorXd> const& vel, Eigen::Ref<const Eigen::VectorXd> const& x, double const time) const override;
+  virtual Eigen::Matrix<double, ConditionalVelocityDistribution::dim, 1> ExternalAcceleration(Eigen::Ref<const Eigen::Matrix<double, ConditionalVelocityDistribution::dim, 1> > const& vel, double const time) const override;
 
 private:
 };

@@ -34,15 +34,15 @@ def MakeFigure(totalWidthPts, fraction, presentationVersion = False):
     greyColor = '#525252'
     whiteColor = '#ffffff'
     if not presentationVersion:
-        rcParams['axes.labelsize'] = 9
-        rcParams['xtick.labelsize'] = 9
-        rcParams['ytick.labelsize'] = 9
-        rcParams['legend.fontsize'] = 9
+        rcParams['axes.labelsize'] = 18
+        rcParams['xtick.labelsize'] = 14
+        rcParams['ytick.labelsize'] = 14
+        rcParams['legend.fontsize'] = 14
     else:
-        rcParams['axes.labelsize'] = 12
-        rcParams['xtick.labelsize'] = 12
-        rcParams['ytick.labelsize'] = 12
-        rcParams['legend.fontsize'] = 12
+        rcParams['axes.labelsize'] = 18
+        rcParams['xtick.labelsize'] = 14
+        rcParams['ytick.labelsize'] = 14
+        rcParams['legend.fontsize'] = 14
     rcParams['axes.edgecolor'] = greyColor
     rcParams['axes.facecolor'] = whiteColor
     rcParams['figure.facecolor'] = whiteColor
@@ -86,7 +86,7 @@ print('Optimal bandwidth parameter:', bandwidthPara[optInd])
 
 fig = MakeFigure(425, 0.9, False)
 ax = plt.gca()
-scatter = ax.scatter(samples.T[0], samples.T[1], s=3, c=squaredBandwidth, norm=mcolors.LogNorm(), vmin=min(squaredBandwidth), vmax=max(squaredBandwidth))
+scatter = ax.scatter(samples.T[0], samples.T[1], s=3, c=squaredBandwidth, norm=mcolors.LogNorm(), vmin=min(squaredBandwidth), vmax=max(squaredBandwidth), cmap='jet')
 cbar = plt.colorbar(scatter)
 ax.spines['right'].set_visible(False)
 ax.spines['top'].set_visible(False)
@@ -100,13 +100,13 @@ plt.close(fig)
 
 fig = MakeFigure(425, 0.9, False)
 ax = plt.gca()
-scatter = ax.scatter(samples.T[0], samples.T[1], s=3, c=densityEstimate, vmin=0.0, vmax=0.16)
+scatter = ax.scatter(samples.T[0], samples.T[1], s=3, c=densityEstimate, vmin=0.0, vmax=0.16, cmap='jet')
 cbar = plt.colorbar(scatter)
 ax.spines['right'].set_visible(False)
 ax.spines['top'].set_visible(False)
 ax.yaxis.set_ticks_position('left')
 ax.xaxis.set_ticks_position('bottom')
-cbar.ax.set_ylabel(r'Density estimtaion $\psi^{(i)}$')
+cbar.set_label(label=r'Density estimtaion $\psi^{(i)}$', size=16)
 ax.set_xlabel(r'$x_0$')
 ax.set_ylabel(r'$x_1$')
 plt.savefig('figures/DensityEstimation.pdf', format='pdf', bbox_inches='tight')
@@ -114,13 +114,13 @@ plt.close(fig)
 
 fig = MakeFigure(425, 0.9, False)
 ax = plt.gca()
-scatter = ax.scatter(samples.T[0], samples.T[1], s=3, c=trueDensity, vmin=0.0, vmax=0.16)
+scatter = ax.scatter(samples.T[0], samples.T[1], s=3, c=trueDensity, vmin=0.0, vmax=0.16, cmap='jet')
 cbar = plt.colorbar(scatter)
 ax.spines['right'].set_visible(False)
 ax.spines['top'].set_visible(False)
 ax.yaxis.set_ticks_position('left')
 ax.xaxis.set_ticks_position('bottom')
-cbar.ax.set_ylabel(r'True density evaluation $\mathcal{N}(\mathbf{x}^{(i)}; \mathbf{0}, \mathbf{I})$')
+cbar.set_label(label=r'True density evaluation $\mathcal{N}(\mathbf{x}^{(i)}; \mathbf{0}, \mathbf{I})$', size=12)
 ax.set_xlabel(r'$x_0$')
 ax.set_ylabel(r'$x_1$')
 plt.savefig('figures/TrueDensity.pdf', format='pdf', bbox_inches='tight')
@@ -133,8 +133,8 @@ ax.semilogx(bandwidthPara, logKernelAvgDerivative, color='#525252')
 ax.plot(bandwidthPara[optInd], logKernelAvgDerivative[optInd], 'o', markersize=4, markerfacecolor='#a50f15', markeredgecolor='#a50f15')
 ax.set_xlim([min(bandwidthPara), max(bandwidthPara)])
 ax.set_ylim([0, 1.05])
-ax.set_xlabel(r'$\epsilon$')
-ax.set_ylabel(r'$\Sigma_l^{\prime}$')
+ax.set_xlabel(r'Bandwidth parameter $\epsilon$', fontsize=16)
+ax.set_ylabel(r'$\chi_{\xi}^{\prime}$')
 ax.spines['right'].set_visible(False)
 ax.spines['top'].set_visible(False)
 ax.yaxis.set_ticks_position('left')

@@ -4,34 +4,36 @@
 // ========================
 //   www.exahype.eu
 // ========================
-#ifndef UpdateParticleMethods_CLASS_HEADER_
-#define UpdateParticleMethods_CLASS_HEADER_
+#ifndef UpdateMicroscaleMethods_CLASS_HEADER_
+#define UpdateMicroscaleMethods_CLASS_HEADER_
+
+#include <MUQ/SamplingAlgorithms/SampleCollection.h>
 
 #include "exahype/plotters/LimitingADERDG2UserDefined.h"
 
-namespace Boltzmann {
-  class UpdateParticleMethods;
+namespace spiEX_Boltzmann {
+  class UpdateMicroscaleMethods;
 }
 
-class Boltzmann::UpdateParticleMethods : public exahype::plotters::LimitingADERDG2UserDefined {
+class spiEX_Boltzmann::UpdateMicroscaleMethods : public exahype::plotters::LimitingADERDG2UserDefined {
  public:
   /**
    * Constructor.
-   * 
+   *
    * \note ExaHyPE does not increment file counters for
    * you if you use user defined plotting. You have
-   * to declare and manage such member variables yourself. 
+   * to declare and manage such member variables yourself.
    */
-  UpdateParticleMethods();
+  UpdateMicroscaleMethods();
 
   /**
-   * This method is invoked every time an ADER-DG cell 
+   * This method is invoked every time an ADER-DG cell
    * is touched by the plotting plotter.
    *
    * \note Use the protected variables _order, _variables to
-   * determine the size of u. 
+   * determine the size of u.
    * The array u has the size _variables * (_order+1)^DIMENSIONS.
-   * 
+   *
    * \param[in] offsetOfPatch the offset of the cell/patch.
    * \param[in] sizeOfPatch the offset of the cell/patch.
    * \param[in] u the degrees of freedom "living" inside of the patch.
@@ -42,13 +44,13 @@ class Boltzmann::UpdateParticleMethods : public exahype::plotters::LimitingADERD
       double timeStamp) override;
 
   /**
-   * This method is invoked every time a Finite Volume cell 
+   * This method is invoked every time a Finite Volume cell
    * is touched by the plotting plotter.
    *
    * \note Use the protected variables _order, _variables to
-   * determine the size of u. 
+   * determine the size of u.
    * The array u has the size _variables * (_order+1)^DIMENSIONS.
-   * 
+   *
    * \param[in] offsetOfPatch the offset of the cell/patch.
    * \param[in] sizeOfPatch the offset of the cell/patch.
    * \param[in] u the degrees of freedom "living" inside of the patch.
@@ -58,7 +60,7 @@ class Boltzmann::UpdateParticleMethods : public exahype::plotters::LimitingADERD
       const tarch::la::Vector<DIMENSIONS, double>& sizeOfPatch, double* const u,
       double timeStamp) override;
 
-  /** 
+  /**
    * This method is called at the beginning of the plotting.
    * You can use it to reset member variables, e.g., those
    * used for calculations, or to increment file counters.
@@ -67,13 +69,19 @@ class Boltzmann::UpdateParticleMethods : public exahype::plotters::LimitingADERD
    *            Usually the global minimum.
    */
   void startPlotting( double time) override;
-  
-  /** 
+
+  /**
    * This method is called at the end of the plotting.
    * You can use it to reset member variables, finalise calculations (compute square roots etc.),
    * or to increment file counters
    */
   void finishPlotting() override;
+
+  /// The current time of the macro-scale simulation
+  double currentTime = std::numeric_limits<double>::quiet_NaN();
+
+  /// Store the state at grid points
+  std::shared_ptr<muq::SamplingAlgorithms::SampleCollection> states;
 };
 
-#endif /* UpdateParticleMethods_CLASS_HEADER_ */
+#endif /* UpdateMicroscaleMethods_CLASS_HEADER_ */

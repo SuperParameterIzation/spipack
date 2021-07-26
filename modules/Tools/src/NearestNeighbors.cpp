@@ -24,7 +24,7 @@ numThreads(options["NumThreads"].as<std::size_t>(defaults.numThreads))
 
 void NearestNeighbors::Initialize(YAML::Node const& options) {
   // get the stride
-  const std::size_t stride = options["Stride"].as<double>(NumSamples()<5? NumSamples() : (size_t)(NumSamples()/5));
+  const std::size_t stride = NumSamples()/options["Stride"].as<std::size_t>(1);
 
   // reserve memory
   clouds.reserve(NumSamples()/stride+1);
@@ -61,6 +61,11 @@ Eigen::Ref<Eigen::VectorXd> NearestNeighbors::Point(std::size_t const i) {
   return samples->at(i)->state[0];
 }
 
+std::shared_ptr<SamplingState> NearestNeighbors::GetSamplingState(std::size_t const i) {
+  assert(samples);
+  assert(i<samples->size());
+  return samples->at(i);
+}
 
 std::size_t NearestNeighbors::NumSamples() const {
   assert(samples);
@@ -75,7 +80,7 @@ std::size_t NearestNeighbors::StateDim() const {
   return samples->at(0)->state[0].size();
 }
 
-std::shared_ptr<const SampleCollection> NearestNeighbors::Samples() const {
+std::shared_ptr<SampleCollection> NearestNeighbors::Samples() const {
   assert(samples);
   return samples;
 }
@@ -99,6 +104,7 @@ void NearestNeighbors::FindNeighbors(Eigen::Ref<const Eigen::VectorXd> const& po
   // choose the kdtree that ignores the first lag samples
   std::size_t ind = clouds.size()-1;
   while( clouds[ind].lag>lag ) { --ind; }
+  assert(clouds[ind].kdtree_get_point_count()==kdtrees[ind]->m_size);
 
   // find the nearest neighbors---neighbors in a specified radius
   kdtrees[ind]->findNeighbors(resultSet, point.data(), nanoflann::SearchParams());
@@ -176,12 +182,20 @@ Eigen::VectorXd NearestNeighbors::Mean() const {
 }
 
 Eigen::MatrixXd NearestNeighbors::Covariance() const {
+  assert(false);
   assert(samples);
   return samples->Covariance(0);
 }
 
 Eigen::MatrixXd NearestNeighbors::Covariance(Eigen::Ref<const Eigen::VectorXd> const& mean) const {
-  assert(samples);
+  /*assert(samples);
+  Eigen::MatrixXd cov = Eigen::MatrixXd::Zero(Point(0).size(), Point(0).size());
+  for( std::size_t i=0; i<NumSamples(); ++i ) {
+    const Eigen::VectorXd diff = Point(i)-mean;
+    cov += diff*diff.transpose();
+  }
+  cov /= (double)NumSamples();
+  return cov;*/
   return samples->Covariance(mean, 0);
 }
 

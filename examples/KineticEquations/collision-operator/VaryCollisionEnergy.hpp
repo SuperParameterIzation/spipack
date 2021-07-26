@@ -63,11 +63,10 @@ private:
   /**
   @param[in] v One of the velocity vectors \f$\boldsymbol{v}\f$
   @param[in] vprime The second velocity vector $\boldsymbol{v^{\prime}}\f$
-  @param[in] x The macro-scale location \f$\boldsymbol{x}\f$
   @param[in] t The macro-scale time \f$t\f$
   \return A vector on the unit hypersphere \f$\boldsymbol{w}\f$
   */
-  inline virtual Eigen::VectorXd SampleUnitHypersphere(Eigen::Ref<const Eigen::VectorXd> const& v, Eigen::Ref<const Eigen::VectorXd> const& vprime, Eigen::Ref<const Eigen::VectorXd> const& x, double const t) const override {
+  inline virtual Eigen::Matrix<double, ConditionalVelocityDistribution::dim, 1> SampleUnitHypersphere(Eigen::Ref<const Eigen::Matrix<double, ConditionalVelocityDistribution::dim, 1> > const& v, Eigen::Ref<const Eigen::Matrix<double, ConditionalVelocityDistribution::dim, 1> > const& vprime, double const t) const override {
     const double theta = 2.0*M_PI*muq::Utilities::RandomGenerator::GetUniform();
     Eigen::Matrix<double, dim, 1> w(dim, 1);
     w(0) = std::cos(theta); w(1) = std::sin(theta);
@@ -79,11 +78,10 @@ private:
   @param[in] v One of the velocity vectors \f$\boldsymbol{v}\f$
   @param[in] vprime The second velocity vector $\boldsymbol{v^{\prime}}\f$
   @param[in] w The angle vector between the two samples
-  @param[in] x The macro-scale location \f$\boldsymbol{x}\f$
   @param[in] t The macro-scale time \f$t\f$
   \return A vector on the unit hypersphere \f$\boldsymbol{w}\f$
   */
-  inline virtual double PostCollisionFunction(Eigen::Ref<const Eigen::VectorXd> const& v, Eigen::Ref<const Eigen::VectorXd> const& vprime, Eigen::Ref<const Eigen::VectorXd> const& w, Eigen::Ref<const Eigen::VectorXd> const& x, double const t) const override {
+  inline virtual double PostCollisionFunction(Eigen::Ref<const Eigen::Matrix<double, ConditionalVelocityDistribution::dim, 1> > const& v, Eigen::Ref<const Eigen::Matrix<double, ConditionalVelocityDistribution::dim, 1> > const& vprime, Eigen::Ref<const Eigen::Matrix<double, ConditionalVelocityDistribution::dim, 1> > const& w, double const t) const override {
     // the energy
     const double etimes4 = 2.0*(v.dot(v)+vprime.dot(vprime));
 

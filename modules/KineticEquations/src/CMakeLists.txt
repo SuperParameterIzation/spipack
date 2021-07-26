@@ -1,5 +1,9 @@
 set(SOURCE
+  MacroscaleInformation.cpp
   ConditionalVelocityDistribution.cpp
+
+  KineticModels.cpp
+  KineticParticleModels.cpp
 )
 
 add_library(spiKE SHARED ${SOURCE})

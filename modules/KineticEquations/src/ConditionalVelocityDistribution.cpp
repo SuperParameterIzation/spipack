@@ -2,190 +2,274 @@
 
 #include <MUQ/Utilities/RandomGenerator.h>
 
+#include <MUQ/Modeling/ODE.h>
 #include <MUQ/Modeling/Distributions/Gaussian.h>
 
 #include <sstream>
 #include <iomanip>
 
+namespace pt = boost::property_tree;
 using namespace muq::Utilities;
 using namespace muq::Modeling;
 using namespace muq::SamplingAlgorithms;
 using namespace spi::Tools;
-using namespace spi::NumericalSolvers;
 using namespace spi::KineticEquations;
 
-ConditionalVelocityDistribution::ConditionalVelocityDistribution(Eigen::VectorXd const& macroLoc, std::shared_ptr<RandomVariable> const& rv, std::shared_ptr<MacroscaleInformation> const& initMacroInfo, YAML::Node const& options) :
+ConditionalVelocityDistribution::ConditionalVelocityDistribution(Eigen::Matrix<double, MacroscaleInformation::dim, 1> const& macroLoc, std::shared_ptr<RandomVariable> const& rv, std::shared_ptr<MacroscaleInformation> const& initMacroInfo, YAML::Node const& options) :
 macroLoc(macroLoc),
 samples(std::make_shared<NearestNeighbors>(rv, options["NearestNeighbors"])),
-kolmogorov(std::make_shared<KolmogorovOperator>(samples, KolmogorovOptions(options["KolmogorovOptions"].as<YAML::Node>(YAML::Node()), samples->StateDim()))),
 currentTime(options["CurrentTime"].as<double>(defaults.currentTime)),
 varepsilon(options["NondimensionalParameter"].as<double>(defaults.varepsilon)),
-alpha(options["ExternalAccelerationRescaling"].as<double>(defaults.alpha)),
-theta(options["TimestepParameter"].as<double>(defaults.theta)),
-accelerationNoiseScale(options["AccelerationNoiseScale"].as<double>(defaults.accelerationNoiseScale)),
-retuneFreq(options["KolmogorovRetuneFrequency"].as<std::size_t>(defaults.retuneFreq)),
-numTimesteps(options["NumTimesteps"].as<std::size_t>(defaults.numTimesteps)),
-prevMacroInfo(std::make_shared<RescaledMacroscaleInformation>(initMacroInfo, alpha, this->samples->StateDim())),
-normalizingConstant(options["InitialNormalizingConstant"].as<double>(defaults.initialNormalizingConstant)),
-filename(options["OutputFilename"].as<std::string>(defaults.filename))
+prevMacroInfo(initMacroInfo)
 {
-  assert(theta>-1.0e-10); assert(theta<1.0+1.0e-10);
-  assert(alpha>0.0);
+  ShiftSamples(prevMacroInfo);
+  InitializeDirectionalDerivative();
+  InitializeKolmogorovOperator(options);
+
+  ExpectedEnergy(initMacroInfo->velocity);
 }
 
-ConditionalVelocityDistribution::ConditionalVelocityDistribution(Eigen::VectorXd const& macroLoc, std::shared_ptr<SampleCollection> const& samples, std::shared_ptr<MacroscaleInformation> const& initMacroInfo, YAML::Node const& options) :
+ConditionalVelocityDistribution::ConditionalVelocityDistribution(Eigen::Matrix<double, MacroscaleInformation::dim, 1> const& macroLoc, std::shared_ptr<SampleCollection> const& samples, std::shared_ptr<MacroscaleInformation> const& initMacroInfo, YAML::Node const& options) :
 macroLoc(macroLoc),
 samples(std::make_shared<NearestNeighbors>(samples, options["NearestNeighbors"])),
-kolmogorov(std::make_shared<KolmogorovOperator>(this->samples, KolmogorovOptions(options["KolmogorovOptions"].as<YAML::Node>(YAML::Node()), this->samples->StateDim()))),
 currentTime(options["CurrentTime"].as<double>(defaults.currentTime)),
 varepsilon(options["NondimensionalParameter"].as<double>(defaults.varepsilon)),
-alpha(options["ExternalAccelerationRescaling"].as<double>(defaults.alpha)),
-theta(options["TimestepParameter"].as<double>(defaults.theta)),
-accelerationNoiseScale(options["AccelerationNoiseScale"].as<double>(defaults.accelerationNoiseScale)),
-retuneFreq(options["KolmogorovRetuneFrequency"].as<std::size_t>(defaults.retuneFreq)),
-numTimesteps(options["NumTimesteps"].as<std::size_t>(defaults.numTimesteps)),
-prevMacroInfo(std::make_shared<RescaledMacroscaleInformation>(initMacroInfo, alpha, this->samples->StateDim())),
-normalizingConstant(options["InitialNormalizingConstant"].as<double>(defaults.initialNormalizingConstant)),
-filename(options["OutputFilename"].as<std::string>(defaults.filename))
+prevMacroInfo(initMacroInfo)
 {
-  assert(theta>-1.0e-10); assert(theta<1.0+1.0e-10);
-  assert(alpha>0.0);
+  ShiftSamples(prevMacroInfo);
+  InitializeDirectionalDerivative();
+  InitializeKolmogorovOperator(options);
+
+  ExpectedEnergy(initMacroInfo->velocity);
 }
 
-ConditionalVelocityDistribution::ConditionalVelocityDistribution(Eigen::VectorXd const& macroLoc, std::shared_ptr<NearestNeighbors> const& samples, std::shared_ptr<MacroscaleInformation> const& initMacroInfo, YAML::Node const& options) :
+ConditionalVelocityDistribution::ConditionalVelocityDistribution(Eigen::Matrix<double, MacroscaleInformation::dim, 1> const& macroLoc, std::shared_ptr<NearestNeighbors> const& samples, std::shared_ptr<MacroscaleInformation> const& initMacroInfo, YAML::Node const& options) :
 macroLoc(macroLoc),
 samples(samples),
-kolmogorov(std::make_shared<KolmogorovOperator>(samples, KolmogorovOptions(options["KolmogorovOptions"].as<YAML::Node>(YAML::Node()), samples->StateDim()))),
 currentTime(options["CurrentTime"].as<double>(defaults.currentTime)),
 varepsilon(options["NondimensionalParameter"].as<double>(defaults.varepsilon)),
-alpha(options["ExternalAccelerationRescaling"].as<double>(defaults.alpha)),
-theta(options["TimestepParameter"].as<double>(defaults.theta)),
-accelerationNoiseScale(options["AccelerationNoiseScale"].as<double>(defaults.accelerationNoiseScale)),
-retuneFreq(options["KolmogorovRetuneFrequency"].as<std::size_t>(defaults.retuneFreq)),
-numTimesteps(options["NumTimesteps"].as<std::size_t>(defaults.numTimesteps)),
-prevMacroInfo(std::make_shared<RescaledMacroscaleInformation>(initMacroInfo, alpha, this->samples->StateDim())),
-normalizingConstant(options["InitialNormalizingConstant"].as<double>(defaults.initialNormalizingConstant)),
-filename(options["OutputFilename"].as<std::string>(defaults.filename))
+prevMacroInfo(initMacroInfo)
 {
-  assert(theta>-1.0e-10); assert(theta<1.0+1.0e-10);
-  assert(alpha>0.0);
+  ShiftSamples(prevMacroInfo);
+  InitializeDirectionalDerivative();
+  InitializeKolmogorovOperator(options);
+
+  ExpectedEnergy(initMacroInfo->velocity);
 }
 
-YAML::Node ConditionalVelocityDistribution::KolmogorovOptions(YAML::Node options, std::size_t const dim) {
-  options["ManifoldDimension"] = (double)dim;
-  const YAML::Node& parameter = options["DensityOptions"];
-  if( !parameter ) { options["DensityOptions"] = options; }
-  options["DensityOptions"]["ManifoldDimension"] = (double)dim;
+void ConditionalVelocityDistribution::InitializeDirectionalDerivative() {
+  // the number of samples
+  const std::size_t n = samples->NumSamples();
 
-  return options;
+  directionalDerivative = Eigen::VectorXd(n);
+  for( std::size_t i=0; i<n; ++i ) { directionalDerivative(i) = DirectionalDerivative(samples->Point(i)); }
+}
+
+double ConditionalVelocityDistribution::DirectionalDerivative(Eigen::VectorXd const& velocity) const { return 0.0; }
+
+void ConditionalVelocityDistribution::InitializeKolmogorovOperator(YAML::Node const& options) {
+  // the number of samples
+  const std::size_t n = samples->NumSamples();
+
+  const YAML::Node& kolOptions = options["KolmogorovOptions"].as<YAML::Node>(YAML::Node());
+  const YAML::Node& kolParaOpt = kolOptions["BandwidthCostOptimization"].as<YAML::Node>(YAML::Node());
+
+  densityEstimationOptions.put("Stride", std::min(n, (std::size_t)(5*log((double)n))));
+  densityEstimationOptions.put("NumNearestNeighbors", kolOptions["NumNearestNeighbors"].as<std::size_t>(10));
+  densityEstimationOptions.put("ManifoldDimension", (double)MacroscaleInformation::dim);
+  densityEstimationOptions.put("SparsityTolerance", kolOptions["SparsityTolerance"].as<double>(1.0e-4));
+  densityEstimationOptions.put("NumThreads", kolOptions["NumThreads"].as<std::size_t>(1));
+  densityEstimationOptions.put("BandwidthCostOptimization.SparsityTolerance", kolParaOpt["SparsityTolerance"].as<double>(1.0e-4));
+  densityEstimationOptions.put("BandwidthCostOptimization.FTol.AbsoluteTolerance", kolParaOpt["FTol.AbsoluteTolerance"].as<double>(1.0e-2));
+  densityEstimationOptions.put("BandwidthCostOptimization.FTol.RelativeTolerance", kolParaOpt["FTol.RelativeTolerance"].as<double>(1.0e-2));
+  densityEstimationOptions.put("BandwidthCostOptimization.XTol.AbsoluteTolerance", kolParaOpt["XTol.AbsoluteTolerance"].as<double>(1.0e-2));
+  densityEstimationOptions.put("BandwidthCostOptimization.XTol.RelativeTolerance", kolParaOpt["XTol.RelativeTolerance"].as<double>(1.0e-2));
+  densityEstimationOptions.put("BandwidthCostOptimization.MaxEvaluations", kolParaOpt["MaxEvaluations"].as<std::size_t>(1000));
+  densityEstimationOptions.put("BandwidthCostOptimization.Algorithm", kolParaOpt["Algorithm"].as<std::string>("LBFGS"));
+  densityEstimationOptions.put("VariableBandwidth", kolOptions["VariableBandwidth"].as<double>(-0.5));
+  densityEstimationOptions.put("NumEigenpairs", kolOptions["NumEigenpairs"].as<std::size_t>(std::min(n, (std::size_t)(5*log((double)n)))));
+
+  kolmogorov = std::make_shared<KolmogorovOperator>(samples->Samples(), densityEstimationOptions);
 }
 
 std::size_t ConditionalVelocityDistribution::NumSamples() const { return samples->NumSamples(); }
 
-std::size_t ConditionalVelocityDistribution::StateDim() const { return samples->StateDim(); }
+std::size_t ConditionalVelocityDistribution::StateDim() const { return MacroscaleInformation::dim; }
 
 double ConditionalVelocityDistribution::CurrentTime() const { return currentTime; }
 
-double ConditionalVelocityDistribution::ExternalAccelerationRescaling() const { return alpha; }
-
-double ConditionalVelocityDistribution::TimestepParameter() const { return theta; }
-
-std::size_t ConditionalVelocityDistribution::NumTimesteps() const { return numTimesteps; }
-
-Eigen::Ref<Eigen::VectorXd const> ConditionalVelocityDistribution::Point(std::size_t const i) const {
+Eigen::Ref<Eigen::Matrix<double, MacroscaleInformation::dim, 1> const> ConditionalVelocityDistribution::Point(std::size_t const i) const {
   assert(i<NumSamples());
   return samples->Point(i);
 }
 
-Eigen::Ref<Eigen::VectorXd> ConditionalVelocityDistribution::Point(std::size_t const i) {
+Eigen::Ref<Eigen::Matrix<double, MacroscaleInformation::dim, 1> > ConditionalVelocityDistribution::Point(std::size_t const i) {
   assert(i<NumSamples());
   return samples->Point(i);
 }
 
-void ConditionalVelocityDistribution::Run(double const nextTime, std::shared_ptr<const MacroscaleInformation> const& finalMacroInfo, bool const saveInitialConditions) {
+void ConditionalVelocityDistribution::ShiftSamples(std::shared_ptr<const MacroscaleInformation> const& macroInfo) {
+  const Eigen::Matrix<double, MacroscaleInformation::dim, 1> shift = macroInfo->velocity-samples->Mean();
+  for( std::size_t i=0; i<NumSamples(); ++i ) { Point(i) += shift; }
+}
+
+Eigen::Matrix<double, MacroscaleInformation::dim, 1> ConditionalVelocityDistribution::SampleMean() const { return samples->Mean(); }
+
+void ConditionalVelocityDistribution::Run(double const nextTime, std::shared_ptr<const MacroscaleInformation> const& finalMacroInfo) {
   // compute the macro-scale time step
-  const double macroDelta = nextTime-currentTime;
-  assert(macroDelta>0.0);
+  const double delta = nextTime-currentTime;
+  if( delta<1.0e-10 ) { return; } // don't need to update anything
 
-  // the micro-scale time step
-  const double microDelta = 1.0/numTimesteps;
-  double microT = -1.0; // the micro-scale time
+  // the collision step
+  CollisionStep(delta, finalMacroInfo);
 
-  // rescale the macro-scale information into the micro-scale coordinates
-  auto finalInfo = std::make_shared<RescaledMacroscaleInformation>(finalMacroInfo, alpha, StateDim());
-  auto prevInfo = prevMacroInfo;
+  // the number of samples
+  const std::size_t n = samples->NumSamples();
 
-  // tune the bandwidth parameter
-  if( prevInfo->logMassDensityGrad.norm()>1.0e-10 ) {
-    kolmogorov->BuildKDTrees();
-    kolmogorov->TuneBandwidthParameter(true);
-  }
+  const double startTime = currentTime;
+  Eigen::VectorXd density = kolmogorov->EstimateDensity();
+  const double ssize = nextTime-currentTime;
+  currentTime += ssize;
 
-  // write the initial conditions to file
-  if( saveInitialConditions & !filename.empty() ) {
-    // compute the acceleration at the initial timestep
-    ComputeAcceleration(macroDelta, currentTime, prevInfo);
+  // create the samples that move off the x=hat{x} plane
+  auto tiltedSamples = std::make_shared<muq::SamplingAlgorithms::SampleCollection>();
+  for( std::size_t i=0; i<n; ++i ) { tiltedSamples->Add(std::make_shared<SamplingState>(kolmogorov->Point(i))); }
 
-    WriteToFile(currentTime, prevInfo);
-  }
+  // update the samples (both from the distribution and the tilted plane)
+  UpdateSamples(prevMacroInfo, density, ssize, tiltedSamples);
 
-  for( std::size_t t=0; t<numTimesteps; ++t ) {
-    // the next micro-scale time
-    microT += microDelta;
-    const double macroTime = currentTime+(t+1)*microDelta*macroDelta;
+  // update the densities
+  density = kolmogorov->EstimateDensity();
+  const Eigen::VectorXd tiltedDensity = NystromMethod(prevMacroInfo, density, ssize, tiltedSamples);
 
-    // interpolate the macro-scale information on this this timestep
-    auto currInfo = InterpolateMacroscaleInformation(microT, finalInfo);
+  // update the directional derivative
+  directionalDerivative = (tiltedDensity-density)/ssize;
+  const double nrm = directionalDerivative.sum();
+  if( nrm<1.0e-13 ) { directionalDerivative = Eigen::VectorXd::Zero(n); }
+  directionalDerivative *= prevMacroInfo->velocityDiv/nrm;
 
-    // update the normalizing constant
-    UpdateNormalizingConstant(macroDelta, microDelta, prevInfo, currInfo);
-
-    // collision step
-    if( !std::isinf(varepsilon) ) {
-      assert(!std::isnan(varepsilon));
-      CollisionStep(macroDelta, microDelta, macroTime, currInfo);
-    }
-
-    // rebuild the kd tree based on the new particle configuration
-    if( currInfo->logMassDensityGrad.norm()>1.0e-10 ) {
-      kolmogorov->BuildKDTrees();
-      if( (t+1)%retuneFreq==0 & t!=numTimesteps-1 ) { kolmogorov->TuneBandwidthParameter(true); }
-    }
-
-    // update the particle velocities
-    ConvectionStep(macroDelta, microDelta, macroTime, currInfo);
-
-    // reset the previous macro-scale information
-    prevInfo = currInfo;
-
-    // write the current state to file
-    if( !filename.empty() ) {
-      WriteToFile(macroTime, currInfo);
-    }
-  }
+  // shift the samples so the macro scale means match
+  ShiftSamples(finalMacroInfo);
 
   // update the current time
-  currentTime = nextTime;
-  prevMacroInfo = finalInfo;
+  assert(std::abs(currentTime-nextTime)<1.0e-13);
+  prevMacroInfo = finalMacroInfo;
+  computedExpectedAcceleration = false;
+  computedCovariance = false;
+  computedSkew = false;
+  computedEnergy = false;
+
+  ExpectedEnergy(prevMacroInfo->velocity);
+
+  return;
 }
 
-void ConditionalVelocityDistribution::CollisionStep(double const macroDelta, double const microDelta, double const macroTime, std::shared_ptr<const RescaledMacroscaleInformation> const& currInfo) {
+Eigen::VectorXd ConditionalVelocityDistribution::NystromMethod(std::shared_ptr<const MacroscaleInformation> const& currInfo, Eigen::VectorXd const& density, double const stepsize, std::shared_ptr<muq::SamplingAlgorithms::SampleCollection> const& tiltedSamples) const {
+  auto tiltedDensity = std::make_shared<DensityEstimation>(tiltedSamples, densityEstimationOptions);
+  const Eigen::VectorXd tiltedConditional = (1.0+stepsize*currInfo->velocityDiv)*tiltedDensity->EstimateDensity();
+
+  // rebuild the kd trees since the samples have moved
+  tiltedDensity->ResetIndices();
+  tiltedDensity->BuildKDTrees();
+  kolmogorov->ResetIndices();
+  kolmogorov->BuildKDTrees();
+
+  // the number of samples
+  const std::size_t n = NumSamples();
+
+  // the number of neighbors used to interpolate between samples
+  const std::size_t k = 5;
+
+  std::vector<Eigen::Triplet<double> > entries;
+  for( std::size_t i=0; i<n; ++i ) {
+    // find the points closest to xi
+    std::vector<std::pair<std::size_t, double> > neighbors;
+    tiltedDensity->FindNeighbors(kolmogorov->Point(i), k, neighbors);
+    assert(neighbors.size()==k);
+
+    for( const auto& it : neighbors ) {
+      const double eval = std::exp(-it.second);
+      entries.emplace_back(i, it.first, eval);
+    }
+  }
+
+  // the sum of each row in the kernel matrix
+  Eigen::VectorXd rowsum = Eigen::VectorXd::Zero(n);
+  for( const auto& entry : entries ) { rowsum(entry.row()) += entry.value(); }
+
+  // create the sparse matrix and interpolate
+  Eigen::SparseMatrix<double> kernel(n, n);
+  kernel.setFromTriplets(entries.begin(), entries.end());
+
+  return rowsum.array().inverse().matrix().asDiagonal()*kernel*tiltedConditional;
+}
+
+void ConditionalVelocityDistribution::UpdateSamples(std::shared_ptr<const MacroscaleInformation> const& currInfo, Eigen::VectorXd const& density, double const stepsize, std::shared_ptr<muq::SamplingAlgorithms::SampleCollection> const& tiltedSamples) {
+  // the number of samples
+  const std::size_t n = NumSamples();
+
+  // compute the eigendecomposition of the Laplace operator
+  Eigen::VectorXd similarity, eigs;
+  Eigen::MatrixXd Qhat;
+  std::tie(similarity, eigs, Qhat) = kolmogorov->Eigendecomposition(density);
+
+  // compute the right hand side for the kolmogorov operator
+  Eigen::VectorXd rhs(n);
+  assert(rhs.size()==n);
+  for( std::size_t i=0; i<n; ++i ) { rhs(i) = (kolmogorov->Point(i)-currInfo->velocity).dot(currInfo->logMassDensityGrad); }
+
+  // effect acceleration of the tilted samples
+  Eigen::VectorXd soln = kolmogorov->KolmogorovProblemSolution(similarity, eigs, Qhat, rhs);
+  Eigen::MatrixXd accelerationTilted = kolmogorov->GradientVectorField(similarity, eigs, Qhat, soln);
+
+  // update the rhs
+  assert(directionalDerivative.size()==n);
+  for( std::size_t i=0; i<n; ++i ) { rhs(i) += currInfo->velocityDiv - directionalDerivative(i)/density(i); }
+
+  // effect acceleration of the samples
+  soln = kolmogorov->KolmogorovProblemSolution(similarity, eigs, Qhat, rhs);
+  Eigen::MatrixXd acceleration = kolmogorov->GradientVectorField(similarity, eigs, Qhat, soln);
+
+  // update using the prescribed acceleration
+  const double diffusionNugget = 1.0e-4;
+  for( std::size_t i=0; i<n; ++i ) {
+    Eigen::Matrix<double, MacroscaleInformation::dim, 1> acc = ExternalAcceleration(Point(i), currentTime);
+    accelerationTilted.row(i) += acc;
+    acceleration.row(i) += acc;
+
+    // random gaussian
+    Eigen::Matrix<double, 1, MacroscaleInformation::dim> vec(MacroscaleInformation::dim, 1);
+
+    for( std::size_t i=0; i<MacroscaleInformation::dim; ++i ) { vec(i) = RandomGenerator::GetNormal(); }
+    tiltedSamples->at(i)->state[0] += stepsize*accelerationTilted.row(i)  + diffusionNugget*vec;
+
+    for( std::size_t i=0; i<MacroscaleInformation::dim; ++i ) { vec(i) = RandomGenerator::GetNormal(); }
+    Point(i) += stepsize*acceleration.row(i) + diffusionNugget*vec;
+  }
+}
+
+void ConditionalVelocityDistribution::CollisionStep(const double delta, std::shared_ptr<const MacroscaleInformation> const& finalMacroInfo) {
+  // need to be in the macro-scale coordinate system
+  assert(finalMacroInfo->coordinates==Coordinates::MACRO);
   const std::size_t n = NumSamples();
 
   double time = 0.0;
-  while( time<microDelta ) {
-    // compute the collision probability for each sample
+  while( time<delta ) {
+    // the mass density and velocity at this time
+    const double dum = delta-time;
+    const double massDensity = (time*finalMacroInfo->massDensity + dum*prevMacroInfo->massDensity)/delta;
+    const Eigen::VectorXd vel = (time*finalMacroInfo->velocity + dum*prevMacroInfo->velocity)/delta;
+
+    // compute the collision rate function for each sample
     Eigen::VectorXd collisionProb(n);
-    for( std::size_t i=0; i<n; ++i ) { collisionProb(i) = CollisionRateFunction(macroLoc, Point(i), macroTime); }
-    collisionProb *= currInfo->massDensity*macroDelta/(varepsilon*std::pow(alpha, (double)StateDim()));
+    const double macroTime = currentTime + time;
+    for( std::size_t i=0; i<n; ++i ) { collisionProb(i) = CollisionRateFunction(vel, macroTime); }
 
     // compute the timestep size
-    const double deltaPrime = std::min(microDelta-time, 1.0/collisionProb.maxCoeff());
-    assert(deltaPrime>0.0);
-    time += deltaPrime;
+    const double tau = std::min(delta-time, varepsilon/(massDensity*collisionProb.maxCoeff()));
 
-    // update the collision probability based on the timestep size
-    collisionProb *= deltaPrime;
+    // compute the collision probability
+    collisionProb *= tau*massDensity/varepsilon;
 
     // create a list of the particles that will collide
     std::vector<std::size_t> collide;
@@ -202,154 +286,126 @@ void ConditionalVelocityDistribution::CollisionStep(double const macroDelta, dou
       // the indices of the colliding particles
       const std::size_t p1 = collide[i], p2 = collide[i+1];
 
+      // get the velocities and convert to macro-scale coordinates
+      Eigen::Ref<Eigen::Matrix<double, MacroscaleInformation::dim, 1> > v1 = Point(p1);
+      Eigen::Ref<Eigen::Matrix<double, MacroscaleInformation::dim, 1> > v2 = Point(p2);
+
       // sample and scale a vector from the unit hypersphere
-      Eigen::VectorXd w = SampleUnitHypersphere(Point(p1), Point(p2), macroLoc, macroTime);
-      if( w.norm()<1.0e-12 ) { continue; }
+      Eigen::VectorXd w = SampleUnitHypersphere(v1, v2, macroTime);
       assert(std::abs(w.norm()-1.0)<1.0e-10);
-      w *= PostCollisionFunction(Point(p1), Point(p2), w, macroLoc, macroTime);
+      w *= PostCollisionFunction(v1, v2, w, macroTime);
 
       // update the velocities
-      Point(p1) += w; Point(p2) -= w;
+      v1 += w; v2 -= w;
     }
+
+    time += tau;
   }
 }
 
-double ConditionalVelocityDistribution::CollisionRateFunction(Eigen::Ref<const Eigen::VectorXd> const& x, Eigen::Ref<const Eigen::VectorXd> const& v, double const t) { return 1.0; }
+double ConditionalVelocityDistribution::CollisionRateFunction(Eigen::Matrix<double, MacroscaleInformation::dim, 1> const& vi, double const t) const { return 1.0; }
 
-Eigen::VectorXd ConditionalVelocityDistribution::SampleUnitHypersphere(Eigen::Ref<const Eigen::VectorXd> const& v, Eigen::Ref<const Eigen::VectorXd> const& vprime, Eigen::Ref<const Eigen::VectorXd> const& x, double const t) const {
-  const Eigen::VectorXd diff = v-vprime;
-  const double nrm = diff.norm();
-  if( nrm<1.0e-12 ) { return diff; }
-  return diff/diff.norm();
+Eigen::Matrix<double, MacroscaleInformation::dim, 1> ConditionalVelocityDistribution::SampleUnitHypersphere(Eigen::Ref<const Eigen::Matrix<double, MacroscaleInformation::dim, 1> > const& v, Eigen::Ref<const Eigen::Matrix<double, MacroscaleInformation::dim, 1> > const& vprime, double const t) const {
+  // random gaussian
+  Eigen::Matrix<double, MacroscaleInformation::dim, 1> vec(MacroscaleInformation::dim, 1);
+  for( std::size_t i=0; i<MacroscaleInformation::dim; ++i ) { vec(i) = RandomGenerator::GetNormal(); }
+
+  // return the normalized vector
+  return vec/vec.norm();
 }
 
-double ConditionalVelocityDistribution::PostCollisionFunction(Eigen::Ref<const Eigen::VectorXd> const& v, Eigen::Ref<const Eigen::VectorXd> const& vprime, Eigen::Ref<const Eigen::VectorXd> const& w, Eigen::Ref<const Eigen::VectorXd> const& x, double const t) const { return -(v-vprime).norm(); }
+double ConditionalVelocityDistribution::PostCollisionFunction(Eigen::Ref<const Eigen::Matrix<double, MacroscaleInformation::dim, 1> > const& v, Eigen::Ref<const Eigen::Matrix<double, MacroscaleInformation::dim, 1> > const& vprime, Eigen::Ref<const Eigen::Matrix<double, MacroscaleInformation::dim, 1> > const& w, double const t) const {
+  const double we = -w.dot(v-vprime);
+  const double e = 0.5*(v.norm()+vprime.norm());
+  //const double scale = 1.0e-2;
+  //const double gamma = std::exp(scale*prevMacroInfo->massDensity)/(1.0+prevMacroInfo->massDensity*expectedEnergy);
+  //std::cout << "gamma: " << gamma << " expected energy: " <<  expectedEnergy << std::endl;
+  const double gamma = 1.0;
 
-void ConditionalVelocityDistribution::ConvectionStep(double const macroDelta, double const microDelta, double const macroTime, std::shared_ptr<RescaledMacroscaleInformation> const& currInfo) {
-  const std::size_t n = NumSamples();
-  ComputeAcceleration(macroDelta, macroTime, currInfo);
-
-  const double delta = macroDelta*microDelta;
-  for( std::size_t i=0; i<n; ++i ) {
-    Point(i) += delta*alpha*currInfo->acceleration.row(i);
-  }
+  return 0.5*(we + std::copysign(1.0, we)*std::sqrt(std::max(0.0, we*we-4.0*(1.0-gamma)*e)));
 }
 
-Eigen::VectorXd ConditionalVelocityDistribution::ExternalAcceleration(Eigen::Ref<const Eigen::VectorXd> const& vel, Eigen::Ref<const Eigen::VectorXd> const& x, double const time) const { return Eigen::VectorXd::Zero(StateDim()); }
+Eigen::Matrix<double, MacroscaleInformation::dim, 1> ConditionalVelocityDistribution::ExternalAcceleration(Eigen::Ref<const Eigen::Matrix<double, MacroscaleInformation::dim, 1> > const& vel, double const time) const {
+  Eigen::Matrix<double, MacroscaleInformation::dim, 1> externalVel = Eigen::Matrix<double, MacroscaleInformation::dim, 1>::Zero(MacroscaleInformation::dim, 1);
+  externalVel(0) = 1.0;
+  //externalVel(0) = (macroLoc(0)<0.5? -1.0 : 1.0);
 
-void ConditionalVelocityDistribution::WeightedPoissonGradient(std::shared_ptr<RescaledMacroscaleInformation> const& currInfo) const {
-  const std::size_t n = NumSamples();
-  const std::size_t neigs = kolmogorov->NumEigenvalues();
-
-  // compute the eigendecomposition of the kolmogorov operator
-  Eigen::VectorXd S(n), Sinv(n), lambda(neigs);
-  Eigen::MatrixXd Qhat(n, neigs);
-  kolmogorov->ComputeEigendecomposition(S, Sinv, lambda, Qhat);
-
-  // compte the right hand side for the weighted Poisson problem
-  Eigen::VectorXd rhs(n);
-  for( std::size_t i=0; i<n; ++i ) {
-    // the relative velocity: V+Uhat-U(T)=(v/alpha - Uhat) + Uhat - U(T) dotted with the gradient of the log mass density
-    rhs(i) = -(Point(i)/alpha - currInfo->velocity).dot(currInfo->logMassDensityGrad);
-  }
-
-  // apply the pseudo-inverse to the rhs (we will need the coeffients of the solution)
-  Eigen::VectorXd coeff = kolmogorov->PseudoInverse(rhs, S, lambda, Qhat);
-  assert(coeff.size()==neigs);
-
-  // compute the gradient of the solution to the weighted Poisson problem
-  currInfo->acceleration = kolmogorov->FunctionGradient(coeff, S, Sinv, lambda, Qhat);
+  //externalVel -= vel;
+  //return externalVel.array().abs()*externalVel.array();
+  return externalVel;
 }
 
-void ConditionalVelocityDistribution::ComputeAcceleration(double const macroDelta, double const macroTime, std::shared_ptr<RescaledMacroscaleInformation> const& currInfo) {
-  const std::size_t dim = StateDim();
-  const std::size_t n = NumSamples();
+std::shared_ptr<const MacroscaleInformation> ConditionalVelocityDistribution::MacroscaleInfo() const { return prevMacroInfo; }
 
-  // is the forcing nonzero---if it is zero, we don't need to compute the augmented acceleration
-  if( currInfo->logMassDensityGrad.norm()>1.0e-10 ) {
-    WeightedPoissonGradient(currInfo);
-  } else {
-    currInfo->acceleration = Eigen::MatrixXd::Zero(n, dim);
+Eigen::Matrix<double, MacroscaleInformation::dim, MacroscaleInformation::dim> ConditionalVelocityDistribution::Covariance() {
+  if( !computedCovariance ) {
+    assert(samples);
+    covariance = samples->Covariance(prevMacroInfo->velocity);
+    std::cout << std::endl << std::endl;
+    std::cout << covariance << std::endl;
+    std::cout << std::endl << std::endl;
+    computedCovariance = true;
   }
 
-  const double scale = accelerationNoiseScale*macroDelta;
-  assert(scale>-1.0e-10);
-  auto gauss = std::make_shared<Gaussian>(dim);
+  return covariance;
+}
 
-  // add in the external acceleration
-  for( std::size_t i=0; i<n; ++i ) {
-    Eigen::VectorXd external = ExternalAcceleration(Point(i), macroLoc, macroTime);
-    assert(external.size()==dim);
-    if( std::abs(scale)>1.0e-12 ) { external += scale*gauss->Sample(); }
-
-    currInfo->acceleration.row(i) = external.transpose()/alpha - currInfo->acceleration.row(i);
+Eigen::Matrix<double, MacroscaleInformation::dim, 1> ConditionalVelocityDistribution::Skew() {
+  if( !computedSkew ) {
+    assert(samples);
+    skew = Skew(0, samples->NumSamples());
+    computedSkew = true;
   }
+
+  return skew;
 }
 
-void ConditionalVelocityDistribution::UpdateNormalizingConstant(double const macroDelta, double const microDelta, std::shared_ptr<const RescaledMacroscaleInformation> const& prevInfo, std::shared_ptr<const RescaledMacroscaleInformation> const& currInfo) {
-  const double delta = microDelta*macroDelta;
-  const double scale = (1.0 + (1.0-theta)*delta*prevInfo->velocityDivergence)/(1.0 - theta*delta*currInfo->velocityDivergence);
-  assert(std::abs(scale)>-1.0e-10);
+Eigen::Matrix<double, MacroscaleInformation::dim, 1> ConditionalVelocityDistribution::Skew(std::size_t const first, std::size_t const last) const {
+  assert(first<=last);
+  const std::size_t length = last-first;
+  if( length<5 ) {
+    Eigen::Matrix<double, MacroscaleInformation::dim, 1> skew = Eigen::Matrix<double, MacroscaleInformation::dim, 1>::Zero(MacroscaleInformation::dim, 1);
+    for( std::size_t i=first; i<last; ++i ) {
+      const Eigen::Matrix<double, MacroscaleInformation::dim, 1> diff = samples->Point(i) - prevMacroInfo->velocity;
 
-  normalizingConstant *= scale;
+      skew += diff*diff.dot(diff);
+    }
+    return skew/(double)length;
+  }
+
+  const std::size_t middle = first+length/2;
+  const double w1 = (middle-first)/(double)length;
+  const double w2 = (last-middle)/(double)length;
+
+  return w1*Skew(first, middle) + w2*Skew(middle, last);
 }
 
-std::shared_ptr<ConditionalVelocityDistribution::RescaledMacroscaleInformation> ConditionalVelocityDistribution::InterpolateMacroscaleInformation(double const microT, std::shared_ptr<const ConditionalVelocityDistribution::MacroscaleInformation> const& nextMacroInfo) {
-  auto macroInfo = std::make_shared<RescaledMacroscaleInformation>();
+double ConditionalVelocityDistribution::ExpectedEnergy(Eigen::Ref<const Eigen::Matrix<double, MacroscaleInformation::dim, 1> > const& expectedVel) {
+  if( !computedEnergy ) {
+    expectedEnergy = ExpectedEnergy(0, NumSamples(), expectedVel);
+    computedEnergy = true;
+  }
 
-  // interpolate the macro-scale information
-  macroInfo->massDensity = (microT+1.0)*nextMacroInfo->massDensity - microT*prevMacroInfo->massDensity;
-  macroInfo->velocity = (microT+1.0)*nextMacroInfo->velocity - microT*prevMacroInfo->velocity;
-  macroInfo->velocityDivergence = (microT+1.0)*nextMacroInfo->velocityDivergence - microT*prevMacroInfo->velocityDivergence;
-  macroInfo->logMassDensityGrad = (microT+1.0)*nextMacroInfo->logMassDensityGrad - microT*prevMacroInfo->logMassDensityGrad;
-
-  return macroInfo;
+  return expectedEnergy;
 }
 
-std::shared_ptr<const ConditionalVelocityDistribution::MacroscaleInformation> ConditionalVelocityDistribution::MacroscaleInfo() const {
-  return std::make_shared<MacroscaleInformation>(prevMacroInfo->massDensity/std::pow(alpha, (double)StateDim()), prevMacroInfo->velocity*alpha, prevMacroInfo->velocityDivergence, prevMacroInfo->logMassDensityGrad/alpha);
+Eigen::Matrix<double, MacroscaleInformation::dim, 1> ConditionalVelocityDistribution::ExpectedExternalAcceleration(double const time) {
+  if( !computedExpectedAcceleration ) {
+    expectedAcceleration = ExpectedExternalAcceleration(0, NumSamples(), time);
+    computedExpectedAcceleration = true;
+  }
+
+  return expectedAcceleration;
 }
 
-double ConditionalVelocityDistribution::NormalizingConstant() const { return normalizingConstant; }
-
-ConditionalVelocityDistribution::MacroscaleInformation::MacroscaleInformation() {}
-
-ConditionalVelocityDistribution::MacroscaleInformation::MacroscaleInformation(double const massDensity, Eigen::VectorXd const& velocity, double const velocityDivergence, Eigen::VectorXd const& logMassDensityGrad) :
-massDensity(massDensity),
-velocity(velocity),
-velocityDivergence(velocityDivergence),
-logMassDensityGrad(logMassDensityGrad)
-{}
-
-ConditionalVelocityDistribution::RescaledMacroscaleInformation::RescaledMacroscaleInformation(std::shared_ptr<const MacroscaleInformation> const& macroInfo, double const alpha, std::size_t const dim) :
-MacroscaleInformation(macroInfo->massDensity*std::pow(alpha, (double)dim), macroInfo->velocity/alpha, macroInfo->velocityDivergence, macroInfo->logMassDensityGrad*alpha)
-{}
-
-ConditionalVelocityDistribution::RescaledMacroscaleInformation::RescaledMacroscaleInformation() :
-MacroscaleInformation()
-{}
-
-Eigen::MatrixXd ConditionalVelocityDistribution::Covariance(Eigen::Ref<const Eigen::VectorXd> const& mean) const {
-  assert(samples);
-  return samples->Covariance(mean);
-}
-
-double ConditionalVelocityDistribution::ExpectedEnergy(Eigen::Ref<const Eigen::VectorXd> const& expectedVel) const {
-  return ExpectedEnergy(0, NumSamples(), expectedVel);
-}
-
-Eigen::VectorXd ConditionalVelocityDistribution::ExpectedExternalAcceleration(Eigen::Ref<const Eigen::VectorXd> const& x, double const time) const {
-  return ExpectedExternalAcceleration(0, NumSamples(), x, time);
-}
-
-double ConditionalVelocityDistribution::ExpectedEnergy(std::size_t const first, std::size_t const last, Eigen::Ref<const Eigen::VectorXd> const& expectedVel) const {
+double ConditionalVelocityDistribution::ExpectedEnergy(std::size_t const first, std::size_t const last, Eigen::Ref<const Eigen::Matrix<double, MacroscaleInformation::dim, 1> > const& expectedVel) const {
   assert(first<last);
   const std::size_t n = last-first;
 
   if( n<6 ) {
     double energy = 0.0;
     for( std::size_t i=first; i<last; ++i ) {
-      const Eigen::VectorXd diff = Point(i) - expectedVel;
+      const Eigen::Matrix<double, MacroscaleInformation::dim, 1> diff = Point(i) - expectedVel;
       energy += diff.dot(diff);
     }
     return 0.5*energy/n;
@@ -361,14 +417,15 @@ double ConditionalVelocityDistribution::ExpectedEnergy(std::size_t const first, 
   return half/(double)n*ExpectedEnergy(first, middle, expectedVel) + (n-half)/(double)n*ExpectedEnergy(middle, last, expectedVel);
 }
 
-Eigen::VectorXd ConditionalVelocityDistribution::ExpectedExternalAcceleration(std::size_t const first, std::size_t const last, Eigen::Ref<const Eigen::VectorXd> const& x, double const time) const {
+Eigen::Matrix<double, MacroscaleInformation::dim, 1> ConditionalVelocityDistribution::ExpectedExternalAcceleration(std::size_t const first, std::size_t const last, double const time) const {
   assert(first<last);
   const std::size_t n = last-first;
 
   if( n<6 ) {
-    Eigen::VectorXd acc = Eigen::VectorXd::Zero(StateDim());
+    Eigen::Matrix<double, MacroscaleInformation::dim, 1> acc = Eigen::Matrix<double, MacroscaleInformation::dim, 1>::Zero(MacroscaleInformation::dim, 1);
     for( std::size_t i=first; i<last; ++i ) {
-      acc += ExternalAcceleration(Point(i), x, time);
+      Eigen::Matrix<double, MacroscaleInformation::dim, 1> a = ExternalAcceleration(Point(i), time);
+      acc += a;
     }
     return acc/n;
   }
@@ -376,27 +433,7 @@ Eigen::VectorXd ConditionalVelocityDistribution::ExpectedExternalAcceleration(st
   // compute recursively
   const std::size_t half = n/2;
   const std::size_t middle = first+half;
-  return half/(double)n*ExpectedExternalAcceleration(first, middle, x, time) + (n-half)/(double)n*ExpectedExternalAcceleration(middle, last, x, time);
+  return half/(double)n*ExpectedExternalAcceleration(first, middle, time) + (n-half)/(double)n*ExpectedExternalAcceleration(middle, last, time);
 }
 
-void ConditionalVelocityDistribution::WriteToFile(double const macroTime, std::shared_ptr<const RescaledMacroscaleInformation> const& currInfo, std::string const& dataset) const {
-  static std::size_t nwrites = 0;
-  std::stringstream ss;
-  ss << std::setw((std::size_t)log10(numTimesteps)+10) << std::setfill('0') << nwrites++;
-  const std::string file = filename+"-"+ss.str()+".h5";
-
-  // output the collection to file
-  const std::string dataset_ = (dataset.at(0)=='/'? dataset : "/"+dataset);
-  samples->Samples()->WriteToFile(file, dataset_);
-
-  // create an hdf5 file
-  auto hdf5file = std::make_shared<HDF5File>(file);
-  hdf5file->WriteMatrix(dataset+"/time", Eigen::VectorXd::Constant(1, macroTime).eval());
-  hdf5file->WriteMatrix(dataset+"/acceleration", (currInfo->acceleration*alpha).eval());
-  hdf5file->WriteMatrix(dataset+"/expected energy", Eigen::VectorXd::Constant(1, ExpectedEnergy(currInfo->velocity*alpha)).eval());
-  hdf5file->WriteMatrix(dataset+"/covariance", Covariance(currInfo->velocity*alpha).eval());
-  hdf5file->WriteMatrix(dataset+"/expected velocity", (currInfo->velocity*alpha).eval());
-  hdf5file->WriteMatrix(dataset+"/sample mean", samples->Mean());
-  hdf5file->WriteMatrix(dataset+"/expected acceleration", ExpectedExternalAcceleration(macroLoc, macroTime));
-  hdf5file->Close();
-}
+Eigen::Matrix<double, MacroscaleInformation::dim, 1> ConditionalVelocityDistribution::MacroscaleLocation() const { return macroLoc; }

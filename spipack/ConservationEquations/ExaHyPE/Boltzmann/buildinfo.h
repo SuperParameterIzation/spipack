@@ -4,7 +4,7 @@
 #define _EXAHYPE_BUILD_INFO_H_
 
 #define EXAHYPE_BUILDINFO_AVAILABLE
-#define EXAHYPE_BUILD_DATE          "Tue 24 Nov 2020 12:10:59 AM EST"
+#define EXAHYPE_BUILD_DATE          "Fri 05 Mar 2021 05:08:26 PM EST"
 #define EXAHYPE_BUILD_HOST          "Andy-NYU"
 
 /* Strings passed by the Makefile */

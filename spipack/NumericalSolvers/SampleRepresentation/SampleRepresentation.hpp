@@ -66,7 +66,7 @@ public:
     @param[in] samples Samples from the underlying distribution \f$\psi\f$
     @param[in] options Setup options
   */
-  SampleRepresentation(std::shared_ptr<const spi::Tools::NearestNeighbors> const& samples, YAML::Node const& options);
+  SampleRepresentation(std::shared_ptr<spi::Tools::NearestNeighbors> const& samples, YAML::Node const& options);
 
   virtual ~SampleRepresentation() = default;
 
@@ -106,6 +106,13 @@ public:
   \return The \f$i^{th}\f$ point from the point cloud.
   */
   Eigen::Ref<Eigen::VectorXd const> Point(std::size_t const i) const;
+
+  /// Get the \f$i^{th}\f$ point \f$\boldsymbol{x}^{(i)}\f$ from the point cloud.
+  /**
+  @param[in] i We want to get this point
+  \return The \f$i^{th}\f$ point from the point cloud.
+  */
+  Eigen::Ref<Eigen::VectorXd> Point(std::size_t const i);
 
   /// Construct the (dense) kernel matrix \f$\boldsymbol{K}_{\epsilon}\f$
   /**
@@ -236,7 +243,7 @@ protected:
   Eigen::VectorXd KernelMatrix(double const eps, Eigen::Ref<const Eigen::VectorXd> const& rvec, std::vector<Eigen::Triplet<double> >& entries);
 
   /// Store the samples from \f$\psi\f$.
-  const std::shared_ptr<const spi::Tools::NearestNeighbors> samples;
+  const std::shared_ptr<spi::Tools::NearestNeighbors> samples;
 
   /// The number of nearest neighbors used to compute the bandwidth
   const std::size_t numNearestNeighbors;

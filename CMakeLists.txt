@@ -11,7 +11,11 @@ message(STATUS "")
 # Check flags
 ###############################################
 
-set(CMAKE_CXX_FLAGS ${CMAKE_CXX_FLAGS} "-w -g --std=c++17 -pthread -fopenmp -O3 -msse4 -mavx")
+# Require C++17
+set(CMAKE_CXX_STANDARD 17)
+set(CMAKE_CXX_STANDARD_REQUIRED ON)
+
+set(CMAKE_CXX_FLAGS ${CMAKE_CXX_FLAGS} "-w -g -pthread -fopenmp -O3 -ldl -fPIC")
 
 ###############################################
 # Find dependencies
@@ -26,6 +30,8 @@ list(APPEND CMAKE_MODULE_PATH
 	${CMAKE_SOURCE_DIR}/cmake/append/
 	${CMAKE_SOURCE_DIR}/cmake/exahype/
 	)
+  
+set(SPIPACK_LINK_DIRS )
 
 # find dependencies
 include(FindDependencies)
@@ -117,4 +123,4 @@ endif(DOXYGEN_FOUND)
 # Build the examples
 ###############################################
 
-add_subdirectory(examples EXCLUDE_FROM_ALL)
+#add_subdirectory(examples EXCLUDE_FROM_ALL)

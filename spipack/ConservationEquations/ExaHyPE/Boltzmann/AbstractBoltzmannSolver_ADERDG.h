@@ -21,18 +21,18 @@
 #include "tarch/Assertions.h"
 #include "tarch/la/Vector.h"
 
-namespace Boltzmann {
+namespace spiEX_Boltzmann {
   class BoltzmannSolver_ADERDG;
   class AbstractBoltzmannSolver_ADERDG;
 }
 
-class Boltzmann::AbstractBoltzmannSolver_ADERDG: public exahype::solvers::ADERDGSolver {
+class spiEX_Boltzmann::AbstractBoltzmannSolver_ADERDG: public exahype::solvers::ADERDGSolver {
 public:
   static constexpr int Order                     = 3;
-  static constexpr int NumberOfVariables         = 5;
-  static constexpr int NumberOfParameters        = 0;
+  static constexpr int NumberOfVariables         = 4;
+  static constexpr int NumberOfParameters        = 2;
   static constexpr int NumberOfGlobalObservables = 0;
-  static constexpr int NumberOfDMPObservables    = 5; // only of interest if this ADERDGSolver is a component of a LimitingADERDSolver 
+  static constexpr int NumberOfDMPObservables    = 4; // only of interest if this ADERDGSolver is a component of a LimitingADERDSolver 
   static constexpr int MaxPicardIterations       = Order+1;
   static constexpr bool UseMaxPicardIterations   = false;
   static constexpr double CFL                    = 0.9;
@@ -367,7 +367,6 @@ public:
 
   //override the size of unused data storage to -1 to not allocate it
   int getTempPointForceSourcesSize() const {return -1;} //pointSource not required
-  int getTempSpaceTimeFluxUnknowns1Size() const {return -1;} //gradQ not required
 
   
   

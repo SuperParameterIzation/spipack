@@ -1,40 +1,62 @@
 #ifndef BOLTZMANN_HPP_
 #define BOLTZMANN_HPP_
 
-#include "exahype/runners/Runner.h"
+#include <sstream>
 
-namespace exahype {
-  namespace parser {
-    /// Forward declaration of exahype::parser::Parser class
-    class Parser;
-  }
-}
+#include "spipack/SPIPACKDirectories.hpp"
+
+#include "spipack/KineticEquations/KineticModels.hpp"
+
+#include "spipack/ConservationEquations/ExaHyPE/Boltzmann/BoltzmannSolver.h"
+
+// First, define your list
+#define SPIPACK_BOLTZMANN_SOLVERMODES(F) \
+  F(CompressibleEulerLimit), \
+  F(ParticleMethods)
 
 namespace spi {
 namespace ConservationEquations {
 
-class Boltzmann : public exahype::runners::Runner {
+class Boltzmann {
 public:
-  Boltzmann();
+  /// Get the exahype boltzmann solver
+  static spiEX_Boltzmann::BoltzmannSolver* BoltzmannSolver();
+
+  static void Initialize();
+
+  /// Which mode are we using to solve the Boltzmann equation
+  /**
+  For example, we could solve the compressible Euler or represent the conditional velocity distribution using a particle method
+  */
+  #define F(e) e
+  enum SolverMode { SPIPACK_BOLTZMANN_SOLVERMODES(F), NumSolverModes };
+  #undef F
+
+  /**
+  @param[in] microscaleModels The micro-scale models that allow us to compute expectations with respect to the conditional velocity distribution \f$\nu(\boldsymbol{v} \vert \boldsymbol{x})\f$
+  @param[in] options Numerical options for the Boltzmann model
+  */
+  Boltzmann(std::shared_ptr<spi::KineticEquations::KineticModels> const& microscaleModels, YAML::Node const& options);
 
   virtual ~Boltzmann() = default;
+
+  /// Which mode are we running?
+  /**
+  \return The solver mode.
+  */
+  Boltzmann::SolverMode GetSolverMode() const;
 
   void Run();
 
 private:
+  /// A map from string to enum options for the solver mode
+  static std::unordered_map<std::string, Boltzmann::SolverMode> SolverModesMap();
 
-  inline static exahype::parser::Parser parser;
-  inline static std::vector<std::string> cmdlineargs;
+  /// Which mode are we running?
+  const SolverMode mode;
 
-  void Run(exahype::repositories::Repository& repository);
-
-  /// Construct the <tt>ExaHyPE</tt> (external library) parser based on the internal configuration file
-  /**
-  \return parser The <tt>ExaHyPE</tt> parser
-  */
-  void ConstructBoltzmannParser(std::stringstream& specfile);
-
-  void UpdateSmallScale(); 
+  /// The file that defines the options for the exahype simulation
+  const std::string constructFile = spi::SPIPACK_INSTALL_DIR+"/ExaHyPE/GenerateBoltzmann.exahype";
 };
 
 } // namespace ConservationEquations

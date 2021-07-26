@@ -33,7 +33,7 @@ numThreads(options["NumThreads"].as<std::size_t>(this->samples->NumThreads()))
   Initialize(options);
 }
 
-SampleRepresentation::SampleRepresentation(std::shared_ptr<const NearestNeighbors> const& samples, YAML::Node const& options) :
+SampleRepresentation::SampleRepresentation(std::shared_ptr<NearestNeighbors> const& samples, YAML::Node const& options) :
 samples(samples),
 numNearestNeighbors(options["NumNearestNeighbors"].as<std::size_t>(defaults.numNearestNeighbors)),
 truncateKernelMatrix(options["TruncateKernelMatrix"].as<bool>(defaults.truncateKernelMatrix)),
@@ -72,6 +72,11 @@ std::size_t SampleRepresentation::StateDim() const { return samples->StateDim();
 std::size_t SampleRepresentation::NumNearestNeighbors() const { return numNearestNeighbors; }
 
 Eigen::Ref<Eigen::VectorXd const> SampleRepresentation::Point(std::size_t const i) const {
+  assert(i<NumSamples());
+  return samples->Point(i);
+}
+
+Eigen::Ref<Eigen::VectorXd> SampleRepresentation::Point(std::size_t const i) {
   assert(i<NumSamples());
   return samples->Point(i);
 }
@@ -171,6 +176,7 @@ Eigen::VectorXd SampleRepresentation::KernelMatrix(double const eps, Eigen::Ref<
       std::vector<std::pair<std::size_t, double> > neighbors;
       const double maxband = truncationTol*theta.maxCoeff();
       samples->FindNeighbors(Point(i), maxband, neighbors, i);
+      //std::cout << "nneighbors: " << neighbors.size() << std::endl;
 
       // loop through the neighbors
       for( const auto& neigh : neighbors ) {

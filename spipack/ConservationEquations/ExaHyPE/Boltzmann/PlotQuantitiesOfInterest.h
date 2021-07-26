@@ -4,20 +4,20 @@
 // ========================
 //   www.exahype.eu
 // ========================
-#ifndef POSTPROCESSING_BoltzmannWriter_FV_CLASS_HEADER_
-#define POSTPROCESSING_BoltzmannWriter_FV_CLASS_HEADER_
+#ifndef POSTPROCESSING_PlotQuantitiesOfInterest_CLASS_HEADER_
+#define POSTPROCESSING_PlotQuantitiesOfInterest_CLASS_HEADER_
 
 #include "exahype/plotters/Plotter.h"
 
-namespace Boltzmann {
+namespace spiEX_Boltzmann {
   class BoltzmannSolver;
-  class BoltzmannWriter_FV;
+  class PlotQuantitiesOfInterest;
 }
 
-class Boltzmann::BoltzmannWriter_FV : public exahype::plotters::Plotter::UserOnTheFlyPostProcessing {
+class spiEX_Boltzmann::PlotQuantitiesOfInterest : public exahype::plotters::Plotter::UserOnTheFlyPostProcessing {
 public:
-  BoltzmannWriter_FV(Boltzmann::BoltzmannSolver& solver);
-  virtual ~BoltzmannWriter_FV();
+  PlotQuantitiesOfInterest(spiEX_Boltzmann::BoltzmannSolver& solver);
+  virtual ~PlotQuantitiesOfInterest();
 
   void startPlotting(double time) override;
   void finishPlotting() override;
@@ -31,4 +31,4 @@ public:
     double timeStamp) override;
 };
 
-#endif /* POSTPROCESSING_BoltzmannWriter_FV_CLASS_HEADER_ */
+#endif /* POSTPROCESSING_PlotQuantitiesOfInterest_CLASS_HEADER_ */

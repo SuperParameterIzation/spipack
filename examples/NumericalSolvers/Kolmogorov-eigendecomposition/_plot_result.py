@@ -36,15 +36,15 @@ def MakeFigure(totalWidthPts, fraction, presentationVersion = False):
     greyColor = '#525252'
     whiteColor = '#ffffff'
     if not presentationVersion:
-        rcParams['axes.labelsize'] = 9
-        rcParams['xtick.labelsize'] = 9
-        rcParams['ytick.labelsize'] = 9
-        rcParams['legend.fontsize'] = 9
+        rcParams['axes.labelsize'] = 18
+        rcParams['xtick.labelsize'] = 14
+        rcParams['ytick.labelsize'] = 14
+        rcParams['legend.fontsize'] = 14
     else:
-        rcParams['axes.labelsize'] = 12
-        rcParams['xtick.labelsize'] = 12
-        rcParams['ytick.labelsize'] = 12
-        rcParams['legend.fontsize'] = 12
+        rcParams['axes.labelsize'] = 18
+        rcParams['xtick.labelsize'] = 14
+        rcParams['ytick.labelsize'] = 14
+        rcParams['legend.fontsize'] = 14
     rcParams['axes.edgecolor'] = greyColor
     rcParams['axes.facecolor'] = whiteColor
     rcParams['figure.facecolor'] = whiteColor
@@ -105,7 +105,7 @@ for i in range(len(samples)):
 
 fig = MakeFigure(425, 0.9, False)
 ax = plt.gca()
-scatter = ax.scatter(samples.T[0], samples.T[1], s=3, c=densityEstimate, vmin=0.0, vmax=0.16)
+scatter = ax.scatter(samples.T[0], samples.T[1], s=3, c=densityEstimate, vmin=0.0, vmax=0.16, cmap='jet')
 cbar = plt.colorbar(scatter)
 ax.spines['right'].set_visible(False)
 ax.spines['top'].set_visible(False)
@@ -136,7 +136,7 @@ for i in range(len(f)):
     # plot f
     fig = MakeFigure(425, 0.9, False)
     ax = plt.gca()
-    scatter = ax.scatter(samples.T[0], samples.T[1], s=3, c=f[i], vmin=min(f[i]), vmax=max(f[i]))
+    scatter = ax.scatter(samples.T[0], samples.T[1], s=3, c=f[i], vmin=min(f[i]), vmax=max(f[i]), cmap='jet')
     cbar = plt.colorbar(scatter)
     ax.spines['right'].set_visible(False)
     ax.spines['top'].set_visible(False)
@@ -152,7 +152,7 @@ for i in range(len(f)):
     # plot L f
     fig = MakeFigure(425, 0.9, False)
     ax = plt.gca()
-    scatter = ax.scatter(samples.T[0], samples.T[1], s=3, c=Lf[i], vmin=min(Lf[i]), vmax=max(Lf[i]))
+    scatter = ax.scatter(samples.T[0], samples.T[1], s=3, c=Lf[i], vmin=min(Lf[i]), vmax=max(Lf[i]), cmap='jet')
     cbar = plt.colorbar(scatter)
     ax.spines['right'].set_visible(False)
     ax.spines['top'].set_visible(False)
@@ -168,7 +168,7 @@ for i in range(len(f)):
     # plot Sinv Lhat S f
     fig = MakeFigure(425, 0.9, False)
     ax = plt.gca()
-    scatter = ax.scatter(samples.T[0], samples.T[1], s=3, c=SinvLhatSf[i], vmin=min(SinvLhatSf[i]), vmax=max(SinvLhatSf[i]))
+    scatter = ax.scatter(samples.T[0], samples.T[1], s=3, c=SinvLhatSf[i], vmin=min(SinvLhatSf[i]), vmax=max(SinvLhatSf[i]), cmap='jet')
     cbar = plt.colorbar(scatter)
     ax.spines['right'].set_visible(False)
     ax.spines['top'].set_visible(False)
@@ -184,7 +184,7 @@ for i in range(len(f)):
     # plot Lhatinv f = Uhat lambdainv Uhat^T f
     fig = MakeFigure(425, 0.9, False)
     ax = plt.gca()
-    scatter = ax.scatter(samples.T[0], samples.T[1], s=3, c=Lhatinvf[i], vmin=min(Lhatinvf[i]), vmax=max(Lhatinvf[i]))
+    scatter = ax.scatter(samples.T[0], samples.T[1], s=3, c=Lhatinvf[i], vmin=min(Lhatinvf[i]), vmax=max(Lhatinvf[i]), cmap='jet')
     cbar = plt.colorbar(scatter)
     ax.spines['right'].set_visible(False)
     ax.spines['top'].set_visible(False)
@@ -200,7 +200,7 @@ for i in range(len(f)):
     # plot Linv f = S^{-1} Uhat lambdainv Uhat^T S f
     fig = MakeFigure(425, 0.9, False)
     ax = plt.gca()
-    scatter = ax.scatter(samples.T[0], samples.T[1], s=3, c=Linvf[i], vmin=min(Linvf[i]), vmax=max(Linvf[i]))
+    scatter = ax.scatter(samples.T[0], samples.T[1], s=3, c=Linvf[i], vmin=min(Linvf[i]), vmax=max(Linvf[i]), cmap='jet')
     cbar = plt.colorbar(scatter)
     ax.spines['right'].set_visible(False)
     ax.spines['top'].set_visible(False)
@@ -213,6 +213,170 @@ for i in range(len(f)):
     pdf.savefig(fig, bbox_inches='tight')
     plt.close(fig)
 pdf.close()
+
+# compute the analytic fourth eigenfunction
+analytic4Eigenfunction = [0.0]*len(samples)
+analytic5Eigenfunction = [0.0]*len(samples)
+for i in range(len(analytic4Eigenfunction)):
+    analytic4Eigenfunction[i] = samples[i][0]*samples[i][1]
+    analytic5Eigenfunction[i] = samples[i][0]*samples[i][0] - samples[i][1]*samples[i][1]
+analytic4Eigenfunction = np.array(analytic4Eigenfunction)
+analytic4Eigenfunction = np.sqrt(len(analytic4Eigenfunction))*analytic4Eigenfunction/np.linalg.norm(analytic4Eigenfunction)
+analytic5Eigenfunction = np.array(analytic5Eigenfunction)
+analytic5Eigenfunction = np.sqrt(len(analytic5Eigenfunction))*analytic5Eigenfunction/np.linalg.norm(analytic5Eigenfunction)
+
+fig = MakeFigure(425, 0.9, False)
+ax = plt.gca()
+scatter = ax.scatter(samples.T[0], samples.T[1], s=3, c=analytic4Eigenfunction, vmin=min(analytic4Eigenfunction), vmax=max(analytic4Eigenfunction), cmap='jet')
+cbar = plt.colorbar(scatter)
+ax.spines['right'].set_visible(False)
+ax.spines['top'].set_visible(False)
+ax.yaxis.set_ticks_position('left')
+ax.xaxis.set_ticks_position('bottom')
+cbar.set_label(label=r'Eigenfunction magnitude', size=16)
+ax.set_xlabel(r'$x_0$')
+ax.set_ylabel(r'$x_1$')
+plt.savefig('figures/AnalyticFourthEigenfunction.pdf', format='pdf', bbox_inches='tight')
+plt.close(fig)
+
+fig = MakeFigure(425, 0.9, False)
+ax = plt.gca()
+scatter = ax.scatter(samples.T[0], samples.T[1], s=3, c=analytic5Eigenfunction, vmin=min(analytic5Eigenfunction), vmax=max(analytic5Eigenfunction), cmap='jet')
+cbar = plt.colorbar(scatter)
+ax.spines['right'].set_visible(False)
+ax.spines['top'].set_visible(False)
+ax.yaxis.set_ticks_position('left')
+ax.xaxis.set_ticks_position('bottom')
+cbar.set_label(label=r'Eigenfunction magnitude', size=16)
+ax.set_xlabel(r'$x_0$')
+ax.set_ylabel(r'$x_1$')
+plt.savefig('figures/AnalyticFifthEigenfunction.pdf', format='pdf', bbox_inches='tight')
+plt.close(fig)
+
+eigvec4 = np.sqrt(len(analytic4Eigenfunction))*eigvecsL[3]/np.linalg.norm(eigvecsL[3])
+eigvec5 = np.sqrt(len(analytic5Eigenfunction))*eigvecsL[4]/np.linalg.norm(eigvecsL[4])
+
+def TrueEigenvectors(theta):
+    rot = np.array([[np.cos(theta), -np.sin(theta)],
+                    [np.sin(theta), np.cos(theta)]])
+
+    n = len(eigvec4)
+
+    analytic4 = np.array([0.0]*n)
+    analytic5 = np.array([0.0]*n)
+    for i in range(n):
+        samp = rot@np.array([[samples[i, 0]], [samples[i, 1]]])
+
+        analytic4[i] = samp[0][0]*samp[1][0]
+        analytic5[i] = -samp[0][0]*samp[0][0] + samp[1][0]*samp[1][0]
+
+    analytic4 = np.sqrt(n)*analytic4/np.linalg.norm(analytic4)
+    analytic5 = np.sqrt(n)*analytic5/np.linalg.norm(analytic5)
+
+    return analytic4, analytic5
+
+def RotationCost(theta):
+    analytic4, analytic5 = TrueEigenvectors(theta[0]);
+
+    diff4 = eigvec4-analytic4
+    diff5 = eigvec5-analytic5
+
+    n = len(eigvec4)
+
+    cost = 0.0
+    for i in range(n):
+        cost = cost + diff4[i]*diff4[i]
+        cost = cost + diff5[i]*diff5[i]
+
+
+    return cost/n
+
+tht = np.linspace(0.0, 2.0*np.pi, num=10)
+for t in tht:
+    print('cost:' , RotationCost([t]))
+
+from scipy.optimize import minimize
+from scipy.optimize import Bounds
+bounds = Bounds(0.0, 2.0*np.pi)
+theta = minimize(RotationCost, [np.pi], method='nelder-mead', options={'xatol': 1e-8, 'disp': True}, bounds=bounds)
+
+print('theta:', theta)
+
+analytic4Eigenfunction, analytic5Eigenfunction = TrueEigenvectors(theta.x[0])
+
+print(np.sqrt(len(analytic5Eigenfunction)), np.linalg.norm(eigvec4))
+
+fig = MakeFigure(425, 0.9, False)
+ax = plt.gca()
+scatter = ax.scatter(samples.T[0], samples.T[1], s=3, c=analytic4Eigenfunction, vmin=min(analytic4Eigenfunction), vmax=max(analytic4Eigenfunction), cmap='jet')
+cbar = plt.colorbar(scatter)
+ax.spines['right'].set_visible(False)
+ax.spines['top'].set_visible(False)
+ax.yaxis.set_ticks_position('left')
+ax.xaxis.set_ticks_position('bottom')
+cbar.set_label(label=r'Eigenfunction magnitude', size=16)
+ax.set_xlabel(r'$x_0$')
+ax.set_ylabel(r'$x_1$')
+plt.savefig('figures/AnalyticFourthEigenfunction.pdf', format='pdf', bbox_inches='tight')
+plt.close(fig)
+
+fig = MakeFigure(425, 0.9, False)
+ax = plt.gca()
+scatter = ax.scatter(samples.T[0], samples.T[1], s=3, c=analytic5Eigenfunction, vmin=min(analytic5Eigenfunction), vmax=max(analytic5Eigenfunction), cmap='jet')
+cbar = plt.colorbar(scatter)
+ax.spines['right'].set_visible(False)
+ax.spines['top'].set_visible(False)
+ax.yaxis.set_ticks_position('left')
+ax.xaxis.set_ticks_position('bottom')
+cbar.set_label(label=r'Eigenfunction magnitude', size=16)
+ax.set_xlabel(r'$x_0$')
+ax.set_ylabel(r'$x_1$')
+plt.savefig('figures/AnalyticFifthEigenfunction.pdf', format='pdf', bbox_inches='tight')
+plt.close(fig)
+
+fig = MakeFigure(425, 0.9, False)
+ax = plt.gca()
+scatter = ax.scatter(samples.T[0], samples.T[1], s=3, c=eigvec4, vmin=min(analytic4Eigenfunction), vmax=max(analytic4Eigenfunction), cmap='jet')
+cbar = plt.colorbar(scatter)
+ax.spines['right'].set_visible(False)
+ax.spines['top'].set_visible(False)
+ax.yaxis.set_ticks_position('left')
+ax.xaxis.set_ticks_position('bottom')
+cbar.set_label(label=r'Eigenfunction magnitude', size=16)
+ax.set_xlabel(r'$x_0$')
+ax.set_ylabel(r'$x_1$')
+plt.savefig('figures/EstimatedFourthEigenfunction.pdf', format='pdf', bbox_inches='tight')
+plt.close(fig)
+
+fig = MakeFigure(425, 0.9, False)
+ax = plt.gca()
+scatter = ax.scatter(samples.T[0], samples.T[1], s=3, c=eigvec5, vmin=min(analytic5Eigenfunction), vmax=max(analytic5Eigenfunction), cmap='jet')
+cbar = plt.colorbar(scatter)
+ax.spines['right'].set_visible(False)
+ax.spines['top'].set_visible(False)
+ax.yaxis.set_ticks_position('left')
+ax.xaxis.set_ticks_position('bottom')
+cbar.set_label(label=r'Eigenfunction magnitude', size=16)
+ax.set_xlabel(r'$x_0$')
+ax.set_ylabel(r'$x_1$')
+plt.savefig('figures/EstimatedFifthEigenfunction.pdf', format='pdf', bbox_inches='tight')
+plt.close(fig)
+
+error = analytic4Eigenfunction-eigvec4
+
+fig = MakeFigure(425, 0.9, False)
+ax = plt.gca()
+scatter = ax.scatter(samples.T[0], samples.T[1], s=3, c=error, vmin=max(-20.0, min(error)), vmax=min(20.0, max(error)), cmap='jet')
+cbar = plt.colorbar(scatter)
+ax.spines['right'].set_visible(False)
+ax.spines['top'].set_visible(False)
+ax.yaxis.set_ticks_position('left')
+ax.xaxis.set_ticks_position('bottom')
+cbar.set_label(label=r'Difference', size=16)
+ax.set_xlabel(r'$x_0$')
+ax.set_ylabel(r'$x_1$')
+plt.savefig('figures/FourthEigenfunctionDifference.pdf', format='pdf', bbox_inches='tight')
+plt.close(fig)
 
 pdf = matplotlib.backends.backend_pdf.PdfPages("figures/Eigenfunctions_L.pdf")
 
@@ -227,6 +391,7 @@ ax.set_xlim([1, len(eigvals)])
 ax.set_xlabel(r'Index $i$')
 ax.set_ylabel(r'Eigenvalues $\lambda_i$')
 pdf.savefig(fig, bbox_inches='tight')
+plt.savefig('figures/EigenvaluesL.pdf', format='pdf', bbox_inches='tight')
 plt.close(fig)
 
 for i in range(min([25, len(eigvecsL)])):
@@ -267,7 +432,7 @@ for i in range(min([25, len(eigvecsL)])):
     else:
         mntkm = 1.5*mntk
     #scatter = ax.scatter(samples.T[0], samples.T[1], s=3, c=eigvecsL[i], vmin=mntkm, vmax=mxtkm)
-    scatter = ax.scatter(samples.T[0], samples.T[1], s=3, c=eigvec, vmin=max([-5.0, min(eigvec)]), vmax=min([5.0, max(eigvec)]))
+    scatter = ax.scatter(samples.T[0], samples.T[1], s=3, c=eigvec, vmin=max([-5.0, min(eigvec)]), vmax=min([5.0, max(eigvec)]), cmap='jet')
     #cbar = plt.colorbar(scatter, ticks=np.sort([mntk, 0.0, mxtk]))
     cbar = plt.colorbar(scatter)
     ax.spines['right'].set_visible(False)
@@ -335,7 +500,7 @@ for i in range(min([25, len(eigvecsLhat)])):
     else:
         mntkm = 1.4*mntk
     #scatter = ax.scatter(samples.T[0], samples.T[1], s=3, c=eigvecsLhat[i], vmin=mntkm, vmax=mxtkm)
-    scatter = ax.scatter(samples.T[0], samples.T[1], s=3, c=eigvec, vmin=max([-5.0, min(eigvec)]), vmax=min([5.0, max(eigvec)]))
+    scatter = ax.scatter(samples.T[0], samples.T[1], s=3, c=eigvec, vmin=max([-5.0, min(eigvec)]), vmax=min([5.0, max(eigvec)]), cmap='jet')
     cbar = plt.colorbar(scatter)
     ax.spines['right'].set_visible(False)
     ax.spines['top'].set_visible(False)
@@ -351,11 +516,13 @@ pdf.close()
 
 fig = MakeFigure(425, 0.9, False)
 ax = plt.gca()
+ax.plot([min(bandwidthPara), max(bandwidthPara)], [1, 1], '--', color='#737373')
 ax.semilogx(bandwidthPara, logKernelAvgDerivative, color='#525252')
 ax.plot(bandwidthPara[optInd], logKernelAvgDerivative[optInd], 'o', markersize=4, markerfacecolor='#a50f15', markeredgecolor='#a50f15')
 ax.set_xlim([min(bandwidthPara), max(bandwidthPara)])
-ax.set_xlabel(r'$\epsilon$')
-ax.set_ylabel(r'$\Sigma_l^{\prime}$')
+ax.set_ylim([0, 1.05])
+ax.set_xlabel(r'Bandwidth parameter $\epsilon$', fontsize=16)
+ax.set_ylabel(r'$\chi_{\xi, \beta}^{\prime}$')
 ax.spines['right'].set_visible(False)
 ax.spines['top'].set_visible(False)
 ax.yaxis.set_ticks_position('left')

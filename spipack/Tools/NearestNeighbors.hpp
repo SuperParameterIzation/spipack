@@ -57,6 +57,13 @@ public:
   */
   Eigen::Ref<Eigen::VectorXd> Point(std::size_t const i);
 
+  /// Get the \f$i^{th}\f$ sample
+  /**
+  @param[in] i We want this sample
+  \return Get the \f$i^{th}\f$ sample
+  */
+  std::shared_ptr<muq::SamplingAlgorithms::SamplingState> GetSamplingState(std::size_t const i);
+
   /// The total number of samples
   /**
   \return The number of samples
@@ -76,7 +83,7 @@ public:
   std::size_t NumThreads() const;
 
   /// The sample collection
-  std::shared_ptr<const muq::SamplingAlgorithms::SampleCollection> Samples() const;
+  std::shared_ptr<muq::SamplingAlgorithms::SampleCollection> Samples() const;
 
   /// Build the kd-trees
   void BuildKDTrees() const;
@@ -96,7 +103,7 @@ public:
   @param[in] k The number of nearest neighbors \f$k\f$
   @param[out] neighbors A vector of the nearest neighbors. First: the neighbor's index, Second: the squared distance (\f$d^2 = \boldsymbol{x} \cdot \boldsymbol{x}^{(j)}\f$) between the point \f$\boldsymbol{x}\f$ and the neighbor
   @param[in] lag Ignore the first <tt>lag</tt> samples (defaults to \f$0\f$)
-  \return The smallest radius that contains all of the points
+  \return The average smallest radius that contains all of the points
   */
   double FindNeighbors(Eigen::Ref<const Eigen::VectorXd> const& point, std::size_t const k, std::vector<std::pair<std::size_t, double> >& neighbors, std::size_t const& lag = 0) const;
 
@@ -202,7 +209,7 @@ private:
 	std::vector<std::shared_ptr<NanoflannKDTree> > kdtrees;
 
   /// Samples from the distribution \f$\psi\f$
-  std::shared_ptr<const muq::SamplingAlgorithms::SampleCollection> samples;
+  std::shared_ptr<muq::SamplingAlgorithms::SampleCollection> samples;
 
   /// The number of <tt>openMP</tt> threads available to this object.
   const std::size_t numThreads;

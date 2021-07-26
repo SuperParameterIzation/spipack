@@ -9,14 +9,14 @@
 
 #include "exahype/plotters/Plotter.h"
 
-namespace Boltzmann {
+namespace spiEX_Boltzmann {
   class BoltzmannSolver;
   class BoltzmannWriter;
 }
 
-class Boltzmann::BoltzmannWriter : public exahype::plotters::Plotter::UserOnTheFlyPostProcessing {
+class spiEX_Boltzmann::BoltzmannWriter : public exahype::plotters::Plotter::UserOnTheFlyPostProcessing {
 public:
-  BoltzmannWriter(Boltzmann::BoltzmannSolver& solver);
+  BoltzmannWriter(spiEX_Boltzmann::BoltzmannSolver& solver);
   virtual ~BoltzmannWriter();
 
   void startPlotting(double time) override;

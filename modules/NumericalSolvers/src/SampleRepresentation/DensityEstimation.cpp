@@ -20,7 +20,7 @@ SampleRepresentation(samples, options),
 tuneManifoldDimension(options["TuneManifoldDimension"].as<bool>(defaults.tuneManifoldDimension))
 {}
 
-DensityEstimation::DensityEstimation(std::shared_ptr<const NearestNeighbors> const& samples, YAML::Node const& options) :
+DensityEstimation::DensityEstimation(std::shared_ptr<NearestNeighbors> const& samples, YAML::Node const& options) :
 SampleRepresentation(samples, options),
 tuneManifoldDimension(options["TuneManifoldDimension"].as<bool>(defaults.tuneManifoldDimension))
 {}
@@ -45,6 +45,7 @@ Eigen::VectorXd DensityEstimation::Estimate(Eigen::Ref<const Eigen::VectorXd> co
 
     // the initial condition for the optimization is the current parameter value
     std::vector<Eigen::VectorXd> inputs(1);
+    bandwidthPara = 1.0;
     inputs[0] = Eigen::VectorXd::Constant(1, std::log2(bandwidthPara));
 
     // solve the optimization and update the parameters
@@ -55,14 +56,12 @@ Eigen::VectorXd DensityEstimation::Estimate(Eigen::Ref<const Eigen::VectorXd> co
 
   // compute the kernel matrix
   Eigen::SparseMatrix<double> kmat;
-  KernelMatrix(bandwidthPara, bandwidth, kmat);
+  const Eigen::VectorXd rowsum = KernelMatrix(bandwidthPara, bandwidth, kmat);
   assert(kmat.rows()==NumSamples());
   assert(kmat.cols()==NumSamples());
 
-  // compute the volume vector
   Eigen::VectorXd vol = ((NumSamples()*std::pow(M_PI*bandwidthPara, manifoldDim/2.0))*squaredBandwidth.array().pow(manifoldDim/2.0)).array().inverse();
-  assert(vol.size()==NumSamples());
 
-  // apply the matrix vector product to compute the density estimation
+  //return rowsum.array()*vol.array();
   return kmat*vol;
 }

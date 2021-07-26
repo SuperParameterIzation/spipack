@@ -26,7 +26,7 @@ int main(int argc, char **argv) {
   const std::string filename = "outputData_eigendecomposition.h5";
 
   // the number of samples
-  const std::size_t n = 10000;
+  const std::size_t n = 500;
 
   // numerical parameters
   const std::size_t numNeighbors = 25;
@@ -38,13 +38,18 @@ int main(int argc, char **argv) {
   // create a standard Gaussian random variable
   auto rv = std::make_shared<Gaussian>(dim)->AsVariable();
 
-  // compute a sample collection
   auto samples = std::make_shared<SampleCollection>();
-  for( std::size_t i=0; i<n; ++i ) { samples->Add(std::make_shared<SamplingState>(rv->Sample())); }
+  {
+    HDF5File hdf5file(filename);
+    auto samps = hdf5file.ReadMatrix("/samples");
+    for( std::size_t i=0; i<samps.cols(); ++i ) { samples->Add(std::make_shared<SamplingState>(samps.col(i))); }
+  }
+  // compute a sample collection
+  //for( std::size_t i=0; i<n; ++i ) { samples->Add(std::make_shared<SamplingState>(rv->Sample())); }
 
   // options for the nearest neighbor search
   YAML::Node nnOptions;
-  nnOptions["NumSamples"] = n;
+  nnOptions["NumSamples"] = samples->size();
   nnOptions["Stride"] = n/5;
   nnOptions["NumThreads"] = omp_get_max_threads();
 
@@ -57,7 +62,7 @@ int main(int argc, char **argv) {
   densityOptions["NearestNeighbors"] = nnOptions;
   densityOptions["KernelOptions"] = kernelOptions;
   densityOptions["NumNearestNeighbors"] = numNeighbors;
-  densityOptions["TruncationTolerance"] = -std::log(1.0e-2);
+  densityOptions["TruncationTolerance"] = -std::log(1.0e-4);
   densityOptions["ManifoldDimension"] = (double)dim;
 
   // set the options for the Kolmogorov operator
@@ -66,7 +71,7 @@ int main(int argc, char **argv) {
   options["KernelOptions"] = kernelOptions;
   options["DensityOptions"] = densityOptions;
   options["OperatorParameter"] = 1.0;
-  options["TruncationTolerance"] = -std::log(1.0e-2);
+  options["TruncationTolerance"] = -std::log(1.0e-4);
   options["ManifoldDimension"] = (double)dim;
   options["BandwidthExponent"] = -0.5;
   options["BandwidthParameter"] = 1.0e-1;
@@ -146,6 +151,8 @@ int main(int argc, char **argv) {
   // this recomputes Lhat, which is a little redundant but okay as an example
   kolOperator->ComputeEigendecomposition(S, Sinv, lambda, Uhat);
   std::cout << "done." << std::endl;
+
+  std::cout << "eigenvalues: " << lambda.transpose() << std::endl << std::endl;
 
   // compute the inverse eigenvalues
   Eigen::VectorXd lambdaInv(neigs);

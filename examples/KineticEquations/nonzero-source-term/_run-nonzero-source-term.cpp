@@ -5,19 +5,18 @@
 using namespace muq::Modeling;
 using namespace spi::KineticEquations;
 
-// the dimension of the state space
-constexpr std::size_t dim = 2;
+std::shared_ptr<MacroscaleInformation> MacroscaleInformation() {
+  Eigen::VectorXd logMassDensityGrad = Eigen::Matrix<double, MacroscaleInformation::dim, 1>::Zero(MacroscaleInformation::dim, 1);
+  logMassDensityGrad(0) = 0.0;
 
-std::shared_ptr<ConditionalVelocityDistribution::MacroscaleInformation> MacroscaleInformation() {
-  Eigen::VectorXd logMassDensityGrad = Eigen::Matrix<double, dim, 1>::Zero(dim, 1);
-  logMassDensityGrad(0) = 1.0;
+  return std::make_shared<MacroscaleInformation>(1.0, Eigen::Matrix<double, MacroscaleInformation::dim, 1>::Zero(MacroscaleInformation::dim, 1), 0.0, logMassDensityGrad);
 
-  return std::make_shared<ConditionalVelocityDistribution::MacroscaleInformation>(1.0, Eigen::Matrix<double, dim, 1>::Zero(dim, 1), 0.0, logMassDensityGrad);
-  }
+  return nullptr;
+}
 
 int main(int argc, char **argv) {
-  // the number of samples
-  const std::size_t n = 1000;
+  /*// the number of samples
+  const std::size_t n = 100;
 
   // the number of timesteps
   const std::size_t numTimesteps = 100;
@@ -55,8 +54,8 @@ int main(int argc, char **argv) {
   options["KolmogorovRetuneFrequency"] = 1000;
 
   auto distribution = std::make_shared<ConditionalVelocityDistribution>(
-    Eigen::Matrix<double, dim, 1>::Zero(dim),
-    std::make_shared<Gaussian>(dim)->AsVariable(), MacroscaleInformation(),
+    Eigen::Matrix<double, MacroscaleInformation::dim, 1>::Zero(MacroscaleInformation::dim),
+    std::make_shared<Gaussian>(MacroscaleInformation::dim)->AsVariable(), MacroscaleInformation(),
     options);
 
   // run the micro-scale model
@@ -65,5 +64,5 @@ int main(int argc, char **argv) {
   for( std::size_t i=0; i<5; ++i ) {
     time += delta;
     distribution->Run(time, MacroscaleInformation(), i==0);
-  }
+  }*/
 }

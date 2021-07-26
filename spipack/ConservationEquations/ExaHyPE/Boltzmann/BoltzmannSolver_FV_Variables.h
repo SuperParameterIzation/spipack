@@ -21,11 +21,11 @@
  * Generic information about the variable string as it was declared in the
  * specification file
  **/
-struct Boltzmann::AbstractBoltzmannSolver_FV::VariableMetrics {
-  static constexpr int numDistinctVariables = 3;
-  static constexpr int SizeVariables  = 5; 
-  static constexpr int SizeParameters = 0;
-  static constexpr int Size           = 5+0;
+struct spiEX_Boltzmann::AbstractBoltzmannSolver_FV::VariableMetrics {
+  static constexpr int numDistinctVariables = 4;
+  static constexpr int SizeVariables  = 4; 
+  static constexpr int SizeParameters = 2;
+  static constexpr int Size           = 4+2;
   static constexpr int Dimensions     = DIMENSIONS;
 };
 
@@ -39,14 +39,15 @@ struct Boltzmann::AbstractBoltzmannSolver_FV::VariableMetrics {
  * You might want to use a typedef to shorten the notation or create 
  * an instance of this class.
  **/
-class Boltzmann::AbstractBoltzmannSolver_FV::VariableShortcuts : public Boltzmann::AbstractBoltzmannSolver_FV::VariableMetrics {
+class spiEX_Boltzmann::AbstractBoltzmannSolver_FV::VariableShortcuts : public spiEX_Boltzmann::AbstractBoltzmannSolver_FV::VariableMetrics {
 public:
   /// positions of fields inside the unknown vector (solution vector) Q
-  const int _Q[numDistinctVariables + 1] = { 0,1,3 };
+  const int _Q[numDistinctVariables + 1] = { 0,1,3,4 };
 
   const int massDensity = 0;
   const int momentum = 1;
-  const int coordinates = 3;
+  const int energy = 3;
+  const int coordinates = 4;
 
   const int* asArray() const { return _Q; }
   int operator [] (int index) const { return _Q[index]; }
@@ -58,14 +59,15 @@ public:
  * For instance, 0 means "scalar field" while any value >0 may mean a vector field or
  * even a "linearized" tensor field
  **/
-class Boltzmann::AbstractBoltzmannSolver_FV::VariableMultiplicities : public Boltzmann::AbstractBoltzmannSolver_FV::VariableMetrics {
+class spiEX_Boltzmann::AbstractBoltzmannSolver_FV::VariableMultiplicities : public spiEX_Boltzmann::AbstractBoltzmannSolver_FV::VariableMetrics {
 public:
   /// positions of fields inside the unknown vector (solution vector) Q
  
-  const int _Q[numDistinctVariables] = { 1,2,2 };
+  const int _Q[numDistinctVariables] = { 1,2,1,2 };
 
   const int massDensity = 1;
   const int momentum = 2;
+  const int energy = 1;
   const int coordinates = 2;
 
   const int* asArray() const { return _Q; }
@@ -79,12 +81,13 @@ public:
  * These names might want to be used for plotting, output, etc.
  *
  **/
-class Boltzmann::AbstractBoltzmannSolver_FV::VariableNames : public Boltzmann::AbstractBoltzmannSolver_FV::VariableMetrics {
+class spiEX_Boltzmann::AbstractBoltzmannSolver_FV::VariableNames : public spiEX_Boltzmann::AbstractBoltzmannSolver_FV::VariableMetrics {
 public:
-  char const *_Q[numDistinctVariables + 1] = { "massDensity","momentum","coordinates" };
+  char const *_Q[numDistinctVariables + 1] = { "massDensity","momentum","energy","coordinates" };
 
   const char* massDensity = "massDensity";
   const char* momentum = "momentum";
+  const char* energy = "energy";
   const char* coordinates = "coordinates";
 
   const char* const* asArray() const { return _Q; } // type: whatever
@@ -102,32 +105,34 @@ public:
  * Usage is like:
  * 
  *    void somewhere() {
- *       using namespace Boltzmann::BoltzmannSolver_FV_Variables::shortcuts;
+ *       using namespace spiEX_Boltzmann::BoltzmannSolver_FV_Variables::shortcuts;
  *       Q[foo] = 17;
  *    }
  *
  * instead of
  * 
  *    void somewhere() {
- *       Boltzmann::AbstractBoltzmannSolver_FV::VariableNames q;
+ *       spiEX_Boltzmann::AbstractBoltzmannSolver_FV::VariableNames q;
  *       Q[q.foo] = 17;
  *    }
  *
  **/
-namespace Boltzmann {
+namespace spiEX_Boltzmann {
   namespace BoltzmannSolver_FV_Variables {
     namespace shortcuts {
       constexpr int massDensity = 0;
       constexpr int momentum = 1;
-      constexpr int coordinates = 3;
+      constexpr int energy = 3;
+      constexpr int coordinates = 4;
     } // namespace shortcuts
     namespace names {
       constexpr char massDensity[] = "massDensity"; 
       constexpr char momentum[] = "momentum"; 
+      constexpr char energy[] = "energy"; 
       constexpr char coordinates[] = "coordinates"; 
     } // namespace names
-  } // end of namespace Boltzmann::BoltzmannSolver_FV_Variables 
-} // end of namespace Boltzmann
+  } // end of namespace spiEX_Boltzmann::BoltzmannSolver_FV_Variables 
+} // end of namespace spiEX_Boltzmann
 
 /*
  * Another class idea:
@@ -145,7 +150,7 @@ namespace Boltzmann {
  */
 
 
-class Boltzmann::AbstractBoltzmannSolver_FV::ReadOnlyVariables : public Boltzmann::AbstractBoltzmannSolver_FV::VariableMetrics {
+class spiEX_Boltzmann::AbstractBoltzmannSolver_FV::ReadOnlyVariables : public spiEX_Boltzmann::AbstractBoltzmannSolver_FV::VariableMetrics {
   private:
     const double* const _Q;
   public:
@@ -191,27 +196,30 @@ class Boltzmann::AbstractBoltzmannSolver_FV::ReadOnlyVariables : public Boltzman
       return values;
     }
         
+    // getter and setter for energy
+    double energy() const {return _Q[3];}
+        
     // getters for coordinates 
     double coordinates(int index) const {
       assertion(index >= 0 && index<2);
-      return _Q[3+index];
+      return _Q[4+index];
     }
     tarch::la::Vector<2,double> coordinates() const {
       tarch::la::Vector<2,double> values;
-      values=_Q[3],_Q[4];
+      values=_Q[4],_Q[5];
       return values;
     }
         
 }; // end of ReadOnlyVariables
 
 
-class Boltzmann::AbstractBoltzmannSolver_FV::Variables : public Boltzmann::AbstractBoltzmannSolver_FV::VariableMetrics{
+class spiEX_Boltzmann::AbstractBoltzmannSolver_FV::Variables : public spiEX_Boltzmann::AbstractBoltzmannSolver_FV::VariableMetrics{
   private:
     double* const _Q;
   public:
-    static constexpr int SizeVariables  = 5;
-    static constexpr int SizeParameters = 0;
-    static constexpr int Size           = 5+0;
+    static constexpr int SizeVariables  = 4;
+    static constexpr int SizeParameters = 2;
+    static constexpr int Size           = 4+2;
   
     Variables(double* const Q) : _Q(Q) {}
     
@@ -277,31 +285,35 @@ class Boltzmann::AbstractBoltzmannSolver_FV::Variables : public Boltzmann::Abstr
       _Q[2] = momentum1;
     }
     
+    // getter and setter for energy
+    double energy() const {return _Q[3];}
+    double& energy() {return _Q[3];}
+    
     // getters for coordinates 
     double coordinates(int index) const {
       assertion(index >= 0 && index<2);
-      return _Q[3+index];
+      return _Q[4+index];
     }
     tarch::la::Vector<2,double> coordinates() const {
       tarch::la::Vector<2,double> values;
-      values=_Q[3],_Q[4];
+      values=_Q[4],_Q[5];
       return values;
     }
     // setters for coordinates
-    double& coordinates(int index) {return _Q[3+index];}
+    double& coordinates(int index) {return _Q[4+index];}
     void coordinates(const tarch::la::Vector<2,double>& values) const {
-      _Q[3] = values[0];
-      _Q[4] = values[1];
+      _Q[4] = values[0];
+      _Q[5] = values[1];
     }
     void coordinates(double coordinates0,double coordinates1) {
-      _Q[3] = coordinates0;
-      _Q[4] = coordinates1;
+      _Q[4] = coordinates0;
+      _Q[5] = coordinates1;
     }
     
 }; // end of Variables
 
 
-class Boltzmann::AbstractBoltzmannSolver_FV::Fluxes : public Boltzmann::AbstractBoltzmannSolver_FV::VariableMetrics {
+class spiEX_Boltzmann::AbstractBoltzmannSolver_FV::Fluxes : public spiEX_Boltzmann::AbstractBoltzmannSolver_FV::VariableMetrics {
   private:
     double** const _F;
   public:
@@ -460,18 +472,68 @@ _F[0][1+1],_F[1][1+1],_F[2][1+1];
       _F[1][1+1] = v11;
     }
     #endif
+    // getters for energy
+    double energy(int column) const {
+      assertion(column >= 0 && column<DIMENSIONS);
+      return _F[column][3];
+    }
+    tarch::la::Vector<DIMENSIONS,double> energy() const {
+      #if DIMENSIONS==2 
+      tarch::la::Vector<DIMENSIONS,double> values(_F[0][3],_F[1][3]);
+      #elif DIMENSIONS==3 
+      tarch::la::Vector<DIMENSIONS,double> values(_F[0][3],_F[1][3],_F[2][3]);
+      #endif
+      return values;
+    }
+    // setters for energy
+    double& energy(int column) {
+      assertion(column >= 0 && column<DIMENSIONS);
+      return _F[column][3];
+    }
+
+    void energy(const tarch::la::Vector<DIMENSIONS,double>& values) {
+      _F[0][3] = values[0];
+      _F[1][3] = values[1];
+      #if DIMENSIONS==3
+      _F[2][3] = values[2];
+      #endif
+    }
+
+    #if DIMENSIONS==2
+    // setter for 2.5D calculations. Third vector element is ignored.*/;
+    void energy(const tarch::la::Vector<3,double>& values) {
+      _F[0][3] = values[0];
+      _F[1][3] = values[1];
+    }
+    #endif
+
+    // setter for 3D and 2.5D calculations. Third argument is ignored for the latter.
+    void energy(double v0,double v1,double v2) {
+      _F[0][3] = v0;
+      _F[1][3] = v1;
+      #if DIMENSIONS==3
+      _F[2][3] = v2;
+      #endif
+    }
+    
+    #if DIMENSIONS==2
+    void energy(double v0,double v1) {
+      _F[0][3] = v0;
+      _F[1][3] = v1;
+    }
+    #endif
     // getters for coordinates
     double coordinates(int row, int column) const {
       assertion(row >= 0 && row<2);
       assertion(column >= 0 && column<DIMENSIONS);
-      return _F[column][3+row];
+      return _F[column][4+row];
     }
     tarch::la::Vector<DIMENSIONS,double> coordinates(int row) const {
       assertion(row >= 0 && row<2);
       #if DIMENSIONS==2
-      tarch::la::Vector<DIMENSIONS,double> values(_F[0][3+row],_F[1][3+row]);
+      tarch::la::Vector<DIMENSIONS,double> values(_F[0][4+row],_F[1][4+row]);
       #elif DIMENSIONS==3 
-      tarch::la::Vector<DIMENSIONS,double> values(_F[0][3+row],_F[1][3+row],_F[2][3+row]);
+      tarch::la::Vector<DIMENSIONS,double> values(_F[0][4+row],_F[1][4+row],_F[2][4+row]);
       #endif
       return values;
     }
@@ -479,12 +541,12 @@ _F[0][1+1],_F[1][1+1],_F[2][1+1];
       tarch::la::Matrix<2,DIMENSIONS,double> values;
       #if DIMENSIONS==2
       values = 
-_F[0][3+0],_F[1][3+0],
-_F[0][3+1],_F[1][3+1];
+_F[0][4+0],_F[1][4+0],
+_F[0][4+1],_F[1][4+1];
       #elif DIMENSIONS==3
       values = 
-_F[0][3+0],_F[1][3+0],_F[2][3+0],
-_F[0][3+1],_F[1][3+1],_F[2][3+1];
+_F[0][4+0],_F[1][4+0],_F[2][4+0],
+_F[0][4+1],_F[1][4+1],_F[2][4+1];
       #endif
       return values;
     }
@@ -492,64 +554,64 @@ _F[0][3+1],_F[1][3+1],_F[2][3+1];
     double& coordinates(int row, int column) {
       assertion(row >= 0 && row<2);
       assertion(column >= 0 && column<DIMENSIONS);
-      return _F[column][3+row];
+      return _F[column][4+row];
     }
 
     void coordinates(const tarch::la::Matrix<2,DIMENSIONS,double>& values) {
-      _F[0][3+0] = values(0,0);
-      _F[0][3+1] = values(1,0);
-      _F[1][3+0] = values(0,1);
-      _F[1][3+1] = values(1,1);
+      _F[0][4+0] = values(0,0);
+      _F[0][4+1] = values(1,0);
+      _F[1][4+0] = values(0,1);
+      _F[1][4+1] = values(1,1);
       #if DIMENSIONS==3
-      _F[2][3+0] = values(0,2);
-      _F[2][3+1] = values(1,2);
+      _F[2][4+0] = values(0,2);
+      _F[2][4+1] = values(1,2);
       #endif
     }
     #if DIMENSIONS==2
     // setter for 2.5D calculations. Third matrix column is ignored.*/;
     void coordinates(const tarch::la::Matrix<2,3,double>& values) {
-      _F[0][3+0] = values(0,0);
-      _F[0][3+1] = values(1,0);
-      _F[1][3+0] = values(0,1);
-      _F[1][3+1] = values(1,1);
+      _F[0][4+0] = values(0,0);
+      _F[0][4+1] = values(1,0);
+      _F[1][4+0] = values(0,1);
+      _F[1][4+1] = values(1,1);
     }
     #endif
       
     // setter for 3D and 2.5D calculations. Third argument is ignored for the latter.
     void coordinates(int row, double v0,double v1,double v2) {
       assertion(row >= 0 && row<2);
-      _F[0][3+row] = v0;
-      _F[1][3+row] = v1;
+      _F[0][4+row] = v0;
+      _F[1][4+row] = v1;
       #if DIMENSIONS==3
-      _F[2][3+row] = v2;
+      _F[2][4+row] = v2;
       #endif
     }
     #if DIMENSIONS==2
     // setter for 2D calculations.*/;
     void coordinates(int row, double v0,double v1) {
       assertion(row >= 0 && row<2);
-      _F[0][3+row] = v0;
-      _F[1][3+row] = v1;
+      _F[0][4+row] = v0;
+      _F[1][4+row] = v1;
     }
     #endif
 
     // setter for 3D and 2.5D calculations. Third column values are ignored for the latter.
     void coordinates(double v00,double v01,double v02,double v10,double v11,double v12) {
-      _F[0][3+0] = v00;
-      _F[0][3+1] = v10;
-      _F[1][3+0] = v01;
-      _F[1][3+1] = v11;
+      _F[0][4+0] = v00;
+      _F[0][4+1] = v10;
+      _F[1][4+0] = v01;
+      _F[1][4+1] = v11;
       #if DIMENSIONS==3
-      _F[2][3+0] = v02;
-      _F[2][3+1] = v12;
+      _F[2][4+0] = v02;
+      _F[2][4+1] = v12;
       #endif
     }
     #if DIMENSIONS==2
     void coordinates(double v00,double v01,double v10,double v11) {
-      _F[0][3+0] = v00;
-      _F[0][3+1] = v10;
-      _F[1][3+0] = v01;
-      _F[1][3+1] = v11;
+      _F[0][4+0] = v00;
+      _F[0][4+1] = v10;
+      _F[1][4+0] = v01;
+      _F[1][4+1] = v11;
     }
     #endif
 }; // end of Fluxes
@@ -559,7 +621,7 @@ _F[0][3+1],_F[1][3+1],_F[2][3+1];
 //
 // Global Observables
 //
-class Boltzmann::AbstractBoltzmannSolver_FV::ReadOnlyGlobalObservables {
+class spiEX_Boltzmann::AbstractBoltzmannSolver_FV::ReadOnlyGlobalObservables {
   private:
     const double* const _observables;
   public:
@@ -588,7 +650,7 @@ class Boltzmann::AbstractBoltzmannSolver_FV::ReadOnlyGlobalObservables {
 }; // end of ReadOnlyGlobalObservables
 
 
-class Boltzmann::AbstractBoltzmannSolver_FV::GlobalObservables {
+class spiEX_Boltzmann::AbstractBoltzmannSolver_FV::GlobalObservables {
   private:
     double* const _observables;
   public:

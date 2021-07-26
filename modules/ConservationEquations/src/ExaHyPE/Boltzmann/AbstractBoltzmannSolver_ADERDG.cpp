@@ -21,20 +21,20 @@
 #include <stdio.h>
 
 // quadrature weights and operators
-double**   Boltzmann::AbstractBoltzmannSolver_ADERDG::weights                                 = kernels::legendre::weights;
-double**   Boltzmann::AbstractBoltzmannSolver_ADERDG::nodes                                   = kernels::legendre::nodes;
-double***  Boltzmann::AbstractBoltzmannSolver_ADERDG::Kxi                                     = kernels::legendre::Kxi;
-double***  Boltzmann::AbstractBoltzmannSolver_ADERDG::dudx                                    = kernels::legendre::dudx;
-double***  Boltzmann::AbstractBoltzmannSolver_ADERDG::iK1                                     = kernels::legendre::iK1;
-double***  Boltzmann::AbstractBoltzmannSolver_ADERDG::equidistantGridProjector                = kernels::legendre::equidistantGridProjector;
-double***  Boltzmann::AbstractBoltzmannSolver_ADERDG::FCoeff                                  = kernels::legendre::FCoeff;
-double**** Boltzmann::AbstractBoltzmannSolver_ADERDG::fineGridProjector                       = kernels::legendre::fineGridProjector;
-kernels::UnivariateFunction** Boltzmann::AbstractBoltzmannSolver_ADERDG::basisFunction                 = kernels::legendre::basisFunction;
-kernels::UnivariateFunction** Boltzmann::AbstractBoltzmannSolver_ADERDG::basisFunctionFirstDerivative  = kernels::legendre::basisFunctionFirstDerivative;
-kernels::UnivariateFunction** Boltzmann::AbstractBoltzmannSolver_ADERDG::basisFunctionSecondDerivative = kernels::legendre::basisFunctionSecondDerivative;
+double**   spiEX_Boltzmann::AbstractBoltzmannSolver_ADERDG::weights                                 = kernels::legendre::weights;
+double**   spiEX_Boltzmann::AbstractBoltzmannSolver_ADERDG::nodes                                   = kernels::legendre::nodes;
+double***  spiEX_Boltzmann::AbstractBoltzmannSolver_ADERDG::Kxi                                     = kernels::legendre::Kxi;
+double***  spiEX_Boltzmann::AbstractBoltzmannSolver_ADERDG::dudx                                    = kernels::legendre::dudx;
+double***  spiEX_Boltzmann::AbstractBoltzmannSolver_ADERDG::iK1                                     = kernels::legendre::iK1;
+double***  spiEX_Boltzmann::AbstractBoltzmannSolver_ADERDG::equidistantGridProjector                = kernels::legendre::equidistantGridProjector;
+double***  spiEX_Boltzmann::AbstractBoltzmannSolver_ADERDG::FCoeff                                  = kernels::legendre::FCoeff;
+double**** spiEX_Boltzmann::AbstractBoltzmannSolver_ADERDG::fineGridProjector                       = kernels::legendre::fineGridProjector;
+kernels::UnivariateFunction** spiEX_Boltzmann::AbstractBoltzmannSolver_ADERDG::basisFunction                 = kernels::legendre::basisFunction;
+kernels::UnivariateFunction** spiEX_Boltzmann::AbstractBoltzmannSolver_ADERDG::basisFunctionFirstDerivative  = kernels::legendre::basisFunctionFirstDerivative;
+kernels::UnivariateFunction** spiEX_Boltzmann::AbstractBoltzmannSolver_ADERDG::basisFunctionSecondDerivative = kernels::legendre::basisFunctionSecondDerivative;
 
 // We define the constructor of the actual solver here in order to regenerate it easily.
-Boltzmann::BoltzmannSolver_ADERDG::BoltzmannSolver_ADERDG(
+spiEX_Boltzmann::BoltzmannSolver_ADERDG::BoltzmannSolver_ADERDG(
   const double maximumMeshSize,
   const int maximumMeshDepth,
   const int haloCells,
@@ -58,7 +58,7 @@ Boltzmann::BoltzmannSolver_ADERDG::BoltzmannSolver_ADERDG(
 }
 
 
-Boltzmann::AbstractBoltzmannSolver_ADERDG::AbstractBoltzmannSolver_ADERDG(
+spiEX_Boltzmann::AbstractBoltzmannSolver_ADERDG::AbstractBoltzmannSolver_ADERDG(
     const double maximumMeshSize,
     const int maximumMeshDepth,
     const int haloCells,
@@ -86,22 +86,22 @@ Boltzmann::AbstractBoltzmannSolver_ADERDG::AbstractBoltzmannSolver_ADERDG(
 ) {
 }
 
-void Boltzmann::AbstractBoltzmannSolver_ADERDG::constantsToString(std::ostream& os) {
+void spiEX_Boltzmann::AbstractBoltzmannSolver_ADERDG::constantsToString(std::ostream& os) {
   // This string is used in the --version output to identify compile time constants
-  os << "Boltzmann::AbstractBoltzmannSolver_ADERDG("
+  os << "spiEX_Boltzmann::AbstractBoltzmannSolver_ADERDG("
      << "nVar=" << NumberOfVariables << ", "
      << "nParam=" << NumberOfParameters << ", "
      << "Order=" << Order
      << ")";
 }
 
-void Boltzmann::AbstractBoltzmannSolver_ADERDG::abortWithMsg(const char* const msg) {
+void spiEX_Boltzmann::AbstractBoltzmannSolver_ADERDG::abortWithMsg(const char* const msg) {
   // verbosily fail even without assertions turned on
   puts(msg);
   abort();
 }
 
-int Boltzmann::AbstractBoltzmannSolver_ADERDG::fusedSpaceTimePredictorVolumeIntegral(double* lduh, double* lQhbnd, double* lGradQhbnd, double* lFhbnd, double* const luh, const tarch::la::Vector<DIMENSIONS, double>& cellCentre, const tarch::la::Vector<DIMENSIONS, double>& cellSize, const double t ,const double dt,const bool addVolumeIntegralResultToUpdate) {
+int spiEX_Boltzmann::AbstractBoltzmannSolver_ADERDG::fusedSpaceTimePredictorVolumeIntegral(double* lduh, double* lQhbnd, double* lGradQhbnd, double* lFhbnd, double* const luh, const tarch::la::Vector<DIMENSIONS, double>& cellCentre, const tarch::la::Vector<DIMENSIONS, double>& cellSize, const double t ,const double dt,const bool addVolumeIntegralResultToUpdate) {
   constexpr int spaceBasisSize     = (Order+1)*(Order+1);
   constexpr int spaceTimeBasisSize = spaceBasisSize*(Order+1);
   constexpr int sizeLQi   = (NumberOfVariables+NumberOfParameters)*spaceTimeBasisSize;
@@ -126,7 +126,7 @@ int Boltzmann::AbstractBoltzmannSolver_ADERDG::fusedSpaceTimePredictorVolumeInte
   
   double* lQhi = memory; memory+=sizeLQhi;
   double* lFhi = memory; memory+=sizeLFhi;
-  const int picardIterations = kernels::aderdg::generic::c::spaceTimePredictorNonlinear<true, true, false, false, false, BoltzmannSolver_ADERDG>(*static_cast<BoltzmannSolver_ADERDG*>(this), lQhbnd, lGradQhbnd, lFhbnd, lQi, rhs, lFi, gradQ, lQhi, lFhi, luh, cellCentre, tarch::la::invertEntries(cellSize), t, dt);
+  const int picardIterations = kernels::aderdg::generic::c::spaceTimePredictorNonlinear<true, true, false, true, false, BoltzmannSolver_ADERDG>(*static_cast<BoltzmannSolver_ADERDG*>(this), lQhbnd, lGradQhbnd, lFhbnd, lQi, rhs, lFi, gradQ, lQhi, lFhi, luh, cellCentre, tarch::la::invertEntries(cellSize), t, dt);
  
   if ( addVolumeIntegralResultToUpdate ) {
     kernels::aderdg::generic::c::volumeIntegralNonlinear<BoltzmannSolver_ADERDG, true, true, false, NumberOfVariables, Order+1>(lduh,lFhi,cellSize); 
@@ -140,11 +140,11 @@ int Boltzmann::AbstractBoltzmannSolver_ADERDG::fusedSpaceTimePredictorVolumeInte
   return picardIterations;
 }
 
-void Boltzmann::AbstractBoltzmannSolver_ADERDG::addUpdateToSolution(double* const luh,const double* const luhOld,const double* const lduh,const double dt) {
+void spiEX_Boltzmann::AbstractBoltzmannSolver_ADERDG::addUpdateToSolution(double* const luh,const double* const luhOld,const double* const lduh,const double dt) {
   kernels::aderdg::generic::c::solutionUpdate<BoltzmannSolver_ADERDG>(*static_cast<BoltzmannSolver_ADERDG*>(this),luh,luhOld,lduh,dt);
 }
 
-void Boltzmann::AbstractBoltzmannSolver_ADERDG::faceIntegral(double* const out/*may be solution or update vector*/,double* const lFhbnd,const int direction, const int orientation,const tarch::la::Vector<DIMENSIONS-1,int>& subfaceIndex,const int levelDelta,const tarch::la::Vector<DIMENSIONS, double>& cellSize,const double dt,const bool addToUpdate) {
+void spiEX_Boltzmann::AbstractBoltzmannSolver_ADERDG::faceIntegral(double* const out/*may be solution or update vector*/,double* const lFhbnd,const int direction, const int orientation,const tarch::la::Vector<DIMENSIONS-1,int>& subfaceIndex,const int levelDelta,const tarch::la::Vector<DIMENSIONS, double>& cellSize,const double dt,const bool addToUpdate) {
     
   constexpr int basisSize2 = (Order+1);
   constexpr int basisSize3 = basisSize2*(Order+1);
@@ -170,13 +170,13 @@ void Boltzmann::AbstractBoltzmannSolver_ADERDG::faceIntegral(double* const out/*
   
 }
 
-void Boltzmann::AbstractBoltzmannSolver_ADERDG::riemannSolver(double* const FL,double* const FR,const double* const QL,const double* const QR,const double t,const double dt, const tarch::la::Vector<DIMENSIONS, double>& cellSize, const int direction, bool isBoundaryFace, int faceIndex) {
+void spiEX_Boltzmann::AbstractBoltzmannSolver_ADERDG::riemannSolver(double* const FL,double* const FR,const double* const QL,const double* const QR,const double t,const double dt, const tarch::la::Vector<DIMENSIONS, double>& cellSize, const int direction, bool isBoundaryFace, int faceIndex) {
   assertion2(direction>=0,dt,direction);
   assertion2(direction<DIMENSIONS,dt,direction);
-kernels::aderdg::generic::c::riemannSolverNonlinear<false,false,BoltzmannSolver_ADERDG>(*static_cast<BoltzmannSolver_ADERDG*>(this),FL,FR,QL,QR,t,dt,cellSize,direction);
+kernels::aderdg::generic::c::riemannSolverNonlinear<true,false,BoltzmannSolver_ADERDG>(*static_cast<BoltzmannSolver_ADERDG*>(this),FL,FR,QL,QR,t,dt,cellSize,direction);
 }
 
-void Boltzmann::AbstractBoltzmannSolver_ADERDG::boundaryConditions(double* const fluxIn,const double* const stateIn,const double* const gradStateIn, const double* const luh,const tarch::la::Vector<DIMENSIONS,double>& cellCentre,const tarch::la::Vector<DIMENSIONS,double>& cellSize,const double t,const double dt,const int direction,const int orientation) {
+void spiEX_Boltzmann::AbstractBoltzmannSolver_ADERDG::boundaryConditions(double* const fluxIn,const double* const stateIn,const double* const gradStateIn, const double* const luh,const tarch::la::Vector<DIMENSIONS,double>& cellCentre,const tarch::la::Vector<DIMENSIONS,double>& cellSize,const double t,const double dt,const int direction,const int orientation) {
   constexpr int basisSize     = (Order+1);
   constexpr int sizeStateOut = (NumberOfVariables+NumberOfParameters)*basisSize;
   constexpr int sizeFluxOut  = NumberOfVariables*basisSize;
@@ -204,33 +204,33 @@ void Boltzmann::AbstractBoltzmannSolver_ADERDG::boundaryConditions(double* const
   }
 }
 
-double Boltzmann::AbstractBoltzmannSolver_ADERDG::stableTimeStepSize(const double* const luh,const tarch::la::Vector<DIMENSIONS,double>& cellSize) {
+double spiEX_Boltzmann::AbstractBoltzmannSolver_ADERDG::stableTimeStepSize(const double* const luh,const tarch::la::Vector<DIMENSIONS,double>& cellSize) {
   double d = kernels::aderdg::generic::c::stableTimeStepSize<BoltzmannSolver_ADERDG,false>(*static_cast<BoltzmannSolver_ADERDG*>(this),luh,cellSize);
   return d;
 }
-void Boltzmann::AbstractBoltzmannSolver_ADERDG::adjustSolution(double* const luh,const tarch::la::Vector<DIMENSIONS,double>& cellCentre,const tarch::la::Vector<DIMENSIONS,double>& cellSize,double t,double dt) {
+void spiEX_Boltzmann::AbstractBoltzmannSolver_ADERDG::adjustSolution(double* const luh,const tarch::la::Vector<DIMENSIONS,double>& cellCentre,const tarch::la::Vector<DIMENSIONS,double>& cellSize,double t,double dt) {
   kernels::aderdg::generic::c::solutionAdjustment<BoltzmannSolver_ADERDG>(*static_cast<BoltzmannSolver_ADERDG*>(this),luh,cellCentre,cellSize,t,dt);
 }
 
-void Boltzmann::AbstractBoltzmannSolver_ADERDG::faceUnknownsProlongation(double* const lQhbndFine,double* const lFhbndFine,const double* const lQhbndCoarse,const double* const lFhbndCoarse,const int coarseGridLevel,const int fineGridLevel,const tarch::la::Vector<DIMENSIONS-1,int>& subfaceIndex) {
+void spiEX_Boltzmann::AbstractBoltzmannSolver_ADERDG::faceUnknownsProlongation(double* const lQhbndFine,double* const lFhbndFine,const double* const lQhbndCoarse,const double* const lFhbndCoarse,const int coarseGridLevel,const int fineGridLevel,const tarch::la::Vector<DIMENSIONS-1,int>& subfaceIndex) {
   kernels::aderdg::generic::c::faceUnknownsProlongation<BoltzmannSolver_ADERDG,NumberOfVariables,NumberOfParameters,Order+1>(lQhbndFine,lFhbndFine,lQhbndCoarse,lFhbndCoarse,coarseGridLevel,fineGridLevel,subfaceIndex);
 }
 
-void Boltzmann::AbstractBoltzmannSolver_ADERDG::volumeUnknownsProlongation(double* const luhFine,const double* const luhCoarse,const int coarseGridLevel,const int fineGridLevel,const tarch::la::Vector<DIMENSIONS,int>& subcellIndex) {
+void spiEX_Boltzmann::AbstractBoltzmannSolver_ADERDG::volumeUnknownsProlongation(double* const luhFine,const double* const luhCoarse,const int coarseGridLevel,const int fineGridLevel,const tarch::la::Vector<DIMENSIONS,int>& subcellIndex) {
   kernels::aderdg::generic::c::volumeUnknownsProlongation<BoltzmannSolver_ADERDG,NumberOfVariables,NumberOfParameters,Order+1>(luhFine,luhCoarse,coarseGridLevel,fineGridLevel,subcellIndex);
 }
 
-void Boltzmann::AbstractBoltzmannSolver_ADERDG::volumeUnknownsRestriction(double* const luhCoarse,const double* const luhFine,const int coarseGridLevel,const int fineGridLevel,const tarch::la::Vector<DIMENSIONS,int>& subcellIndex) {
+void spiEX_Boltzmann::AbstractBoltzmannSolver_ADERDG::volumeUnknownsRestriction(double* const luhCoarse,const double* const luhFine,const int coarseGridLevel,const int fineGridLevel,const tarch::la::Vector<DIMENSIONS,int>& subcellIndex) {
   kernels::aderdg::generic::c::volumeUnknownsRestriction<BoltzmannSolver_ADERDG,NumberOfVariables,NumberOfParameters,Order+1>(luhCoarse,luhFine,coarseGridLevel,fineGridLevel,subcellIndex);
 }
 
 //--------
 
 
-void Boltzmann::AbstractBoltzmannSolver_ADERDG::resetGlobalObservables(double* const globalObservables) {
+void spiEX_Boltzmann::AbstractBoltzmannSolver_ADERDG::resetGlobalObservables(double* const globalObservables) {
 }
 
-void Boltzmann::AbstractBoltzmannSolver_ADERDG::updateGlobalObservables(
+void spiEX_Boltzmann::AbstractBoltzmannSolver_ADERDG::updateGlobalObservables(
     double* const                               globalObservables,
     const double* const                         luh,
     const tarch::la::Vector<DIMENSIONS,double>& cellCentre,
@@ -239,47 +239,47 @@ void Boltzmann::AbstractBoltzmannSolver_ADERDG::updateGlobalObservables(
     const double dt) {
 }
 
-void Boltzmann::AbstractBoltzmannSolver_ADERDG::mergeGlobalObservables(double* const globalObservables,const double* const otherObservables) {
+void spiEX_Boltzmann::AbstractBoltzmannSolver_ADERDG::mergeGlobalObservables(double* const globalObservables,const double* const otherObservables) {
 }
 
-void Boltzmann::AbstractBoltzmannSolver_ADERDG::wrapUpGlobalObservables(double* const globalObservables) {
+void spiEX_Boltzmann::AbstractBoltzmannSolver_ADERDG::wrapUpGlobalObservables(double* const globalObservables) {
 }
 
 //--------
 
-void Boltzmann::AbstractBoltzmannSolver_ADERDG::flux(const double* const Q,double** const F) {
+void spiEX_Boltzmann::AbstractBoltzmannSolver_ADERDG::flux(const double* const Q,double** const F) {
       abortWithMsg("flux: If this operation is entered, you have activated the corresponding guard. Then you have to re-implement this routine, too." );
 }
 
-void Boltzmann::AbstractBoltzmannSolver_ADERDG::viscousFlux(const double* const Q,const double* const gradQ, double** const F) {
+void spiEX_Boltzmann::AbstractBoltzmannSolver_ADERDG::viscousFlux(const double* const Q,const double* const gradQ, double** const F) {
       abortWithMsg("viscous flux: If this operation is entered, you have activated the corresponding guard. Then you have to re-implement this routine, too." );
 }
 
-void Boltzmann::AbstractBoltzmannSolver_ADERDG::viscousEigenvalues(const double* const Q,const int direction,double* const lambda) {
+void spiEX_Boltzmann::AbstractBoltzmannSolver_ADERDG::viscousEigenvalues(const double* const Q,const int direction,double* const lambda) {
       abortWithMsg("viscous eigenvalues: If this operation is entered, you have activated the corresponding guard. Then you have to re-implement this routine, too." );
 }
 
-void Boltzmann::AbstractBoltzmannSolver_ADERDG::algebraicSource(const tarch::la::Vector<DIMENSIONS, double>& x, double t, const double *const Q, double *S) {
+void spiEX_Boltzmann::AbstractBoltzmannSolver_ADERDG::algebraicSource(const tarch::la::Vector<DIMENSIONS, double>& x, double t, const double *const Q, double *S) {
       abortWithMsg("algebraicSource: If this operation is entered, you have activated the corresponding guard. Then you have to re-implement this routine, too." );
 }
 
-    void Boltzmann::AbstractBoltzmannSolver_ADERDG::nonConservativeProduct(const double* const Q,const double* const gradQ,double* const BgradQ) {
+    void spiEX_Boltzmann::AbstractBoltzmannSolver_ADERDG::nonConservativeProduct(const double* const Q,const double* const gradQ,double* const BgradQ) {
       abortWithMsg("nonConservativeProduct: If this operation is entered, you have activated the corresponding guard. Then you have to re-implement this routine, too." );
 }
 
-void Boltzmann::AbstractBoltzmannSolver_ADERDG::multiplyMaterialParameterMatrix(const double* const Q, double** const rhs) {
+void spiEX_Boltzmann::AbstractBoltzmannSolver_ADERDG::multiplyMaterialParameterMatrix(const double* const Q, double** const rhs) {
       abortWithMsg("multiplyMaterialParameterMatrix: If this operation is entered, you have activated the corresponding guard. Then you have to re-implement this routine, too." );
 }
 
-void Boltzmann::AbstractBoltzmannSolver_ADERDG::pointSource(const double* const Q,const double* const x,const double t,const double dt, double* const forceVector,int n) {
+void spiEX_Boltzmann::AbstractBoltzmannSolver_ADERDG::pointSource(const double* const Q,const double* const x,const double t,const double dt, double* const forceVector,int n) {
       abortWithMsg("pointSource: If this operation is entered, you have activated the corresponding guard. Then you have to re-implement this routine, too." );
 }
 
-void Boltzmann::AbstractBoltzmannSolver_ADERDG::resetGlobalObservables(GlobalObservables& globalObservables) const {
+void spiEX_Boltzmann::AbstractBoltzmannSolver_ADERDG::resetGlobalObservables(GlobalObservables& globalObservables) const {
   abortWithMsg("If this operation is entered (resetGlobalObservables), you have specified global observables. Then you have to re-implement this routine, too." );
 }
 
-void Boltzmann::AbstractBoltzmannSolver_ADERDG::mapGlobalObservables(
+void spiEX_Boltzmann::AbstractBoltzmannSolver_ADERDG::mapGlobalObservables(
     GlobalObservables&                          globalObservables,
     const double* const                         luh,
     const tarch::la::Vector<DIMENSIONS,double>& cellCentre,
@@ -289,13 +289,13 @@ void Boltzmann::AbstractBoltzmannSolver_ADERDG::mapGlobalObservables(
   abortWithMsg("If this operation is entered (mapGlobalObservables), you have specified global observables. Then you have to re-implement this routine, too." );
 }
 
-void Boltzmann::AbstractBoltzmannSolver_ADERDG::mergeGlobalObservables(
+void spiEX_Boltzmann::AbstractBoltzmannSolver_ADERDG::mergeGlobalObservables(
     GlobalObservables&         globalObservables,
     ReadOnlyGlobalObservables& otherObservables) const {
   abortWithMsg("If this operation is entered (mergeGlobalObservables), you have specified global observables. Then you have to re-implement this routine, too." );
 }
 
-void Boltzmann::AbstractBoltzmannSolver_ADERDG::wrapUpGlobalObservables(GlobalObservables& globalObservables) const {
+void spiEX_Boltzmann::AbstractBoltzmannSolver_ADERDG::wrapUpGlobalObservables(GlobalObservables& globalObservables) const {
   // Please re-implement if required.
 }
 
