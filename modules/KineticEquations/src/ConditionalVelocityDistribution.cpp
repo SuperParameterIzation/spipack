@@ -173,8 +173,6 @@ void ConditionalVelocityDistribution::Run(double const nextTime, std::shared_ptr
 
 Eigen::VectorXd ConditionalVelocityDistribution::NystromMethod(Eigen::VectorXd const& field, std::shared_ptr<muq::SamplingAlgorithms::SampleCollection> const& samples) const {
   auto density = std::make_shared<DensityEstimation>(samples, densityEstimationOptions);
-  //const Eigen::VectorXd tiltedConditional = (1.0+stepsize*currInfo->velocityDiv)*tiltedDensity->EstimateDensity();
-
   // rebuild the kd trees since the samples have moved
   density->ResetIndices();
   density->BuildKDTrees();
@@ -212,6 +210,10 @@ Eigen::VectorXd ConditionalVelocityDistribution::NystromMethod(Eigen::VectorXd c
 }
 
 void ConditionalVelocityDistribution::UpdateSamples(std::shared_ptr<const MacroscaleInformation> const& currInfo, Eigen::VectorXd const& density, double const stepsize, std::shared_ptr<muq::SamplingAlgorithms::SampleCollection> const& tiltedSamples) {
+  std::cout << "density: " << std::endl;
+  std::cout << density.transpose() << std::endl;
+  std::cout << std::endl << std::endl;
+
   // the number of samples
   const std::size_t n = NumSamples();
 
@@ -337,9 +339,9 @@ Eigen::Matrix<double, MacroscaleInformation::dim, 1> ConditionalVelocityDistribu
   externalVel(0) = 1.0;
   //externalVel(0) = (macroLoc(0)<0.5? -1.0 : 1.0);
 
-  //externalVel -= vel;
-  //return externalVel.array().abs()*externalVel.array();
-  return externalVel;
+  externalVel -= vel;
+  return externalVel.array().abs()*externalVel.array();
+  //return externalVel;
 }
 
 std::shared_ptr<const MacroscaleInformation> ConditionalVelocityDistribution::MacroscaleInfo() const { return prevMacroInfo; }
@@ -348,7 +350,7 @@ Eigen::Matrix<double, MacroscaleInformation::dim, MacroscaleInformation::dim> Co
   if( !computedCovariance ) {
     assert(samples);
     covariance = samples->Covariance(prevMacroInfo->velocity);
-    std::cout << std::endl << std::endl;
+    std::cout << "covariance: " << std::endl;
     std::cout << covariance << std::endl;
     std::cout << std::endl << std::endl;
     computedCovariance = true;
