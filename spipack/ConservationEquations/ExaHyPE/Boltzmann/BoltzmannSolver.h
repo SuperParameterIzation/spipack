@@ -31,6 +31,9 @@ class spiEX_Boltzmann::BoltzmannSolver: public exahype::solvers::LimitingADERDGS
     static constexpr int PatchSize                 = spiEX_Boltzmann::AbstractBoltzmannSolver_FV::PatchSize;
     static constexpr int GhostLayerWidth           = spiEX_Boltzmann::AbstractBoltzmannSolver_FV::GhostLayerWidth;
 
+    /// Get the exahype boltzmann solver
+    static spiEX_Boltzmann::BoltzmannSolver* GetBoltzmannSolver();
+
     // limiter projection matrices
     double dg2fv[(Order+1)*PatchSize];
     double fv2dg[(Order+1)*PatchSize];

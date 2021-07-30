@@ -35,7 +35,7 @@
 
 using namespace spi::ConservationEquations;
 
-spiEX_Boltzmann::BoltzmannSolver* Boltzmann::BoltzmannSolver() {
+/*spiEX_Boltzmann::BoltzmannSolver* Boltzmann::BoltzmannSolver() {
   for( const auto& it : exahype::solvers::RegisteredSolvers ) {
     assert(it);
     auto bolt = dynamic_cast<spiEX_Boltzmann::BoltzmannSolver*>(it);
@@ -43,7 +43,7 @@ spiEX_Boltzmann::BoltzmannSolver* Boltzmann::BoltzmannSolver() {
   }
 
   return nullptr;
-}
+}*/
 
 void Boltzmann::Initialize() {
   // setup environment

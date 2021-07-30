@@ -27,7 +27,8 @@ void spiEX_Boltzmann::UpdateMicroscaleMethods::plotFiniteVolumesPatch(const tarc
   assert(states);
 
   // get the boltzmann solver
-  auto bolt = Boltzmann::BoltzmannSolver();
+  //auto bolt = Boltzmann::BoltzmannSolver();
+  auto bolt = spiEX_Boltzmann::BoltzmannSolver::GetBoltzmannSolver();
   assert(bolt);
   assert(bolt->NumberOfParameters==DIMENSIONS);
   assert(bolt->getType()==exahype::solvers::Solver::Type::LimitingADERDG);

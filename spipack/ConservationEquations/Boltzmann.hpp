@@ -20,7 +20,7 @@ namespace ConservationEquations {
 class Boltzmann {
 public:
   /// Get the exahype boltzmann solver
-  static spiEX_Boltzmann::BoltzmannSolver* BoltzmannSolver();
+  //static spiEX_Boltzmann::BoltzmannSolver* BoltzmannSolver();
 
   static void Initialize();
 
