@@ -210,9 +210,9 @@ Eigen::VectorXd ConditionalVelocityDistribution::NystromMethod(Eigen::VectorXd c
 }
 
 void ConditionalVelocityDistribution::UpdateSamples(std::shared_ptr<const MacroscaleInformation> const& currInfo, Eigen::VectorXd const& density, double const stepsize, std::shared_ptr<muq::SamplingAlgorithms::SampleCollection> const& tiltedSamples) {
-  std::cout << "density: " << std::endl;
+  /*std::cout << "density: " << std::endl;
   std::cout << density.transpose() << std::endl;
-  std::cout << std::endl << std::endl;
+  std::cout << std::endl << std::endl;*/
 
   // the number of samples
   const std::size_t n = NumSamples();
@@ -233,7 +233,7 @@ void ConditionalVelocityDistribution::UpdateSamples(std::shared_ptr<const Macros
 
   // update the rhs
   assert(directionalDerivative.size()==n);
-  for( std::size_t i=0; i<n; ++i ) { rhs(i) += currInfo->velocityDiv - directionalDerivative(i)/density(i); }
+  for( std::size_t i=0; i<n; ++i ) { rhs(i) += directionalDerivative(i)/density(i) - currInfo->velocityDiv; }
 
   // effect acceleration of the samples
   soln = kolmogorov->KolmogorovProblemSolution(similarity, eigs, Qhat, rhs);
@@ -250,10 +250,10 @@ void ConditionalVelocityDistribution::UpdateSamples(std::shared_ptr<const Macros
     Eigen::Matrix<double, 1, MacroscaleInformation::dim> vec(MacroscaleInformation::dim, 1);
 
     for( std::size_t i=0; i<MacroscaleInformation::dim; ++i ) { vec(i) = RandomGenerator::GetNormal(); }
-    tiltedSamples->at(i)->state[0] += stepsize*accelerationTilted.row(i)  + diffusionNugget*vec;
+    tiltedSamples->at(i)->state[0] += stepsize*accelerationTilted.row(i);//  + diffusionNugget*vec;
 
     for( std::size_t i=0; i<MacroscaleInformation::dim; ++i ) { vec(i) = RandomGenerator::GetNormal(); }
-    Point(i) += stepsize*acceleration.row(i) + diffusionNugget*vec;
+    Point(i) += stepsize*acceleration.row(i);// + diffusionNugget*vec;
   }
 }
 
