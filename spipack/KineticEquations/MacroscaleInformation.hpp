@@ -68,7 +68,12 @@ public:
   */
   Coordinates coordinates = Coordinates::MACRO;
 
+  // This method lets cereal know which data members to serialize
+  template<class Archive>
+  void serialize(Archive & archive) { archive(massDensity, logMassDensityGrad, velocity, velocityDiv, coordinates); }
+
 private:
+
 };
 
 } // namespace KineticEquations

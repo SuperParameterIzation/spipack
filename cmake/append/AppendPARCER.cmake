@@ -1,0 +1,15 @@
+list(APPEND SPIPACK_EXTERNAL_INCLUDE_DIRS
+   ${PARCER_INCLUDE_DIRS}
+ )
+
+ message(STATUS "")
+ message(STATUS "")
+ message(STATUS "")
+ message(STATUS ${PARCER_LIBRARIES})
+ message(STATUS "")
+ message(STATUS "")
+ message(STATUS "")
+
+ list(APPEND SPIPACK_EXTERNAL_LIBRARIES
+   ${PARCER_LIBRARIES}
+ )

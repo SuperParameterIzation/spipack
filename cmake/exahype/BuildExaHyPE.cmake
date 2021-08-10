@@ -4,6 +4,8 @@ macro(ExaHyPE_System equation)
   # load the exahype file list
   include(${equation}/ExaHyPEFiles)
 
+  include_directories(${MPI_INCLUDE_PATH})
+
   add_library(spiEX_${equation} SHARED ${EXAHYPE_${equation}_SOURCE})
 
   target_include_directories(spiEX_${equation} PRIVATE

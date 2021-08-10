@@ -46,13 +46,13 @@ TEST_F(BoltzmannTests, BoltzmannParticleMethods) {
   //Boltzmann::Initialize();
 
   // the number of particles per micro-scale models
-  const std::size_t n = 1000;
+  const std::size_t n = 1500;
 
   // the number of timesteps per micro-scale model run
   const std::size_t numTimesteps = 5;
 
   // number of micro-scale models
-  std::size_t gridSize = 15;
+  std::size_t gridSize = 25;
 
   // options for the nearest neighbor search
   YAML::Node nnOptions;

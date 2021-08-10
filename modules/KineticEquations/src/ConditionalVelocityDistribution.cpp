@@ -350,9 +350,9 @@ Eigen::Matrix<double, MacroscaleInformation::dim, MacroscaleInformation::dim> Co
   if( !computedCovariance ) {
     assert(samples);
     covariance = samples->Covariance(prevMacroInfo->velocity);
-    std::cout << "covariance: " << std::endl;
+    /*std::cout << "covariance: " << std::endl;
     std::cout << covariance << std::endl;
-    std::cout << std::endl << std::endl;
+    std::cout << std::endl << std::endl;*/
     computedCovariance = true;
   }
 

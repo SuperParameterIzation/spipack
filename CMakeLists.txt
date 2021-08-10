@@ -30,7 +30,7 @@ list(APPEND CMAKE_MODULE_PATH
 	${CMAKE_SOURCE_DIR}/cmake/append/
 	${CMAKE_SOURCE_DIR}/cmake/exahype/
 	)
-  
+
 set(SPIPACK_LINK_DIRS )
 
 # find dependencies
@@ -64,6 +64,22 @@ add_dependencies(run-tests ${SPIPACK_LIBRARIES})
 if( SPIPACK_BUILT_GTEST )
 	add_dependencies(run-tests GTEST)
 endif()
+
+include_directories(${MPI_INCLUDE_PATH})
+
+add_executable(run-parallel-tests ${PARALLEL_GTEST_SOURCE})
+target_link_libraries(run-parallel-tests ${SPIPACK_EXTERNAL_LIBRARIES} ${SPIPACK_LIBRARIES} ${GTEST_LIBRARIES} ${MPI_LIBRARIES})
+add_dependencies(run-parallel-tests ${SPIPACK_LIBRARIES})
+if( SPIPACK_BUILT_GTEST )
+	add_dependencies(run-parallel-tests GTEST)
+endif()
+if(MPI_COMPILE_FLAGS)
+  set_target_properties(run-parallel-tests PROPERTIES COMPILE_FLAGS "${MPI_COMPILE_FLAGS}")
+endif()
+if(MPI_LINK_FLAGS)
+  set_target_properties(run-parallel-tests PROPERTIES LINK_FLAGS "${MPI_LINK_FLAGS}")
+endif()
+
 
 ###############################################
 # Install SPIPACK

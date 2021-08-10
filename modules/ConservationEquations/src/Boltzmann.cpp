@@ -2,8 +2,6 @@
 
 #include "spipack/ConservationEquations/ExaHyPE/Boltzmann/BoltzmannSolver.h"
 
-
-
 #include "tarch/logging/Log.h"
 #include "tarch/tests/TestCaseRegistry.h"
 #include "tarch/logging/CommandLineLogger.h"
@@ -77,6 +75,18 @@ mode(SolverModesMap().at(options["SolverMode"].as<std::string>("CompressibleEule
     auto bolt = dynamic_cast<spiEX_Boltzmann::BoltzmannSolver*>(it);
     if( bolt ) {
       bolt->kineticModels = microscaleModels;
+      break;
+    }
+  }
+}
+
+Boltzmann::~Boltzmann() {
+  // need to delete the particle methods so that the communicator releases the trapped processors (parallel only)
+  for( const auto& it : exahype::solvers::RegisteredSolvers ) {
+    assert(it);
+    auto bolt = dynamic_cast<spiEX_Boltzmann::BoltzmannSolver*>(it);
+    if( bolt ) {
+      bolt->kineticModels = nullptr;
       break;
     }
   }

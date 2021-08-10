@@ -38,7 +38,7 @@ public:
   */
   Boltzmann(std::shared_ptr<spi::KineticEquations::KineticModels> const& microscaleModels, YAML::Node const& options);
 
-  virtual ~Boltzmann() = default;
+  virtual ~Boltzmann();
 
   /// Which mode are we running?
   /**
